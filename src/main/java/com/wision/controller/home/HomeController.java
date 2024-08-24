@@ -1,9 +1,6 @@
 package com.wision.controller.home;
 
-import com.wision.entity.DiaryForm;
 import com.wision.entity.DocListVo;
-import com.wision.entity.LogVo;
-import com.wision.entity.StatsListVo;
 import com.wision.service.HomeService;
 import com.wision.util.Result;
 import io.swagger.annotations.Api;
@@ -28,33 +25,5 @@ public class HomeController {
     public Result homeDisplay(@RequestBody String params){
         List<DocListVo> homeDisplay= homeService.homeDisplay(params);
         return Result.success(homeDisplay);
-    }
-
-    @ApiOperation("考核统计展示")
-    @PostMapping("/statsdisply")
-    public Result statsDisply(){
-        List<StatsListVo> statsDisply= homeService.statsDisply();
-        return Result.success(statsDisply);
-    }
-
-    @ApiOperation("个人日志详细")
-    @PostMapping("/logdet")
-    public Result logDet(@RequestBody String params){
-        List<LogVo> logDet= homeService.logDet(params);
-        return Result.suclayer(logDet);
-    }
-
-    @ApiOperation("个人日志保存")
-    @PostMapping("/logsave")
-    public Result logSave(@RequestBody DiaryForm params){
-        homeService.logSave(params);
-        return Result.success();
-    }
-
-    @ApiOperation("个人日志导出")
-    @PostMapping("/logexport")
-    public Result logExport(){
-        List<LogVo> logExport= homeService.logExport();
-        return Result.suclayer(logExport);
     }
 }
