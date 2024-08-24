@@ -1,4 +1,4 @@
-package com.wision.controller.test;
+package com.wision.controller.prod;
 
 
 import javax.swing.*;

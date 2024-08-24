@@ -201,10 +201,10 @@ public class ProdController {
         return Result.success(mainTbl);
     }
 
-    @ApiOperation("工程计算器")
-    @PostMapping("/calculator")
-    public Result calculator(@RequestBody Calculator params){
-        Float result= suppService.calculator(params);
-        return Result.success(result);
-    }
+//    @ApiOperation("工程计算器")
+//    @PostMapping("/calculator")
+//    public Result calculator(@RequestBody Calculator params){
+//        Float result= suppService.calculator(params);
+//        return Result.success(result);
+//    }
 }

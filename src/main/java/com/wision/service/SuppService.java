@@ -129,9 +129,9 @@ public interface SuppService {
      * @return
      */
     List<MainTblVo> mainTbl(String params);
-    /**
-     * 工程计算器
-     * @return
-     */
-    Float calculator(Calculator params);
+//    /**
+//     * 工程计算器
+//     * @return
+//     */
+//    Float calculator(Calculator params);
 }

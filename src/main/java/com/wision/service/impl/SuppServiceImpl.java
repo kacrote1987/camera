@@ -473,18 +473,18 @@ public class SuppServiceImpl implements SuppService {
         return mainTbl;
     }
 
-    @Override
-    public Float calculator(Calculator params) {
-        Float param1,param2,param3,param4,param5,param6;
-        if(params.getParam1()==null){param1=0f;}else{param1=params.getParam1();}
-        if(params.getParam2()==null){param2=0f;}else{param2=params.getParam2();}
-        if(params.getParam3()==null){param3=0f;}else{param3=params.getParam3();}
-        if(params.getParam4()==null){param4=0f;}else{param4=params.getParam4();}
-        if(params.getParam5()==null){param5=0f;}else{param5=params.getParam5();}
-        if(params.getParam6()==null){param6=0f;}else{param6=params.getParam6();}
-        Float result=param1+param2+param3+param4+param5+param6;
-        return result;
-    }
+//    @Override
+//    public Float calculator(Calculator params) {
+//        Float param1,param2,param3,param4,param5,param6;
+//        if(params.getParam1()==null){param1=0f;}else{param1=params.getParam1();}
+//        if(params.getParam2()==null){param2=0f;}else{param2=params.getParam2();}
+//        if(params.getParam3()==null){param3=0f;}else{param3=params.getParam3();}
+//        if(params.getParam4()==null){param4=0f;}else{param4=params.getParam4();}
+//        if(params.getParam5()==null){param5=0f;}else{param5=params.getParam5();}
+//        if(params.getParam6()==null){param6=0f;}else{param6=params.getParam6();}
+//        Float result=param1+param2+param3+param4+param5+param6;
+//        return result;
+//    }
 
     public static String method (String str){
         String pos="";
