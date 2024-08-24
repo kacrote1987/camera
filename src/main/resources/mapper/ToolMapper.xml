@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wision.mapper.ToolMapper">
+    <select id="toolList" resultType="com.wision.entity.ToolListVo" >
+        select a.tool_id,a.tool_type,a.tool_name,a.tool_ver,tool_conf,a.tool_explain,date_format(a.tool_time,'%Y-%m-%d') as tool_time,a.share_num,a.tool_state
+        from t_supp_tool_basic a where 1=1
+        <if test="params.toolType!=null and params.toolType!=''">
+            and a.tool_type = #{params.toolType}
+        </if>
+        <if test="params.toolName!=null and params.toolName!=''">
+            and a.tool_name like #{params.toolName} '%'
+        </if>
+        <if test="params.toolState!=null and params.toolState!=''">
+            and a.tool_state = #{params.toolState}
+        </if>
+        order by a.tool_id
+    </select>
+    <select id="toolDet" resultType="com.wision.entity.ToolDetVo" >
+        select tool_id,tool_type,tool_name,tool_ver,tool_explain,date_format(tool_time,'%Y-%m-%d') as tool_time,share_num,tool_state
+        from t_supp_tool_basic where tool_id=#{toolId}
+    </select>
+    <insert id="insertTool">
+        insert into t_supp_tool_basic(tool_type,tool_name,tool_ver,tool_explain,tool_time,share_num,tool_state)
+        values(#{params.toolType},#{params.toolName},#{params.toolVer},#{params.toolExplain},#{params.toolTime}
+        ,#{params.shareNum},#{params.toolState})
+    </insert>
+    <delete id="deleteTool">
+        delete from t_supp_tool_basic where tool_id=#{params}
+    </delete>
+    <update id="updateTool">
+        update t_supp_tool_basic set tool_type=#{params.toolType},tool_name=#{params.toolName},tool_ver=#{params.toolVer}
+        ,tool_explain=#{params.toolExplain},tool_time=#{params.toolTime},share_num=#{params.shareNum},tool_state=#{params.toolState}
+        where tool_id=#{params.toolId}
+    </update>
+    <select id="toolSel" resultType="com.wision.entity.ToolListVo" >
+        select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.tool_name,b.tool_ver,b.tool_explain,date_format(b.tool_time,'%Y-%m-%d') as tool_time
+        ,b.share_num,b.tool_state from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
+    </select>
+</mapper>
