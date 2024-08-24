@@ -6,27 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-public interface SuppService {
-    /**
-     * 组件列表
-     * @return
-     */
-    PageInfo<ToolListVo> toolList(ToolListForm params);
-    /**
-     * 组件详细
-     * @return
-     */
-    List<ToolDetVo> toolDet(String params);
-    /**
-     * 组件保存
-     * @return
-     */
-    void toolSave(ToolDetForm params);
-    /**
-     * 组件查询
-     * @return
-     */
-    PageInfo<ToolListVo> toolSel(String params,ToolListForm params1);
+public interface ProdService {
     /**
      * 产品列表
      * @return
@@ -129,9 +109,4 @@ public interface SuppService {
      * @return
      */
     List<MainTblVo> mainTbl(String params);
-//    /**
-//     * 工程计算器
-//     * @return
-//     */
-//    Float calculator(Calculator params);
 }

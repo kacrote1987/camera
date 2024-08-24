@@ -3,8 +3,8 @@ package com.wision.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
-import com.wision.mapper.SuppMapper;
-import com.wision.service.SuppService;
+import com.wision.mapper.ProdMapper;
+import com.wision.service.ProdService;
 import com.wision.util.ExcelUtils;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import org.springframework.stereotype.Service;
@@ -20,70 +20,31 @@ import java.util.Map;
 import static java.util.Objects.isNull;
 
 @Service
-public class SuppServiceImpl implements SuppService {
+public class ProdServiceImpl implements ProdService {
     @Resource
-    SuppMapper suppMapper;
-
-    @Override
-    public PageInfo<ToolListVo> toolList(ToolListForm params) {
-        PageHelper.startPage(params.getPage(), 10);
-        List<ToolListVo> toolList = suppMapper.toolList(params);
-        return PageInfo.of(toolList);
-    }
-
-    @Override
-    public List<ToolDetVo> toolDet(String params) {
-        List<ToolDetVo> toolDet = null;
-        if (!params.equals("add")) {
-            toolDet = suppMapper.toolDet(Long.valueOf(params));
-        }
-        return toolDet;
-    }
-
-    @Override
-    public void toolSave(ToolDetForm params) {
-        if (params.getAction().equals("add")) {
-            suppMapper.insertTool(params);
-        } else if (params.getAction().equals("del")) {
-            suppMapper.deleteTool(params.getToolId());
-        } else {
-            suppMapper.updateTool(params);
-        }
-    }
-
-    @Override
-    public PageInfo<ToolListVo> toolSel(String prodId,ToolListForm params) {
-        PageHelper.startPage(params.getPage(), 10);
-        String menuId;
-        List<ToolListVo> toolSel = null;
-        if(prodId.indexOf("menuId")>-1){
-            menuId = prodId.substring(prodId.indexOf("menuId=")+7,prodId.length());
-            toolSel = suppMapper.toolSel(Long.valueOf(menuId),params);
-        }
-        return PageInfo.of(toolSel);
-    }
+    ProdMapper prodMapper;
 
     @Override
     public PageInfo<ProdListVo> prodList(ProdListForm params) {
         PageHelper.startPage(params.getPage(), 10);
-        List<ProdListVo> prodList = suppMapper.prodList(params);
+        List<ProdListVo> prodList = prodMapper.prodList(params);
         return PageInfo.of(prodList);
     }
 
     @Override
     public List<ProdDetVo> prodDet(String params) {
-        List<ProdDetVo> prodDet=suppMapper.prodDet(params);
+        List<ProdDetVo> prodDet=prodMapper.prodDet(params);
         return prodDet;
     }
 
     @Override
     public void prodSave(ProdDetForm params) {
         if (params.getAction().equals("add")) {
-            suppMapper.insertProd(params);
+            prodMapper.insertProd(params);
         } else if (params.getAction().equals("del")) {
-            suppMapper.deleteProd(params.getProdId());
+            prodMapper.deleteProd(params.getProdId());
         } else {
-            suppMapper.updateProd(params);
+            prodMapper.updateProd(params);
         }
         //创建文件夹
         String dirStr = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\dist\\views\\supp\\prodlist\\mytest";
@@ -95,39 +56,39 @@ public class SuppServiceImpl implements SuppService {
 
     @Override
     public List<ProdViewVo> prodView(String params) {
-        List<ProdViewVo> prodView=suppMapper.prodView(Long.valueOf(params));
-        prodView.get(0).setMenuList(suppMapper.menuList(Long.valueOf(params)));
+        List<ProdViewVo> prodView=prodMapper.prodView(Long.valueOf(params));
+        prodView.get(0).setMenuList(prodMapper.menuList(Long.valueOf(params)));
         return prodView;
     }
 
     @Override
     public void tblSave(BasicTblList params) {
         if(params.getAction().equals("del")){//删除
-            String tblName=suppMapper.checkTblExists(params.getTblCode());
+            String tblName=prodMapper.checkTblExists(params.getTblCode());
             if(tblName!=null){
-                suppMapper.dropTbl(params.getTblCode());
+                prodMapper.dropTbl(params.getTblCode());
             }
-            suppMapper.deleteTblById(params.getTblId());
+            prodMapper.deleteTblById(params.getTblId());
         }else{//新增
-            suppMapper.insertTblByName(params.getProdId(),params.getTblName());
-            Long tblId=suppMapper.getTblIdByName(params.getProdId(),params.getTblName());
+            prodMapper.insertTblByName(params.getProdId(),params.getTblName());
+            Long tblId=prodMapper.getTblIdByName(params.getProdId(),params.getTblName());
             String tblCode="t_imp_"+tblId+"_"+getPinYinHeadChar(params.getTblName());
-            suppMapper.updateTblByCode(tblId,tblCode);
+            prodMapper.updateTblByCode(tblId,tblCode);
         }
     }
 
     @Override
     public List<BasicTblList> basicTbl(String params) {
         Long prodId=Long.valueOf(params.substring(0,params.indexOf("=")));
-        List<BasicTblList> basicTblList = suppMapper.basicTblList(prodId);
+        List<BasicTblList> basicTblList = prodMapper.basicTblList(prodId);
         return basicTblList;
     }
 
     @Override
     public List<MenuListVo> menuList(String prodId) {
-        List<MenuListVo> menuList=suppMapper.menuList(Long.valueOf(prodId.substring(0,prodId.indexOf("="))));
+        List<MenuListVo> menuList=prodMapper.menuList(Long.valueOf(prodId.substring(0,prodId.indexOf("="))));
         for(int i=0;i<menuList.size();i++){
-            List<RelatDetVo> toolList=suppMapper.getToolIdsByMenuId(menuList.get(i).getMenuId());
+            List<RelatDetVo> toolList=prodMapper.getToolIdsByMenuId(menuList.get(i).getMenuId());
             String toolIds="";
             if(toolList.size()>0){
                 for(int j=0;j<toolList.size();j++){
@@ -143,56 +104,56 @@ public class SuppServiceImpl implements SuppService {
     @Override
     public void menuSave(MenuListForm params) {
         if (params.getAction().equals("add")) {
-            suppMapper.insertMenu(params.getProdId());
+            prodMapper.insertMenu(params.getProdId());
         } else if (params.getAction().equals("del")) {
 //            先删除对应关系
-            List<RelatDetVo> relatIds=suppMapper.getRelatIdsByMenuId(params.getMenuId());
+            List<RelatDetVo> relatIds=prodMapper.getRelatIdsByMenuId(params.getMenuId());
             for(int i=0;i<relatIds.size();i++){
-                List<RelatDetVo> typeIds=suppMapper.getTypeIds(relatIds.get(i).getRelatId());
+                List<RelatDetVo> typeIds=prodMapper.getTypeIds(relatIds.get(i).getRelatId());
                 for(int j=0;j<typeIds.size();j++){
 //                    *注:此处暂时写死为basic和step,后期再放开
                     if(typeIds.get(j).getRelatName()=="basic" || typeIds.get(j).getRelatName()=="step"){
-                        suppMapper.deleteType(typeIds.get(j).getRelatId(),typeIds.get(j).getRelatName()+"_id","t_supp_tool_"+typeIds.get(j).getRelatName());
+                        prodMapper.deleteType(typeIds.get(j).getRelatId(),typeIds.get(j).getRelatName()+"_id","t_supp_tool_"+typeIds.get(j).getRelatName());
                     }
                 }
-                suppMapper.deleteRelatExt(relatIds.get(i).getRelatId());
+                prodMapper.deleteRelatExt(relatIds.get(i).getRelatId());
             }
-            suppMapper.deleteRelatMain(params.getMenuId());
+            prodMapper.deleteRelatMain(params.getMenuId());
 //            再删除菜单
-            suppMapper.deleteMenuMain(params.getMenuId());
+            prodMapper.deleteMenuMain(params.getMenuId());
         } else if (params.getField().equals("toolIds")) {
 //            更新对应关系t_supp_relat_main表和t_supp_relat_ext表
             String toolIdsTemp=params.getValue()+',';
             while(toolIdsTemp.indexOf(',')>0){
                 String toolId=toolIdsTemp.substring(0,toolIdsTemp.indexOf(','));
-                Long existRelat=suppMapper.existRelat(params.getMenuId(),Long.valueOf(toolId));
+                Long existRelat=prodMapper.existRelat(params.getMenuId(),Long.valueOf(toolId));
                 if(existRelat==null){
-                    suppMapper.insertRelat(params.getMenuId(),Long.valueOf(toolId));
-                    suppMapper.insertExtByMenu(params.getMenuId(),Long.valueOf(toolId));
+                    prodMapper.insertRelat(params.getMenuId(),Long.valueOf(toolId));
+                    prodMapper.insertExtByMenu(params.getMenuId(),Long.valueOf(toolId));
                 }
                 toolIdsTemp=toolIdsTemp.substring(toolIdsTemp.indexOf(',')+1,toolIdsTemp.length());
             }
 //            清除多余数据
-            List<RelatDetVo> relatVo=suppMapper.getCleanExtIds(params.getMenuId(),params.getValue());
+            List<RelatDetVo> relatVo=prodMapper.getCleanExtIds(params.getMenuId(),params.getValue());
             for(int i=0;i<relatVo.size();i++){
 //                *注:此处暂时写死为basic和step,后期再放开
                 if(relatVo.get(i).getRelatName()=="basic" || relatVo.get(i).getRelatName()=="step"){
-                    suppMapper.cleanType("t_supp_tool_"+relatVo.get(i).getRelatName(),relatVo.get(i).getRelatName()+"_id",relatVo.get(i).getRelatId());
+                    prodMapper.cleanType("t_supp_tool_"+relatVo.get(i).getRelatName(),relatVo.get(i).getRelatName()+"_id",relatVo.get(i).getRelatId());
                 }
             }
-            suppMapper.cleanExt(params.getMenuId(),params.getValue());
-            suppMapper.cleanRelat(params.getMenuId(),params.getValue());
+            prodMapper.cleanExt(params.getMenuId(),params.getValue());
+            prodMapper.cleanRelat(params.getMenuId(),params.getValue());
         } else {
 //            更新其余信息时，仅更新菜单
-            suppMapper.updateMenu(params.getMenuId(),method(params.getField()),params.getValue());
+            prodMapper.updateMenu(params.getMenuId(),method(params.getField()),params.getValue());
         }
     }
 
     @Override
     public List<MenuTreeVo> menuTree(String params) {
-        List<MenuTreeVo> MenuTreeVo=suppMapper.menuFather(Long.valueOf(params));
+        List<MenuTreeVo> MenuTreeVo=prodMapper.menuFather(Long.valueOf(params));
         for(int i=0;i<MenuTreeVo.size();i++){
-            List<children> menuChild=suppMapper.menuChild(MenuTreeVo.get(i).getId());
+            List<children> menuChild=prodMapper.menuChild(MenuTreeVo.get(i).getId());
             if(menuChild.size()!=0){
                 MenuTreeVo.get(i).setChildren(menuChild);
             }else {
@@ -205,25 +166,25 @@ public class SuppServiceImpl implements SuppService {
     @Override
     public List<FlowListVo> flowList(String params) {
         Long relatId=Long.valueOf(params.substring(0,params.indexOf("=")));
-        List<FlowListVo> flowList=suppMapper.flowList(relatId);
+        List<FlowListVo> flowList=prodMapper.flowList(relatId);
         return flowList;
     }
 
     @Override
     public void flowSave(FlowListForm params) {
         if (params.getAction().equals("add")) {
-            suppMapper.insertFlow(params.getRelatId());
+            prodMapper.insertFlow(params.getRelatId());
         } else if (params.getAction().equals("del")) {
-            suppMapper.deleteFlow(params.getExtId());
+            prodMapper.deleteFlow(params.getExtId());
         } else {
-            suppMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
+            prodMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
         }
     }
 
     @Override
     public List<RelatDetVo> relatDet(Long relatId) {
-        List<RelatDetVo> relatDet=suppMapper.relatDet(relatId);
-//        String basicTbl=suppMapper.getMainTblByOtherRelatId(relatId);
+        List<RelatDetVo> relatDet=prodMapper.relatDet(relatId);
+//        String basicTbl=prodMapper.getMainTblByOtherRelatId(relatId);
 //        relatDet.get(0).setMainTbl(basicTbl.substring(0,basicTbl.indexOf(",")));
 //        relatDet.get(0).setBasicTbl(basicTbl.substring(basicTbl.indexOf(",")+1,basicTbl.length()));
         return relatDet;
@@ -232,38 +193,38 @@ public class SuppServiceImpl implements SuppService {
     @Override
     public List<TblImpForm> tblList(String params) {
         Long tblId=Long.valueOf(params.substring(0,params.indexOf("=")));
-        List<TblImpForm> tblList = suppMapper.tblList(tblId);
+        List<TblImpForm> tblList = prodMapper.tblList(tblId);
         return tblList;
     }
 
     @Override
     public List<TblImpForm> tblDet(String params) {
-        List<TblImpForm> tblDet = suppMapper.tblDet(Long.valueOf(params));
+        List<TblImpForm> tblDet = prodMapper.tblDet(Long.valueOf(params));
         return tblDet;
     }
 
     @Override
     public void relatSave(RelatForm params) {
         //先判断组件类型，再判断是否主表
-        String toolType=suppMapper.getToolType(params.getRelatId());
+        String toolType=prodMapper.getToolType(params.getRelatId());
         if(toolType.equals("basic")){ //basic
-            String layoutType=suppMapper.getLayoutType(params.getRelatId());
+            String layoutType=prodMapper.getLayoutType(params.getRelatId());
             String basicTbl;
             if(layoutType!=null){//主表，更新映射，更新用户表名称
                 basicTbl="t_imp_"+params.getRelatId()+"_"+getPinYinHeadChar(params.getRelatName());
-                suppMapper.updateRelatBasic(params,basicTbl);
+                prodMapper.updateRelatBasic(params,basicTbl);
             }else{ //非主表（字典表）
-                suppMapper.updateRelatBasic(params,null);
+                prodMapper.updateRelatBasic(params,null);
             }
         }else{ //flow
-            suppMapper.updateRelatFlow(params);
-            String check=suppMapper.checkStepCol(params.getMainTbl());
+            prodMapper.updateRelatFlow(params);
+            String check=prodMapper.checkStepCol(params.getMainTbl());
             if(check==null){
-                suppMapper.addStepCol(params.getMainTbl());
-                suppMapper.iniStepCol(params.getMainTbl());
-                String stepCode=suppMapper.chkExtCol(suppMapper.getmainRelatId(params.getRelatId()));
+                prodMapper.addStepCol(params.getMainTbl());
+                prodMapper.iniStepCol(params.getMainTbl());
+                String stepCode=prodMapper.chkExtCol(prodMapper.getmainRelatId(params.getRelatId()));
                 if(stepCode==null){
-                    suppMapper.addExtCol(suppMapper.getmainRelatId(params.getRelatId()));
+                    prodMapper.addExtCol(prodMapper.getmainRelatId(params.getRelatId()));
                 }
             }
         }
@@ -296,14 +257,14 @@ public class SuppServiceImpl implements SuppService {
         String[] keys = {"col1","col2","col3","col4","col5","col6","col7","col8","col9","col10"};
         String keysName="'" + Arrays.toString(keys).substring(1,Arrays.toString(keys).length()-1).replace(",","','") + "'";
 //        判断表是否存在
-        String tblName=suppMapper.checkTblExists(tblCode);
+        String tblName=prodMapper.checkTblExists(tblCode);
         if(tblName!=null){
-            suppMapper.dropTbl(tblCode);
+            prodMapper.dropTbl(tblCode);
         }
-        suppMapper.createTbl(tblCode,keysName);
-        suppMapper.cleanTbl(tblCode);
+        prodMapper.createTbl(tblCode,keysName);
+        prodMapper.cleanTbl(tblCode);
         for(int k=0;k<keys.length;k++){
-            suppMapper.alterTbl(tblCode,keys[k]);
+            prodMapper.alterTbl(tblCode,keys[k]);
         }
 //        导入，读取excel中列的信息
         List<Map<String, Object>> list= ExcelUtils.importExcel(file,keys);
@@ -313,34 +274,34 @@ public class SuppServiceImpl implements SuppService {
                 col += "'"+map.get("col"+i).toString()+"',";
             }
             col=col.substring(0,col.length()-1);
-            suppMapper.insertTbl(tblCode,col);
+            prodMapper.insertTbl(tblCode,col);
         }
 //        先清除t_supp_relat_ext中已有表头
-        suppMapper.cleanHeader(tblId);
+        prodMapper.cleanHeader(tblId);
 //        再重新新增t_supp_relat_ext表中的表头
         String cols=Arrays.toString(keys).substring(1,Arrays.toString(keys).length()-1);
         String[] array1 = cols.split(",");
         cols=cols.replace(",",",',',");
-        String header=suppMapper.getHeader(tblCode,cols);
+        String header=prodMapper.getHeader(tblCode,cols);
         String[] array2 = header.split(",");
         for(int i=0;i<array1.length;i++){
-            suppMapper.insertHeader(tblId,array1[i],array2[i]);
+            prodMapper.insertHeader(tblId,array1[i],array2[i]);
         }
 //        清除列中的空格
-        suppMapper.cleanBasicBlank();
+        prodMapper.cleanBasicBlank();
 //        从表中删除t_imp_X_X表中第一行表头
-        suppMapper.deleteHeader(tblCode);
+        prodMapper.deleteHeader(tblCode);
     }
 
     @Override
     public List<BasicCol> basicCol(Long id) {
-        List<BasicCol> basicCol=suppMapper.getColName(id);
+        List<BasicCol> basicCol=prodMapper.getColName(id);
         return basicCol;
     }
 
     @Override
     public void colSave(BasicCol params) {
-        suppMapper.updateCol(params.getExtId(),method(params.getField()),params.getValue());
+        prodMapper.updateCol(params.getExtId(),method(params.getField()),params.getValue());
     }
 
     @Override
@@ -351,7 +312,7 @@ public class SuppServiceImpl implements SuppService {
         childTblMenu1.setType("checkbox");
         childTblCol.add(childTblMenu1);
         //获取查询结果列名
-        List<ChildTblCol> childTblCol1=suppMapper.getTblSel(Long.valueOf(menuId),"1",null);
+        List<ChildTblCol> childTblCol1=prodMapper.getTblSel(Long.valueOf(menuId),"1",null);
         for(int i=0;i<childTblCol1.size();i++){
             childTblCol.add(childTblCol1.get(i));
         }
@@ -367,7 +328,7 @@ public class SuppServiceImpl implements SuppService {
             childTblCol.get(i).setWidth(width);
         }
         //获取查询条件
-        List<ChildTblCol> basicSel=suppMapper.getTblSel(Long.valueOf(menuId),null,"1");
+        List<ChildTblCol> basicSel=prodMapper.getTblSel(Long.valueOf(menuId),null,"1");
         //将获取的列名插入ChildTblSel中
         ChildTblSelVo ChildTblSel= new ChildTblSelVo();
         ChildTblSel.setChildTblCol(childTblCol);
@@ -381,7 +342,7 @@ public class SuppServiceImpl implements SuppService {
     @Override
     public PageInfo<ChildTblForm> childTblCont(String menuId,ChildTblForm params) {
         //获取表名
-        String tblName=suppMapper.getBasicChildTbl(Long.valueOf(menuId.substring(0,menuId.indexOf("="))));//tblName=t_imp_40_xmzb
+        String tblName=prodMapper.getBasicChildTbl(Long.valueOf(menuId.substring(0,menuId.indexOf("="))));//tblName=t_imp_40_xmzb
         //获取导入表的内容
         PageHelper.startPage(params.getPage(), 10);
         String search=params.getSearch()+",";
@@ -444,7 +405,7 @@ public class SuppServiceImpl implements SuppService {
 //            String jsonString = JSONObject.toJSONString(params1);
 //            System.out.println("jsonString = " + jsonString);
         }
-        List<ChildTblForm> childTblCont=suppMapper.childTblCont(Long.valueOf(menuId.substring(0,menuId.indexOf("="))),params1);
+        List<ChildTblForm> childTblCont=prodMapper.childTblCont(Long.valueOf(menuId.substring(0,menuId.indexOf("="))),params1);
         return PageInfo.of(childTblCont);
     }
 
@@ -454,10 +415,10 @@ public class SuppServiceImpl implements SuppService {
         Long menuId = Long.valueOf(params.substring(params.indexOf("&")+1,params.length()));
         ChildTblDetForm childTblDet = new ChildTblDetForm();
 //        //获取字段名
-        List<BasicCol> childTblHeadDet = suppMapper.childTblHeadDet(menuId);
+        List<BasicCol> childTblHeadDet = prodMapper.childTblHeadDet(menuId);
 //        //获取字段值
-        String tblName = suppMapper.getBasicChildTbl(menuId);
-        ChildTblForm childTblContDet = suppMapper.childTblContDet(tblName,id);
+        String tblName = prodMapper.getBasicChildTbl(menuId);
+        ChildTblForm childTblContDet = prodMapper.childTblContDet(tblName,id);
 //        //放入表格中
         childTblDet.setId(id);
         childTblDet.setMenuId(menuId);
@@ -469,22 +430,9 @@ public class SuppServiceImpl implements SuppService {
     @Override
     public List<MainTblVo> mainTbl(String params) {
         Long menuId=Long.valueOf(params.substring(params.indexOf("_")+1,params.length()));
-        List<MainTblVo> mainTbl=suppMapper.getMainTbl(menuId);
+        List<MainTblVo> mainTbl=prodMapper.getMainTbl(menuId);
         return mainTbl;
     }
-
-//    @Override
-//    public Float calculator(Calculator params) {
-//        Float param1,param2,param3,param4,param5,param6;
-//        if(params.getParam1()==null){param1=0f;}else{param1=params.getParam1();}
-//        if(params.getParam2()==null){param2=0f;}else{param2=params.getParam2();}
-//        if(params.getParam3()==null){param3=0f;}else{param3=params.getParam3();}
-//        if(params.getParam4()==null){param4=0f;}else{param4=params.getParam4();}
-//        if(params.getParam5()==null){param5=0f;}else{param5=params.getParam5();}
-//        if(params.getParam6()==null){param6=0f;}else{param6=params.getParam6();}
-//        Float result=param1+param2+param3+param4+param5+param6;
-//        return result;
-//    }
 
     public static String method (String str){
         String pos="";

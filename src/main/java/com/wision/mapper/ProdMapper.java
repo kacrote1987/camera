@@ -7,13 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface SuppMapper {
-    List<ToolListVo> toolList(@Param("params") ToolListForm params);
-    List<ToolDetVo> toolDet(Long params);
-    boolean insertTool(@Param("params") ToolDetForm params);
-    boolean deleteTool(Long params);
-    boolean updateTool(@Param("params") ToolDetForm params);
-    List<ToolListVo> toolSel(Long menuId,@Param("params") ToolListForm params);
+public interface ProdMapper {
     List<ProdListVo> prodList(@Param("params") ProdListForm params);
     List<ProdDetVo> prodDet(String params);
     boolean insertProd(@Param("params") ProdDetForm params);

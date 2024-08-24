@@ -127,7 +127,7 @@
     }
     $.ajax({
       type: "post",
-      url: "/supp/proddet",
+      url: "/prod/proddet",
       contentType: "application/json;charset=utf-8",
       dataType: "json",
       data: prodId,
@@ -158,7 +158,7 @@
     params.prodExplain = $('#prodExplain').val();
     params.prodTime = $('#prodTime').val();
     params.prodState = $('#prodState').val();
-    postdata(params, "/supp/prodsave", function () {
+    postdata(params, "/prod/prodsave", function () {
       layer.msg("保存成功！");
     });
   }

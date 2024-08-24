@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wision.mapper.SuppMapper">
+<mapper namespace="com.wision.mapper.ProdMapper">
     <select id="toolList" resultType="com.wision.entity.ToolListVo" >
         select a.tool_id,a.tool_type,a.tool_name,a.tool_ver,tool_conf,a.tool_explain,date_format(a.tool_time,'%Y-%m-%d') as tool_time,a.share_num,a.tool_state
         from t_supp_tool_basic a where 1=1

@@ -149,7 +149,7 @@
         }
         $.ajax({
             type: "post",
-            url: "/supp/tooldet",
+            url: "/tool/tooldet",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             data: toolId,
@@ -181,7 +181,7 @@
         params.toolTime = $('#toolTime').val();
         params.shareNum = $('#shareNum').val();
         params.toolExplain = $('#toolExplain').val();
-        postdata(params, "/supp/toolsave", function () {
+        postdata(params, "/tool/toolsave", function () {
             layer.msg("保存成功！");
         });
     }
