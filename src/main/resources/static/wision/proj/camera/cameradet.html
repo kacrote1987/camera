@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>单位详细</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">点位概况</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item  layui-show">
+                        <!--            点位概况-->
+                        <div class="layui-row layui-col-space12">
+                            <div class="layui-col-md2">
+                            </div>
+                            <div class="layui-col-md8">
+                                <div class="layui-card">
+                                    <input id="actions" type="text" name="actions" placeholder="" autocomplete="off"
+                                           class="layui-input" style="display: none">
+                                    <input id="cameraId" type="text" name="cameraId" placeholder="" autocomplete="off"
+                                           class="layui-input" style="display: none">
+                                    <input id="rpStr" type="text" name="rpStr" placeholder="" autocomplete="off"
+                                           class="layui-input" style="display: none">
+                                    <div class="layui-card-body">
+                                        <form class="layui-form" action="" lay-filter="component-form-element">
+                                            <blockquote class="layui-elem-quote">一、设备信息</blockquote>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">*监控点编码</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraCode" type="text" name="cameraCode"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">*监控点名称</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraName" type="text" name="cameraName"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">*经度</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraLng" type="text" name="cameraLng"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">*纬度</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraLat" type="text" name="cameraLat"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">设备厂商</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraBrand" type="text" name="cameraBrand"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">设备型号</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraModel" type="text" name="cameraModel"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">设备类型</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraType" type="text" name="cameraType"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">种类细分</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraType2" type="text" name="cameraType2"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">照视距离</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraDistance" type="text" name="cameraDistance"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">共享条件</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="shareType" type="text" name="shareType"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <blockquote class="layui-elem-quote">二、项目信息</blockquote>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg12">
+                                                    <label class="layui-form-label">项目名称</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="projId" type="text" name="projId"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">行政区域</label>
+                                                    <div class="layui-input-block">
+                                                        <select id="cameraArea" name="cameraArea">
+                                                            <option value="">请选择</option>
+                                                            <option value="爱山派出所">爱山派出所</option>
+                                                            <option value="织里派出所">织里派出所</option>
+                                                            <option value="高新区派出所">高新区派出所</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">乡镇街道</label>
+                                                    <div class="layui-input-block">
+                                                        <select id="cameraTown" name="cameraTown">
+                                                            <option value="">请选择</option>
+                                                            <option value="爱山派出所">爱山派出所</option>
+                                                            <option value="织里派出所">织里派出所</option>
+                                                            <option value="高新区派出所">高新区派出所</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">村级社区</label>
+                                                    <div class="layui-input-block">
+                                                        <select id="cameraVillage" name="cameraVillage">
+                                                            <option value="">请选择</option>
+                                                            <option value="爱山派出所">爱山派出所</option>
+                                                            <option value="织里派出所">织里派出所</option>
+                                                            <option value="高新区派出所">高新区派出所</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">所属部门</label>
+                                                    <div class="layui-input-block">
+                                                        <select id="cameraDept" name="cameraDept">
+                                                            <option value="">请选择</option>
+                                                            <option value="爱山派出所">爱山派出所</option>
+                                                            <option value="织里派出所">织里派出所</option>
+                                                            <option value="高新区派出所">高新区派出所</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">建设时间</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraBuildtime" type="text" name="cameraBuildtime"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">合同期</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraDeadline" type="text" name="cameraDeadline"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <blockquote class="layui-elem-quote">三、标签信息</blockquote>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">监控点类型</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="tagType" type="text" name="tagType"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">场景类型</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="sceneType" type="text" name="sceneType"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">场所大类</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="tagLv1" type="text" name="tagLv1"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">场所细分</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="tagLv2" type="text" name="tagLv2"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg12">
+                                                    <label class="layui-form-label">具体场所</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="tagIds" type="text" name="tagIds"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <blockquote class="layui-elem-quote">四、网络信息</blockquote>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">网络类型</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraNet" type="text" name="cameraNet"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">录像天数</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="videoDate" type="text" name="videoDate"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">IPV4地址</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraIpv4" type="text" name="cameraIpv4"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">通道号</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraChannel" type="text" name="cameraChannel"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">运营商</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraIsp" type="text" name="cameraIsp"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">链路带宽</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraLink" type="text" name="cameraLink"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">设备状态</label>
+                                                    <div class="layui-input-block">
+                                                        <select id="cameraState" name="cameraState">
+                                                            <option value="">请选择</option>
+                                                            <option value="在线">在线</option>
+                                                            <option value="离线">离线</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <blockquote class="layui-elem-quote">五、运维信息</blockquote>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">水平方位角</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="azimuthLevel" type="text" name="azimuthLevel"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">垂直方位角</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="azimuthVert" type="text" name="azimuthVert"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">杆件编码</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="rodCode" type="text" name="rodCode"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">杆件类型</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="rodType" type="text" name="rodType"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">杆件高度</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="rodHeight" type="text" name="rodHeight"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">杆件颜色</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="rodColor" type="text" name="rodColor"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">摄像头高度</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="cameraHeight" type="text" name="cameraHeight"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">取电位置</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="powerPos" type="text" name="powerPos"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">机箱个数</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="boxNum" type="text" name="boxNum"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">机箱情况</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="boxSituat" type="text" name="boxSituat"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">摸排单位</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="checkUnit" type="text" name="checkUnit"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">现场勘察</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="checkTime" type="text" name="checkTime"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg6">
+                                                    <label class="layui-form-label">是否统维</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="checkUnified" type="text" name="checkUnified"
+                                                               lay-verify="required" placeholder="" autocomplete="off"
+                                                               class="layui-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-row layui-col-space10 layui-form-item">
+                                                <div class="layui-col-lg12">
+                                                    <label class="layui-form-label">备注</label>
+                                                    <div class="layui-input-block">
+                                                        <textarea id="remark" placeholder="" class="layui-textarea"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layui-form-item layui-layout-admin">
+    <div class="layui-input-block">
+        <div class="layui-footer" style="left: 0;">
+            <button id="unitSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
+                    onclick="save()">保存
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../js/demo.js"></script>
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'element', 'table', 'laydate'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , table = layui.table;
+
+        form.render(null, 'component-form-group');
+        var cameraId = window.location.search.substring(1, window.location.search.length);
+        if (cameraId == "add") {
+            $('#actions').val("add");
+        } else {
+            $('#actions').val("update");
+            $('#cameraId').val(cameraId);
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/camera/cameradet",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: cameraId,
+            success: function (detObj) {
+                if (detObj.msg == "sucess") {
+                    var detJson = detObj.data[0];
+                    $('#cameraId').val(detJson.cameraId);
+                    $('#cameraCode').val(detJson.cameraCode);
+                    $('#cameraName').val(detJson.cameraName);
+                    $('#cameraLng').val(detJson.cameraLng);
+                    $('#cameraLat').val(detJson.cameraLat);
+                    $('#cameraBrand').val(detJson.cameraBrand);
+                    $('#cameraType').val(detJson.cameraType);
+                    $('#cameraType2').val(detJson.cameraType2);
+                    $('#cameraModel').val(detJson.cameraModel);
+                    $('#cameraDistance').val(detJson.cameraDistance);
+                    $('#shareType').val(detJson.shareType);
+                    $('#projId').val(detJson.projId);
+                    $('#cameraArea').val(detJson.cameraArea);
+                    $('#cameraTown').val(detJson.cameraTown);
+                    $('#cameraVillage').val(detJson.cameraVillage);
+                    $('#cameraBuildtime').val(detJson.cameraBuildtime);
+                    $('#cameraDeadline').val(detJson.cameraDeadline);
+                    $('#cameraDept').val(detJson.cameraDept);
+                    $('#tagType').val(detJson.tagType);
+                    $('#sceneType').val(detJson.sceneType);
+                    $('#tagLv1').val(detJson.tagLv1);
+                    $('#tagLv2').val(detJson.tagLv2);
+                    $('#tagIds').val(detJson.tagIds);
+                    $('#cameraNet').val(detJson.cameraNet);
+                    $('#cameraIpv4').val(detJson.cameraIpv4);
+                    $('#cameraChannel').val(detJson.cameraChannel);
+                    $('#videoDate').val(detJson.videoDate);
+                    $('#cameraIsp').val(detJson.cameraIsp);
+                    $('#cameraLink').val(detJson.cameraLink);
+                    $('#cameraState').val(detJson.cameraState);
+                    $('#azimuthLevel').val(detJson.azimuthLevel);
+                    $('#azimuthVert').val(detJson.azimuthVert);
+                    $('#rodCode').val(detJson.rodCode);
+                    $('#rodType').val(detJson.rodType);
+                    $('#rodHeight').val(detJson.rodHeight);
+                    $('#rodColor').val(detJson.rodColor);
+                    $('#cameraHeight').val(detJson.cameraHeight);
+                    $('#powerPos').val(detJson.powerPos);
+                    $('#boxNum').val(detJson.boxNum);
+                    $('#boxSituat').val(detJson.boxSituat);
+                    $('#checkUnit').val(detJson.checkUnit);
+                    $('#checkTime').val(detJson.checkTime);
+                    $('#checkUnified').val(detJson.checkUnified);
+                    $('#unifiedUnit').val(detJson.unifiedUnit);
+                    $('#remark').val(detJson.remark);
+                    $('#checkState').val(detJson.checkState);
+                    //以下展示选项
+                    // var rpStr = $('#rpStr').val();
+                    // var temp='';
+                    // for (var i = 0; i < rpStr.substr(rpStr.lastIndexOf(",") + 1, rpStr.length); i++) {
+                    //     temp += '<input type="checkbox" name="posTag" title=' + rpStr.substr(0, rpStr.indexOf(",")) + ' value=' + rpStr.substr(0, rpStr.indexOf(",")) + ' lay-skin="primary">';
+                    //     rpStr = rpStr.substr(rpStr.indexOf(",") + 1, rpStr.length);
+                    // }
+                    // $('#mytag').html(temp);
+                    // form.render('checkbox');
+                    // //以下匹配打勾
+                    // var split = detJson.posTag.split(",");
+                    // for (var j = 0; j < split.length; j++) {
+                    //     $("input[name=posTag][value="+split[j]+"]").attr("checked",true);
+                    // }
+                    layui.form.render();
+                }
+            }
+        });
+
+    });
+
+    function save() {
+        var params = {};
+        params.action = $('#actions').val();
+        params.cameraId = $('#cameraId').val();
+        params.cameraCode = $('#cameraCode').val();
+        params.cameraName = $('#cameraName').val();
+        params.cameraLng = $('#cameraLng').val();
+        params.cameraLat = $('#cameraLat').val();
+        params.cameraBrand = $('#cameraBrand').val();
+        params.cameraType = $('#cameraType').val();
+        params.cameraType2 = $('#cameraType2').val();
+        params.cameraModel = $('#cameraModel').val();
+        params.cameraDistance = $('#cameraDistance').val();
+        params.shareType = $('#shareType').val();
+        params.projId = $('#projId').val();
+        params.cameraArea = $('#cameraArea').val();
+        params.cameraTown = $('#cameraTown').val();
+        params.cameraVillage = $('#cameraVillage').val();
+        params.cameraBuildtime = $('#cameraBuildtime').val();
+        params.cameraDeadline = $('#cameraDeadline').val();
+        params.cameraDept = $('#cameraDept').val();
+        params.tagType = $('#tagType').val();
+        params.sceneType = $('#sceneType').val();
+        params.tagLv1 = $('#tagLv1').val();
+        params.tagLv2 = $('#tagLv2').val();
+        params.tagIds = $('#tagIds').val();
+        params.cameraNet = $('#cameraNet').val();
+        params.cameraIpv4 = $('#cameraIpv4').val();
+        params.cameraChannel = $('#cameraChannel').val();
+        params.videoDate = $('#videoDate').val();
+        params.cameraIsp = $('#cameraIsp').val();
+        params.cameraLink = $('#cameraLink').val();
+        params.cameraState = $('#cameraState').val();
+        params.azimuthLevel = $('#azimuthLevel').val();
+        params.azimuthVert = $('#azimuthVert').val();
+        params.rodCode = $('#rodCode').val();
+        params.rodType = $('#rodType').val();
+        params.rodHeight = $('#rodHeight').val();
+        params.rodColor = $('#rodColor').val();
+        params.cameraHeight = $('#cameraHeight').val();
+        params.powerPos = $('#powerPos').val();
+        params.boxNum = $('#boxNum').val();
+        params.boxSituat = $('#boxSituat').val();
+        params.checkUnit = $('#checkUnit').val();
+        params.checkTime = $('#checkTime').val();
+        params.checkUnified = $('#checkUnified').val();
+        params.unifiedUnit = $('#unifiedUnit').val();
+        params.remark = $('#remark').val();
+        params.checkState = $('#checkState').val();
+        // params.posTag= $("input[name=posTag]:checked").map(function() {
+        //     return $(this).val();
+        // }).get().join(",");
+        postdata(params, "/camera/camerasave", function () {layer.msg("保存成功！");});
+    }
+</script>
+</body>
+</html>

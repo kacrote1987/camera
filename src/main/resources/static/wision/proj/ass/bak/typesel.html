@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标签管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>组件</cite></a>
+        <a><cite>树形组件</cite></a>
+    </div>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs3">
+            <div class="layui-card">
+                <div class="layui-card-header">参数选定</div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="camType" name="camType" placeholder="" autocomplete="off"
+                                   class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">品牌</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="camBrand" name="camBrand" placeholder="" autocomplete="off"
+                                   class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="camName" name="camName" placeholder="" autocomplete="off"
+                                   class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">型号</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="camModel" name="camModel" placeholder="" autocomplete="off"
+                                   class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">分辨率</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="camResol" name="camResol" placeholder="" autocomplete="off"
+                                   class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">带算法</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="camAlgo" name="camAlgo" placeholder="" autocomplete="off"
+                                   class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">单价</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="camPrice" name="camPrice" placeholder="" autocomplete="off"
+                                   class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">数量</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="camNum" name="camNum" placeholder="" autocomplete="off"
+                                   class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">总价</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="camTotal" name="camTotal" placeholder="" autocomplete="off"
+                                   class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-input-block">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs9">
+            <div class="layui-card">
+                <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <input type="text" id="posId" placeholder="" autocomplete="off" class="layui-input" readonly style="display: none">
+                            <label class="layui-form-label">类型</label>
+                            <div class="layui-input-block">
+                                <select id="typeSel" name="typeSel" lay-filter="typeSel">
+                                    <option value="">请选择</option>
+                                    <option value="double">双舱</option>
+                                    <option value="half">半球</option>
+                                    <option value="chkpoint">卡口</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">分辨率</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="resolSel" placeholder="" autocomplete="off" class="layui-input" disabled>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">带算法</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="algoSel" placeholder="" autocomplete="off" class="layui-input" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/html" id="test-table-toolbar-barDemo">
+                    <a id="det" class="layui-btn layui-btn-xs" lay-event="submit">确定</a>
+                </script>
+
+                <div class="layui-card-body">
+                    <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+                    <script type="text/html" id="imgTpl">
+                        <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+                    </script>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../../js/demo.js"></script>
+<script src="../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'tree' , 'form' , 'util' ,'table', 'laydate'], function(){
+        var admin = layui.admin
+            ,table = layui.table
+            ,$ = layui.$
+            ,element = layui.element
+            ,laydate = layui.laydate
+            ,tree = layui.tree
+            ,util = layui.util
+            ,form = layui.form
+
+        var posId = window.location.search.substring(1, window.location.search.length);
+        $('#posId').val(posId);
+        form.on('select(typeSel)', function (data) {
+            $.ajax({
+                type:"post",
+                url:"/camera/reqlist",
+                contentType:"application/json;charset=utf-8",
+                dataType:"json",
+                data:posId,
+                success:function(detObj){
+                    if(detObj.msg=="sucess"){
+                        var detJson=detObj.data[0];
+                        $('#resolSel').val(detJson.camResol);
+                        $('#algoSel').val(detJson.camAlgo);
+                        layui.form.render();
+                    }
+                }
+            });
+
+            table.render({
+                elem: '#test-table-toolbar'
+                ,id: 'typeReload'
+                ,method: 'post'
+                ,url: '/camera/typelist?' + data.value //数据接口
+                ,response:{
+                    statusName:'code',
+                    statusCode:'200'
+                }
+                ,toolbar: '#test-table-toolbar-toolbarDemo'
+                ,title: '型号参数表'
+                ,cols: [[
+                    {type: 'checkbox', fixed: 'left', width:'5%'}
+                    ,{field: 'camId', title: '序号', width:'5%'}
+                    ,{field: 'camType', title: '类型',sort: true, width:'12%'}
+                    ,{field: 'camBrand', title: '品牌',sort: true, width:'12%'}
+                    ,{field: 'camName', title: '名称',sort: true, width:'12%'}
+                    ,{field: 'camModel', title: '型号',sort: true, width:'12%'}
+                    ,{field: 'camNo', title: '序列号',sort: true, width:'12%'}
+                    ,{field: 'camResol', title: '分辨率',sort: true, width:'12%'}
+                    ,{field: 'camPrice', title: '单价',sort: true, width:'12%'}
+                    ,{fixed: 'right', title:'操作', toolbar: '#test-table-toolbar-barDemo', width:'6%'}
+                ]]
+            });
+
+            var params=posId+','+$('#typeSel').val();
+            $.ajax({
+                type:"post",
+                url:"/camera/typeseled",
+                contentType:"application/json;charset=utf-8",
+                dataType:"json",
+                data:params,
+                success:function(detObj){
+                    if(detObj.msg=="sucess"){
+                        var detJson=detObj.data[0];
+                        if(detJson.camId==null){
+                            $('#camBrand').val("");
+                            $('#camType').val("");
+                            $('#camName').val("");
+                            $('#camModel').val("");
+                            $('#camResol').val("");
+                            $('#camAlgo').val("");
+                            $('#camPrice').val("");
+                            $('#camTotal').val("");
+                        }else{
+                            $('#camBrand').val(detJson.camBrand);
+                            $('#camType').val(detJson.camType);
+                            $('#camName').val(detJson.camName);
+                            $('#camModel').val(detJson.camModel);
+                            $('#camResol').val(detJson.camResol);
+                            $('#camAlgo').val(detJson.camAlgo);
+                            $('#camPrice').val(detJson.camPrice);
+                            $('#camNum').val(detJson.camNum);
+                            $('#camTotal').val(detJson.camTotal);
+                        }
+                        layui.form.render();
+                    }
+                }
+            });
+        });
+
+        //监听行工具事件
+        table.on('tool(test-table-toolbar)', function(obj){
+            if(obj.event === 'submit'){
+                layer.confirm('是否选择该类型？', {
+                    btn: ['是','否'] //按钮
+                }, function(){
+                    var params=$('#posId').val()+","+obj.data.camId;
+                    postdata(params,"/camera/typesel",function () {
+                        table.reload('posReload');layer.msg("操作成功");});
+                });
+            }
+        });
+
+        //仅节点左侧图标控制收缩
+        tree.render({
+            elem: '#test-tree-demo4'
+            ,data: data
+            ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+            ,click: function(obj){
+                $('#deptName').val(obj.data.title);
+                table.reload('tagReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        deptName: obj.data.title
+                    }
+                }, 'data');
+            }
+        });
+
+        $('.layui-fluid .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    })
+</script>
+</body>
+</html>

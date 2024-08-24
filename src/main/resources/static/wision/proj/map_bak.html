@@ -1,0 +1,1021 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>万像慧治</title>
+    <link rel="stylesheet" href="v3.11.2/css/ol.css"/>
+    <script type="text/javascript" src="v3.11.2/build/ol.js"></script>
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+    <script src="https://webapi.amap.com/maps?v=2.0&key=da5c5caa1b78cfce183497a36ad4d2df&plugin=AMap.PolygonEditor"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="../img/logo.png"/>
+</head>
+<style type="text/css">
+    html, body, .main {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
+    #container {
+        width: 100%;
+        height: 95%;
+    }
+
+    #toolControl {
+        position: absolute;
+        top: 10px;
+        left: 0px;
+        right: 0px;
+        margin: auto;
+        width: 300px;
+        z-index: 1001;
+    }
+
+    .toolItem {
+        width: 30px;
+        height: 30px;
+        float: left;
+        margin: 1px;
+        padding: 4px;
+        border-radius: 3px;
+        background-size: 30px 30px;
+        background-position: 4px 4px;
+        background-repeat: no-repeat;
+        box-shadow: 0 1px 2px 0 #e4e7ef;
+        background-color: #ffffff;
+        border: 1px solid #ffffff;
+    }
+
+    .toolItem:hover {
+        border-color: #789cff;
+    }
+
+    .active {
+        border-color: #d5dff2;
+        background-color: #d5dff2;
+    }
+
+    #panel_search {
+        position: absolute;
+        background: #FFF;
+        width: 350px;
+        height: 700px;
+        padding: 20px;
+        z-index: 9999;
+        top: 70px;
+        left: 30px;
+    }
+
+    #panel_tag {
+        position: absolute;
+        background: #FFF;
+        width: 300px;
+        height: 700px;
+        padding: 20px;
+        z-index: 9999;
+        top: 70px;
+        left: 450px;
+    }
+
+    #panel_plan {
+        position: absolute;
+        background: #FFF;
+        width: 350px;
+        height: 700px;
+        padding: 20px;
+        z-index: 9999;
+        top: 70px;
+        left: 30px;
+    }
+
+    #panel_area {
+        position: absolute;
+        background: #FFF;
+        width: 460px;
+        height: 230px;
+        padding: 20px;
+        z-index: 9999;
+        top: 25%;
+        left: 60%;
+    }
+
+    #panel_share {
+        position: absolute;
+        background: #FFF;
+        width: 460px;
+        height: 230px;
+        padding: 20px;
+        z-index: 9999;
+        top: 25%;
+        left: 60%;
+    }
+
+    .top-bar {
+        width: 100%;
+        height: 50px;
+        margin: 0;
+        display: flex;
+    }
+
+    .box-top {
+        width: 100%;
+        min-width: 1350px;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 20px;
+        /*border-bottom-left-radius: 8px;*/
+        /*border-bottom-right-radius: 8px;*/
+    }
+
+    .top-ui {
+        width: 100%;
+        min-width: 800px;
+        height: 50px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .top-ui li {
+        width: 10%;
+        min-width: 50px;
+        margin: -5px 50px 0 70px;
+        float: left;
+        text-align: center;
+        display: block;
+    }
+
+    .top-ui a {
+        color: black;
+        text-decoration: none;
+    / / 下划线;
+    }
+
+    .top-ui a:hover {
+        color: white;
+    }
+
+    .top-ui img {
+        height: 40px;
+        margin: 0;
+        padding: 0;
+        display: inline;
+        position: relative;
+        top: -10px;
+    }
+
+    #marker {
+        background-image: url('https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/marker_editor.png');
+    }
+
+    #polyline {
+        background-image: url('https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/polyline.png');
+    }
+
+    #polygon {
+        background-image: url('https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/polygon.png');
+    }
+
+    #circle {
+        background-image: url('https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/circle.png');
+    }
+
+    #rectangle {
+        background-image: url('https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/rectangle.png');
+    }
+
+    #ellipse {
+        background-image: url('https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/ellipse.png');
+    }
+
+    #info {
+        position: absolute;
+        left: 80%;
+        right: 0;
+        margin: auto;
+        bottom: 30px;
+        height: 250px;
+        width: 400px;
+        background-color: #fff;
+        border-radius: 10px;
+        font-size: 18px;
+        line-height: 50px;
+        text-align: left;
+    }
+
+    .box {
+        width: 600px;
+        height: 600px;
+        margin: 0 auto;
+    }
+</style>
+<body>
+<div class="top-bar">
+    <div class="box-top">
+        <ul class="top-ui">
+            <li STYLE="width: 600px">
+                功能菜单：
+                <a href="#" onclick="hide_all()">全部关闭</a> |
+                <a href="#" onclick="show_search()">点位搜索</a> |
+                <a href="#" onclick="show_plan()">科学布建</a> |
+                <a href="#" onclick="drawSectorOpen()">可视域开</a> |
+                <a href="#" onclick="drawSectorClose()">可视域关</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="panel_search" style="display: none">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <div class="layui-col-lg10">
+                <label class="layui-form-label">点位名称</label>
+                <div class="layui-input-block">
+                    <input type="text" id="pos_name" name="pos_name" placeholder="请输入" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-lg2">
+                <button data-type="test1" class="layui-btn layui-btn-primary" onclick="pos_search()">搜索</button>
+            </div>
+        </div>
+        <div class="layui-card-header">
+            <div class="layui-col-lg10">
+                <label class="layui-form-label"><a href="#" onclick="show_tag()">标签</a></label>
+                <div class="layui-input-block"></div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div id="test-tree-demo-res" style="display: block"></div>
+        </div>
+    </div>
+</div>
+<div id="panel_tag" style="display: none">
+    <div class="layui-card">
+
+    </div>
+</div>
+<div id="panel_plan" style="display: none">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <div>
+                <button data-type="test1" class="layui-btn layui-btn-primary" onclick="changeywlx('demo1')">需求阶段
+                </button>
+                <button data-type="test1" class="layui-btn layui-btn-primary" onclick="changeywlx('demo2')">规划阶段
+                </button>
+                <button data-type="test1" class="layui-btn layui-btn-primary" onclick="changeywlx('demo3')">待建阶段
+                </button>
+            </div>
+        </div>
+        <div class="layui-card-header">
+            <div id="toolControl_demo1">
+                <a href="#" onclick="createPolygon()">新建区域</a> |
+                <a href="#" onclick="closePolygon()">结束编辑</a>
+            </div>
+            <div id="toolControl_demo2" style="display: none">
+                <div class="toolItem active" id="marker" title="点标记"></div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div id="test-tree-demo1" style="display: block"></div>
+            <div id="test-tree-demo2" style="display: none"></div>
+            <div id="test-tree-demo3" style="display: none"></div>
+        </div>
+    </div>
+</div>
+<div id="panel_area" style="display: none">
+    <div class="layui-row layui-col-space10 layui-form-item">
+        <div class="layui-row layui-col-space10 layui-form-item">
+            <div class="layui-col-lg6">
+                <label class="layui-form-label">需求名称</label>
+                <div class="layui-input-block">
+                    <input id="menuName" type="text" name="menuName" lay-verify="required" placeholder=""
+                           autocomplete="off" class="layui-input" style="width: 350px">
+                </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space10 layui-form-item">
+            <div class="layui-col-lg12">
+                <label class="layui-form-label">需求描述</label>
+                <div class="layui-input-block">
+                    <textarea id="menuContent" name="menuContent" placeholder="" class="layui-textarea"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-input-block">
+            <div class="layui-footer" style="left: 0;">
+                <button id="areaSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
+                        onclick="areaSave()">保存
+                </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button id="areaCansol" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
+                        onclick="areaCansol()">取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="panel_share" style="display: none">
+    <div class="layui-row layui-col-space10 layui-form-item">
+        <div class="layui-row layui-col-space10 layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">申请类别</label>
+                <div class="layui-input-block">
+                    <select id="projType" name="projType">
+                        <option value="">全部</option>
+                        <option value="点位并网">点位并网</option>
+                        <option value="点位割接">点位割接</option>
+                        <option value="点位迁改">点位迁改</option>
+                        <option value="点位共享">点位共享</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space10 layui-form-item">
+            <div class="layui-col-lg12">
+                <label class="layui-form-label">申请理由</label>
+                <div class="layui-input-block">
+                    <textarea id="shareContent" name="menuContent" placeholder="" class="layui-textarea"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-input-block">
+            <div class="layui-footer" style="left: 0;">
+                <button id="shareSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
+                        onclick="shareSave()">保存
+                </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button id="sareCansol" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
+                        onclick="shareSave()">取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="container"></div>
+<script type="text/javascript">
+    function show_search() {
+        document.getElementById("panel_search").style.display = "block";
+        document.getElementById("panel_plan").style.display = "none";
+        document.getElementById("panel_share").style.display = "none";
+        document.getElementById("panel_manage").style.display = "none";
+    }
+
+    function show_plan() {
+        document.getElementById("panel_search").style.display = "none";
+        document.getElementById("panel_plan").style.display = "block";
+        document.getElementById("panel_share").style.display = "none";
+        document.getElementById("panel_manage").style.display = "none";
+    }
+
+    function hide_all() {
+        document.getElementById("panel_search").style.display = "none";
+        document.getElementById("panel_tag").style.display = "none";
+        document.getElementById("panel_plan").style.display = "none";
+        document.getElementById("panel_area").style.display = "none";
+        document.getElementById("panel_share").style.display = "none";
+    }
+
+    function changeywlx(ywlx) {
+        if (ywlx == 'demo2') {
+            document.getElementById("test-tree-demo1").style.display = "none";
+            document.getElementById("test-tree-demo2").style.display = "block";
+            document.getElementById("test-tree-demo3").style.display = "none";
+            document.getElementById("toolControl_demo1").style.display = "none";
+            document.getElementById("toolControl_demo2").style.display = "block";
+        } else if (ywlx == 'demo3') {
+            document.getElementById("test-tree-demo1").style.display = "none";
+            document.getElementById("test-tree-demo2").style.display = "none";
+            document.getElementById("test-tree-demo3").style.display = "block";
+            document.getElementById("toolControl_demo1").style.display = "none";
+            document.getElementById("toolControl_demo2").style.display = "none";
+        } else {
+            document.getElementById("test-tree-demo1").style.display = "block";
+            document.getElementById("test-tree-demo2").style.display = "none";
+            document.getElementById("test-tree-demo3").style.display = "none";
+            document.getElementById("toolControl_demo1").style.display = "block";
+            document.getElementById("toolControl_demo2").style.display = "none";
+        }
+    }
+
+    function areaSave() {
+        document.getElementById("panel_area").style.display = "none";
+    }
+
+    function areaCansol() {
+        document.getElementById("menuName").value = "";
+        document.getElementById("menuContent").value = "";
+        document.getElementById("panel_area").style.display = "none";
+    }
+
+    function videoplay() {
+        window.open('../../cockpit/video/video.html', 'newwindow', 'height=230, width=390, top=50%, left=50%, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
+    }
+
+    function share() {
+        document.getElementById("panel_share").style.display = "block";
+    }
+
+    function shareSave() {
+        document.getElementById("panel_share").style.display = "none";
+    }
+
+    //可视域
+    function drawSector(centerPos, startAngle, includeAngle, radius) {
+        //自定义图层添加渲染方法
+        var onRender = function () {
+            let size = map.getSize();
+            let width = size.width;
+            let height = size.height;
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+            canvas.width = width;
+            canvas.height = height;
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'lightgreen';
+            ctx.strokeStyle = 'lightgreen';
+            ctx.lineWidth = 4;
+            for (var i = 0; i < centerPos.length; i++) {
+                let pos = map.lngLatToContainer(centerPos[i]);
+                //计算实际半径距离在图层上的像素,用于固定扇形半径随缩放变化
+                var newLngLat = azimuth_offset(centerPos[i][0], centerPos[i][1], 0, radius);//距离点的坐标
+                let newPos = map.lngLatToContainer(newLngLat);
+                let radiusCtx = Math.sqrt((pos.x - newPos.x) * (pos.x - newPos.x) + (pos.y - newPos.y) * (pos.y - newPos.y));
+                //绘制图形
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+                ctx.arc(pos.x, pos.y, radiusCtx, Math.PI * startAngle / 180, Math.PI * (startAngle + includeAngle) / 180);
+                //ctx.lineTo(pos.x, pos.y);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.fill();
+            }
+        }
+        customLayer.render = onRender;// 将自定义的 render 方法挂在自定义图层的 render 属性上
+        customLayer.setMap(map);
+        customLayer.show();
+    }
+
+    function azimuth_offset(origin_lon, origin_lat, azimuth, distance) {
+        var lonlat = [0.0, 0.0];
+        if (azimuth != null && distance > 0) {
+            lonlat[0] = origin_lon + distance * Math.sin(azimuth * Math.PI / 180) * 180 / (Math.PI * 6371229 * Math.cos(origin_lat * Math.PI / 180));
+            lonlat[1] = origin_lat + distance * Math.cos(azimuth * Math.PI / 180) / (Math.PI * 6371229 / 180);
+        } else {
+            lonlat[0] = origin_lon;
+            lonlat[1] = origin_lat;
+        }
+        return lonlat;
+    }
+
+    function drawSectorOpen() {
+        $.ajax({
+            type: "post",
+            url: "/camera/lnglat",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (detObj) {
+                if (detObj.msg === "sucess") {
+                    let ORIGIN_LONGLAT = [];
+                    let pos = [];
+                    for (var i = 0; i < detObj.data.length; i++) {
+                        pos.push(Number(detObj.data[i].cameraLng), Number(detObj.data[i].cameraLat));
+                        ORIGIN_LONGLAT.push(pos);
+                        pos = [];
+                    }
+                    drawSector(ORIGIN_LONGLAT, 0, 60, 30);
+                }
+            }
+        });
+    }
+
+    function drawSectorClose() {
+        drawSector(0, 0, 0, 0);
+    }
+</script>
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../js/demo.js"></script>
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'tree', 'form', 'util', 'table', 'laydate'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , table = layui.table
+            , element = layui.element
+            , laydate = layui.laydate
+            , tree = layui.tree
+            , util = layui.util
+            , form = layui.form
+
+            //模拟数据
+            , data0 = [{
+                title: '组织架构'
+                , id: 1
+                , field: 'noti0'
+                , spread: true
+                , children: [{
+                    title: '公安分局'
+                    , id: 2
+                    , field: 'noti2'
+                    , children: [{
+                        title: '高新区派出所'
+                        , id: 2
+                        , field: 'noti2'
+                        , children: [{
+                            title: '物芯雪亮工程一期'
+                            , id: 2
+                            , field: 'noti2'
+                            , children: [{
+                                title: '点位1'
+                                , id: 2
+                                , field: 'noti2'
+                            }, {
+                                title: '点位2'
+                                , id: 2
+                                , field: 'noti2'
+                            }, {
+                                title: '点位3'
+                                , id: 2
+                                , field: 'noti2'
+                            }]
+                        }, {
+                            title: '物芯雪亮工程二期'
+                            , id: 2
+                            , field: 'noti2'
+                            , children: [{
+                                title: '点位1'
+                                , id: 2
+                                , field: 'noti2'
+                            }, {
+                                title: '点位2'
+                                , id: 2
+                                , field: 'noti2'
+                            }, {
+                                title: '点位3'
+                                , id: 2
+                                , field: 'noti2'
+                            }]
+                        }, {
+                            title: '2023年公共视频监控一期'
+                            , id: 2
+                            , field: 'noti2'
+                            , children: [{
+                                title: '点位1'
+                                , id: 2
+                                , field: 'noti2'
+                            }, {
+                                title: '点位2'
+                                , id: 2
+                                , field: 'noti2'
+                            }, {
+                                title: '点位3'
+                                , id: 2
+                                , field: 'noti2'
+                            }]
+                        }]
+                    }]
+                }, {
+                    title: '执法局'
+                    , id: 3
+                    , field: 'noti3'
+                    , children: [{
+                        title: '执法一中队'
+                        , id: 2
+                        , field: 'noti2'
+                        , children: [{
+                            title: '智慧城管一期'
+                            , id: 2
+                            , field: 'noti2'
+                            , children: [{
+                                title: '点位1'
+                                , id: 2
+                                , field: 'noti2'
+                            }, {
+                                title: '点位2'
+                                , id: 2
+                                , field: 'noti2'
+                            }, {
+                                title: '点位3'
+                                , id: 2
+                                , field: 'noti2'
+                            }]
+                        }]
+                    }]
+                }, {
+                    title: '水利局'
+                    , id: 4
+                    , field: 'noti4'
+                }]
+            }]
+
+            , data1 = [{
+                title: '公安分局2023年新增需求'
+                , id: 1
+                , field: 'noti0'
+                , spread: true
+                , children: [{
+                    title: '需求01'
+                    , id: 2
+                    , field: 'noti2'
+                }, {
+                    title: '需求02'
+                    , id: 3
+                    , field: 'noti3'
+                }, {
+                    title: '需求03'
+                    , id: 4
+                    , field: 'noti4'
+                }]
+            }, {
+                title: '执法局2023年新增需求'
+                , id: 1
+                , field: 'noti0'
+                , children: [{
+                    title: '需求01'
+                    , id: 2
+                    , field: 'noti2'
+                }, {
+                    title: '需求02'
+                    , id: 3
+                    , field: 'noti3'
+                }, {
+                    title: '需求03'
+                    , id: 4
+                    , field: 'noti4'
+                }]
+            }]
+
+            , data2 = [{
+                title: '2023年新增点位计划'
+                , id: 1
+                , field: 'noti0'
+                , spread: true
+                , children: [{
+                    title: '公安分局2023年新增需求'
+                    , id: 2
+                    , field: 'noti2'
+                    , children: [{
+                        title: '需求01'
+                        , id: 2
+                        , field: 'noti2'
+                        , children: [{
+                            title: '点位01[待规划]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位02[待规划]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位03[待规划]'
+                            , id: 2
+                            , field: 'noti2'
+                        }]
+                    }, {
+                        title: '需求02'
+                        , id: 2
+                        , field: 'noti2'
+                        , children: [{
+                            title: '点位01[待规划]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位02[待规划]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位03[待规划]'
+                            , id: 2
+                            , field: 'noti2'
+                        }]
+                    }, {
+                        title: '需求03'
+                        , id: 2
+                        , field: 'noti2'
+                        , children: [{
+                            title: '点位01[待规划]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位02[待规划]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位03[待规划]'
+                            , id: 2
+                            , field: 'noti2'
+                        }]
+                    }]
+                }, {
+                    title: '执法局2023年新增需求'
+                    , id: 3
+                    , field: 'noti3'
+                }, {
+                    title: '水利局2023年新增需求'
+                    , id: 4
+                    , field: 'noti4'
+                }]
+            }]
+
+            , data3 = [{
+                title: '2023年新增点位计划'
+                , id: 1
+                , field: 'noti0'
+                , spread: true
+                , children: [{
+                    title: '公安分局2023年新增需求'
+                    , id: 2
+                    , field: 'noti2'
+                    , children: [{
+                        title: '需求01'
+                        , id: 2
+                        , field: 'noti2'
+                        , children: [{
+                            title: '点位01[待审核]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位02[待审核]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位03[待审核]'
+                            , id: 2
+                            , field: 'noti2'
+                        }]
+                    }, {
+                        title: '需求02'
+                        , id: 2
+                        , field: 'noti2'
+                        , children: [{
+                            title: '点位01[待审核]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位02[待审核]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位03[待审核]'
+                            , id: 2
+                            , field: 'noti2'
+                        }]
+                    }, {
+                        title: '需求03'
+                        , id: 2
+                        , field: 'noti2'
+                        , children: [{
+                            title: '点位01[待审核]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位02[待审核]'
+                            , id: 2
+                            , field: 'noti2'
+                        }, {
+                            title: '点位03[待审核]'
+                            , id: 2
+                            , field: 'noti2'
+                        }]
+                    }]
+                }, {
+                    title: '执法局2023年新增需求'
+                    , id: 3
+                    , field: 'noti3'
+                }, {
+                    title: '水利局2023年新增需求'
+                    , id: 4
+                    , field: 'noti4'
+                }]
+            }]
+
+        //头工具栏事件
+        table.on('toolbar(test-table-toolbar)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    layer.open({
+                        type: 2
+                        , title: '文件新增'
+                        , content: 'docdet.html?add'
+                        , maxmin: true
+                        , area: ['1200px', '600px']
+                    });
+                    break;
+            }
+            ;
+        });
+
+        //仅节点左侧图标控制收缩
+        tree.render({
+            elem: '#test-tree-demo-res'
+            , data: data0
+            , onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+            , click: function (obj) {
+                $('#typeId').val(obj.data1.field);
+                $('#typeName').val(obj.data1.title);
+                table.reload('docReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        typeId: obj.data.field
+                    }
+                }, 'data1');
+            }
+        });
+
+        tree.render({
+            elem: '#test-tree-demo1'
+            , data: data1
+            , onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+            , click: function (obj) {
+                $('#typeId').val(obj.data1.field);
+                $('#typeName').val(obj.data1.title);
+                table.reload('docReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        typeId: obj.data.field
+                    }
+                }, 'data1');
+            }
+        });
+
+        tree.render({
+            elem: '#test-tree-demo2'
+            , data: data2
+            , onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+            , click: function (obj) {
+                $('#typeId').val(obj.data2.field);
+                $('#typeName').val(obj.data2.title);
+                table.reload('docReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        typeId: obj.data.field
+                    }
+                }, 'data2');
+            }
+        });
+
+        tree.render({
+            elem: '#test-tree-demo3'
+            , data: data3
+            , onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+            , click: function (obj) {
+                $('#typeId').val(obj.data3.field);
+                $('#typeName').val(obj.data3.title);
+                table.reload('docReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        typeId: obj.data.field
+                    }
+                }, 'data3');
+            }
+        });
+
+        $('.layui-fluid .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+    //地图加载完成
+    var map = new AMap.Map('container', {
+        resizeEnable: true, //是否监控地图容器尺寸变化
+        center: [120.185608,30.857037],
+        layers: [
+            new AMap.TileLayer.Satellite()  // 卫星
+            // new AMap.TileLayer.RoadNet()  // 路网
+        ],
+        zoom: 17, //初始化地图层级
+    });
+
+    var canvas;
+    map.on("complete", function () {
+        AMap.plugin('AMap.CustomLayer', function () {
+            canvas = document.createElement('canvas');
+            customLayer = new AMap.CustomLayer(canvas, {
+                zooms: [3, 20],
+                alwaysRender: true,//缩放过程中是否重绘，复杂绘制建议设为false
+                zIndex: 22,
+                opacity: 0.6
+            });
+            LabelsLayer = new AMap.LabelsLayer(canvas, {
+                zooms: [3, 20],
+                alwaysRender: true,//缩放过程中是否重绘，复杂绘制建议设为false
+                zIndex: 1000,
+                opacity: 0.6,
+                collision: false
+            });
+            // 普通点
+            var normalMarker = new AMap.Marker({
+                anchor: 'bottom-center',
+                offset: [0, -15],
+            });
+            var markers = [];
+            var positions = getAllPoints();
+            function getAllPoints() {
+                var result = null;
+                $.ajax({
+                    type: "post",
+                    url: "/camera/lnglat",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: function (detObj) {
+                        if (detObj.msg === "sucess") {
+                            let ORIGIN_LONGLAT = [];
+                            let pos = [];
+                            for (var i = 0; i < detObj.data.length; i++) {
+                                pos.push(Number(detObj.data[i].cameraLng), Number(detObj.data[i].cameraLat));
+                                ORIGIN_LONGLAT.push(pos);
+                                pos = [];
+                            }
+                            result = ORIGIN_LONGLAT;
+                        }
+                    }
+                });
+                return result;
+            }
+            var icon = {
+                type: 'image',
+                image: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+                size: [6, 9],
+                anchor: 'bottom-center',
+            };
+            //画布设置
+            for (var i = 0; i < positions.length; i++) {
+                var curPosition = positions[i];
+                var curData = {
+                    position: curPosition,
+                    icon: icon,
+                };
+                var labelMarker = new AMap.LabelMarker(curData);
+                markers.push(labelMarker);
+                // let pos = map.lngLatToContainer(positions[i]);
+                // 给marker绑定事件
+                labelMarker.on('click', function (e) {
+                    var position = e.data.data && e.data.data.position;
+                    if (position) {
+                        var info = [];
+                        info.push("<p class='input-item'>部门：</p>");
+                        info.push("<p class='input-item'>编码：</p>");
+                        info.push("<p class='input-item'>名称：</p>");
+                        info.push("<p class='input-item'>经度：</p>");
+                        info.push("<p class='input-item'>纬度：</p>");
+                        info.push("<p class='input-item'>状态：</p>");
+                        info.push("<p class='input-item'>视频 | 回放 | 共享 | 收藏</p>");
+                        infoWindow = new AMap.InfoWindow({
+                            content: info.join("")  //使用默认信息窗体框样式，显示信息内容
+                        });
+                        infoWindow.open(map, position);
+                    }
+                });
+                labelMarker.on('mouseout', function () {
+                    map.remove(normalMarker);
+                });
+            }
+            LabelsLayer.add(markers);
+            LabelsLayer.setMap(map);
+            LabelsLayer.show();
+        });
+    });
+
+    var polygonArr = new Array();//多边形覆盖物节点坐标数组
+    var  polygon = new AMap.Polygon({
+        path: polygonArr,//设置多边形边界路径
+        strokeColor: "#FF33FF", //线颜色
+        strokeOpacity: 0.2, //线透明度
+        strokeWeight: 3,    //线宽
+        fillColor: "#1791fc", //填充色
+        fillOpacity: 0.35//填充透明度
+    });
+    map.add(polygon);
+    var polyEditor = new AMap.PolygonEditor(map);
+    function createPolygon() {
+        polyEditor.close();
+        polyEditor.setTarget();
+        polyEditor.open();
+    }
+    function closePolygon() {
+        polyEditor.close();
+        document.getElementById("panel_area").style.display = "block";
+    }
+    function show_tag(){
+        document.getElementById("panel_tag").style.display = "block";
+    }
+</script>
+</body>
+</html>

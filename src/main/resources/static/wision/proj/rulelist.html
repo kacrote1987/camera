@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>规则管理</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>组件</cite></a>
+    <a><cite>树形组件</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md2">
+
+      <div class="layui-card">
+        <div class="layui-card-header">规则目录</div>
+        <div class="layui-card-body">
+          <div id="test-tree-demo4"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="layui-col-md10">
+
+      <div class="layui-card">
+        <div class="layui-card-header"></div>
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+          <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">规则类别</label>
+              <div class="layui-input-block">
+                <input type="text" id="typeName" placeholder="只读" autocomplete="off" class="layui-input" readonly>
+                <input type="text" id="typeId" placeholder="" autocomplete="off" class="layui-input" readonly style="display: none">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">规则名称</label>
+              <div class="layui-input-block">
+                <input type="text" id="docName" placeholder="请输入" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-inline">
+              <label class="layui-form-label">规则状态</label>
+              <div class="layui-input-block">
+                <select id="docState">
+                  <option value="">全部</option>
+                  <option value="在用">在用<option>
+                  <option value="禁用">禁用</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-inline">
+              <button class="layui-btn layuiadmin-btn-useradmin" data-type="reload">
+                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <script type="text/html" id="test-table-toolbar-toolbarDemo">
+          <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+          </div>
+        </script>
+
+        <script type="text/html" id="test-table-toolbar-barDemo">
+          <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+          <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+
+        <div class="layui-card-body">
+          <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+          <script type="text/html" id="imgTpl">
+            <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+          </script>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'tree' , 'form' , 'util' ,'table', 'laydate'], function(){
+    var admin = layui.admin
+            ,table = layui.table
+            ,$ = layui.$
+            ,element = layui.element
+            ,laydate = layui.laydate
+            ,tree = layui.tree
+            ,util = layui.util
+            ,form = layui.form
+
+            //模拟数据
+            ,data = [{
+              title: '数据规则'
+              ,id: 1
+              ,field: 'data0'
+              ,spread: true
+              ,children: [{
+                title: '必填项控制'
+                ,id: 2
+                ,field: 'data2'
+              },{
+                title: '数值型判断'
+                ,id: 3
+                ,field: 'data3'
+              },{
+                title: '字典校验'
+                ,id: 4
+                ,field: 'data4'
+              },{
+                title: '数据边界'
+                ,id: 5
+                ,field: 'data5'
+              }]
+            },{
+              title: '逻辑规则'
+              ,id: 6
+              ,field: 'statist0'
+              ,spread: true
+              ,children: [{
+                title: '在线率'
+                ,id: 7
+                ,field: 'statist7'
+              },{
+                title: '完好率'
+                ,id: 8
+                ,field: 'statist8'
+              },{
+                title: '及时率'
+                ,id: 9
+                ,field: 'statist9'
+              },{
+                title: '到账率'
+                ,id: 10
+                ,field: 'statist10'
+              }]
+            }]
+
+    table.render({
+      elem: '#test-table-toolbar'
+      ,id: 'ruleReload'
+      ,method: 'post'
+      ,url: '/rule/rulelist/' //数据接口
+      ,response:{
+        statusName:'code',
+        statusCode:'200',
+        msgName:'msg',
+        dataName:'data'
+      }
+      ,toolbar: '#test-table-toolbar-toolbarDemo'
+      ,title: '规则信息表'
+      ,cols: [[
+        {type: 'checkbox', fixed: 'left', width:'5%'}
+        ,{field: 'rowNum', title: '序号', width:'5%'}
+        ,{field: 'typeName', title: '规则类别',sort: true, width:'16%'}
+        ,{field: 'ruleName', title: '规则名称',sort: true, width:'16%'}
+        ,{field: 'rulePuber', title: '发布人',sort: true, width:'16%'}
+        ,{field: 'ruleTime', title: '更新时间',sort: true, width:'16%'}
+        ,{field: 'ruleState', title: '规则状态',sort: true, width:'16%'}
+        ,{fixed: 'right', title:'操作', toolbar: '#test-table-toolbar-barDemo', width:'10%'}
+      ]]
+      ,page: {
+        limits: [10]
+      }
+    });
+
+    //执行重载
+    var $ = layui.$, active = {
+      reload: function(){
+        var typeId = $('#typeId');
+        var ruleName = $('#ruleName');
+        var ruleState = $('#ruleState');
+        table.reload('ruleReload', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          ,where: {
+            typeId: typeId.val(),
+            ruleName: ruleName.val(),
+            ruleState: ruleState.val()
+          }
+        }, 'data');
+      }
+    };
+
+    //头工具栏事件
+    table.on('toolbar(test-table-toolbar)', function(obj){
+      var checkStatus = table.checkStatus(obj.config.id);
+      switch(obj.event){
+        case 'add':
+          layer.open({
+            type: 2
+            ,title: '规则新增'
+            ,content: 'ruledet.html?0'
+            ,maxmin: true
+            ,area: ['1200px', '600px']
+          });
+          break;
+        case 'det':
+          if(checkStatus.data.length>1){layer.msg("不能操作多项");
+          }else{
+            layer.open({
+              type: 2
+              ,title: '规则详细'
+              ,content: 'ruledet.html?' + checkStatus.data[0].docId
+              ,maxmin: true
+              ,area: ['1200px', '600px']
+            });}
+          break;
+        case 'rec':
+          if(checkStatus.data[0].typeType!="book"){layer.msg("不是图书类，无借阅记录！");
+          }else{
+            layer.open({
+              type: 2
+              ,title: '人员信息详细'
+              ,content: 'docdet.html?' + checkStatus.data[0].docId
+              ,maxmin: true
+              ,area: ['1200px', '600px']
+            });}
+          break;
+        case 'borw':
+          if(checkStatus.data[0].typeType!="book"){layer.msg("不是图书类，不能操作借阅！");
+          }else{
+            layer.open({
+              type: 2
+              ,title: '人员信息详细'
+              ,content: 'docdet.html?' + checkStatus.data[0].docId
+              ,maxmin: true
+              ,area: ['1200px', '600px']
+            });}
+          break;
+      };
+    });
+
+    //监听行工具事件
+    table.on('tool(test-table-toolbar)', function(obj){
+      var data = obj.data;
+      if(obj.event === 'del'){
+        layer.confirm('真的删除行么', function(index){
+          obj.del();
+          layer.close(index);
+        });
+      } else if(obj.event === 'edit'){
+        layer.prompt({
+          formType: 2
+          ,value: data.email
+        }, function(value, index){
+          obj.update({
+            email: value
+          });
+          layer.close(index);
+        });
+      }
+    });
+
+    //仅节点左侧图标控制收缩
+    tree.render({
+      elem: '#test-tree-demo4'
+      ,data: data
+      ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+      ,click: function(obj){
+        $('#typeId').val(obj.data.field);
+        $('#typeName').val(obj.data.title);
+        table.reload('docReload', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          ,where: {
+            typeId: obj.data.field
+          }
+        }, 'data');
+      }
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  })
+</script>
+</body>
+</html>

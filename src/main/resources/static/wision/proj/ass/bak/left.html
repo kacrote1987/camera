@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>js左右分栏类似百度地图</title>
+    <link rel="stylesheet" href="v3.11.2/css/ol.css" />
+    <script type="text/javascript" src="v3.11.2/build/ol.js"></script>
+
+    <style>
+        html,body,.main{
+            margin:0px;
+            padding:opx;
+            width:100%;
+            height:100%;
+        }
+        .left{
+            position:absolute;
+            z-index:100;
+            left:0px;
+            width:20%;
+            height:100%;
+            background:#666;
+        }
+        .right{
+            position:absolute;
+            z-index:100;
+            right:0px;
+            width:80%;
+            height:100%;
+            background:#CCC;
+        }
+        .flexible{
+            position:absolute;
+            z-index:100;
+            left:20%;
+            top:47%;
+            cursor:pointer;
+        }
+    </style>
+    <script>
+        var map;
+        function init(){//ol加载地图
+            map=new ol.Map({
+                target:'right',
+                layers:[
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view:new ol.View({
+                    center:ol.proj.transform([116.391,39.901], 'EPSG:4326', 'EPSG:3857'),
+                    zoom:16
+                })
+            });
+
+        }
+
+        function show(){
+            document.getElementById("left").style.display="block";
+            document.getElementById("flexible").innerHTML="<img src='left.png' onclick='hide()' />";
+            document.getElementById("right").style.width="80%";//恢复右侧
+            document.getElementById("flexible").style.left="20%";//恢复按钮位置
+        }
+        function hide(){
+            document.getElementById("left").style.display="none";
+            document.getElementById("flexible").innerHTML="<img src='right.png' onclick='show()' />";
+            document.getElementById("right").style.width="100%";
+            document.getElementById("flexible").style.left="0px";
+        }
+    </script>
+</head>
+
+<body onLoad="init()">
+<div class="main">
+    <div class="left" id="left"><img src="leftcon.png" height="100%" width="100%" /></div>
+    <div class="right" id="right"></div>
+    <div class="flexible" id="flexible"><img src="left.png" onclick='hide()'/></div>
+</div>
+</body>
+</html>

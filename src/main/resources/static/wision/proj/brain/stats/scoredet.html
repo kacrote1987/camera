@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>工时明细</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-header">绩效分明细</div>
+    <div class="layui-card-body">
+      <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+      <script type="text/html" id="imgTpl">
+        <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+      </script>
+    </div>
+  </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../js/demo.js"></script>
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '../../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table'], function(){
+    var admin = layui.admin
+            ,table = layui.table;
+
+    var statsId=window.location.search.substring(1,window.location.search.length);
+    table.render({
+      elem: '#test-table-toolbar'
+      ,id: 'scoreReload'
+      ,method: 'post'
+      ,url: '/stats/scoredet?' + statsId//数据接口
+      ,response:{
+        statusName:'code',
+        statusCode:'200',
+        msgName:'msg',
+        dataName:'data'
+      }
+      ,title: '工时明细表'
+      ,cols: [
+        [{ title: '部门',field: 'scoreDept', align:'center', rowspan: 3, colspan: 1, width:'8%'},
+         { title: '姓名',field: 'scoreName', align:'center', rowspan: 3, colspan: 1, width:'6%'},
+         { title: '工时', align:'center', rowspan: 1, colspan: 13},
+         { title: '权重前合计', field: 'scoreS15', align:'center', rowspan: 3, colspan: 1, width:'7%'},
+         { title: '权重后合计', field: 'scoreS16', align:'center', rowspan: 3, colspan: 1, width:'7%'},
+         { title: '质量分', align:'center', rowspan: 1, colspan: 9},
+         { title: '安全分', field: 'scoreS26', edit: 'text', style:'color:blue;', rowspan: 3, colspan: 1, width:'6%'},
+         { title: '个人总计',field: 'scoreTotal', rowspan: 3, colspan: 1, width:'6%'},
+         { title: '部门总计',field: 'scoreTotalDept', rowspan: 3, colspan: 1, width:'6%'}],
+        [{title: '绝对工时', field: 'scoreS1', align:'center', edit: 'text', style:'color:blue;', rowspan: 2, colspan: 1, width:'6%'},
+         {title: '附加工时', align:'center', rowspan: 1, colspan: 4},
+         {title: '折算工时', align:'center', rowspan: 1, colspan: 6},
+         {title: '扣分项', align:'center', rowspan: 1, colspan: 2},
+         {title: '报告出具及时率', rowspan: 1, colspan: 2},
+         {title: '报告一次性合格率', rowspan: 1, colspan: 2},
+         {title: '缴款书录入及时率', rowspan: 1, colspan: 2},
+         {title: '个人收费到账率', rowspan: 1, colspan: 2},
+         {title: '合计',field: 'scoreS25', rowspan: 2, colspan: 1}],
+        [{title: '单位数量',field: 'scoreS2', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'6%'},
+          {title: '单位数加分',field: 'scoreS3', align:'center', rowspan: 1, colspan: 1, width:'7%'},
+          {title: '派驻外地加分',field: 'scoreS4', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'8%'},
+          {title: '新闻稿录用加分',field: 'scoreS5', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'8%'},
+          {title: '辅助部门负责人管理工作分',field: 'scoreS6', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'13%'},
+          {title: '报告审核分',field: 'scoreS7', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'7%'},
+          {title: '参与非检验工作天数',field: 'scoreS8', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'10%'},
+          {title: '参与非检验工作折算分',field: 'scoreS9', align:'center', rowspan: 1, colspan: 1, width:'11%'},
+          {title: '外培天数',field: 'scoreS10', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'6%'},
+          {title: '外培折算分',field: 'scoreS11', align:'center', rowspan: 1, colspan: 1, width:'7%'},
+          {title: '不服从工作安排',field: 'scoreS12', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1,width:'8%'},
+          {title: '未按照规定时限办结事项',field: 'scoreS13', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1,width:'12%'},
+          {title: '及时率',field: 'scoreS17', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'5%'},
+          {title: '绩效分',field: 'scoreS18', align:'center', rowspan: 1, colspan: 1, width:'5%'},
+          {title: '及时率',field: 'scoreS19', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'5%'},
+          {title: '绩效分',field: 'scoreS20', align:'center', rowspan: 1, colspan: 1, width:'5%'},
+          {title: '及时率',field: 'scoreS21', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'5%'},
+          {title: '绩效分',field: 'scoreS22', align:'center', rowspan: 1, colspan: 1, width:'5%'},
+          {title: '及时率',field: 'scoreS23', align:'center', edit: 'text', style:'color:blue;', rowspan: 1, colspan: 1, width:'5%'},
+          {title: '绩效分',field: 'scoreS24', align:'center', rowspan: 1, colspan: 1, width:'5%'}]]
+    });
+
+    //监听单元格编辑
+    table.on('edit(test-table-toolbar)', function(obj){
+      var params={};
+      params.action="update";
+      params.scoreId=obj.data.scoreId;
+      params.field=obj.field;
+      params.value=obj.value;
+      postdata(params,"/stats/scoresave",function () {table.reload('scoreReload');layer.msg("更新成功");})
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+
+  });
+</script>
+</body>
+</html>

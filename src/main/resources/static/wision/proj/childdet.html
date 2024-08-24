@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>开支详细</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <div class="layui-tab">
+        <ul class="layui-tab-title">
+          <li class="layui-this">发票基本信息</li>
+          <li>发票明细</li>
+        </ul>
+        <div class="layui-tab-content">
+          <div class="layui-tab-item layui-show">
+            <!--            发票基本信息页-->
+            <div class="layui-row layui-col-space12">
+              <div class="layui-col-md2">
+              </div>
+              <div class="layui-col-md8">
+                <div class="layui-card">
+                  <input id="action" type="text" name="fullname" placeholder="" autocomplete="off" class="layui-input" style="display: none">
+                  <input id="invoId" type="text" name="fullname" placeholder="" autocomplete="off" class="layui-input" style="display: none">
+                  <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-element">
+                      <div class="layui-row layui-col-space10 layui-form-item">
+                        <div class="layui-col-lg6">
+                          <label class="layui-form-label">项目类别*</label>
+                          <div class="layui-input-block">
+                            <select id="invoType" name="invoType" lay-filter="invoType">
+                              <option value="">全部</option>
+                              <option value="办公费">办公费</option>
+                              <option value="印刷费">印刷费</option>
+                              <option value="水费">水费</option>
+                              <option value="电费">电费</option>
+                              <option value="邮电费">邮电费</option>
+                              <option value="物业费">物业费</option>
+                              <option value="差旅费">差旅费</option>
+                              <option value="维护费">维护费</option>
+                              <option value="租赁费">租赁费</option>
+                              <option value="租车">租车</option>
+                              <option value="会议费">会议费</option>
+                              <option value="培训费">培训费</option>
+                              <option value="公务接待">公务接待</option>
+                              <option value="专用材料">专用材料</option>
+                              <option value="劳务费">劳务费</option>
+                              <option value="委托业务费">委托业务费</option>
+                              <option value="办公设备">办公设备</option>
+                              <option value="其他商品服务">其他商品服务</option>
+                              <option value="宣传费">宣传费</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="layui-row layui-col-space10 layui-form-item">
+                        <div class="layui-col-lg6">
+                          <label class="layui-form-label">发票号码*</label>
+                          <div class="layui-input-block">
+                            <input id="invoNo" type="text" name="invoNo" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                        <div class="layui-col-lg6">
+                          <label class="layui-form-label">余额*</label>
+                          <div class="layui-input-block">
+                            <input id="invoSurp" type="text" name="invoSurp" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="layui-row layui-col-space10 layui-form-item">
+                        <div class="layui-col-lg6">
+                          <label class="layui-form-label">申请人*</label>
+                          <div class="layui-input-block">
+                            <input id="invoAppman" type="text" name="invoAppman" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                        <div class="layui-col-lg6">
+                          <label class="layui-form-label">开支日期*</label>
+                          <div class="layui-input-block">
+                            <input id="invoDate" type="text" name="invoDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                          <textarea id="invoNote" name="invoNote" placeholder="" class="layui-textarea"></textarea>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="layui-col-md2">
+              </div>
+            </div>
+          </div>
+          <div class="layui-tab-item">
+            <!--            发票明细页-->
+            <div class="layui-row layui-col-space12">
+              <script type="text/html" id="test-table-toolbar-toolbarDemo">
+                <div class="layui-btn-container" id="actions">
+                  <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+                  <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+                </div>
+              </script>
+              <div class="layui-col-md10">
+                <div class="layui-card">
+                  <div class="layui-card-body">
+                    <table id="test-table-invo-memb" lay-filter="test-table-invo-memb"></table>
+                  </div>
+                </div>
+              </div>
+              <div class="layui-col-md1">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="layui-form-item layui-layout-admin">
+  <div class="layui-input-block">
+    <div class="layui-footer" style="left: 0;">
+      <button id="invoSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1" onclick="save()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'table', 'laydate'], function(){
+    var $ = layui.$
+            ,form = layui.form
+            ,laydate = layui.laydate
+            ,table = layui.table;
+
+    form.render(null, 'component-form-group');
+    var invoId=window.location.search.substring(1,window.location.search.length);
+    if(invoId=="add"){
+      $('#action').val("add");
+      laydate.render({
+        elem: '#invoDate'
+      });
+      document.getElementById("actions").style.display='none';
+    }else{
+      $('#action').val("update");
+      $('#invoId').val(invoId);
+    }
+    $.ajax({
+      type:"post",
+      url:"/cost/invodet",
+      contentType:"application/json;charset=utf-8",
+      dataType:"json",
+      data:invoId,
+      success:function(detObj){
+        if(detObj.msg=="sucess"){
+          var detJson=detObj.data[0];
+          $('#invoType').val(detJson.invoType);
+          $('#invoNo').val(detJson.invoNo);
+          $('#invoSurp').val(detJson.invoSurp);
+          $('#invoAppman').val(detJson.invoAppman);
+          $('#invoDate').val(detJson.invoDate);
+          $('#invoNote').val(detJson.invoNote);
+          layui.form.render();
+        }
+      }
+    });
+
+    table.render({
+      elem: '#test-table-invo-memb'
+      , id: 'membReload'
+      , method: 'post'
+      , url: '/cost/invomemb?' + invoId
+      , toolbar: '#test-table-toolbar-toolbarDemo'
+      , title: '发票项目内容'
+      , page: false
+      , cols: [[
+        {type: 'checkbox', fixed: 'left', width: '40'}
+        , {field: 'membId', title: '序号', width: '70'}
+        , {field: 'membDept', title: '部门', edit: 'text', width: '260'} // ,templet: '#selectGxmc'
+        , {field: 'membType', title: '种类', edit: 'text', width: '260'}
+        , {field: 'membSurp', title: '金额', edit: 'text', width: '260'}
+      ]]
+      ,done: function (res, curr, count) {
+        $(".layui-table-body, .layui-table-box, .layui-table-cell").css('overflow', 'visible');
+      }
+      });
+
+    //头工具栏事件
+    table.on('toolbar(test-table-invo-memb)', function (obj) {
+      var checkStatus = table.checkStatus(obj.config.id);
+      var params = {};
+      params.invoId = document.getElementById("invoId").value;
+      switch (obj.event) {
+        case 'add':
+          params.action="add";
+          postdata(params,"/cost/invomembdo",function () {table.reload('membReload');layer.msg("添加成功！");});
+          break;
+        case 'del':
+          params.action="del";
+          params.membId=checkStatus.data[0].membId;
+          postdata(params,"/cost/invomembdo",function () {table.reload('membReload');layer.msg("已删除！");});
+          break;
+      };
+    });
+
+    //监听单元格编辑
+    table.on('edit(test-table-invo-memb)', function (obj) {
+      var params = {};
+      params.action = "update";
+      params.membId = obj.data.membId;
+      params.field = obj.field;
+      params.value = obj.value;
+      postdata(params, "/cost/invomembdo", function () {table.reload('membReload');layer.msg("更新成功");})
+    });
+
+    laydate.render({
+      elem: '#invoDate'
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+
+  });
+
+  function save(){
+    var params={};
+    params.action=$('#action').val();
+    params.invoId=$('#invoId').val();
+    params.invoType = $('#invoType').val();
+    params.invoNo = $('#invoNo').val();
+    params.invoSurp = $('#invoSurp').val();
+    params.invoAppman = $('#invoAppman').val();
+    params.invoDate = $('#invoDate').val();
+    params.invoNote = $('#invoNote').val();
+    postdata(params,"/cost/invodo",function () {layer.msg("保存成功！");});
+  }
+</script>
+<!--<script type="text/html" id="selectGxmc" >-->
+<!--  <select name='membDept' id="membDept" style="text-align: center">-->
+<!--    <option value="" {{# if (d.membDept==null){ }} selected="selected" {{# } }}></option>-->
+<!--    <option value="机电综合检验部" {{# if (d.membDept=="机电综合检验部"){ }} selected="selected" {{# } }}>机电综合检验部</option>-->
+<!--    <option value="承压综合检验部" {{# if (d.membDept=="承压综合检验部"){ }} selected="selected" {{# } }}>承压综合检验部</option>-->
+<!--    <option value="德清检验站" {{# if (d.membDept=="德清检验站"){ }} selected="selected" {{# } }}>德清检验站</option>-->
+<!--    <option value="长兴检验站" {{# if (d.membDept=="长兴检验站"){ }} selected="selected" {{# } }}>长兴检验站</option>-->
+<!--    <option value="安吉检验站" {{# if (d.membDept=="安吉检验站"){ }} selected="selected" {{# } }}>安吉检验站</option>-->
+<!--  </select>-->
+<!--</script>-->
+</body>
+</html>

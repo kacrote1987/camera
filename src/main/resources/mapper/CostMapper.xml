@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wision.mapper.CostMapper">
+    <select id="costTotal" resultType="com.wision.entity.CostVos" >
+        select count(*) as cost_total FROM t_basic_cost where 1=1
+        <if test="params.inspSn!=null and params.inspSn!=''">
+            and cost_id in (select cost_id from t_basic_insp where insp_sn like '%' #{params.inspSn} '%')
+        </if>
+        <if test="params.inspNo!=null and params.inspNo!=''">
+            and cost_id in (select cost_id from t_basic_insp where insp_no like '%' #{params.inspNo} '%')
+        </if>
+        <if test="params.unitName!=null and params.unitName!=''">
+            and cost_id in (select cost_id from t_basic_insp where unit_name like '%' #{params.unitName} '%')
+        </if>
+        <if test="params.costUnitname!=null and params.costUnitname!=''">
+            and cost_unitname like '%' #{params.costUnitname} '%'
+        </if>
+        <if test="params.costState!=null and params.costState!=''">
+            and cost_state = #{params.costState}
+        </if>
+        <if test="params.costNo!=null and params.costNo!=''">
+            and cost_no like '%' #{params.costNo} '%'
+        </if>
+    </select>
+    <select id="selCost" resultType="com.wision.entity.CostVo" >
+        select cost_id,cost_no,cost_unitname,cost_contman,cost_conttel,cost_recv,cost_pay,
+               (case when cost_state=1 then '已到账' else '未到账' end) as cost_state,cost_mode,
+               cost_paydate,cost_regdate,cost_regman,cost_step FROM t_basic_cost where 1=1
+        <if test="params.inspSn!=null and params.inspSn!=''">
+            and cost_id in (select cost_id from t_basic_insp where insp_sn like '%' #{params.inspSn} '%')
+        </if>
+        <if test="params.inspNo!=null and params.inspNo!=''">
+            and cost_id in (select cost_id from t_basic_insp where insp_no like '%' #{params.inspNo} '%')
+        </if>
+        <if test="params.unitName!=null and params.unitName!=''">
+            and cost_id in (select cost_id from t_basic_insp where unit_name like '%' #{params.unitName} '%')
+        </if>
+        <if test="params.costUnitname!=null and params.costUnitname!=''">
+            and cost_unitname like '%' #{params.costUnitname} '%'
+        </if>
+
+        <if test="params.costState!=null and params.costState!=''">
+            and cost_state = #{params.costState}
+        </if>
+        <if test="params.costNo!=null and params.costNo!=''">
+            and cost_no like '%' #{params.costNo} '%'
+        </if>
+        order by cost_no limit #{page},10
+    </select>
+    <insert id="insertCost">
+        insert into t_basic_cost(cost_no,cost_unitname,cost_contman,cost_conttel)
+        values(#{params.costNo},#{params.costUnitname},#{params.costContman},#{params.costConttel})
+    </insert>
+    <delete id="deleteCost">
+        delete from t_basic_cost where cost_id=#{costId}
+    </delete>
+    <update id="updateCost">
+        update t_basic_cost set cost_no=#{params.costNo},cost_unitname=#{params.costUnitname},cost_contman=#{params.costContman}
+        ,cost_conttel=#{params.costConttel} where cost_id=#{params.costId}
+    </update>
+    <select id="invoTotal" resultType="com.wision.entity.InvoVos" >
+        select count(*) as invo_total from t_cost_invo_main t where 1=1
+        <if test="params.invoType!=null and params.invoType!=''">
+            and t.invo_type=#{params.invoType}
+        </if>
+        <if test="params.invoNo!=null and params.invoNo!=''">
+            and t.invo_no like '%' #{params.invoNo} '%'
+        </if>
+        <if test="params.invoAppman!=null and params.invoAppman!=''">
+            and t.invo_appman like '%' #{params.invoAppman} '%'
+        </if>
+        <if test="params.invoDate1!=null and params.invoDate1!=''">
+            and date(t.invo_date) &gt;= #{params.invoDate1}
+        </if>
+        <if test="params.invoDate2!=null and params.invoDate2!=''">
+            and date(t.invo_date) &lt;= #{params.invoDate2}
+        </if>
+        <if test="params.invoId!=null and params.invoId!=''">
+            and t.invo_id=#{params.invoId}
+        </if>
+    </select>
+    <select id="selInvo" resultType="com.wision.entity.InvoVo" >
+        select @rownum:=@rownum+1 as row_num,t.invo_id,t.invo_type,t.invo_no,t.invo_surp,t.invo_appman,invo_date,invo_note
+        from (select @rownum:=0) r,t_cost_invo_main t where 1=1
+        <if test="params.invoType!=null and params.invoType!=''">
+            and t.invo_type=#{params.invoType}
+        </if>
+        <if test="params.invoNo!=null and params.invoNo!=''">
+            and t.invo_no like '%' #{params.invoNo} '%'
+        </if>
+        <if test="params.invoAppman!=null and params.invoAppman!=''">
+            and t.invo_appman like '%' #{params.invoAppman} '%'
+        </if>
+        <if test="params.invoDate1!=null and params.invoDate1!=''">
+            and date(t.invo_date) &gt;= #{params.invoDate1}
+        </if>
+        <if test="params.invoDate2!=null and params.invoDate2!=''">
+            and date(t.invo_date) &lt;= #{params.invoDate2}
+        </if>
+        order by t.invo_type,t.invo_no limit #{page},10
+    </select>
+    <select id="selInvoDet" resultType="com.wision.entity.InvoDetVo" >
+        select invo_id,invo_type,invo_no,invo_surp,invo_appman,invo_date,invo_note
+        from t_cost_invo_main where invo_id=#{invoId}
+    </select>
+    <insert id="insertInvo">
+        insert into t_cost_invo_main(invo_type,invo_no,invo_surp,invo_appman,invo_date,invo_note)
+        values(#{params.invoType},#{params.invoNo},#{params.invoSurp},#{params.invoAppman},#{params.invoDate},#{params.invoNote})
+    </insert>
+    <delete id="deleteInvo">
+        delete from t_cost_invo_main where invo_id=#{params.invoId}
+    </delete>
+    <update id="updateInvo">
+        update t_cost_invo_main set invo_type=#{params.invoType},invo_no=#{params.invoNo},invo_surp=#{params.invoSurp}
+        ,invo_appman=#{params.invoAppman},invo_date=#{params.invoDate},invo_note=#{params.invoNote} where invo_id=#{params.invoId}
+    </update>
+    <select id="selMemb" resultType="com.wision.entity.InvoMembVo" >
+        select memb_id,memb_dept,memb_type,memb_surp from t_cost_invo_memb t where invo_id=#{invoId}
+    </select>
+    <insert id="insertMemb">
+        insert into t_cost_invo_memb(invo_id) values(#{invoId})
+    </insert>
+    <delete id="deleteMemb">
+        delete from t_cost_invo_memb where memb_id=#{membId}
+    </delete>
+    <update id="updateMemb">
+        update t_cost_invo_memb set ${field} = #{value} where memb_id=#{membId}
+    </update>
+</mapper>

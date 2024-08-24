@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wision.mapper.HomeMapper">
+    <select id="homeDisplay" resultType="com.wision.entity.DocListVo" >
+        select doc_id,(case when length(doc_name)>300 then concat(left(doc_name,300),'...') else doc_name end) as doc_name1
+        ,(case when length(doc_name)>25 then concat(left(doc_name,25),'...') else doc_name end) as doc_name2
+        ,date(doc_time) as doc_time from t_oa_doc_main where doc_state='在用' and type_id=#{type_id} order by doc_time desc limit 5
+    </select>
+    <select id="statsDisply" resultType="com.wision.entity.StatsListVo" >
+        select stats_id,(case when length(stats_name)>25 then concat(left(stats_name,25),'...') else stats_name end) as stats_name
+        ,CONCAT(stats_year,'年',stats_month,'月') as stats_date from t_brain_stats where stats_type='考核统计' order by stats_date desc limit 5
+    </select>
+    <select id="logDet" resultType="com.wision.entity.LogVo" >
+        select log_note from t_home_log where log_date=#{params}
+    </select>
+    <insert id="insertLog" >
+        insert into t_mylog(log_name,log_content) values(#{params.logName},#{params.logContent})
+    </insert>
+    <update id="updateLog" >
+        update t_mylog set log_content=#{params.logContent} where log_name=#{params.logName}
+    </update>
+    <select id="logExport" resultType="com.wision.entity.LogVo" >
+        select log_id,(case when log_name='五统一' then '一个核心工作' else '其他工作' end) as log_name,(case when log_name='五统一' then '工程维护'
+        when log_name='其他任务' then '其他任务' else '项目交付' end) as log_dept,CONCAT(log_name,'：',char(10),log_content) as log_content
+        ,'全月' as log_state from t_mylog where log_name not in ('主要任务','会议纪要','历史备份')
+    </select>
+    <select id="childList" resultType="com.wision.entity.MenuListVo" >
+        select child_id,child_name,child_src,child_state from t_sys_child_main
+    </select>
+    <select id="menuList" resultType="com.wision.entity.MenuListVo" >
+        select menu_id as child_id,menu_name as child_name,menu_src as child_src from t_sys_child_menu
+    </select>
+</mapper>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>数量修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-card">
+                <input type="text" id="posId" name="posId" placeholder="" autocomplete="off" class="layui-input"
+                       style="display: none">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">待建双舱</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="doublePrenum" name="doublePrenum" placeholder="" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">待建半球</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="halfPrenum" name="halfPrenum" placeholder="" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">待建卡口</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="chkpointPrenum" name="chkpointPrenum" placeholder=""
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-layout-admin">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0;">
+                            <button id="scienSave" class="layui-btn" lay-submit="submit"
+                                    lay-filter="component-form-demo1" onclick="save()">保存
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../../js/demo.js"></script>
+<script src="../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'table', 'laydate'], function () {
+        var admin = layui.admin
+            , table = layui.table
+            , $ = layui.$
+            , element = layui.element
+            , form = layui.form;
+
+        var posId = window.location.search.substring(1, window.location.search.length);
+        $('#posId').val(posId);
+        $.ajax({
+            type: "post",
+            url: "/camera/posdet",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: posId,
+            success: function (detObj) {
+                if (detObj.msg == "sucess") {
+                    var detJson = detObj.data[0];
+                    $('#doublePrenum').val(detJson.doublePrenum);
+                    $('#halfPrenum').val(detJson.halfPrenum);
+                    $('#chkpointPrenum').val(detJson.chkpointPrenum);
+                    layui.form.render();
+                }
+            }
+        });
+
+        $('.layui-fluid .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+    function save() {
+        var params = {};
+        params.posId = window.location.search.substring(1, window.location.search.length);
+        params.doublePrenum = $('#doublePrenum').val();
+        params.halfPrenum = $('#halfPrenum').val();
+        params.chkpointPrenum = $('#chkpointPrenum').val();
+        postdata(params, "/camera/presave", function () {layer.msg("保存成功！");});
+    }
+</script>
+</body>
+</html>

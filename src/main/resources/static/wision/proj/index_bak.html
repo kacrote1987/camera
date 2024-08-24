@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>物芯数科</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="shortcut icon" type="image/x-icon" href="../img/logo.png" />
+
+  <script>
+    /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
+  </script>
+</head>
+<body class="layui-layout-body">
+
+<div id="LAY_app">
+  <div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+      <!-- 头部区域 -->
+      <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item layadmin-flexible" lay-unselect>
+          <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+          </a>
+        </li>
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+          <a lay-href="home/diary.html" layadmin-event="message" lay-text="个人日志">
+            <i class="layui-icon layui-icon-note"></i>
+          </a>
+        </li>
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+          <a href="javascript:;" layadmin-event="about">通讯录</a>
+        </li>
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+          <dd><a href="example/001/index.html" target="_blank">驾驶舱</a></dd>
+        </li>
+      </ul>
+      <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">常用网址</a>
+          <dl class="layui-nav-child">
+            <dd><a lay-href="https://qiye.163.com/login/">公司邮箱</a></dd>
+            <dd><a lay-href="http://ggzy.huzhou.gov.cn/hzfront/">湖州公共资源</a></dd>
+            <dd><a lay-href="http://www.wuxing.gov.cn/hzgov/front/s127/sy/index.html">吴兴公共资源</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">移动端</a>
+          <dl class="layui-nav-child">
+            <dd><a href="#" onclick="">浙政钉</a></dd>
+            <dd><a href="#" onclick="">浙里办</a></dd>
+            <dd><a href="#" onclick="">微信公众号</a></dd>
+            <dd><a href="#" onclick="">APP</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">四横体系</a>
+          <dl class="layui-nav-child">
+            <dd><a href="#" onclick="chagever('业务应用体系')">业务应用体系</a></dd>
+            <dd><a href="#" onclick="chagever('应用支撑体系')">应用支撑体系</a></dd>
+            <dd><a href="#" onclick="chagever('数据资源体系')">数据资源体系</a></dd>
+            <dd><a href="#" onclick="chagever('基础设施体系')">基础设施体系</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">四纵体系</a>
+          <dl class="layui-nav-child">
+            <dd><a href="#" onclick="chagever('组织保障体系')">组织保障体系</a></dd>
+            <dd><a href="#" onclick="chagever('网络安全体系')">网络安全体系</a></dd>
+            <dd><a href="#" onclick="chagever('标准规范体系')">标准规范体系</a></dd>
+            <dd><a href="#" onclick="chagever('政策制度体系')">政策制度体系</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+          <a href="javascript:;" layadmin-event="fullscreen">
+            <i class="layui-icon layui-icon-screen-full"></i>
+          </a>
+        </li>
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+          <a href="javascript:;" layadmin-event="theme">
+            <i class="layui-icon layui-icon-theme"></i>
+          </a>
+        </li>
+        <li class="layui-nav-item" lay-unselect>
+          <a href="javascript:;">
+            <img src="http://t.cn/RCzsdCq" class="layui-nav-img"><cite>管理员</cite>
+          </a>
+          <dl class="layui-nav-child">
+            <dd><a lay-href="system/orgcore/loginfo.html">登录信息</a></dd>
+            <dd><a lay-href="system/orgcore/myroler.html">我的权限</a></dd>
+            <hr>
+            <dd><a href="../login.html">退出</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+          <a layadmin-event=""><i class="layui-icon layui-icon-more-vertical"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 侧边菜单 -->
+    <div class="layui-side layui-side-menu">
+      <div class="layui-side-scroll">
+        <a href="../main.html">
+          <div class="layui-logo">
+            <span><img src="../img/logo.png">&nbsp;&nbsp;物芯数科</span>
+          </div>
+        </a>
+
+        <!--        主页-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu" style="display: block">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="体系架构" lay-direction="2">
+              <i class="layui-icon layui-icon-home"></i>
+              <cite>体系架构</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="list"><a lay-href="home/homepage1.html">架构图</a></dd>
+              <dd data-name="list"><a lay-href="home/homepage1.html">业务数据分析</a></dd>
+              <dd data-name="list"><a lay-href="home/homepage2.html">财务数据分析</a></dd>
+              <dd data-name="list"><a lay-href="home/homepage2.html">个人数据分析</a></dd>
+            </dl>
+          </li>
+        </ul>
+
+
+        <!--      基础设施体系-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu1" lay-filter="layadmin-system-side-menu" style="display: none">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="应用管理" lay-direction="2">
+              <i class="layui-icon layui-icon-home"></i>
+              <cite>应用管理</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="home">
+                <a lay-href="homepage2.html">测试</a>
+              </dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="规则管理" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>规则管理</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="component/form/element.html">测试</a></dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="网络管理" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>网络管理</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="component/form/element.html">测试</a></dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="设备管理" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>设备管理</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="list"><a lay-href="system/iotcore/drivelist.html">驱动管理</a></dd>
+              <dd data-name="list"><a lay-href="system/iotcore/equiplist.html">设备接入</a></dd>
+            </dl>
+          </li>
+        </ul>
+
+        <!--    数据资源体系-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu2" lay-filter="layadmin-system-side-menu" style="display: none">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="数据共享" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>数据服务</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="component/form/element.html">数据高铁</a></dd>
+              <dd><a lay-href="component/form/group.html">算法模型</a></dd>
+              <dd data-name="grid">
+                <a href="javascript:;">分析挖掘</a>
+                <dl class="layui-nav-child">
+                  <dd><a lay-href="bigdata/map/mapbusin.html">业务分析</a></dd>
+                  <dd><a lay-href="bigdata/map/mapcost.html">财务分析</a></dd>
+                </dl>
+              </dd>
+              <dd><a lay-href="component/form/group.html">数字孪生</a></dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="数据共享" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>数据共享</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="component/form/group.html">主题数据库</a></dd>
+              <dd><a lay-href="component/form/element.html">专题数据库</a></dd>
+              <dd><a lay-href="component/form/element.html">视频汇聚平台</a></dd>
+              <dd><a lay-href="component/form/element.html">其他外部平台</a></dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="数据清洗" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>数据清洗</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="component/form/element.html">清洗规则</a></dd>
+              <dd><a lay-href="component/form/group.html">清洗内容</a></dd>
+              <dd><a lay-href="component/form/group.html">数据转换</a></dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="数据源" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>数据源</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="component/form/element.html">感知数据</a></dd>
+              <dd><a lay-href="component/form/group.html">录入数据</a></dd>
+              <dd><a lay-href="component/form/element.html">接口数据</a></dd>
+            </dl>
+          </li>
+        </ul>
+
+        <!--  应用支撑体系-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu3" lay-filter="layadmin-system-side-menu" style="display: none">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+              <i class="layui-icon layui-icon-home"></i>
+              <cite>主页</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="home">
+                <a lay-href="home/homepage2.html">组件库</a>
+              </dd>
+            </dl>
+          </li>
+        </ul>
+
+        <!--  业务应用体系-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu4" lay-filter="layadmin-system-side-menu" style="display: none">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+              <i class="layui-icon layui-icon-home"></i>
+              <cite>主页</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="home">
+                <a lay-href="home/homepage2.html">业务应用</a>
+              </dd>
+            </dl>
+          </li>
+        </ul>
+
+        <!--  政策制度体系-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu5" lay-filter="layadmin-system-side-menu" style="display: none">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+              <i class="layui-icon layui-icon-home"></i>
+              <cite>主页</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="home">
+                <a lay-href="home/homepage2.html">政策制度</a>
+              </dd>
+            </dl>
+          </li>
+        </ul>
+
+        <!--  标准规范体系-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu6" lay-filter="layadmin-system-side-menu" style="display: none">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+              <i class="layui-icon layui-icon-home"></i>
+              <cite>主页</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="home">
+                <a lay-href="home/homepage2.html">标准规范</a>
+              </dd>
+            </dl>
+          </li>
+        </ul>
+
+        <!--  网络安全体系-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu7" lay-filter="layadmin-system-side-menu" style="display: none">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+              <i class="layui-icon layui-icon-home"></i>
+              <cite>主页</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="home">
+                <a lay-href="home/homepage2.html">网络安全</a>
+              </dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="数据安全" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>数据安全</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="component/form/element.html">数据审计</a></dd>
+              <dd><a lay-href="component/form/group.html">数据准入</a></dd>
+              <dd><a lay-href="component/form/element.html">数据鉴权</a></dd>
+            </dl>
+          </li>
+        </ul>
+
+        <!--  组织保障体系-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu8" lay-filter="layadmin-system-side-menu" style="display: none">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="内部组织" lay-direction="2">
+              <i class="layui-icon layui-icon-home"></i>
+              <cite>内部组织</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="list"><a lay-href="system/orgcore/deptlist.html">部门管理</a></dd>
+              <dd data-name="list"><a lay-href="system/orgcore/userlist.html">人事管理</a></dd>
+            </dl>
+          </li>
+          <li data-name="set" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="系统管理" lay-direction="2">
+              <i class="layui-icon layui-icon-set"></i>
+              <cite>系统管理</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="system/orgcore/menulist.html">模块管理</a></dd>
+              <dd><a lay-href="system/orgcore/grant.html">权限管理</a></dd>
+              <dd><a lay-href="system/orgcore/rulelist.html">规则管理</a></dd>
+              <dd><a lay-href="system/orgcore/optimize.html">系统优化</a></dd>
+            </dl>
+          </li>
+        </ul>
+
+        <!--五统一-->
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu9" lay-filter="layadmin-system-side-menu" style="display: none">
+          <li data-name="home" class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+              <i class="layui-icon layui-icon-home"></i>
+              <cite>主页</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd data-name="home">
+                <a lay-href="home/homepage2.html">数据展示</a>
+              </dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="点位规划" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>点位规划</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="video/videoplan/planlist.html">视频算法库</a></dd>
+              <dd><a lay-href="component/form/group.html">点位特征库</a></dd>
+              <dd><a lay-href="component/form/element.html">设备选型库</a></dd>
+              <dd><a lay-href="component/form/element.html">业务逻辑库</a></dd>
+              <dd><a lay-href="component/form/element.html">统一匹配规则</a></dd>
+              <dd><a lay-href="component/form/element.html">统一组织目录</a></dd>
+              <dd><a lay-href="component/form/element.html">统一管理制度</a></dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="点位治理" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>点位治理</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="video/videocure/videolist.html">点位基础信息</a></dd>
+              <dd><a lay-href="video/videocure/taglist.html">标签管理</a></dd>
+            </dl>
+          </li>
+          <li data-name="user" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="点位共享" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>点位共享</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="video/videoshare/rulelist.html">共享规则</a></dd>
+              <dd><a lay-href="component/form/group.html">接口列表</a></dd>
+              <dd><a lay-href="component/form/element.html">流程申请</a></dd>
+              <dd><a lay-href="component/form/element.html">权限管理</a></dd>
+              <dd><a lay-href="component/form/element.html">数据监测</a></dd>
+            </dl>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+
+    <!-- 页面标签 -->
+    <div class="layadmin-pagetabs" id="LAY_app_tabs">
+      <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+      <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+      <div class="layui-icon layadmin-tabs-control layui-icon-down">
+        <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+          <li class="layui-nav-item" lay-unselect>
+            <a href="javascript:;"></a>
+            <dl class="layui-nav-child layui-anim-fadein">
+              <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+              <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+              <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+            </dl>
+          </li>
+        </ul>
+      </div>
+      <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+        <ul class="layui-tab-title" id="LAY_app_tabsheader">
+          <li lay-id="home/homepage.html" lay-attr="home/homepage.html" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- 主体内容 -->
+    <div class="layui-body" id="LAY_app_body">
+      <div class="layadmin-tabsbody-item layui-show">
+        <iframe src="home/homepage1.html" frameborder="0" class="layadmin-iframe"></iframe>
+      </div>
+    </div>
+
+    <!-- 辅助元素，一般用于移动设备下遮罩 -->
+    <div class="layadmin-body-shade" layadmin-event="shade"></div>
+  </div>
+</div>
+
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use('index');
+  function chagever(obj){
+    if(obj=='基础设施体系'){
+      document.getElementById("LAY-system-side-menu").style.display='none';
+      document.getElementById("LAY-system-side-menu1").style.display='block';
+      document.getElementById("LAY-system-side-menu2").style.display='none';
+      document.getElementById("LAY-system-side-menu3").style.display='none';
+      document.getElementById("LAY-system-side-menu4").style.display='none';
+      document.getElementById("LAY-system-side-menu5").style.display='none';
+      document.getElementById("LAY-system-side-menu6").style.display='none';
+      document.getElementById("LAY-system-side-menu7").style.display='none';
+      document.getElementById("LAY-system-side-menu8").style.display='none';
+      document.getElementById("LAY-system-side-menu9").style.display='none';
+    } else if(obj=='数据资源体系'){
+      document.getElementById("LAY-system-side-menu").style.display='none';
+      document.getElementById("LAY-system-side-menu1").style.display='none';
+      document.getElementById("LAY-system-side-menu2").style.display='block';
+      document.getElementById("LAY-system-side-menu3").style.display='none';
+      document.getElementById("LAY-system-side-menu4").style.display='none';
+      document.getElementById("LAY-system-side-menu5").style.display='none';
+      document.getElementById("LAY-system-side-menu6").style.display='none';
+      document.getElementById("LAY-system-side-menu7").style.display='none';
+      document.getElementById("LAY-system-side-menu8").style.display='none';
+      document.getElementById("LAY-system-side-menu9").style.display='none';
+    } else if(obj=='应用支撑体系'){
+      document.getElementById("LAY-system-side-menu").style.display='none';
+      document.getElementById("LAY-system-side-menu1").style.display='none';
+      document.getElementById("LAY-system-side-menu2").style.display='none';
+      document.getElementById("LAY-system-side-menu3").style.display='block';
+      document.getElementById("LAY-system-side-menu4").style.display='none';
+      document.getElementById("LAY-system-side-menu5").style.display='none';
+      document.getElementById("LAY-system-side-menu6").style.display='none';
+      document.getElementById("LAY-system-side-menu7").style.display='none';
+      document.getElementById("LAY-system-side-menu8").style.display='none';
+      document.getElementById("LAY-system-side-menu9").style.display='none';
+    } else if(obj=='业务应用体系'){
+      document.getElementById("LAY-system-side-menu").style.display='none';
+      document.getElementById("LAY-system-side-menu1").style.display='none';
+      document.getElementById("LAY-system-side-menu2").style.display='none';
+      document.getElementById("LAY-system-side-menu3").style.display='none';
+      document.getElementById("LAY-system-side-menu4").style.display='block';
+      document.getElementById("LAY-system-side-menu5").style.display='none';
+      document.getElementById("LAY-system-side-menu6").style.display='none';
+      document.getElementById("LAY-system-side-menu7").style.display='none';
+      document.getElementById("LAY-system-side-menu8").style.display='none';
+      document.getElementById("LAY-system-side-menu9").style.display='none';
+    } else if(obj=='政策制度体系'){
+      document.getElementById("LAY-system-side-menu").style.display='none';
+      document.getElementById("LAY-system-side-menu1").style.display='none';
+      document.getElementById("LAY-system-side-menu2").style.display='none';
+      document.getElementById("LAY-system-side-menu3").style.display='none';
+      document.getElementById("LAY-system-side-menu4").style.display='none';
+      document.getElementById("LAY-system-side-menu5").style.display='block';
+      document.getElementById("LAY-system-side-menu6").style.display='none';
+      document.getElementById("LAY-system-side-menu7").style.display='none';
+      document.getElementById("LAY-system-side-menu8").style.display='none';
+      document.getElementById("LAY-system-side-menu9").style.display='none';
+    } else if(obj=='标准规范体系'){
+      document.getElementById("LAY-system-side-menu").style.display='none';
+      document.getElementById("LAY-system-side-menu1").style.display='none';
+      document.getElementById("LAY-system-side-menu2").style.display='none';
+      document.getElementById("LAY-system-side-menu3").style.display='none';
+      document.getElementById("LAY-system-side-menu4").style.display='none';
+      document.getElementById("LAY-system-side-menu5").style.display='none';
+      document.getElementById("LAY-system-side-menu6").style.display='block';
+      document.getElementById("LAY-system-side-menu7").style.display='none';
+      document.getElementById("LAY-system-side-menu8").style.display='none';
+      document.getElementById("LAY-system-side-menu9").style.display='none';
+    } else if(obj=='网络安全体系'){
+      document.getElementById("LAY-system-side-menu").style.display='none';
+      document.getElementById("LAY-system-side-menu1").style.display='none';
+      document.getElementById("LAY-system-side-menu2").style.display='none';
+      document.getElementById("LAY-system-side-menu3").style.display='none';
+      document.getElementById("LAY-system-side-menu4").style.display='none';
+      document.getElementById("LAY-system-side-menu5").style.display='none';
+      document.getElementById("LAY-system-side-menu6").style.display='none';
+      document.getElementById("LAY-system-side-menu7").style.display='block';
+      document.getElementById("LAY-system-side-menu8").style.display='none';
+      document.getElementById("LAY-system-side-menu9").style.display='none';
+    } else if(obj=='组织保障体系'){
+      document.getElementById("LAY-system-side-menu").style.display='none';
+      document.getElementById("LAY-system-side-menu1").style.display='none';
+      document.getElementById("LAY-system-side-menu2").style.display='none';
+      document.getElementById("LAY-system-side-menu3").style.display='none';
+      document.getElementById("LAY-system-side-menu4").style.display='none';
+      document.getElementById("LAY-system-side-menu5").style.display='none';
+      document.getElementById("LAY-system-side-menu6").style.display='none';
+      document.getElementById("LAY-system-side-menu7").style.display='none';
+      document.getElementById("LAY-system-side-menu8").style.display='block';
+      document.getElementById("LAY-system-side-menu9").style.display='none';
+    } else if(obj=='五统一'){
+      document.getElementById("LAY-system-side-menu").style.display='none';
+      document.getElementById("LAY-system-side-menu1").style.display='none';
+      document.getElementById("LAY-system-side-menu2").style.display='none';
+      document.getElementById("LAY-system-side-menu3").style.display='none';
+      document.getElementById("LAY-system-side-menu4").style.display='none';
+      document.getElementById("LAY-system-side-menu5").style.display='none';
+      document.getElementById("LAY-system-side-menu6").style.display='none';
+      document.getElementById("LAY-system-side-menu7").style.display='none';
+      document.getElementById("LAY-system-side-menu8").style.display='none';
+      document.getElementById("LAY-system-side-menu9").style.display='block';
+    } else{
+      document.getElementById("LAY-system-side-menu").style.display='block';
+      document.getElementById("LAY-system-side-menu1").style.display='none';
+      document.getElementById("LAY-system-side-menu2").style.display='none';
+      document.getElementById("LAY-system-side-menu3").style.display='none';
+      document.getElementById("LAY-system-side-menu4").style.display='none';
+      document.getElementById("LAY-system-side-menu5").style.display='none';
+      document.getElementById("LAY-system-side-menu6").style.display='none';
+      document.getElementById("LAY-system-side-menu7").style.display='none';
+      document.getElementById("LAY-system-side-menu8").style.display='none';
+      document.getElementById("LAY-system-side-menu9").style.display='none';
+    }
+  }
+</script>
+</body>
+</html>
+
+

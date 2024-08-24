@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wision.mapper.CameraMapper">
+    <select id="applyList" resultType="com.wision.entity.ApplyList">
+        SELECT flow_id,flow_name,flow_type,flow_content,flow_dept,flow_man,flow_time,step_code FROM t_oa_flow_main where join_tbl='camera'
+        <if test="params.flowDept!=null and params.flowDept!=''">
+            and flow_dept like '%' #{params.flowDept} '%'
+        </if>
+        <if test="params.flowMan!=null and params.flowMan!=''">
+            and flow_man like '%' #{params.flowMan} '%'
+        </if>
+        <if test="params.flowType!=null and params.flowType!=''">
+            and flow_type=#{params.flowType}
+        </if>
+        <if test="params.stepCode!=null and params.stepCode!=''">
+            and step_code=#{params.stepCode}
+        </if>
+        order by flow_id
+    </select>
+    <select id="cameraList" resultType="com.wision.entity.CameraList">
+        SELECT camera_id,camera_area,camera_code,camera_name,camera_brand,camera_type,camera_lng,camera_lat,camera_ipv4,tag_addr,camera_net
+        ,camera_state,(case when check_state=1 then '已治理' else '未治理' end) as check_state
+        FROM t_ass_camera_basic where 1=1
+        <if test="params.projName!=null and params.projName!=''">
+            and proj_name like '%' #{params.projName} '%'
+        </if>
+        <if test="params.cameraCode!=null and params.cameraCode!=''">
+            and camera_code like '%' #{params.cameraCode} '%'
+        </if>
+        <if test="params.cameraName!=null and params.cameraName!=''">
+            and camera_name like '%' #{params.cameraName} '%'
+        </if>
+        <if test="params.cameraType!=null and params.cameraType!=''">
+            and camera_type=#{params.cameraType}
+        </if>
+        <if test="params.cameraIpv4!=null and params.cameraIpv4!=''">
+            and camera_ipv4 like '%' #{params.cameraIpv4} '%'
+        </if>
+        <if test="params.checkState!=null and params.checkState!=''">
+            and check_state=#{params.checkState}
+        </if>
+        order by camera_id
+    </select>
+    <select id="cameraDet" resultType="com.wision.entity.CameraDet">
+        SELECT camera_id,camera_code,camera_name,camera_lng,camera_lat,camera_brand,camera_type,camera_type2,camera_model,camera_distance
+        ,share_type,proj_id,camera_area,camera_town,camera_village,camera_buildtime,camera_deadline,camera_dept1
+        ,tag_type,tag_lv1,tag_lv2,tag_addr,camera_net,camera_ipv4,camera_channel,video_date,camera_isp,camera_link,camera_state
+        ,azimuth_level,azimuth_vert,rod_code,rod_type,rod_height,rod_color,camera_height,power_pos,box_num,box_situat,check_unit,check_time
+        ,check_unified,unified_unit,remark,check_state FROM t_ass_camera_basic where camera_id=#{cameraId}
+    </select>
+    <update id="cameraSave">
+        update t_ass_camera_basic set camera_id=#{params.cameraId},camera_code=#{params.cameraCode},camera_name=#{params.cameraName},camera_lng=#{params.cameraLng}
+        ,camera_lat=#{params.cameraLat},camera_brand=#{params.cameraBrand},camera_type=#{params.cameraType},camera_type2=#{params.cameraType2},camera_model=#{params.cameraModel}
+        ,camera_distance=#{params.cameraDistance},share_type=#{params.shareType},proj_id=#{params.projId}
+        ,camera_area=#{params.cameraArea},camera_town=#{params.cameraTown},camera_village=#{params.cameraVillage},camera_buildtime=#{params.cameraBuildtime},camera_deadline=#{params.cameraDeadline}
+        ,camera_dept1=#{params.cameraDept},tag_type=#{params.tagType},tag_lv1=#{params.tagLv1},tag_lv2=#{params.tagLv2},tag_addr=#{params.tagIds}
+        ,camera_net=#{params.cameraNet},camera_ipv4=#{params.cameraIpv4},camera_channel=#{params.cameraChannel},video_date=#{params.videoDate},camera_isp=#{params.cameraIsp}
+        ,camera_link=#{params.cameraLink},camera_state=#{params.cameraState},azimuth_level=#{params.azimuthLevel},azimuth_vert=#{params.azimuthVert},rod_code=#{params.rodCode}
+        ,rod_type=#{params.rodType},rod_height=#{params.rodHeight},rod_color=#{params.rodColor},camera_height=#{params.cameraHeight},power_pos=#{params.powerPos},box_num=#{params.boxNum}
+        ,box_situat=#{params.boxSituat},check_unit=#{params.checkUnit},check_time=#{params.checkTime},check_unified=#{params.checkUnified},unified_unit=#{params.unifiedUnit},remark=#{params.remark}
+        ,check_state=#{params.checkState} where camera_id=#{params.cameraId}
+    </update>
+    <select id="lngLat" resultType="com.wision.entity.LnglatDetVo">
+        SELECT distinct camera_lng,camera_lat FROM t_ass_camera_basic where camera_lng is not null and camera_lat is not null and camera_id &lt;= 10
+        group by camera_lng,camera_lat
+    </select>
+    <select id="lnglatDet" resultType="com.wision.entity.CameraDet">
+        SELECT distinct camera_lng,camera_lat,max(camera_code) as camera_code,max(camera_name) as camera_name FROM t_ass_camera_basic
+        where camera_lng=#{cameraLng} and camera_lat=#{cameraLat} group by camera_lng,camera_lat
+    </select>
+    <select id="lnglatDraw" resultType="com.wision.entity.LnglatDetVo">
+        SELECT distinct t.camera_lng,t.camera_lat,max(t.azimuth_level) as azimuth_level,max(t.includel_angle) as includel_angle,max(t.camera_distance) as camera_distance FROM
+        (select a.camera_id,a.camera_lng,a.camera_lat,a.azimuth_level,b.includel_angle,b.distance_max as camera_distance from t_ass_camera_basic a left join t_ass_camera_param b
+        on a.param_id=b.param_id) t where t.camera_lng is not null and t.camera_lat is not null and t.camera_id &lt;= 10 group by t.camera_lng,t.camera_lat
+    </select>
+    <select id="areaDraw" resultType="com.wision.entity.AreaDrawVo">
+        SELECT area_code FROM t_ass_camera_plan_area
+    </select>
+    <insert id="insertArea">
+        insert into t_ass_camera_plan_area(area_code) values(#{params})
+    </insert>
+    <select id="matchTag">
+        select pos_tag from t_ass_camera_pos where pos_tag like '%' #{tagName} '%'
+    </select>
+    <select id="posDet" resultType="com.wision.entity.PosDetVo">
+        select a.pos_id,a.pos_area,a.pos_type,a.pos_name,a.pos_tag,a.double_num,a.half_num,a.chkpoint_num,a.camera_state
+        ,a.double_prenum,a.half_prenum,a.chkpoint_prenum from t_ass_camera_pos a where a.pos_id = #{posId}
+    </select>
+    <insert id="insertPos">
+        insert into t_ass_camera_pos(pos_area,pos_type,pos_name,pos_tag,double_num,half_num,chkpoint_num,camera_state)
+        values(#{params.posArea},#{params.posType},#{params.posName},#{params.posTag},0,0,0,null)
+    </insert>
+    <update id="updateCamAll">
+        update t_ass_camera_basic set pos_id=null where pos_id=#{params.posId}
+    </update>
+    <delete id="deletePos">
+        delete from t_ass_camera_pos where pos_id=#{params.posId}
+    </delete>
+    <update id="updatePos">
+        update t_ass_camera_pos set pos_area=#{params.posArea},pos_type=#{params.posType},pos_name=#{params.posName}
+        ,pos_tag=#{params.posTag} where pos_id=#{params.posId}
+    </update>
+    <select id="selDet" resultType="com.wision.entity.CameraDet">
+        select a.camera_id,b.proj_name,b.proj_build,b.proj_cont,a.camera_name,a.camera_lng,a.camera_lat,a.camera_brand
+        ,a.camera_type,a.camera_license,a.camera_color,a.camera_price,a.camera_ip,a.camera_state from t_ass_camera_basic a
+        left join t_ass_camera_proj b on a.proj_id=b.proj_id where a.pos_id = #{posId}
+    </select>
+    <select id="tagList" resultType="com.wision.entity.TagListVo">
+        select tag_id,tag_type,tag_name1,tag_code1,tag_name2,tag_code2,tag_name3,tag_code3 from t_ass_camera_tag where 1=1
+        <if test="params.tagType!=null and params.tagType!=''">
+            and tag_type=#{params.tagType}
+        </if>
+        <if test="params.tagName1!=null and params.tagName1!=''">
+            and tag_name1 like '%' #{params.tagName1} '%'
+        </if>
+        <if test="params.tagName2!=null and params.tagName2!=''">
+            and tag_name2 like '%' #{params.tagName2} '%'
+        </if>
+        order by tag_id
+    </select>
+    <select id="tagDet" resultType="com.wision.entity.TagDetVo">
+        select tag_id,tag_type,tag_name1,tag_code1,tag_name2,tag_code2,tag_name3,tag_code3 from t_ass_camera_tag where tag_id=#{tagId}
+    </select>
+    <insert id="insertTag">
+        insert into t_ass_camera_tag(tag_no,tag_name,dept_name,tag_content,tag_state,camera_resol,camera_algo) values(#{params.tagNo}
+        ,#{params.tagName},#{params.deptName}),#{params.tagContent}),#{params.tagState},#{params.camResol}),#{params.camAlgo}))
+    </insert>
+    <delete id="deleteTag">
+        delete from t_ass_camera_tag where tag_id = #{tagId}
+    </delete>
+    <update id="updateTag">
+        update t_ass_camera_tag set tag_no=#{params.tagNo},tag_name=#{params.tagName},dept_name=#{params.deptName}
+        ,tag_content=#{params.tagContent},tag_state=#{params.tagState},camera_resol=#{params.camResol},camera_algo=#{params.camAlgo}
+        where tag_id = #{params.tagId}
+    </update>
+    <select id="tagGather" resultType="com.wision.entity.TagListVo">
+        select distinct tag_name as tag_gather from t_ass_camera_tag where tag_state='生效' order by tag_no
+    </select>
+    <update id="updatePre">
+        update t_ass_camera_pos set double_prenum=#{params.doublePrenum},half_prenum=#{params.halfPrenum},chkpoint_prenum=#{params.chkpointPrenum}
+        where pos_id = #{params.posId}
+    </update>
+    <select id="reqTag" resultType="com.wision.entity.TagDetVo">
+        select pos_tag as tag_name from t_ass_camera_pos where pos_id=#{posId}
+    </select>
+    <select id="reqOrder" resultType="com.wision.entity.TagDetVo">
+        select SUBSTRING(dict_order,3,LENGTH(dict_order)) as param_name,dict_value,dict_code from t_sys_dict
+        where dict_unit='ass' and left(dict_field,6)='camera' order by dict_field desc,dict_code
+    </select>
+    <select id="updateOrder1" resultType="com.wision.entity.TagDetVo">
+        select dict_field as dict_code from t_sys_dict where dict_unit='ass' and left(dict_field,6)='camera' and dict_value=#{paraName}
+    </select>
+    <update id="updateOrder2">
+        update t_ass_camera_tag set ${field} = #{value} where ${field}=(select dict_code from t_sys_dict where dict_unit='ass'
+        and left(dict_field,6)='camera' and dict_value=#{paraName})
+    </update>
+    <update id="updateOrder3">
+        update t_sys_dict set ${field} = #{value} where dict_unit='ass' and left(dict_field,6)='camera' and dict_value=#{paraName}
+    </update>
+    <select id="reqList" resultType="com.wision.entity.TagDetVo">
+        select distinct b.dict_value as cam_resol,c.dict_value as cam_algo from t_ass_camera_tag a left join
+        (select * from t_sys_dict where dict_unit='ass' and dict_field='camera_resol') b on a.camera_resol=b.dict_code left join
+        (select * from t_sys_dict where dict_unit='ass' and dict_field='camera_algo') c on a.camera_resol=c.dict_code where a.tag_name in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by a.camera_resol+a.camera_algo,a.camera_resol
+    </select>
+    <select id="paramList" resultType="com.wision.entity.ParamListForm">
+        select param_id,camera_name,camera_brand,camera_type,camera_type2,camera_model,cmos,diagonal,width,height,focal_length,azheight
+        ,includel_angle,includev_angle,angleroll_min,angleroll_max,az_angle,distance_min,area_min,distance_max,area_max
+        from t_ass_camera_param a where 1=1
+    </select>
+    <select id="typeSeled" resultType="com.wision.entity.ParamListForm">
+        select a.cam_id,a.cam_name,a.cam_brand,a.cam_type,a.cam_model,a.cam_no,a.cam_resol,a.cam_algo,a.cam_range,a.cam_color,a.cam_price
+        from t_ass_camera_type a where a.pos_id like '%' #{posIds} '%' and a.cam_type=#{type}
+    </select>
+    <select id="typeChksel" resultType="com.wision.entity.ParamListForm">
+        select cam_id from t_ass_camera_type where pos_id like '%' #{posIds} '%' and cam_id=#{camId}
+    </select>
+    <update id="typeSel">
+        update t_ass_camera_type set pos_id=(case when pos_id is null then #{posId} else CONCAT(pos_id,#{posId}) end) where cam_id=#{camId}
+    </update>
+    <select id="ruleList" resultType="com.wision.entity.RuleListForm">
+        select rule_id,rule_name,rule_content,rule_state from t_ass_camera_rule
+        <where>
+            <if test="params.ruleName!=null and params.ruleName!=''">
+                rule_name like '%' #{params.ruleName} '%'
+            </if>
+            <if test="params.ruleContent!=null and params.ruleContent!=''">
+                rule_content like '%' #{params.ruleContent} '%'
+            </if>
+            <if test="params.ruleState!=null and params.ruleState!=''">
+                rule_state like '%' #{params.ruleState} '%'
+            </if>
+        </where>
+    </select>
+</mapper>

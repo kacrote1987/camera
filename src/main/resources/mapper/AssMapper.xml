@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wision.mapper.AssMapper">
+    <select id="assList" resultType="com.wision.entity.AssList" >
+        select a.ass_id,a.ass_no,b.dict_value as ass_type,a.ass_name,ass_no,a.purchase_date,a.ass_state
+        from t_ass_main a left join (select * from t_sys_dict where dict_unit='ass' and dict_field='type_code') b
+        on left(a.ass_type,1)=b.dict_code where 1=1
+        <if test="params.assType!=null and params.assType!=''">
+            and a.ass_type like #{params.assType} '%'
+        </if>
+        <if test="params.assType1!=null and params.assType1!=''">
+            and a.ass_type like #{params.assType1} '%'
+        </if>
+        <if test="params.assType2!=null and params.assType2!=''">
+            and a.ass_type like #{params.assType2} '%'
+        </if>
+        <if test="params.assType3!=null and params.assType3!=''">
+            and a.ass_type like #{params.assType3} '%'
+        </if>
+        <if test="params.assNo!=null and params.assNo!=''">
+            and a.ass_no like '%' #{params.assNo} '%'
+        </if>
+        <if test="params.assName!=null and params.assName!=''">
+            and a.ass_name like '%' #{params.assName} '%'
+        </if>
+        <if test="params.assState!=null and params.assState!=''">
+            and a.ass_state = #{params.assState}
+        </if>
+        order by a.ass_no
+    </select>
+    <select id="selDet" resultType="com.wision.entity.AssDet">
+        select t.ass_id,left(t.type_code,2) as ass_type1,left(t.type_code,3) as ass_type2,t.type_code as ass_type3,t.ass_contr
+        ,t.ass_no,t.ass_name,t.ass_catg,t.ass_tag,t.ass_model,t.ass_factoryno,t.ass_manufacturer,t.ass_supplier,t.ass_unit,t.ass_num
+        ,t.ass_cost,t.purchase_date,t.ass_dept,t.ass_owner,t.ass_addr,t.ass_state,t.ass_remark
+        from t_ass_main t
+        left join t_ass_offic a on t.ass_id=a.ass_id
+        left join t_ass_consp b on t.ass_id=b.ass_id
+        left join t_ass_car c on t.ass_id=c.ass_id
+        left join t_ass_server d on t.ass_id=d.ass_id
+        left join t_ass_camera e on t.ass_id=e.ass_id
+        left join t_ass_gate f on t.ass_id=f.ass_id
+        left join t_ass_instr g on t.ass_id=g.ass_id
+        where t.ass_id = #{assId}
+    </select>
+    <insert id="insertAss">
+        insert into t_ass_main(type_code,ass_contr,ass_no,ass_name,ass_catg,ass_tag,ass_model,ass_factoryno,ass_manufacturer,ass_supplier
+        ,ass_unit,ass_num,ass_cost,purchase_date,ass_dept,ass_owner,ass_addr,ass_state,ass_remark) values(#{params.assType3},#{params.assContr}
+        ,#{params.assNo},#{params.assName},#{params.assCatg},#{params.assTag},#{params.assModel},#{params.assFactoryno},#{params.assManufacturer}
+        ,#{params.assSupplier},#{params.assUnit},#{params.assNum},#{params.assCost},#{params.purchaseDate},#{params.assDept},#{params.assOwner}
+        ,#{params.assAddr},#{params.assState},#{params.assRemark})
+    </insert>
+    <delete id="deleteAss">
+        delete from t_ass_main where ass_id=#{assId}
+    </delete>
+    <update id="updateAss">
+        update t_ass_main set type_code=#{params.assType3},ass_contr=#{params.assContr},ass_no=#{params.assNo},ass_name=#{params.assName}
+        ,ass_catg=#{params.assCatg},ass_tag=#{params.assTag},ass_model=#{params.assModel},ass_factoryno=#{params.assFactoryno}
+        ,ass_manufacturer=#{params.assManufacturer},ass_supplier=#{params.assSupplier},ass_unit=#{params.assUnit},ass_num=#{params.assNum}
+        ,ass_cost=#{params.assCost},purchase_date=#{params.purchaseDate},ass_dept=#{params.assDept},ass_owner=#{params.assOwner}
+        ,ass_addr=#{params.assAddr},ass_state=#{params.assState},ass_remark=#{params.assRemark} where ass_id=#{params.assId}
+    </update>
+    <select id="assType" resultType="com.wision.entity.AssList" >
+        select dict_code as ass_type,dict_value as ass_name from t_sys_dict where dict_unit='ass' and dict_field='type_code' and dict_code like '%' #{type} '%'
+        and dict_order=(select dict_order+1 from t_sys_dict where dict_unit='ass' and dict_field='type_code' and dict_code=#{type})
+    </select>
+    <insert id="importAss">
+        insert into t_ass_main(type_code,ass_no,ass_name,ass_catg,ass_tag,ass_model,ass_factoryno,ass_num,ass_unit,ass_manufacturer,ass_supplier,ass_contr
+        ,ass_cost,purchase_date,ass_dept,ass_owner,ass_addr,ass_state,ass_remark)
+        values (#{htbh},#{htbh},#{htbh},#{htbh},#{htbh},#{htbh},#{htbh},#{htbh},#{htbh},#{htbh},#{htbh},#{htbh},#{htbh},#{kssyrq},#{htbh},#{htbh},#{htbh}
+        ,#{zt},#{bz})
+    </insert>
+</mapper>

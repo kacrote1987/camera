@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>内部流程列表</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-card">
+      <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-label">流程类型</label>
+            <div class="layui-input-block">
+              <select id="flowType">
+                <option value="">全部</option>
+                <option value="行政管理">行政管理</option>
+                <option value="公文管理">公文管理</option>
+                <option value="人事管理">人事管理</option>
+                <option value="日常工作">日常工作</option>
+                <option value="资产管理">资产管理</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">流程名称</label>
+            <div class="layui-input-block">
+              <input type="text" id="flowName" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">申请人</label>
+            <div class="layui-input-block">
+              <input type="text" id="flowAppman" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">申请日期</label>
+            <div class="layui-input-inline">
+              <input type="text" id="flowApptime1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+              <input type="text" id="flowApptime2" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <button class="layui-btn layuiadmin-btn-useradmin" data-type="reload">
+              <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-card layui-form" lay-filter="component-form-element" id="LAY-component-progress">
+        <div class="layui-card-body layui-row layui-col-space10">
+          <div class="layui-col-md12">
+            <input class="layui-radio" type="radio" id="step0" name="scienStepcode" value="step0" title="全部" checked>
+            <input class="layui-radio" type="radio" id="step1" name="scienStepcode" value="step1" title="录入">
+            <input class="layui-radio" type="radio" id="step2" name="scienStepcode" value="step2" title="审核">
+            <input class="layui-radio" type="radio" id="step3" name="scienStepcode" value="step3" title="审批">
+            <input class="layui-radio" type="radio" id="step4" name="scienStepcode" value="step4" title="办理">
+            <input class="layui-radio" type="radio" id="step5" name="scienStepcode" value="step5" title="归档">
+          </div>
+        </div>
+        <div class="layui-progress" lay-filter="component-progress-demo">
+          <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+        </div>
+      </div>
+
+      <script type="text/html" id="test-table-toolbar-toolbarDemo">
+        <div class="layui-btn-container">
+          <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+          <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+          <button class="layui-btn layui-btn-sm" lay-event="submit">提交</button>
+          <button class="layui-btn layui-btn-sm" lay-event="backoff">回退</button>
+        </div>
+      </script>
+
+      <script type="text/html" id="test-table-toolbar-barDemo">
+        <a name="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
+      </script>
+      
+      <div class="layui-card-body">
+        <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+        <script type="text/html" id="imgTpl"> 
+          <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+  <script src="../../js/demo.js"></script>
+  <script src="../../../layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: '../../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table', 'laydate'], function(){
+    var admin = layui.admin
+            ,table = layui.table
+            ,$ = layui.$
+            ,element = layui.element
+            ,laydate = layui.laydate
+            ,router = layui.router();
+
+    element.render('flowReload');
+
+    table.render({
+      elem: '#test-table-toolbar'
+      ,id: 'flowReload'
+      ,method: 'post'
+      ,url: '/flow/flowlist/' //数据接口
+      ,response:{
+        statusName:'code',
+        statusCode:'200',
+        msgName:'msg',
+        dataName:'null'
+      }
+      ,toolbar: '#test-table-toolbar-toolbarDemo'
+      ,title: '流程信息表'
+      ,page: true
+      ,cols: [[
+        {type: 'checkbox', fixed: 'left', width:'5%'}
+        ,{field: '', title: '序号', width:'5%'}
+        ,{field: '', title: '流转状态',sort: true, width:'7%'}
+        ,{field: '', title: '项目类别',sort: true, width:'7%'}
+        ,{field: '', title: '项目申报编号',sort: true, width:'7%'}
+        ,{field: '', title: '专业类别',sort: true, width:'7%'}
+        ,{field: '', title: '项目名称',sort: true, width:'8%'}
+        ,{field: '', title: '项目推荐单位',sort: true, width:'7%'}
+        ,{field: '', title: '项目承担单位',sort: true, width:'7%'}
+        ,{field: '', title: '负责人',sort: true, width:'7%'}
+        ,{field: '', title: '执行进度起始时间',sort: true, width:'7%'}
+        ,{field: '', title: '执行进度结束时间',sort: true, width:'7%'}
+        ,{field: '', title: '上一环节办理人',sort: true, width:'7%'}
+        ,{field: '', title: '当前办理人',sort: true, width:'7%'}
+        ,{fixed: 'right', title:'操作', toolbar: '#test-table-toolbar-barDemo', width:'5%'}
+      ]]
+    });
+
+    //头工具栏事件
+    table.on('toolbar(test-table-toolbar)', function(obj){
+      var checkStatus = table.checkStatus(obj.config.id);
+      switch(obj.event){
+        case 'add':
+          layer.open({
+            type: 2
+            ,title: '内部流程新增'
+            ,content: 'flowtype.html?0'
+            ,maxmin: true
+            ,area: ['1200px', '600px']
+          });
+          break;
+        case 'del':
+          layer.confirm('是否删除？', {
+            btn: ['是','否'] //按钮
+          }, function(){
+            postdata(checkStatus.data[0].scienId,"/scien/sciendel",function () {
+              table.reload('scienReload');layer.msg("已删除");});
+          });
+          break;
+        case 'submit':
+          layer.confirm('是否提交？', {
+            btn: ['是','否'] //按钮
+          }, function(){
+            for (var i = 0; i < checkStatus.data.length; i++) {
+              if(checkStatus.data[i].scienStepcode==7){layer.msg("已经是最后一步");
+              }else{postdata('1&'+checkStatus.data[i].scienId,"/scien/scienstep",function () {
+                table.reload('scienReload');layer.msg("提交成功");});}}
+          });
+          break;
+        case 'backoff':
+          layer.confirm('是否回退？', {
+            btn: ['是','否'] //按钮
+          }, function(){
+            for (var i = 0; i < checkStatus.data.length; i++) {
+              if(checkStatus.data[i].scienStepcode==1){layer.msg("已经是第一步");
+              }else{postdata('-1&'+checkStatus.data[0].scienId,"/scien/scienstep",function () {
+                table.reload('scienReload');layer.msg("回退成功");});}}
+          });
+          break;
+      };
+    });
+
+    //监听行工具事件
+    table.on('tool(test-table-toolbar-barDemo)', function(obj){
+      var data = obj.data;
+      if(obj.event === 'det'){
+        layer.open({
+          type: 2
+          ,title: '流程详细'
+          ,content: 'flowdet.html?0' // + data.scienId
+          ,maxmin: true
+          ,area: ['1200px', '600px']
+        });
+      }
+    });
+
+    //执行重载
+    var $ = layui.$, active = {
+      reload: function(){
+        var flowType = $('#flowType');
+        var flowName = $('#flowName');
+        var flowAppman = $('#flowAppman');
+        var flowApptime1 = $('#flowApptime1');
+        var flowApptime2 = $('#flowApptime2');
+        var flowStepcode = $("input[type=radio]:checked");
+        var str=(flowStepcode.val().substr(4,flowStepcode.val().length))*20+'%';
+        table.reload('flowStepcode', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          ,where: {
+            flowType: flowType.val(),
+            flowName: flowName.val(),
+            flowAppman: flowAppman.val(),
+            flowApptime1: flowApptime1.val(),
+            flowApptime2: flowApptime2.val(),
+            flowStepcode: flowStepcode.val()
+          }
+        }, 'data');
+        element.progress('component-progress-demo', str)
+      }
+    };
+
+    laydate.render({
+      elem: '#flowApptime1'
+    });
+
+    laydate.render({
+      elem: '#flowApptime2'
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  });
+  </script>
+</body>
+</html>
