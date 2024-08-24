@@ -70,7 +70,6 @@
 
     <script type="text/html" id="test-table-toolbar-barDemo">
       <a id="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
-      <a id="single" class="layui-btn layui-btn-xs" lay-event="single">单项目</a>
       <a id="design" class="layui-btn layui-btn-xs" lay-event="design">设计</a>
       <a id="preview" class="layui-btn layui-btn-xs" lay-event="preview">试用</a>
 <!--      <a id="package" class="layui-btn layui-btn-xs" lay-event="package">打包</a>-->
@@ -123,10 +122,10 @@
         , {field: 'prodType', title: '产品类别' , sort: true, width: '10%'}
         , {field: 'prodName', title: '产品名称', sort: true, width: '10%'}
         , {field: 'prodVer', title: '产品版本', sort: true, width: '10%'}
-        , {field: 'prodExplain', title: '产品说明', sort: true, width: '25%'}
+        , {field: 'prodExplain', title: '产品说明', sort: true, width: '30%'}
         , {field: 'prodTime', title: '更新时间', sort: true, width: '10%'}
         , {field: 'prodState', title: '产品状态', sort: true, width: '10%'}
-        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-barDemo', width: '15%'}
+        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-barDemo', width: '10%'}
       ]]
       , page: true
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
@@ -169,8 +168,6 @@
           , maxmin: true
           , area: ['1200px', '600px']
         });
-      }else if (obj.event === 'single') {
-        window.open(data.prodLink,'_blank');
       }else if (obj.event === 'design') {
         layer.open({
           type: 2
