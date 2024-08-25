@@ -19,7 +19,7 @@ public class XmglController {
 
     @ApiOperation("项目列表")
     @PostMapping("/xmglList")
-    public Result mapList(){
+    public Result xmglList(){
         List<XmglListVo> xmglList= xmglService.xmglList();
         return Result.success(xmglList);
     }

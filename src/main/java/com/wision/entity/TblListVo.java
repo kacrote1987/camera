@@ -1,58 +1,31 @@
 package com.wision.entity;
 
 public class TblListVo {
-    private Long menuId;
-    private String menuName;
-    private String fatherId;
-    private String toolIds;
-    private String toolPage;
-    private Long menuOrder;
+   private Long tblId;
+   private String tblName;
+   private String tblCode;
 
-    public Long getMenuId() {
-        return menuId;
+    public Long getTblId() {
+        return tblId;
     }
 
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
+    public void setTblId(Long tblId) {
+        this.tblId = tblId;
     }
 
-    public String getMenuName() {
-        return menuName;
+    public String getTblName() {
+        return tblName;
     }
 
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
+    public void setTblName(String tblName) {
+        this.tblName = tblName;
     }
 
-    public String getFatherId() {
-        return fatherId;
+    public String getTblCode() {
+        return tblCode;
     }
 
-    public void setFatherId(String fatherId) {
-        this.fatherId = fatherId;
-    }
-
-    public String getToolIds() {
-        return toolIds;
-    }
-
-    public void setToolIds(String toolIds) {
-        this.toolIds = toolIds;
-    }
-
-    public String getToolPage() {
-        return toolPage;
-    }
-
-    public void setToolPage(String toolPage) {
-        this.toolPage = toolPage;
-    }
-
-    public Long getMenuOrder() {
-        return menuOrder;
-    }
-
-    public void setMenuOrder(Long menuOrder) {
-        this.menuOrder = menuOrder;
+    public void setTblCode(String tblCode) {
+        this.tblCode = tblCode;
     }
 }

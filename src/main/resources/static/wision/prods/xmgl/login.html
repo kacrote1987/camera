@@ -36,7 +36,7 @@
 
     <div class="layui-trans layadmin-user-login-footer">
 
-        <p>© 2022 wision.cn</p>
+        <p>© 2024 wision.cn</p>
     </div>
 
 </div>
@@ -58,15 +58,15 @@
         var prodId = window.location.search.substring(1, window.location.search.length);
         $.ajax({
             type: "post",
-            url: "/xmgl/xmglList",
+            url: "/prod/getProdName",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             data: prodId,
             success: function (detObj) {
                 if (detObj.msg == "sucess") {
-                    var detJson = detObj.data[0];
-                    document.getElementById("prodName").innerHTML = detJson.prodName;
-                    document.getElementById("title").innerHTML = detJson.prodName;
+                    var detJson = detObj.data;
+                    document.getElementById("prodName").innerHTML = detJson;
+                    document.getElementById("title").innerHTML = detJson;
                     //提交
                     form.on('submit(LAY-user-login-submit)', function(obj){
                         location.href = 'index.html?'+detJson.prodId; //后台主页

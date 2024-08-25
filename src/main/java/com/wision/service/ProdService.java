@@ -46,6 +46,11 @@ public interface ProdService {
      * @return
      */
     List<TblListVo> tblList(Long prodId);
+    /**
+     * 子系统获取项目名称
+     * @return
+     */
+    String getProdName(Long prodId);
 //    /**
 //     * 菜单列表
 //     * @return

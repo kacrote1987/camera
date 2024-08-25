@@ -63,7 +63,14 @@ public class ProdServiceImpl implements ProdService {
 
     @Override
     public List<TblListVo> tblList(Long prodId) {
-        return null;
+        List<TblListVo> tblList = prodMapper.tblList(prodId);
+        return tblList;
+    }
+
+    @Override
+    public String getProdName(Long prodId) {
+        String prodName = prodMapper.getProdName(prodId);
+        return prodName;
     }
 
 //    @Override

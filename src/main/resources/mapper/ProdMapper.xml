@@ -44,6 +44,13 @@
         update t_supp_prod_main set prod_type=#{params.prodType},prod_name=#{params.prodName},prod_link=#{params.prodLink}
         ,prod_explain=#{params.prodExplain},prod_time=#{params.prodTime},prod_state=#{params.prodState} where prod_id=#{params.prodId}
     </update>
+    <select id="tblList" resultType="com.wision.entity.TblListVo" >
+        select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}
+    </select>
+    <select id="getProdName" resultType="String" >
+        select prod_name from t_supp_prod_main where prod_id=#{prodId}
+    </select>
+
 <!--    <select id="prodView" resultType="com.wision.entity.ProdViewVo" >-->
 <!--        select prod_id,prod_name from t_supp_prod_main where prod_id=#{prodId}-->
 <!--    </select>-->

@@ -15,6 +15,8 @@ public interface ProdMapper {
     boolean insertProd(@Param("params") ProdDetForm params);
     boolean deleteProd(Long prodId);
     boolean updateProd(@Param("params") ProdDetForm params);
+    List<TblListVo> tblList(Long prodId);
+    String getProdName(Long prodId);
 //    List<ProdViewVo> prodView(Long params);
 //    List<MenuListVo> menuList(Long prodId);
 //    String checkTblExists(String tblName);

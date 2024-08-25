@@ -6,10 +6,7 @@ import com.wision.service.ProdService;
 import com.wision.util.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -72,9 +69,16 @@ public class ProdController {
 
     @ApiOperation("库表列表")
     @PostMapping("/tblList")
-    public Result tblList(@RequestBody Long prodId){
+    public Result tblList(@RequestParam Long prodId){
         List<TblListVo> tblList= prodService.tblList(prodId);
         return Result.success(tblList);
+    }
+
+    @ApiOperation("子系统获取项目名称")
+    @PostMapping("/getProdName")
+    public Result getProdName(@RequestBody Long prodId){
+        String getProdName= prodService.getProdName(prodId);
+        return Result.success(getProdName);
     }
 
 //    @ApiOperation("菜单列表")
