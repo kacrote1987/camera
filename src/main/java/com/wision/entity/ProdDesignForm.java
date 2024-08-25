@@ -1,10 +1,8 @@
 package com.wision.entity;
 
-public class ProdListForm {
+public class ProdDesignForm {
     private String prodType;
     private String prodName;
-    private String prodNickname;
-    private String prodState;
     private Integer page;
     private Integer limit;
 
@@ -22,22 +20,6 @@ public class ProdListForm {
 
     public void setProdName(String prodName) {
         this.prodName = prodName;
-    }
-
-    public String getProdNickname() {
-        return prodNickname;
-    }
-
-    public void setProdNickname(String prodNickname) {
-        this.prodNickname = prodNickname;
-    }
-
-    public String getProdState() {
-        return prodState;
-    }
-
-    public void setProdState(String prodState) {
-        this.prodState = prodState;
     }
 
     public Integer getPage() {

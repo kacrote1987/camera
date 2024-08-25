@@ -1,10 +1,9 @@
 package com.wision.entity;
 
-public class ProdDetVo {
+public class ProdDesignVo {
     private Long prodId;
     private String prodType;
     private String prodName;
-    private String prodNikname;
     private String prodLink;
     private String prodExplain;
     private String prodTime;
@@ -32,14 +31,6 @@ public class ProdDetVo {
 
     public void setProdName(String prodName) {
         this.prodName = prodName;
-    }
-
-    public String getProdNikname() {
-        return prodNikname;
-    }
-
-    public void setProdNikname(String prodNikname) {
-        this.prodNikname = prodNikname;
     }
 
     public String getProdLink() {

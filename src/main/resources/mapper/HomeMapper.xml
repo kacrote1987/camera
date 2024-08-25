@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wision.mapper.HomeMapper">
-    <select id="homeDisplay" resultType="com.wision.entity.DocListVo" >
-        select doc_id,(case when length(doc_name)>300 then concat(left(doc_name,300),'...') else doc_name end) as doc_name1
-        ,(case when length(doc_name)>25 then concat(left(doc_name,25),'...') else doc_name end) as doc_name2
-        ,date(doc_time) as doc_time from t_oa_doc_main where doc_state='在用' and type_id=#{type_id} order by doc_time desc limit 5
-    </select>
-</mapper>

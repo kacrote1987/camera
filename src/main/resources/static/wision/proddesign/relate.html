@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>项目详细</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <!--            逻辑-->
+          <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+              <div class="layui-col-md2">
+
+                <div class="layui-card">
+                  <div class="layui-card-body">
+                    <div id="test-tree-demo4"></div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="layui-col-md10">
+                <div class="layui-card">
+                  <input type="text" id="menuId" placeholder="请输入" autocomplete="off"
+                         class="layui-input" style="display: none">
+                  <script type="text/html" id="test-table-toolbar-toolbarDemo2">
+                    <a id="set" class="layui-btn layui-btn-xs" lay-event="set">配置</a>
+                  </script>
+
+                  <div class="layui-card-body">
+                    <table id="test-table-toolbar2" lay-filter="test-table-toolbar"></table>
+                    <script type="text/html" id="imgTpl2">
+                      <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+                    </script>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'table','laydate','tree','layer'], function(){
+    var $ = layui.$
+            ,form = layui.form
+            ,tree = layui.tree
+            ,table = layui.table
+            , layer = layui.layer;
+
+    form.render(null, 'component-form-group');
+    var prodId=window.location.search.substring(1,window.location.search.length);
+    if(prodId=="add"){
+      $('#action').val("add");
+      document.getElementById("actions").style.display='none';
+    }else{
+      $('#action').val("update");
+      $('#prodId').val(prodId);
+    }
+    table.render({
+      elem: '#test-table-toolbar'
+      , id: 'menuReload'
+      , method: 'post'
+      , url: '/prod/menulist?' + prodId
+      , toolbar: '#test-table-toolbar-toolbarDemo'
+      , title: '菜单管理'
+      , page: false
+      , cols: [[
+        {type: 'checkbox', fixed: 'left', width: '5%'}
+        , {field: 'menuId', title: '菜单ID', width: '10%'}
+        , {field: 'menuName', title: '菜单名称', edit: 'text', width: '20%'}
+        , {field: 'fatherId', title: '父菜单ID', edit: 'text', width: '20%'}
+        , {field: 'toolIds', title: '组件ID', edit: 'text', width: '35%'}
+        , {field: 'menuOrder', title: '排序', edit: 'text', width: '10%'}
+      ]]
+    });
+
+    //头工具栏事件
+    table.on('toolbar(test-table-toolbar)', function (obj) {
+      var checkStatus = table.checkStatus(obj.config.id);
+      var params = {};
+      params.prodId = prodId;
+      switch (obj.event) {
+        case 'add':
+          params.action="add";
+          postdata(params,"/prod/menusave",function () {table.reload('menuReload');layer.msg("添加成功！");});
+          break;
+        case 'del':
+          params.action="del";
+          params.menuId=checkStatus.data[0].menuId;
+          postdata(params,"/prod/menusave",function () {table.reload('menuReload');layer.msg("已删除！");});
+          break;
+      };
+    });
+
+    //监听单元格编辑
+    table.on('edit(test-table-toolbar)', function (obj) {
+      var params = {};
+      params.action = "update";
+      params.menuId = obj.data.menuId;
+      params.field = obj.field;
+      params.value = obj.value;
+      postdata(params, "/prod/menusave", function () {table.reload('menuReload');layer.msg("更新成功");})
+    });
+
+    // 组件查询
+    table.render({
+      elem: '#test-table-toolbar1'
+      , id: 'toolReload'
+      , method: 'post'
+      , url: '/tool/toollist/' //数据接口
+      , response: {
+        statusName: 'code',
+        statusCode: '200'
+      }
+      , title: '资产基础信息表'
+      , cols: [[
+        {field: 'toolId', title: '组件ID', width: '100'}
+        , {field: 'toolType', title: '组件类别', sort: true, width: '100'}
+        , {field: 'toolName', title: '组件名称', sort: true, width: '100'}
+        , {field: 'toolVer', title: '组件版本', sort: true, width: '100'}
+        , {field: 'toolExplain', title: '组件说明', sort: true, width: '300'}
+        , {field: 'toolTime', title: '上架时间', sort: true, width: '200'}
+        , {field: 'toolState', title: '组件状态', sort: true, width: '100'}
+      ]]
+      , page: true
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+          "count": res.data.total, //解析数据长度
+          "data": res.data.list //解析数据列表
+        };
+      }
+    });
+
+    //执行重载
+    var $ = layui.$, active = {
+      reload: function () {
+        var toolType = $('#toolType');
+        var toolName = $('#toolName');
+        var toolState = $('#toolState');
+        table.reload('toolReload', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          , where: {
+            toolType: toolType.val(),
+            toolName: toolName.val(),
+            toolState: toolState.val()
+          }
+        }, 'data');
+      }
+    };
+
+    // 导入基础表
+    table.render({
+      elem: '#test-table-toolbar111'
+      , id: 'menuReload111'
+      , method: 'post'
+      , url: '/prod/basictbl?' + prodId
+      , toolbar: '#test-table-toolbar-toolbarDemo111'
+      , title: '基础表管理'
+      , response: {
+        statusName: 'code',
+        statusCode: '200'
+      }
+      , cols: [[
+        {type: 'checkbox', fixed: 'left', width: '5%'}
+        , {field: 'tblId', title: '库表ID', width: '10%'}
+        , {field: 'tblName', title: '库表命名', width: '35%'}
+        , {field: 'tblCode', title: '库表名称', width: '35%'}
+        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-lay111', width: '15%'}
+      ]]
+      , page: true
+    });
+
+    //头工具栏事件
+    table.on('toolbar(test-table-toolbar111)', function (obj) {
+      alert("123");
+
+
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function () {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+
+
+    var detJson;
+    $.ajax({
+      type:"post",
+      url:"/prod/menutree",
+      contentType:"application/json;charset=utf-8",
+      dataType:"json",
+      data:prodId,
+      async:false,
+      success:function(detObj){
+        if(detObj.msg=="sucess"){
+          detJson=detObj.data;
+        }
+      }
+    });
+
+    //仅节点左侧图标控制收缩
+    tree.render({
+      elem: '#test-tree-demo4'
+      ,data: detJson
+      ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+      ,click: function(obj){
+        $('#menuId').val(obj.data.id);
+        $('#menuName').val(obj.data.title);
+        table.reload('toolSel', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          ,where: {
+            menuId: obj.data.id
+          }
+        }, 'data');
+      }
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+
+    // 数据配置
+    table.render({
+      elem: '#test-table-toolbar2'
+      , id: 'toolSel'
+      , method: 'post'
+      , url: '/tool/toolsel/' //数据接口
+      , response: {
+        statusName: 'code',
+        statusCode: '200'
+      }
+      , title: '资产基础信息表'
+      , cols: [[
+        {field: 'toolId', title: '组件ID', width: '80'}
+        , {field: 'layoutType', title: '组件布局', sort: true, width: '100'}
+        , {field: 'toolType', title: '组件类别', sort: true, width: '100'}
+        , {field: 'toolName', title: '组件名称', sort: true, width: '100'}
+        , {field: 'toolVer', title: '组件版本', sort: true, width: '100'}
+        , {field: '', title: '业务名称', sort: true, width: '100'}
+        , {field: 'toolExplain', title: '组件说明', sort: true, width: '250'}
+        , {field: 'toolTime', title: '上架时间', sort: true, width: '150'}
+        , {field: 'toolState', title: '组件状态', sort: true, width: '100'}
+        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-toolbarDemo2', width: '15%'}
+      ]]
+      , page: true
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+          "count": res.data.total, //解析数据长度
+          "data": res.data.list //解析数据列表
+        };
+      }
+    });
+
+    //监听行工具事件
+    table.on('tool(test-table-toolbar)', function(obj){
+      var data = obj.data;
+      if(obj.event === 'set' && data.toolType === '基础类' && data.toolName === '档案管理'){
+        layer.open({
+          type: 2
+          ,title: '配置'
+          ,content: 'tool/basic.html?' + data.relatId
+          ,maxmin: true
+          ,area: ['700px', '500px']
+        });
+      }else if (obj.event === 'set' && data.toolType === '基础类' && data.toolName === '权限管理'){
+        layer.open({
+          type: 2
+          ,title: '配置'
+          ,content: 'tool/grant.html?' + data.relatId
+          ,maxmin: true
+          ,area: ['700px', '500px']
+        });
+      }else if (obj.event === 'set' && data.toolType === '流程类'){
+        layer.open({
+          type: 2
+          ,title: '配置'
+          ,content: 'tool/flow.html?' + data.relatId
+          ,maxmin: true
+          ,area: ['700px', '500px']
+        });
+      }else if (obj.event === 'set' && data.toolType === '框架类'){
+        layer.open({
+          type: 2
+          ,title: '配置'
+          ,content: 'tool/map.html?' + data.relatId
+          ,maxmin: true
+          ,area: ['700px', '500px']
+        });
+      }else{
+        layer.msg("待完善");
+      }
+    });
+
+
+  });
+</script>
+</body>
+</html>

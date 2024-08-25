@@ -7,8 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
-  <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
 </head>
 <body>
 <div class="layui-fluid">
@@ -45,7 +45,7 @@
                           <label class="layui-form-label">产品状态</label>
                           <div class="layui-input-block">
                             <select id="prodState" lay-filter="prodState">
-                              <option value="在用">在用</option>
+                              <option value="下架">下架</option>
                             </select>
                           </div>
                         </div>
@@ -98,15 +98,24 @@
     </div>
   </div>
 </div>
+<div class="layui-form-item layui-layout-admin">
+  <div class="layui-input-block">
+    <div class="layui-footer" style="left: 0;">
+      <button id="scienSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
+              onclick="save()">保存
+      </button>
+    </div>
+  </div>
+</div>
 
 <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
-<script src="js/demo.js"></script>
-<script src="layuiadmin/layui/layui.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../layuiadmin/layui/layui.js"></script>
 <script>
   layui.config({
-    base: 'layuiadmin/' //静态资源所在路径
+    base: '../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
   }).use(['index', 'form', 'table', 'laydate'], function () {
@@ -116,30 +125,21 @@
             , table = layui.table;
 
     form.render(null, 'component-form-group');
-    var prodId = window.location.search.substring(1, window.location.search.length);
-    $.ajax({
-      type: "post",
-      url: "/prod/prodDet",
-      contentType: "application/json;charset=utf-8",
-      dataType: "json",
-      data: prodId,
-      success: function (detObj) {
-        if (detObj.msg == "sucess") {
-          var detJson = detObj.data[0];
-          $('#prodId').val(detJson.prodId);
-          $('#prodType').val(detJson.prodType);
-          $('#prodName').val(detJson.prodName);
-          $('#prodNikname').val(detJson.prodNikname);
-          $('#prodLink').val(detJson.prodLink);
-          $('#prodExplain').val(detJson.prodExplain);
-          $('#prodTime').val(detJson.prodTime);
-          $('#prodState').val(detJson.prodState);
-          layui.form.render();
-        }
-      }
-    });
 
   });
+
+  function save() {
+    var params = {};
+    params.prodType = $('#prodType').val();
+    params.prodName = $('#prodName').val();
+    params.prodLink = $('#prodLink').val();
+    params.prodExplain = $('#prodExplain').val();
+    params.prodTime = $('#prodTime').val();
+    params.prodState = $('#prodState').val();
+    postdata(params, "/prod/prodAdd", function () {
+      layer.msg("保存成功！");
+    });
+  }
 </script>
 </body>
 </html>

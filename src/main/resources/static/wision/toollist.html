@@ -56,16 +56,9 @@
             </div>
         </div>
 
-        <script type="text/html" id="test-table-toolbar-toolbarDemo">
-            <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-                <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
-            </div>
-        </script>
-
         <script type="text/html" id="test-table-toolbar-barDemo">
             <a id="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
-            <a id="design" class="layui-btn layui-btn-xs" lay-event="design">设计</a>
+            <a id="design" class="layui-btn layui-btn-xs" lay-event="offline">下架</a>
             <a id="preview" class="layui-btn layui-btn-xs" lay-event="preview">试用</a>
         </script>
 
@@ -160,15 +153,16 @@
                     , maxmin: true
                     , area: ['1200px', '600px']
                 });
-            }else if(obj.event === 'design') {
-                layer.msg("开发中");
-                // layer.open({
-                //     type: 2
-                //     , title: '组件设计'
-                //     , content: 'tooldesign.html?' + data.toolId
-                //     , maxmin: true
-                //     , area: ['1200px', '600px']
-                // });
+            }else if(obj.event === 'offline') {
+                layer.confirm('是否下架？', {
+                    btn: ['是','否'] //按钮
+                }, function(){
+                    var params={};
+                    params.action="offline";
+                    params.unitId=checkStatus.data[0].unitId;
+                    postdata(params,"/tool/toolsave",function () {
+                        table.reload('unitReload');layer.msg("已下架");});
+                });
             }else{
                 layer.open({
                     type: 2
