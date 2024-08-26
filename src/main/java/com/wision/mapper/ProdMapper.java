@@ -17,8 +17,9 @@ public interface ProdMapper {
     boolean updateProd(@Param("params") ProdDetForm params);
     List<TblListVo> tblList(Long prodId);
     String getProdName(Long prodId);
+    List<MenuListVo> menuList(Long prodId);
+    List<RelatDetVo> getToolIdsByMenuId(Long menuId);
 //    List<ProdViewVo> prodView(Long params);
-//    List<MenuListVo> menuList(Long prodId);
 //    String checkTblExists(String tblName);
 //    boolean dropTbl(String tblCode);
 //    boolean deleteTblById(Long tblId);
@@ -26,7 +27,6 @@ public interface ProdMapper {
 //    Long getTblIdByName(Long prodId,String tblName);
 //    boolean updateTblByCode(Long tblId,String tblCode);
 //    List<BasicTblList> basicTblList(Long prodId);
-//    List<RelatDetVo> getToolIdsByMenuId(Long menuId);
 //    List<RelatDetVo> extRelatList();
 //    boolean insertMenu(Long prodId);
 //    List<RelatDetVo> getRelatIdsByMenuId(Long menuId);

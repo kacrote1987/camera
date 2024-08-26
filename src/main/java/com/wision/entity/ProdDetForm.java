@@ -5,6 +5,8 @@ public class ProdDetForm {
     private Long prodId;
     private String prodType;
     private String prodName;
+    private String prodNikname;
+    private String prodVer;
     private String prodLink;
     private String prodExplain;
     private String prodTime;
@@ -40,6 +42,22 @@ public class ProdDetForm {
 
     public void setProdName(String prodName) {
         this.prodName = prodName;
+    }
+
+    public String getProdNikname() {
+        return prodNikname;
+    }
+
+    public void setProdNikname(String prodNikname) {
+        this.prodNikname = prodNikname;
+    }
+
+    public String getProdVer() {
+        return prodVer;
+    }
+
+    public void setProdVer(String prodVer) {
+        this.prodVer = prodVer;
     }
 
     public String getProdLink() {

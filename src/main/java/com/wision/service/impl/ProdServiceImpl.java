@@ -73,22 +73,22 @@ public class ProdServiceImpl implements ProdService {
         return prodName;
     }
 
-//    @Override
-//    public List<MenuListVo> menuList(String prodId) {
-//        List<MenuListVo> menuList=prodMapper.menuList(Long.valueOf(prodId.substring(0,prodId.indexOf("="))));
-//        for(int i=0;i<menuList.size();i++){
-//            List<RelatDetVo> toolList=prodMapper.getToolIdsByMenuId(menuList.get(i).getMenuId());
-//            String toolIds="";
-//            if(toolList.size()>0){
-//                for(int j=0;j<toolList.size();j++){
-//                    toolIds = toolIds + toolList.get(j).getToolId() + ",";
-//                }
-//                toolIds=toolIds.substring(0,toolIds.length()-1);
-//            }
-//            menuList.get(i).setToolIds(toolIds);
-//        }
-//        return menuList;
-//    }
+    @Override
+    public List<MenuListVo> menuList(Long prodId) {
+        List<MenuListVo> menuList=prodMapper.menuList(prodId);
+        for(int i=0;i<menuList.size();i++){
+            List<RelatDetVo> toolList=prodMapper.getToolIdsByMenuId(menuList.get(i).getMenuId());
+            String toolIds="";
+            if(toolList.size()>0){
+                for(int j=0;j<toolList.size();j++){
+                    toolIds = toolIds + toolList.get(j).getToolId() + ",";
+                }
+                toolIds=toolIds.substring(0,toolIds.length()-1);
+            }
+            menuList.get(i).setToolIds(toolIds);
+        }
+        return menuList;
+    }
 
 //    @Override
 //    public List<ProdViewVo> prodView(String params) {

@@ -5,6 +5,7 @@ public class ProdDetVo {
     private String prodType;
     private String prodName;
     private String prodNikname;
+    private String prodVer;
     private String prodLink;
     private String prodExplain;
     private String prodTime;
@@ -40,6 +41,14 @@ public class ProdDetVo {
 
     public void setProdNikname(String prodNikname) {
         this.prodNikname = prodNikname;
+    }
+
+    public String getProdVer() {
+        return prodVer;
+    }
+
+    public void setProdVer(String prodVer) {
+        this.prodVer = prodVer;
     }
 
     public String getProdLink() {

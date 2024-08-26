@@ -81,12 +81,12 @@ public class ProdController {
         return Result.success(getProdName);
     }
 
-//    @ApiOperation("菜单列表")
-//    @PostMapping("/menulist")
-//    public Result menuList(@RequestBody String prodId){
-//        List<MenuListVo> menuList= prodService.menuList(prodId);
-//        return Result.success(menuList);
-//    }
+    @ApiOperation("菜单列表")
+    @PostMapping("/menulist")
+    public Result menuList(@RequestParam Long prodId){
+        List<MenuListVo> menuList= prodService.menuList(prodId);
+        return Result.success(menuList);
+    }
 
 //    @ApiOperation("基础表保存")
 //    @PostMapping("/tblsave")

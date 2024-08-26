@@ -76,6 +76,14 @@
                                      autocomplete="off" class="layui-input">
                             </div>
                           </div>
+                          <div class="layui-col-lg6">
+                            <label class="layui-form-label">版本号</label>
+                            <div class="layui-input-block">
+                              <input id="prodVer" type="text" name="fullname"
+                                     lay-verify="required" placeholder=""
+                                     autocomplete="off" class="layui-input">
+                            </div>
+                          </div>
                         </div>
                         <div class="layui-form-item">
                           <label class="layui-form-label">产品说明</label>
@@ -139,6 +147,7 @@
           $('#prodType').val(detJson.prodType);
           $('#prodName').val(detJson.prodName);
           $('#prodNikname').val(detJson.prodNikname);
+          $('#prodVer').val(detJson.prodVer);
           $('#prodLink').val(detJson.prodLink);
           $('#prodExplain').val(detJson.prodExplain);
           $('#prodTime').val(detJson.prodTime);
@@ -155,6 +164,8 @@
     params.prodId = $('#prodId').val();
     params.prodType = $('#prodType').val();
     params.prodName = $('#prodName').val();
+    params.prodNikname = $('#prodNikname').val();
+    params.prodVer = $('#prodVer').val();
     params.prodLink = $('#prodLink').val();
     params.prodExplain = $('#prodExplain').val();
     params.prodTime = $('#prodTime').val();

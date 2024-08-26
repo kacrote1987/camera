@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wision.mapper.ProdMapper">
     <select id="prodList" resultType="com.wision.entity.ProdListVo" >
-        select a.prod_id,a.prod_type,a.prod_name,a.prod_link,a.prod_explain,date_format(a.prod_time,'%Y-%m-%d') as prod_time
+        select a.prod_id,a.prod_type,a.prod_name,a.prod_ver,a.prod_link,a.prod_explain,date_format(a.prod_time,'%Y-%m-%d') as prod_time
         ,a.prod_state from t_supp_prod_main a where prod_state not in ('下架','作废')
         <if test="params.prodType!=null and params.prodType!=''">
             and a.prod_type = #{params.prodType}
@@ -16,7 +16,7 @@
         order by a.prod_time desc
     </select>
     <select id="prodDet" resultType="com.wision.entity.ProdDetVo" >
-        select a.prod_id,a.prod_type,a.prod_name,a.prod_nikname,a.prod_link,a.prod_explain,date_format(a.prod_time,'%Y-%m-%d') as prod_time
+        select a.prod_id,a.prod_type,a.prod_name,a.prod_nikname,a.prod_ver,a.prod_link,a.prod_explain,date_format(a.prod_time,'%Y-%m-%d') as prod_time
         ,a.prod_state from t_supp_prod_main a where a.prod_id=#{prodId}
     </select>
     <update id="changeState">
@@ -34,15 +34,15 @@
         order by a.prod_time desc
     </select>
     <insert id="insertProd">
-        insert into t_supp_prod_main(prod_type,prod_name,prod_link,prod_explain,prod_time,prod_state)
-        values(#{params.prodType},#{params.prodName},#{params.prodLink},#{params.prodExplain},#{params.prodTime},#{params.prodState})
+        insert into t_supp_prod_main(prod_type,prod_name,prod_nikname,prod_ver,prod_link,prod_explain,prod_time,prod_state)
+        values(#{params.prodType},#{params.prodName},#{params.prodNikname},#{params.prodVer},#{params.prodLink},#{params.prodExplain},#{params.prodTime},#{params.prodState})
     </insert>
     <update id="deleteProd">
         update t_supp_prod_main set prod_state='作废' where prod_id=#{prodId}
     </update>
     <update id="updateProd">
-        update t_supp_prod_main set prod_type=#{params.prodType},prod_name=#{params.prodName},prod_link=#{params.prodLink}
-        ,prod_explain=#{params.prodExplain},prod_time=#{params.prodTime},prod_state=#{params.prodState} where prod_id=#{params.prodId}
+        update t_supp_prod_main set prod_type=#{params.prodType},prod_name=#{params.prodName},prod_nikname=#{params.prodNikname},prod_ver=#{params.prodVer}
+        ,prod_link=#{params.prodLink},prod_explain=#{params.prodExplain},prod_time=#{params.prodTime},prod_state=#{params.prodState} where prod_id=#{params.prodId}
     </update>
     <select id="tblList" resultType="com.wision.entity.TblListVo" >
         select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}
@@ -50,12 +50,14 @@
     <select id="getProdName" resultType="String" >
         select prod_name from t_supp_prod_main where prod_id=#{prodId}
     </select>
-
+    <select id="menuList" resultType="com.wision.entity.MenuListVo" >
+        select menu_id,menu_name,father_id,tool_page,menu_order from t_supp_menu_main where prod_id=#{prodId} order by menu_order
+    </select>
+    <select id="getToolIdsByMenuId" resultType="com.wision.entity.RelatDetVo" >
+        select tool_id from t_supp_relat_main where menu_id=#{menuId}
+    </select>
 <!--    <select id="prodView" resultType="com.wision.entity.ProdViewVo" >-->
 <!--        select prod_id,prod_name from t_supp_prod_main where prod_id=#{prodId}-->
-<!--    </select>-->
-<!--    <select id="menuList" resultType="com.wision.entity.MenuListVo" >-->
-<!--        select menu_id,menu_name,father_id,tool_page,menu_order from t_supp_menu_main where prod_id=#{prodId}-->
 <!--    </select>-->
 <!--    <select id="checkTblExists" resultType="String" >-->
 <!--        select table_name from information_schema.tables where table_name=#{tblName}-->
@@ -77,9 +79,6 @@
 <!--    </update>-->
 <!--    <select id="basicTblList" resultType="com.wision.entity.BasicTblList" >-->
 <!--        select tbl_id,prod_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}-->
-<!--    </select>-->
-<!--    <select id="getToolIdsByMenuId" resultType="com.wision.entity.RelatDetVo" >-->
-<!--        select tool_id from t_supp_relat_main where menu_id=#{menuId}-->
 <!--    </select>-->
 <!--    <insert id="insertMenu">-->
 <!--        insert into t_supp_menu_main(prod_id) values(#{prodId})-->

@@ -51,11 +51,11 @@ public interface ProdService {
      * @return
      */
     String getProdName(Long prodId);
-//    /**
-//     * 菜单列表
-//     * @return
-//     */
-//    List<MenuListVo> menuList(String prodId);
+    /**
+     * 菜单列表
+     * @return
+     */
+    List<MenuListVo> menuList(Long prodId);
 //    /**
 //     * 产品演示
 //     * @return
