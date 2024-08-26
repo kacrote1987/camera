@@ -8,6 +8,7 @@ import com.wision.service.ProdService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -90,6 +91,32 @@ public class ProdServiceImpl implements ProdService {
         return menuList;
     }
 
+    @Override
+    public List<MenuTreeVo> menuTree(Long prodId) {
+        List<MenuTreeVo> MenuTreeVo=prodMapper.menuFather(prodId);
+        for(int i=0;i<MenuTreeVo.size();i++){
+            List<children> menuChild=prodMapper.menuChild(MenuTreeVo.get(i).getId());
+            if(menuChild.size()!=0){
+                MenuTreeVo.get(i).setChildren(menuChild);
+            }else {
+                i++;
+            }
+        }
+        return MenuTreeVo;
+    }
+
+    @Override
+    public PageInfo<ToolListVo> toolSel(String prodId,ToolListForm params) {
+        PageHelper.startPage(params.getPage(), 10);
+        String menuId;
+        List<ToolListVo> toolSel = new ArrayList<>();
+        if(prodId.indexOf("menuId")>-1){
+            menuId = prodId.substring(prodId.indexOf("menuId=")+7,prodId.length());
+            toolSel = prodMapper.toolSel(Long.valueOf(menuId),params);
+        }
+        return PageInfo.of(toolSel);
+    }
+
 //    @Override
 //    public List<ProdViewVo> prodView(String params) {
 //        List<ProdViewVo> prodView=prodMapper.prodView(Long.valueOf(params));
@@ -169,24 +196,6 @@ public class ProdServiceImpl implements ProdService {
 //        }
 //    }
 //
-//    @Override
-//    public List<MenuTreeVo> menuTree(String params) {
-//        return null;
-//    }
-//
-////    @Override
-////    public List<MenuTreeVo> menuTree(String params) {
-////        List<MenuTreeVo> MenuTreeVo=prodMapper.menuFather(Long.valueOf(params));
-////        for(int i=0;i<MenuTreeVo.size();i++){
-////            List<children> menuChild=prodMapper.menuChild(MenuTreeVo.get(i).getId());
-////            if(menuChild.size()!=0){
-////                MenuTreeVo.get(i).setChildren(menuChild);
-////            }else {
-////                i++;
-////            }
-////        }
-////        return MenuTreeVo;
-////    }
 ////
 ////    @Override
 ////    public List<FlowListVo> flowList(String params) {

@@ -2,7 +2,10 @@ package com.wision.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wision.entity.*;
+import com.wision.entity.ToolDetForm;
+import com.wision.entity.ToolDetVo;
+import com.wision.entity.ToolListForm;
+import com.wision.entity.ToolListVo;
 import com.wision.mapper.ToolMapper;
 import com.wision.service.ToolService;
 import org.springframework.stereotype.Service;
@@ -40,18 +43,6 @@ public class ToolServiceImpl implements ToolService {
         } else {
             toolMapper.updateTool(params);
         }
-    }
-
-    @Override
-    public PageInfo<ToolListVo> toolSel(String prodId,ToolListForm params) {
-        PageHelper.startPage(params.getPage(), 10);
-        String menuId;
-        List<ToolListVo> toolSel = null;
-        if(prodId.indexOf("menuId")>-1){
-            menuId = prodId.substring(prodId.indexOf("menuId=")+7,prodId.length());
-            toolSel = toolMapper.toolSel(Long.valueOf(menuId),params);
-        }
-        return PageInfo.of(toolSel);
     }
 
     public static String method (String str){

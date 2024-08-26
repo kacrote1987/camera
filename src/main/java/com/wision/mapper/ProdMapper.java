@@ -19,6 +19,9 @@ public interface ProdMapper {
     String getProdName(Long prodId);
     List<MenuListVo> menuList(Long prodId);
     List<RelatDetVo> getToolIdsByMenuId(Long menuId);
+    List<MenuTreeVo> menuFather(Long prodId);
+    List<children> menuChild(Long fatherId);
+    List<ToolListVo> toolSel(Long menuId,@Param("params") ToolListForm params);
 //    List<ProdViewVo> prodView(Long params);
 //    String checkTblExists(String tblName);
 //    boolean dropTbl(String tblCode);
@@ -42,8 +45,6 @@ public interface ProdMapper {
 //    boolean cleanType(String tblName,String colCode,Long typeId);
 //    boolean cleanExt(Long menuId,String toolIds);
 //    boolean cleanRelat(Long menuId,String toolIds);
-//    List<MenuTreeVo> menuFather(Long prodId);
-//    List<children> menuChild(Long fatherId);
 //    List<FlowListVo> flowList(Long relatId);
 //    boolean insertFlow(Long relatId);
 //    boolean deleteFlow(Long extId);

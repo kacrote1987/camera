@@ -23,7 +23,7 @@
         update t_supp_prod_main set prod_state=#{state} where prod_id=#{prodId}
     </update>
     <select id="prodDesign" resultType="com.wision.entity.ProdDesignVo" >
-        select a.prod_id,a.prod_type,a.prod_name,a.prod_link,a.prod_explain,date_format(a.prod_time,'%Y-%m-%d') as prod_time
+        select a.prod_id,a.prod_type,a.prod_name,a.prod_ver,a.prod_link,a.prod_explain,date_format(a.prod_time,'%Y-%m-%d') as prod_time
         ,a.prod_state from t_supp_prod_main a where prod_state = '下架'
         <if test="params.prodType!=null and params.prodType!=''">
             and a.prod_type = #{params.prodType}
@@ -55,6 +55,16 @@
     </select>
     <select id="getToolIdsByMenuId" resultType="com.wision.entity.RelatDetVo" >
         select tool_id from t_supp_relat_main where menu_id=#{menuId}
+    </select>
+    <select id="menuFather" resultType="com.wision.entity.MenuTreeVo" >
+        select menu_name as title,menu_id as id,'true' as spread,null as children,tool_page from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')
+    </select>
+    <select id="menuChild" resultType="com.wision.entity.children" >
+        select menu_name as title,menu_id as id from t_supp_menu_main where father_id=#{fatherId}
+    </select>
+    <select id="toolSel" resultType="com.wision.entity.ToolListVo" >
+        select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.tool_name,b.tool_ver,b.tool_explain,date_format(b.tool_time,'%Y-%m-%d') as tool_time
+             ,b.share_num,b.tool_state from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
     </select>
 <!--    <select id="prodView" resultType="com.wision.entity.ProdViewVo" >-->
 <!--        select prod_id,prod_name from t_supp_prod_main where prod_id=#{prodId}-->
@@ -125,12 +135,6 @@
 <!--    <delete id="cleanRelat">-->
 <!--        delete from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds})-->
 <!--    </delete>-->
-<!--    <select id="menuFather" resultType="com.wision.entity.MenuTreeVo" >-->
-<!--        select menu_name as title,menu_id as id,'true' as spread,null as children,tool_page from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')-->
-<!--    </select>-->
-<!--    <select id="menuChild" resultType="com.wision.entity.children" >-->
-<!--        select menu_name as title,menu_id as id from t_supp_menu_main where father_id=#{fatherId}-->
-<!--    </select>-->
 <!--    <select id="flowList" resultType="com.wision.entity.FlowListVo" >-->
 <!--        select ext_id,tool_name,tool_code from t_supp_relat_ext where tool_tag='flow' and relat_id=#{relatId} order by tool_code-->
 <!--    </select>-->

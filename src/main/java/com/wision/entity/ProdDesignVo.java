@@ -4,6 +4,7 @@ public class ProdDesignVo {
     private Long prodId;
     private String prodType;
     private String prodName;
+    private String prodVer;
     private String prodLink;
     private String prodExplain;
     private String prodTime;
@@ -31,6 +32,14 @@ public class ProdDesignVo {
 
     public void setProdName(String prodName) {
         this.prodName = prodName;
+    }
+
+    public String getProdVer() {
+        return prodVer;
+    }
+
+    public void setProdVer(String prodVer) {
+        this.prodVer = prodVer;
     }
 
     public String getProdLink() {

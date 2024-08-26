@@ -56,9 +56,9 @@
 
     <script type="text/html" id="test-table-toolbar-barDemo">
       <a id="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
-      <a id="design" class="layui-btn layui-btn-xs" lay-event="offline">下架</a>
       <a id="preview" class="layui-btn layui-btn-xs" lay-event="preview">试用</a>
       <a id="package" class="layui-btn layui-btn-xs" lay-event="package">打包</a>
+      <a id="offline" class="layui-btn layui-btn-xs" lay-event="offline">下架</a>
     </script>
 
     <div class="layui-card-body">
@@ -154,6 +154,10 @@
           , maxmin: true
           , area: ['1200px', '600px']
         });
+      }else if (obj.event === 'preview') {
+        window.open(data.prodLink + '?' + data.prodId,'_blank');
+      }else if (obj.event === 'package') {
+        layer.msg("打包");
       }else if (obj.event === 'offline') {
         layer.confirm('是否下架？', {
           btn: ['是','否'] //按钮
@@ -164,10 +168,6 @@
           postdata(params,"/prod/changeState",function () {
             table.reload('prodReload');layer.msg("已下架");});
         });
-      }else if (obj.event === 'preview') {
-        window.open(data.prodLink + '?' + data.prodId,'_blank');
-      }else if (obj.event === 'package') {
-        layer.msg("打包");
       }else{
         layer.msg("待开发");
       }

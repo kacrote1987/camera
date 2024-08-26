@@ -1,12 +1,12 @@
 package com.wision.entity;
 
+import java.util.List;
+
 public class MenuTreeVo {
     private String title;
     private Long id;
     private String spread;
-//    private List<children> children;
-    private String toolPge;
-
+    private List<children> children;
     public String getTitle() {
         return title;
     }
@@ -31,19 +31,11 @@ public class MenuTreeVo {
         this.spread = spread;
     }
 
-//    public List<com.wision.entity.children> getChildren() {
-//        return children;
-//    }
-//
-//    public void setChildren(List<com.wision.entity.children> children) {
-//        this.children = children;
-//    }
-
-    public String getToolPge() {
-        return toolPge;
+    public List<com.wision.entity.children> getChildren() {
+        return children;
     }
 
-    public void setToolPge(String toolPge) {
-        this.toolPge = toolPge;
+    public void setChildren(List<com.wision.entity.children> children) {
+        this.children = children;
     }
 }

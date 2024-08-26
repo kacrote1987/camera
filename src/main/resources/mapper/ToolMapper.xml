@@ -32,8 +32,4 @@
         ,tool_explain=#{params.toolExplain},tool_time=#{params.toolTime},share_num=#{params.shareNum},tool_state=#{params.toolState}
         where tool_id=#{params.toolId}
     </update>
-    <select id="toolSel" resultType="com.wision.entity.ToolListVo" >
-        select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.tool_name,b.tool_ver,b.tool_explain,date_format(b.tool_time,'%Y-%m-%d') as tool_time
-        ,b.share_num,b.tool_state from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
-    </select>
 </mapper>

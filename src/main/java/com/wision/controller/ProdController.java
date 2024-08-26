@@ -82,10 +82,23 @@ public class ProdController {
     }
 
     @ApiOperation("菜单列表")
-    @PostMapping("/menulist")
+    @PostMapping("/menuList")
     public Result menuList(@RequestParam Long prodId){
         List<MenuListVo> menuList= prodService.menuList(prodId);
         return Result.success(menuList);
+    }
+    @ApiOperation("菜单树")
+    @PostMapping("/menuTree")
+    public Result menuTree(@RequestParam Long prodId){
+        List<MenuTreeVo> menuTree= prodService.menuTree(prodId);
+        return Result.success(menuTree);
+    }
+
+    @ApiOperation("根据菜单树查组件")
+    @PostMapping("/toolSel")
+    public Result toolSel(@RequestBody String prodId,ToolListForm params){
+        PageInfo<ToolListVo> toolSel= prodService.toolSel(prodId,params);
+        return Result.success(toolSel);
     }
 
 //    @ApiOperation("基础表保存")
@@ -110,12 +123,6 @@ public class ProdController {
 //        return Result.success();
 //    }
 //
-//    @ApiOperation("菜单树")
-//    @PostMapping("/menutree")
-//    public Result menuTree(@RequestBody String params){
-//        List<MenuTreeVo> menuTree= prodService.menuTree(params);
-//        return Result.suclayer(menuTree);
-//    }
 //
 //    @ApiOperation("流程组件列表")
 //    @PostMapping("/flowlist")

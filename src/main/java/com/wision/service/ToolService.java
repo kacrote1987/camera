@@ -24,9 +24,4 @@ public interface ToolService {
      * @return
      */
     void toolSave(ToolDetForm params);
-    /**
-     * 组件查询
-     * @return
-     */
-    PageInfo<ToolListVo> toolSel(String params,ToolListForm params1);
 }

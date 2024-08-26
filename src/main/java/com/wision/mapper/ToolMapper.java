@@ -13,5 +13,4 @@ public interface ToolMapper {
     boolean insertTool(@Param("params") ToolDetForm params);
     boolean deleteTool(Long params);
     boolean updateTool(@Param("params") ToolDetForm params);
-    List<ToolListVo> toolSel(Long menuId,@Param("params") ToolListForm params);
 }

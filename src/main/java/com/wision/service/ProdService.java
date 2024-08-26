@@ -56,6 +56,16 @@ public interface ProdService {
      * @return
      */
     List<MenuListVo> menuList(Long prodId);
+     /**
+     * 菜单树
+     * @return
+     */
+    List<MenuTreeVo> menuTree(Long prodId);
+    /**
+     * 根据菜单树查组件
+     * @return
+     */
+    PageInfo<ToolListVo> toolSel(String params,ToolListForm params1);
 //    /**
 //     * 产品演示
 //     * @return
@@ -77,11 +87,6 @@ public interface ProdService {
 //     * @return
 //     */
 //    void menuSave(MenuListForm params);
-//    /**
-//     * 菜单树
-//     * @return
-//     */
-//    List<MenuTreeVo> menuTree(String params);
 //    /**
 //     * 流程组件列表
 //     * @return

@@ -44,11 +44,4 @@ public class ToolController {
         toolService.toolSave(params);
         return Result.success();
     }
-
-    @ApiOperation("组件查询")
-    @PostMapping("/toolsel")
-    public Result toolSel(@RequestBody String prodId,ToolListForm params){
-        PageInfo<ToolListVo> toolSel= toolService.toolSel(prodId,params);
-        return Result.success(toolSel);
-    }
 }
