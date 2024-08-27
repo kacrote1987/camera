@@ -158,13 +158,12 @@
         var relatId = window.location.search.substring(1, window.location.search.length);
         $.ajax({
             type: "post",
-            url: "/prod/relatdet",
+            url: "/prod/basicConf?relatId=" + relatId,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            data: relatId,
             success: function (detObj) {
                 if (detObj.msg == "sucess") {
-                    var detJson = detObj.data[0];
+                    var detJson = detObj.data;
                     $('#relatName').val(detJson.relatName);
                     $('#relatOpen').val(detJson.relatOpen);
                     $('#layoutType').val(detJson.layoutType);
@@ -177,7 +176,7 @@
             elem: '#test-table-toolbar'
             , id: 'prodReload'
             , method: 'post'
-            , url: '/supp/basiccol?' + relatId //数据接口
+            , url: '/supp/basicView?relatId=' + relatId //数据接口
             , title: '字段配置表'
             , cols: [[
                   {field: 'toolName', title: '字段名称', width: '15%'}
@@ -280,7 +279,7 @@
         params.basicCol = $('#basicCol').val();
         params.mainTbl = $('#mainTbl').val();
         params.mainCol = $('#mainCol').val();
-        postdata(params, "/supp/relatsave", function () {
+        postdata(params, "/prod/relatEdit", function () {
           layer.msg("保存成功！");
         });
     }

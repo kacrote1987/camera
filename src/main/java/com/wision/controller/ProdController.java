@@ -123,6 +123,27 @@ public class ProdController {
         return Result.success(toolSel);
     }
 
+    @ApiOperation("基础信息组件配置")
+    @PostMapping("/basicConf")
+    public Result basicConf(@RequestParam Long relatId){
+        RelatDetVo basicConf= prodService.basicConf(relatId);
+        return Result.success(basicConf);
+    }
+
+    @ApiOperation("基础信息组件展示")
+    @PostMapping("/basicView")
+    public Result basicView(@RequestParam Long relatId){
+        List<BasicTblList> basicView= prodService.basicView(relatId);
+        return Result.success(basicView);
+    }
+
+//    @ApiOperation("组件配置修改")
+//    @PostMapping("/relatEdit")
+//    public Result relatSave(@RequestBody RelatForm params){
+//        prodService.relatSave(params);
+//        return Result.success();
+//    }
+
 //    @ApiOperation("基础表保存")
 //    @PostMapping("/tblsave")
 //    public Result tblSave(@RequestBody BasicTblList params){
@@ -130,12 +151,6 @@ public class ProdController {
 //        return Result.success();
 //    }
 //
-//    @ApiOperation("基础表展示")
-//    @PostMapping("/basictbl")
-//    public Result basicTbl(@RequestBody String params){
-//        List<BasicTblList> basicTbl= prodService.basicTbl(params);
-//        return Result.success(basicTbl);
-//    }
 //
 //    @ApiOperation("流程组件列表")
 //    @PostMapping("/flowlist")
@@ -172,19 +187,6 @@ public class ProdController {
 //        return Result.success();
 //    }
 //
-//    @ApiOperation("组件映射信息列表")
-//    @PostMapping("/relatdet")
-//    public Result relatDet(@RequestBody Long relatId){
-//        List<RelatDetVo> relatDet= prodService.relatDet(relatId);
-//        return Result.suclayer(relatDet);
-//    }
-//
-//    @ApiOperation("组件映射信息保存")
-//    @PostMapping("/relatsave")
-//    public Result relatSave(@RequestBody RelatForm params){
-//        prodService.relatSave(params);
-//        return Result.success();
-//    }
 //
 //    @ApiOperation("自建表字段配置列表")
 //    @PostMapping("/basiccol")

@@ -22,6 +22,8 @@ public interface ProdMapper {
     List<MenuTreeVo> menuFather(Long prodId);
     List<children> menuChild(Long fatherId);
     List<ToolListVo> toolSel(Long menuId,@Param("params") ToolListForm params);
+    RelatDetVo basicConf(Long relatId);
+    List<BasicTblList> basicTblList(Long prodId);
 //    List<ProdViewVo> prodView(Long params);
 //    String checkTblExists(String tblName);
 //    boolean dropTbl(String tblCode);
@@ -29,7 +31,6 @@ public interface ProdMapper {
 //    boolean insertTblByName(Long prodId,String tblName);
 //    Long getTblIdByName(Long prodId,String tblName);
 //    boolean updateTblByCode(Long tblId,String tblCode);
-//    List<BasicTblList> basicTblList(Long prodId);
 //    List<RelatDetVo> extRelatList();
 //    boolean insertMenu(Long prodId);
 //    List<RelatDetVo> getRelatIdsByMenuId(Long menuId);
@@ -54,7 +55,6 @@ public interface ProdMapper {
 //    boolean updateTypeIds(String newTypeIds,Long relatId);
 //    boolean cleanNullTypeIds();
 //    List<RelatDetVo> getTypeIds(Long relatId);
-//    List<RelatDetVo> relatDet(Long relatId);
 //    List<TblImpForm> tblList(Long prodId);
 //    List<TblImpForm> tblDet(Long tblId);
 //    String getMainTblByOtherRelatId(Long relatId);

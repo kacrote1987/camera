@@ -81,6 +81,16 @@ public interface ProdService {
      * @return
      */
     PageInfo<ToolListVo> toolSel(String params,ToolListForm params1);
+     /**
+     * 基础信息组件配置
+     * @return
+     */
+     RelatDetVo basicConf(Long relatId);
+     /**
+     * 基础信息组件展示
+     * @return
+     */
+    List<BasicTblList> basicView(Long relatId);
 //    /**
 //     * 产品演示
 //     * @return
@@ -91,11 +101,6 @@ public interface ProdService {
 //     * @return
 //     */
 //    void tblSave(BasicTblList params);
-//    /**
-//     * 导入基础表
-//     * @return
-//     */
-//    List<BasicTblList> basicTbl(String params);
 //
 //    /**
 //     * 菜单保存
@@ -112,11 +117,6 @@ public interface ProdService {
 ////     * @return
 ////     */
 ////    void flowSave(FlowListForm params);
-//    /**
-//     * 基础档案组件列表
-//     * @return
-//     */
-//    List<RelatDetVo> relatDet(Long relatId);
 //    /**
 //     * 基础库表列表
 //     * @return

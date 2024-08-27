@@ -63,8 +63,14 @@
         select menu_name as title,menu_id as id from t_supp_menu_main where father_id=#{fatherId}
     </select>
     <select id="toolSel" resultType="com.wision.entity.ToolListVo" >
-        select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.tool_name,b.tool_ver,b.tool_explain,date_format(b.tool_time,'%Y-%m-%d') as tool_time
+        select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.type_code,b.tool_name,b.tool_ver,b.tool_explain,date_format(b.tool_time,'%Y-%m-%d') as tool_time
              ,b.share_num,b.tool_state from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
+    </select>
+    <select id="basicConf" resultType="com.wision.entity.RelatDetVo" >
+        select relat_id,tool_id,relat_name,relat_open,layout_type,basic_tbl from t_supp_relat_main where relat_id=#{relatId}
+    </select>
+    <select id="basicTblList" resultType="com.wision.entity.BasicTblList" >
+        select tbl_id,prod_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}
     </select>
 <!--    <select id="prodView" resultType="com.wision.entity.ProdViewVo" >-->
 <!--        select prod_id,prod_name from t_supp_prod_main where prod_id=#{prodId}-->
@@ -87,9 +93,6 @@
 <!--    <update id="updateTblByCode">-->
 <!--        update t_supp_imp_tbl set tbl_code=#{tblCode} where tbl_id=#{tblId}-->
 <!--    </update>-->
-<!--    <select id="basicTblList" resultType="com.wision.entity.BasicTblList" >-->
-<!--        select tbl_id,prod_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}-->
-<!--    </select>-->
 <!--    <insert id="insertMenu">-->
 <!--        insert into t_supp_menu_main(prod_id) values(#{prodId})-->
 <!--    </insert>-->
@@ -158,9 +161,6 @@
 <!--    </update>-->
 <!--    <select id="getTypeIds" resultType="com.wision.entity.RelatDetVo" >-->
 <!--        select relat_id,tool_code as relat_name from t_supp_relat_ext where relat_id=#{relatId}-->
-<!--    </select>-->
-<!--    <select id="relatDet" resultType="com.wision.entity.RelatDetVo" >-->
-<!--        select relat_id,tool_id,relat_name,relat_open,layout_type,basic_tbl from t_supp_relat_main where relat_id=#{relatId}-->
 <!--    </select>-->
 <!--    <select id="tblList" resultType="com.wision.entity.TblImpForm" >-->
 <!--        select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}-->

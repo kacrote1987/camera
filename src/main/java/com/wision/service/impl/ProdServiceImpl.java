@@ -173,6 +173,21 @@ public class ProdServiceImpl implements ProdService {
         return PageInfo.of(toolSel);
     }
 
+    @Override
+    public RelatDetVo basicConf(Long relatId) {
+        RelatDetVo basicConf=prodMapper.basicConf(relatId);
+//        String basicTbl=prodMapper.getMainTblByOtherRelatId(relatId);
+//        relatDet.get(0).setMainTbl(basicTbl.substring(0,basicTbl.indexOf(",")));
+//        relatDet.get(0).setBasicTbl(basicTbl.substring(basicTbl.indexOf(",")+1,basicTbl.length()));
+        return basicConf;
+    }
+
+    @Override
+    public List<BasicTblList> basicView(Long relatId) {
+//        List<BasicTblList> basicTblList = prodMapper.basicTblList(prodId);
+        return null;
+    }
+
 //    @Override
 //    public List<ProdViewVo> prodView(String params) {
 //        List<ProdViewVo> prodView=prodMapper.prodView(Long.valueOf(params));
@@ -196,12 +211,6 @@ public class ProdServiceImpl implements ProdService {
 //        }
 //    }
 //
-//    @Override
-//    public List<BasicTblList> basicTbl(String params) {
-//        Long prodId=Long.valueOf(params.substring(0,params.indexOf("=")));
-//        List<BasicTblList> basicTblList = prodMapper.basicTblList(prodId);
-//        return basicTblList;
-//    }
 ////
 ////    @Override
 ////    public List<FlowListVo> flowList(String params) {
@@ -221,14 +230,6 @@ public class ProdServiceImpl implements ProdService {
 ////        }
 ////    }
 //
-//    @Override
-//    public List<RelatDetVo> relatDet(Long relatId) {
-//        List<RelatDetVo> relatDet=prodMapper.relatDet(relatId);
-////        String basicTbl=prodMapper.getMainTblByOtherRelatId(relatId);
-////        relatDet.get(0).setMainTbl(basicTbl.substring(0,basicTbl.indexOf(",")));
-////        relatDet.get(0).setBasicTbl(basicTbl.substring(basicTbl.indexOf(",")+1,basicTbl.length()));
-//        return relatDet;
-//    }
 //
 ////    @Override
 ////    public List<TblImpForm> tblList(String params) {

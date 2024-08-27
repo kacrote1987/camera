@@ -7,6 +7,7 @@ public class ToolListVo {
     private String layoutType;
     private Long toolId;
     private String toolType;
+    private String typeCode;
     private String toolName;
     private String toolVer;
     private String toolConf;
@@ -61,6 +62,14 @@ public class ToolListVo {
 
     public void setToolType(String toolType) {
         this.toolType = toolType;
+    }
+
+    public String getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
     }
 
     public String getToolName() {
