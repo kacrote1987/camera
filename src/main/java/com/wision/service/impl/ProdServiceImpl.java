@@ -92,6 +92,62 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
+    public void menuAdd(Long prodId) {
+//        prodMapper.insertMenu(params.getProdId());
+    }
+
+    @Override
+    public void menuDel(Long menuId) {
+//            先删除对应关系
+//        List<RelatDetVo> relatIds=prodMapper.getRelatIdsByMenuId(params.getMenuId());
+//        for(int i=0;i<relatIds.size();i++){
+//            List<RelatDetVo> typeIds=prodMapper.getTypeIds(relatIds.get(i).getRelatId());
+//            for(int j=0;j<typeIds.size();j++){
+////                    *注:此处暂时写死为basic和step,后期再放开
+//                if(typeIds.get(j).getRelatName()=="basic" || typeIds.get(j).getRelatName()=="step"){
+//                    prodMapper.deleteType(typeIds.get(j).getRelatId(),typeIds.get(j).getRelatName()+"_id","t_supp_tool_"+typeIds.get(j).getRelatName());
+//                }
+//            }
+//            prodMapper.deleteRelatExt(relatIds.get(i).getRelatId());
+//        }
+//        prodMapper.deleteRelatMain(params.getMenuId());
+////            再删除菜单
+//        prodMapper.deleteMenuMain(params.getMenuId());
+    }
+
+
+    @Override
+    public void menuEdit(MenuEditForm params) {
+        System.out.println("id="+ params.getMenuId() +";x="+params.getField()+";y="+params.getValue());
+//        if (params.getField().equals("toolIds")) {
+////            更新对应关系t_supp_relat_main表和t_supp_relat_ext表
+//            String toolIdsTemp=params.getValue()+',';
+//            while(toolIdsTemp.indexOf(',')>0){
+//                String toolId=toolIdsTemp.substring(0,toolIdsTemp.indexOf(','));
+//                Long existRelat=prodMapper.existRelat(params.getMenuId(),Long.valueOf(toolId));
+//                if(existRelat==null){
+//                    prodMapper.insertRelat(params.getMenuId(),Long.valueOf(toolId));
+//                    prodMapper.insertExtByMenu(params.getMenuId(),Long.valueOf(toolId));
+//                }
+//                toolIdsTemp=toolIdsTemp.substring(toolIdsTemp.indexOf(',')+1,toolIdsTemp.length());
+//            }
+////            清除多余数据
+//            List<RelatDetVo> relatVo=prodMapper.getCleanExtIds(params.getMenuId(),params.getValue());
+//            for(int i=0;i<relatVo.size();i++){
+////                *注:此处暂时写死为basic和step,后期再放开
+//                if(relatVo.get(i).getRelatName()=="basic" || relatVo.get(i).getRelatName()=="step"){
+//                    prodMapper.cleanType("t_supp_tool_"+relatVo.get(i).getRelatName(),relatVo.get(i).getRelatName()+"_id",relatVo.get(i).getRelatId());
+//                }
+//            }
+//            prodMapper.cleanExt(params.getMenuId(),params.getValue());
+//            prodMapper.cleanRelat(params.getMenuId(),params.getValue());
+//        } else {
+////            更新其余信息时，仅更新菜单
+//            prodMapper.updateMenu(params.getMenuId(),method(params.getField()),params.getValue());
+//        }
+    }
+
+    @Override
     public List<MenuTreeVo> menuTree(Long prodId) {
         List<MenuTreeVo> MenuTreeVo=prodMapper.menuFather(prodId);
         for(int i=0;i<MenuTreeVo.size();i++){
@@ -146,56 +202,6 @@ public class ProdServiceImpl implements ProdService {
 //        List<BasicTblList> basicTblList = prodMapper.basicTblList(prodId);
 //        return basicTblList;
 //    }
-
-//
-//    @Override
-//    public void menuSave(MenuListForm params) {
-//        if (params.getAction().equals("add")) {
-//            prodMapper.insertMenu(params.getProdId());
-//        } else if (params.getAction().equals("del")) {
-////            先删除对应关系
-//            List<RelatDetVo> relatIds=prodMapper.getRelatIdsByMenuId(params.getMenuId());
-//            for(int i=0;i<relatIds.size();i++){
-//                List<RelatDetVo> typeIds=prodMapper.getTypeIds(relatIds.get(i).getRelatId());
-//                for(int j=0;j<typeIds.size();j++){
-////                    *注:此处暂时写死为basic和step,后期再放开
-//                    if(typeIds.get(j).getRelatName()=="basic" || typeIds.get(j).getRelatName()=="step"){
-//                        prodMapper.deleteType(typeIds.get(j).getRelatId(),typeIds.get(j).getRelatName()+"_id","t_supp_tool_"+typeIds.get(j).getRelatName());
-//                    }
-//                }
-//                prodMapper.deleteRelatExt(relatIds.get(i).getRelatId());
-//            }
-//            prodMapper.deleteRelatMain(params.getMenuId());
-////            再删除菜单
-//            prodMapper.deleteMenuMain(params.getMenuId());
-//        } else if (params.getField().equals("toolIds")) {
-////            更新对应关系t_supp_relat_main表和t_supp_relat_ext表
-//            String toolIdsTemp=params.getValue()+',';
-//            while(toolIdsTemp.indexOf(',')>0){
-//                String toolId=toolIdsTemp.substring(0,toolIdsTemp.indexOf(','));
-//                Long existRelat=prodMapper.existRelat(params.getMenuId(),Long.valueOf(toolId));
-//                if(existRelat==null){
-//                    prodMapper.insertRelat(params.getMenuId(),Long.valueOf(toolId));
-//                    prodMapper.insertExtByMenu(params.getMenuId(),Long.valueOf(toolId));
-//                }
-//                toolIdsTemp=toolIdsTemp.substring(toolIdsTemp.indexOf(',')+1,toolIdsTemp.length());
-//            }
-////            清除多余数据
-//            List<RelatDetVo> relatVo=prodMapper.getCleanExtIds(params.getMenuId(),params.getValue());
-//            for(int i=0;i<relatVo.size();i++){
-////                *注:此处暂时写死为basic和step,后期再放开
-//                if(relatVo.get(i).getRelatName()=="basic" || relatVo.get(i).getRelatName()=="step"){
-//                    prodMapper.cleanType("t_supp_tool_"+relatVo.get(i).getRelatName(),relatVo.get(i).getRelatName()+"_id",relatVo.get(i).getRelatId());
-//                }
-//            }
-//            prodMapper.cleanExt(params.getMenuId(),params.getValue());
-//            prodMapper.cleanRelat(params.getMenuId(),params.getValue());
-//        } else {
-////            更新其余信息时，仅更新菜单
-//            prodMapper.updateMenu(params.getMenuId(),method(params.getField()),params.getValue());
-//        }
-//    }
-//
 ////
 ////    @Override
 ////    public List<FlowListVo> flowList(String params) {

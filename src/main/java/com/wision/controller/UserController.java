@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "人事管理")
+@Api(description = "用户管理")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -29,15 +29,15 @@ public class UserController {
         return Result.success(userLoginVo);
     }
 
-    @ApiOperation("人员信息列表")
-    @PostMapping("/userlist")
+    @ApiOperation("用户信息列表")
+    @PostMapping("/userList")
     public Result userList(UserListForm params){
         PageInfo<UserListVo> userList= userService.userList(params);
         return Result.success(userList);
     }
 
-    @ApiOperation("人员信息详细")
-    @PostMapping("/userdet")
+    @ApiOperation("用户详细信息")
+    @PostMapping("/userDet")
     public Result userDet(@RequestBody Long userId){
         List<UserDetVo> userDet=userService.userDet(userId);
         return Result.success(userDet);

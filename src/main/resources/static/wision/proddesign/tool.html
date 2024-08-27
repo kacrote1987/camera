@@ -152,14 +152,13 @@
     // });
 
     //监听单元格编辑
-    // table.on('edit(test-table-toolbar)', function (obj) {
-    //   var params = {};
-    //   params.action = "update";
-    //   params.menuId = obj.data.menuId;
-    //   params.field = obj.field;
-    //   params.value = obj.value;
-    //   postdata(params, "/prod/menusave", function () {table.reload('menuReload');layer.msg("更新成功");})
-    // });
+    table.on('edit(test-table-toolbar)', function (obj) {
+      var params = {};
+      params.menuId = obj.data.menuId;
+      params.field = obj.field;
+      params.value = obj.value;
+      postdata(params, "/prod/menuEdit", function () {table.reload('menuReload');layer.msg("更新成功");})
+    });
 
     // 组件查询
     table.render({

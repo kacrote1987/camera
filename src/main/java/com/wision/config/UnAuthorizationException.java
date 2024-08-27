@@ -1,9 +1,5 @@
-package com.wision.exception;
+package com.wision.config;
 
-/**
- * @author zhangyq
- * @create 2019-09-12 19:18
- */
 public class UnAuthorizationException extends RuntimeException {
 
     public UnAuthorizationException() {

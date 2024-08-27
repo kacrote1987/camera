@@ -1,6 +1,5 @@
 package com.wision.config;
 
-import com.wision.exception.UnAuthorizationException;
 import com.wision.util.MyCache;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

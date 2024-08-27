@@ -56,6 +56,21 @@ public interface ProdService {
      * @return
      */
     List<MenuListVo> menuList(Long prodId);
+    /**
+     * 菜单新增
+     * @return
+     */
+    void menuAdd(Long prodId);
+    /**
+     * 菜单删除
+     * @return
+     */
+    void menuDel(Long menuId);
+    /**
+     * 菜单修改
+     * @return
+     */
+    void menuEdit(MenuEditForm params);
      /**
      * 菜单树
      * @return

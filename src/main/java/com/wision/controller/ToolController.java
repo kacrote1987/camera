@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Api(description = "应用支撑体系")
+@Api(description = "组件管理")
 @RestController
 @RequestMapping("/tool")
 public class ToolController {
@@ -25,21 +25,21 @@ public class ToolController {
     ToolService toolService;
 
     @ApiOperation("组件列表")
-    @PostMapping("/toollist")
+    @PostMapping("/toolList")
     public Result toolList(ToolListForm params){
         PageInfo<ToolListVo> toolList= toolService.toolList(params);
         return Result.success(toolList);
     }
 
     @ApiOperation("组件详细")
-    @PostMapping("/tooldet")
+    @PostMapping("/toolDet")
     public Result toolDet(@RequestBody String params){
         List<ToolDetVo> toolDet= toolService.toolDet(params);
         return Result.success(toolDet);
     }
 
     @ApiOperation("组件保存")
-    @PostMapping("/toolsave")
+    @PostMapping("/toolSave")
     public Result toolSave(@RequestBody ToolDetForm params){
         toolService.toolSave(params);
         return Result.success();

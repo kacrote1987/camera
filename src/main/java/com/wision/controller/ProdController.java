@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Api(description = "产品关联")
+@Api(description = "产品管理")
 @RestController
 @RequestMapping("/prod")
 public class ProdController {
@@ -55,7 +55,7 @@ public class ProdController {
 
     @ApiOperation("产品删除")
     @PostMapping("/prodDel")
-    public Result prodDel(@RequestBody Long prodId){
+    public Result prodDel(@RequestParam Long prodId){
         prodService.prodDel(prodId);
         return Result.success();
     }
@@ -87,6 +87,28 @@ public class ProdController {
         List<MenuListVo> menuList= prodService.menuList(prodId);
         return Result.success(menuList);
     }
+
+    @ApiOperation("菜单新增")
+    @PostMapping("/menuAdd")
+    public Result menuAdd(@RequestBody Long prodId){
+        prodService.menuAdd(prodId);
+        return Result.success();
+    }
+
+    @ApiOperation("菜单删除")
+    @PostMapping("/menuDel")
+    public Result menuDel(@RequestParam Long menuId){
+        prodService.menuDel(menuId);
+        return Result.success();
+    }
+
+    @ApiOperation("菜单修改")
+    @PostMapping("/menuEdit")
+    public Result menuSave(@RequestBody MenuEditForm params){
+        prodService.menuEdit(params);
+        return Result.success();
+    }
+
     @ApiOperation("菜单树")
     @PostMapping("/menuTree")
     public Result menuTree(@RequestParam Long prodId){
@@ -114,15 +136,6 @@ public class ProdController {
 //        List<BasicTblList> basicTbl= prodService.basicTbl(params);
 //        return Result.success(basicTbl);
 //    }
-//
-//
-//    @ApiOperation("菜单保存")
-//    @PostMapping("/menusave")
-//    public Result menuSave(@RequestBody MenuListForm params){
-//        prodService.menuSave(params);
-//        return Result.success();
-//    }
-//
 //
 //    @ApiOperation("流程组件列表")
 //    @PostMapping("/flowlist")
