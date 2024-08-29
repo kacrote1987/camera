@@ -33,7 +33,7 @@
                         <div class="layui-col-lg6">
                           <label class="layui-form-label">产品类别</label>
                           <div class="layui-input-block">
-                            <select id="prodType" name="prodType" lay-filter="prodType">
+                            <select id="prodType" lay-filter="prodType">
                               <option value="">全部</option>
                               <option value="智慧园区">智慧园区</option>
                               <option value="未来社区">未来社区</option>
@@ -53,16 +53,14 @@
                           <div class="layui-col-lg6">
                             <label class="layui-form-label">产品名称</label>
                             <div class="layui-input-block">
-                              <input id="prodName" type="text" name="fullname"
-                                     lay-verify="required" placeholder=""
+                              <input id="prodName" type="text" lay-verify="required" placeholder=""
                                      autocomplete="off" class="layui-input">
                             </div>
                           </div>
                           <div class="layui-col-lg6">
                             <label class="layui-form-label">项目简称</label>
                             <div class="layui-input-block">
-                              <input id="prodNikname" type="text" name="fullname"
-                                     lay-verify="required" placeholder=""
+                              <input id="prodNikname" type="text" lay-verify="required" placeholder=""
                                      autocomplete="off" class="layui-input">
                             </div>
                           </div>
@@ -71,16 +69,14 @@
                           <div class="layui-col-lg6">
                             <label class="layui-form-label">上架时间</label>
                             <div class="layui-input-block">
-                              <input id="prodTime" type="text" name="fullname"
-                                     lay-verify="required" placeholder=""
+                              <input id="prodTime" type="text" lay-verify="required" placeholder=""
                                      autocomplete="off" class="layui-input">
                             </div>
                           </div>
                           <div class="layui-col-lg6">
                             <label class="layui-form-label">版本号</label>
                             <div class="layui-input-block">
-                              <input id="prodVer" type="text" name="fullname"
-                                     lay-verify="required" placeholder=""
+                              <input id="prodVer" type="text" lay-verify="required" placeholder=""
                                      autocomplete="off" class="layui-input">
                             </div>
                           </div>
@@ -88,8 +84,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">产品说明</label>
                           <div class="layui-input-block">
-                                                        <textarea id="prodExplain" placeholder=""
-                                                                  class="layui-textarea"></textarea>
+                              <textarea id="prodExplain" placeholder="" class="layui-textarea"></textarea>
                           </div>
                         </div>
                       </div>
@@ -132,7 +127,7 @@
       dataType: "json",
       data: prodId,
       success: function (detObj) {
-        if (detObj.msg == "sucess") {
+        if (detObj.msg == "success") {
           var detJson = detObj.data[0];
           $('#prodId').val(detJson.prodId);
           $('#prodType').val(detJson.prodType);

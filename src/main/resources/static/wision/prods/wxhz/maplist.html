@@ -213,7 +213,7 @@
             dataType: "json",
             async: false,
             success: function (detObj) {
-                if (detObj.msg === "sucess") {
+                if (detObj.msg === "success") {
                     result = detObj.data;
                 }
             }
@@ -364,7 +364,7 @@
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (detObj) {
-                    if (detObj.msg === "sucess") {
+                    if (detObj.msg === "success") {
                         let ORIGIN_LONGLAT = [];
                         let pos = [];
                         for (var i = 0; i < detObj.data.length; i++) {
@@ -438,7 +438,7 @@
             dataType: "json",
             async: false,
             success: function (detObj) {
-                if (detObj.msg === "sucess") {
+                if (detObj.msg === "success") {
                     result = detObj.data;
                 }
             }
@@ -492,7 +492,7 @@
                 async: false,
                 data: "120.089872,30.856878",
                 success: function (detObj) {
-                    if (detObj.msg === "sucess") {
+                    if (detObj.msg === "success") {
                         result = detObj.data[0];
                     }
                 }

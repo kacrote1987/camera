@@ -16,8 +16,7 @@
         order by a.prod_time desc
     </select>
     <select id="prodDet" resultType="com.wision.entity.ProdDetVo" >
-        select a.prod_id,a.prod_type,a.prod_name,a.prod_nikname,a.prod_ver,a.prod_link,a.prod_explain,date_format(a.prod_time,'%Y-%m-%d') as prod_time
-        ,a.prod_state from t_supp_prod_main a where a.prod_id=#{prodId}
+        select a.prod_id,a.prod_type,a.prod_name,a.prod_nikname,a.prod_ver,a.prod_explain from t_supp_prod_main a where a.prod_id=#{prodId}
     </select>
     <update id="changeState">
         update t_supp_prod_main set prod_state=#{state} where prod_id=#{prodId}
@@ -35,7 +34,7 @@
     </select>
     <insert id="insertProd">
         insert into t_supp_prod_main(prod_type,prod_name,prod_nikname,prod_ver,prod_link,prod_explain,prod_time,prod_state)
-        values(#{params.prodType},#{params.prodName},#{params.prodNikname},#{params.prodVer},#{params.prodLink},#{params.prodExplain},#{params.prodTime},#{params.prodState})
+        values(#{params.prodType},#{params.prodName},#{params.prodNikname},#{params.prodVer},'',#{params.prodExplain},now(),'下架')
     </insert>
     <update id="deleteProd">
         update t_supp_prod_main set prod_state='作废' where prod_id=#{prodId}

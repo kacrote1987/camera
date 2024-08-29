@@ -159,7 +159,7 @@
           layer.confirm('是否删除？', {
             btn: ['是','否'] //按钮
           }, function(){
-            postdata(checkStatus.data[0].prodId,"/prod/prodDel",function () {
+            postdata(null,"/prod/prodDel?prodId=" + checkStatus.data[0].prodId,function () {
               table.reload('prodReload');layer.msg("删除成功");})
           });
           break;
