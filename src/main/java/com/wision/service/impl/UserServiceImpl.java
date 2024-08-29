@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
 import com.wision.mapper.UserMapper;
 import com.wision.service.UserService;
-import com.wision.util.MyCache;
+import com.wision.config.MyCache;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,13 +37,17 @@ public class UserServiceImpl implements UserService {
     }
 
     public PageInfo<UserListVo> userList(UserListForm params) {
+        Integer page = 0;
+        if(params.getPage() != null){
+            page = params.getPage();
+        }
+        PageHelper.startPage(page, 10);
         String type;
         if(params.getType()==null || params.getType().equals("")){
             type="dept";
         }else{
             type=params.getType();
         }
-        PageHelper.startPage(params.getPage(), 10);
         List<UserListVo> userList=userMapper.userList(type,params);
         return PageInfo.of(userList);
     }

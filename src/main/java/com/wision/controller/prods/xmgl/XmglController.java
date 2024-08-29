@@ -1,6 +1,6 @@
 package com.wision.controller.prods.xmgl;
 
-import com.wision.util.Result;
+import com.wision.config.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;

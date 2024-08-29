@@ -3,7 +3,7 @@ package com.wision.controller;
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
 import com.wision.service.ProdService;
-import com.wision.util.Result;
+import com.wision.config.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;

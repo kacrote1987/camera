@@ -20,7 +20,11 @@ public class ToolServiceImpl implements ToolService {
 
     @Override
     public PageInfo<ToolListVo> toolList(ToolListForm params) {
-        PageHelper.startPage(params.getPage(), 10);
+        Integer page = 0;
+        if(params.getPage() != null){
+            page = params.getPage();
+        }
+        PageHelper.startPage(page, 10);
         List<ToolListVo> toolList = toolMapper.toolList(params);
         return PageInfo.of(toolList);
     }

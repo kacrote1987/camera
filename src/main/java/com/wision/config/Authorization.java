@@ -1,6 +1,5 @@
 package com.wision.config;
 
-import com.wision.util.MyCache;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 public class Authorization extends HandlerInterceptorAdapter {
-    final static String TOKEN="wx-token";
+    final static String TOKEN="Wx-Token";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
