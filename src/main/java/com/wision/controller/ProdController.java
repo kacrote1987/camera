@@ -90,7 +90,7 @@ public class ProdController {
 
     @ApiOperation("菜单新增")
     @PostMapping("/menuAdd")
-    public Result menuAdd(@RequestBody Long prodId){
+    public Result menuAdd(@RequestParam Long prodId){
         prodService.menuAdd(prodId);
         return Result.success();
     }

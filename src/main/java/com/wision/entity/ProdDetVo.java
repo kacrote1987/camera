@@ -7,6 +7,7 @@ public class ProdDetVo {
     private String prodNikname;
     private String prodVer;
     private String prodExplain;
+    private String prodState;
 
     public Long getProdId() {
         return prodId;
@@ -54,5 +55,13 @@ public class ProdDetVo {
 
     public void setProdExplain(String prodExplain) {
         this.prodExplain = prodExplain;
+    }
+
+    public String getProdState() {
+        return prodState;
+    }
+
+    public void setProdState(String prodState) {
+        this.prodState = prodState;
     }
 }

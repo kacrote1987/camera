@@ -16,7 +16,7 @@
         order by a.prod_time desc
     </select>
     <select id="prodDet" resultType="com.wision.entity.ProdDetVo" >
-        select a.prod_id,a.prod_type,a.prod_name,a.prod_nikname,a.prod_ver,a.prod_explain from t_supp_prod_main a where a.prod_id=#{prodId}
+        select a.prod_id,a.prod_type,a.prod_name,a.prod_nikname,a.prod_ver,a.prod_explain,a.prod_state from t_supp_prod_main a where a.prod_id=#{prodId}
     </select>
     <update id="changeState">
         update t_supp_prod_main set prod_state=#{state} where prod_id=#{prodId}
@@ -55,6 +55,33 @@
     <select id="getToolIdsByMenuId" resultType="com.wision.entity.RelatDetVo" >
         select tool_id from t_supp_relat_main where menu_id=#{menuId}
     </select>
+    <insert id="insertMenu">
+        insert into t_supp_menu_main(prod_id) values(#{prodId})
+    </insert>
+    <delete id="deleteRelatExt">
+        delete from t_supp_relat_ext where relat_id in (select relat_id from t_supp_relat_main where menu_id = #{menuId})
+    </delete>
+    <delete id="deleteRelatMain">
+        delete from t_supp_relat_main where menu_id=#{menuId}
+    </delete>
+    <delete id="deleteMenuMain">
+        delete from t_supp_menu_main where menu_id=#{menuId}
+    </delete>
+    <select id="checkRelat" resultType="Long" >
+        select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id=#{toolId}
+    </select>
+    <insert id="insertRelat">
+        insert into t_supp_relat_main(menu_id,tool_id) values (#{menuId},#{toolId})
+    </insert>
+    <delete id="cleanExt">
+        delete from t_supp_relat_ext where relat_id in (select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds}))
+    </delete>
+    <delete id="cleanRelat">
+        delete from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds})
+    </delete>
+    <update id="updateMenu">
+        update t_supp_menu_main set ${field} = #{value} where menu_id=#{menuId}
+    </update>
     <select id="menuFather" resultType="com.wision.entity.MenuTreeVo" >
         select menu_name as title,menu_id as id,'true' as spread,null as children,tool_page from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')
     </select>
@@ -92,51 +119,6 @@
 <!--    <update id="updateTblByCode">-->
 <!--        update t_supp_imp_tbl set tbl_code=#{tblCode} where tbl_id=#{tblId}-->
 <!--    </update>-->
-<!--    <insert id="insertMenu">-->
-<!--        insert into t_supp_menu_main(prod_id) values(#{prodId})-->
-<!--    </insert>-->
-<!--    <select id="getRelatIdsByMenuId" resultType="com.wision.entity.RelatDetVo" >-->
-<!--        select relat_id from t_supp_relat_main where menu_id=#{menuId}-->
-<!--    </select>-->
-<!--    <insert id="insertExtByMenu">-->
-<!--        insert into t_supp_relat_ext(relat_id,tool_code)-->
-<!--        select a.relat_id,b.type_code from t_supp_relat_main a inner join t_supp_tool_basic b on a.tool_id=b.tool_id-->
-<!--        where a.menu_id=#{menuId} and a.tool_id=#{toolId}-->
-<!--    </insert>-->
-<!--    <delete id="deleteType">-->
-<!--        delete from ${tblName} where ${typeCode}=#{typeId}-->
-<!--    </delete>-->
-<!--    <delete id="deleteRelatExt">-->
-<!--        delete from t_supp_relat_ext where relat_id=#{relatId}-->
-<!--    </delete>-->
-<!--    <delete id="deleteRelatMain">-->
-<!--        delete from t_supp_relat_main where menu_id=#{menuId}-->
-<!--    </delete>-->
-<!--    <delete id="deleteMenuMain">-->
-<!--        delete from t_supp_menu_main where menu_id=#{menuId}-->
-<!--    </delete>-->
-<!--    <update id="updateMenu">-->
-<!--        update t_supp_menu_main set ${field} = #{value} where menu_id=#{menuId}-->
-<!--    </update>-->
-<!--    <select id="existRelat" resultType="Long" >-->
-<!--        select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id=#{toolId}-->
-<!--    </select>-->
-<!--    <insert id="insertRelat">-->
-<!--        insert into t_supp_relat_main(menu_id,tool_id) values (#{menuId},#{toolId})-->
-<!--    </insert>-->
-<!--    <select id="getCleanExtIds" resultType="com.wision.entity.RelatDetVo" >-->
-<!--        select b.tool_code as relat_name,b.ext_id as relat_id from t_supp_relat_main a inner join t_supp_relat_ext b on a.relat_id=b.relat_id-->
-<!--        where a.menu_id=#{menuId} and a.tool_id not in (${toolIds})-->
-<!--    </select>-->
-<!--    <delete id="cleanType">-->
-<!--        delete from ${tblName} where ${colCode}=#{typeId}-->
-<!--    </delete>-->
-<!--    <delete id="cleanExt">-->
-<!--        delete from t_supp_relat_ext where relat_id in (select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds}))-->
-<!--    </delete>-->
-<!--    <delete id="cleanRelat">-->
-<!--        delete from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds})-->
-<!--    </delete>-->
 <!--    <select id="flowList" resultType="com.wision.entity.FlowListVo" >-->
 <!--        select ext_id,tool_name,tool_code from t_supp_relat_ext where tool_tag='flow' and relat_id=#{relatId} order by tool_code-->
 <!--    </select>-->
@@ -158,9 +140,6 @@
 <!--    <update id="cleanNullTypeIds">-->
 <!--        update t_supp_relat_main set type_ids=replace("null","")-->
 <!--    </update>-->
-<!--    <select id="getTypeIds" resultType="com.wision.entity.RelatDetVo" >-->
-<!--        select relat_id,tool_code as relat_name from t_supp_relat_ext where relat_id=#{relatId}-->
-<!--    </select>-->
 <!--    <select id="tblList" resultType="com.wision.entity.TblImpForm" >-->
 <!--        select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}-->
 <!--    </select>-->
