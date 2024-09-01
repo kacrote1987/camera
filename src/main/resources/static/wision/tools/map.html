@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" type="text/css">
     <link rel="stylesheet" href="v3.11.2/css/ol.css"/>
     <script type="text/javascript" src="v3.11.2/build/ol.js"></script>
-    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
     <script src="https://webapi.amap.com/maps?v=2.0&key=da5c5caa1b78cfce183497a36ad4d2df&plugin=AMap.MarkerCluster,AMap.MouseTool"></script>
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
     <title>万像慧治</title>
@@ -129,7 +129,17 @@
             margin-right: 6px;
         }
 
-        #panel {
+        #panel_search {
+            position: fixed;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            top: 50px;
+            left: 0;
+            width: 280px;
+        }
+
+        #panel_plan {
             position: fixed;
             background-color: white;
             max-height: 90%;
@@ -154,13 +164,34 @@
     </div>
 </div>
 <div id="container" class="map" tabindex="0"></div>
-<div id="panel" class="input-card" style='width: 24rem;'>
+<div id="panel_search" class="input-card" style='width: 25rem;'>
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">组织目录</li>
+            <li>标签搜索</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="input-item">
+                <span class="input-item-text" style="width:4rem;">条件</span>
+                <input id='point_search' type="text" value='' >
+                <button>搜 索</button>
+            </div>
+            <div class="layui-tab-item layui-show">
+                <div id="test-tree-search1"></div>
+            </div>
+            <div class="layui-tab-item">
+                <div id="test-tree-search2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="panel_plan" class="input-card" style='width: 25rem;'>
     <div class="layui-tab">
         <ul class="layui-tab-title">
             <li class="layui-this">需求</li>
             <li>规划</li>
             <li>待建</li>
-            <li>存档</li>
+            <li>归档</li>
         </ul>
         <div class="layui-tab-content">
             <div class="input-item">
@@ -183,6 +214,7 @@
         </div>
     </div>
 </div>
+</div>
 <div class="input-card" style='width: 22rem;'>
     <div class="input-item">
         <input type="radio" name='func' value='polygon'><span class="input-text">框选</span>
@@ -193,9 +225,9 @@
 <script src="//a.amap.com/jsapi_demos/static/china.js"></script>
 <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="../../js/map.js"></script>
-<script src="../../js/demo.js"></script>
-<script src="../../../layuiadmin/layui/layui.js"></script>
+<script src="../js/map.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../layuiadmin/layui/layui.js"></script>
 <script type="text/javascript">
     var map = new AMap.Map("container", {
         center: [120.089872,30.856878],
@@ -213,7 +245,7 @@
             dataType: "json",
             async: false,
             success: function (detObj) {
-                if (detObj.msg === "sucess") {
+                if (detObj.msg === "success") {
                     result = detObj.data;
                 }
             }
@@ -221,71 +253,54 @@
         return result;
     }
     var areas = getAllArea();
-    console.log("areas="+areas);
-    // var path1 = areas;
 
-    var path1 = [
-        [120.086311,30.863202],
-        [120.101452,30.862344],
-        [120.097178,30.849384],
-        [120.079308,30.849931],
-        [120.080445,30.860236]
-    ]
-    var polygon1 = new AMap.Polygon({
-        map:map,
-        fillColor:'',
-        fillOpacity:0.3,
-        path:path1
-    })
-    var path2 = [
-        [120.088766,30.859455],
-        [120.100816,30.862265],
-        [120.103226,30.854068],
-        [120.092358,30.850555]
-    ]
-    var polygon2 = new AMap.Polygon({
-        map:map,
-        fillColor:'',
-        fillOpacity:0.3,
-        path:path2
-    })
-
-    var textBox = new AMap.Text({
-        map: map,
-        position: new AMap.LngLat(120.089872,30.856878),
-        offset: new AMap.Pixel(-20, -40),
-        style:{
-            'background-color':'lightgreen',
-            'border':'solid 1px #0088ff',
-            'padding':'10px 20px'
+    for(var i=0;i<areas.length;i++){
+        //展示需求区域
+        var polygon = new AMap.Polygon({
+            map:map,
+            fillColor:'',
+            fillOpacity:0.3,
+            path:areas[i]
+        })
+        for(var j=i+1;j<areas.length;j++){
+            //判断重合区域，重复黄色高亮
+            new AMap.Polygon({
+                map:map,
+                fillColor:'yellow',
+                fillOpacity:0.3,
+                path:AMap.GeometryUtil.ringRingClip(areas[i],areas[j])
+            })
         }
-    })
-
-    //判断重合区域
-    function compute(){
-        var polygon1_path = polygon1.getPath();
-        var polygon2_path = polygon2.getPath();
-        var ringRingClip = AMap.GeometryUtil.ringRingClip(polygon2_path,polygon1_path);
-        var ringArea = parseInt(AMap.GeometryUtil.ringArea(ringRingClip))
-        var text = '两覆盖物重合区域面积为'+ringArea+'平方米';
-        textBox.setText(text);
-        return ringRingClip;
+        //创建左键菜单
+        var contextLeftMenu = new AMap.ContextMenu();
+        polygon.on('click', function (e) {
+            layer.open({
+                type: 2
+                ,title: '需求描述'
+                ,content: '404.html?' + contextRightMenu._amap_id
+                ,maxmin: true
+                ,area: ['600px', '400px']
+            });
+            contextLeftMenu.open(map, e.lnglat);
+        });
+        //创建右键菜单
+        var contextRightMenu = new AMap.ContextMenu();
+        contextRightMenu.addItem("需求编辑", function () {
+            layer.open({
+                type: 2
+                ,title: '需求描述'
+                ,content: 'xuqiu.html?' + contextRightMenu._amap_id
+                ,maxmin: true
+                ,area: ['600px', '400px']
+            });
+        }, 0);
+        contextRightMenu.addItem("删除区域", function () {
+            postdata(contextRightMenu._amap_id, "/camera/areadel", function () {layer.msg("删除成功！");});
+        }, 0);
+        polygon.on('rightclick', function (e) {
+            contextRightMenu.open(map, e.lnglat);
+        });
     }
-    //重复黄色高亮
-    var coincide = new AMap.Polygon({
-        map:map,
-        fillColor:'yellow',
-        fillOpacity:0.3,
-        path:compute()
-    })
-    //创建右键菜单
-    var contextMenu = new AMap.ContextMenu();
-    contextMenu.addItem("添加需求", function () {
-        alert("添加需求123");
-    }, 0);
-    coincide.on('rightclick', function (e) {
-        contextMenu.open(map, e.lnglat);
-    });
 
     //可视域
     var canvas;
@@ -364,7 +379,7 @@
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (detObj) {
-                    if (detObj.msg === "sucess") {
+                    if (detObj.msg === "success") {
                         let ORIGIN_LONGLAT = [];
                         let pos = [];
                         for (var i = 0; i < detObj.data.length; i++) {
@@ -438,7 +453,7 @@
             dataType: "json",
             async: false,
             success: function (detObj) {
-                if (detObj.msg === "sucess") {
+                if (detObj.msg === "success") {
                     result = detObj.data;
                 }
             }
@@ -492,7 +507,7 @@
                 async: false,
                 data: "120.089872,30.856878",
                 success: function (detObj) {
-                    if (detObj.msg === "sucess") {
+                    if (detObj.msg === "success") {
                         result = detObj.data[0];
                     }
                 }
@@ -596,51 +611,51 @@
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '需求区域1'
+                    title: '区域名称1'
                     ,id: 2
                     ,field: 'dept2'
                 },{
-                    title: '需求区域2'
+                    title: '区域名称2'
                     ,id: 3
                     ,field: 'dept3'
                 },{
-                    title: '需求区域3'
+                    title: '区域名称3'
                     ,id: 4
                     ,field: 'dept4'
                 }]
             },{
-                title: '执法局需求'
+                title: '综合执法局需求'
                 ,id: 1
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '需求区域4'
+                    title: '区域名称4'
                     ,id: 2
                     ,field: 'dept2'
                 },{
-                    title: '需求区域5'
+                    title: '区域名称5'
                     ,id: 3
                     ,field: 'dept3'
                 },{
-                    title: '需求区域6'
+                    title: '区域名称6'
                     ,id: 4
                     ,field: 'dept4'
                 }]
             },{
-                title: '应急局需求'
+                title: '应急管理局需求'
                 ,id: 1
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '需求区域7'
+                    title: '区域名称7'
                     ,id: 2
                     ,field: 'dept2'
                 },{
-                    title: '需求区域8'
+                    title: '区域名称8'
                     ,id: 3
                     ,field: 'dept3'
                 },{
-                    title: '需求区域9'
+                    title: '区域名称9'
                     ,id: 4
                     ,field: 'dept4'
                 }]
@@ -650,15 +665,15 @@
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '需求区域10'
+                    title: '区域名称10'
                     ,id: 2
                     ,field: 'dept2'
                 },{
-                    title: '需求区域11'
+                    title: '区域名称11'
                     ,id: 3
                     ,field: 'dept3'
                 },{
-                    title: '需求区域12'
+                    title: '区域名称12'
                     ,id: 4
                     ,field: 'dept4'
                 }]
@@ -671,12 +686,12 @@
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '公安分局'
+                    title: '公安分局需求'
                     ,id: 2
                     ,field: 'dept2'
                     ,spread: true
                     ,children: [{
-                        title: '需求名称1'
+                        title: '区域名称1'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -693,7 +708,7 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称2'
+                        title: '区域名称2'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -710,17 +725,17 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称3'
+                        title: '区域名称3'
                         ,id: 2
                         ,field: 'dept2'
                     }]
                 },{
-                    title: '综合执法局'
+                    title: '综合执法局需求'
                     ,id: 3
                     ,field: 'dept3'
                     ,spread: true
                     ,children: [{
-                        title: '需求名称1'
+                        title: '区域名称1'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -737,7 +752,7 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称2'
+                        title: '区域名称2'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -754,20 +769,20 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称3'
+                        title: '区域名称3'
                         ,id: 2
                         ,field: 'dept2'
                     }]
                 },{
-                    title: '应急管理局'
+                    title: '应急管理局需求'
                     ,id: 4
                     ,field: 'dept4'
                 },{
-                    title: '水利局'
+                    title: '水利局需求'
                     ,id: 5
                     ,field: 'dept5'
                 },{
-                    title: '教育局'
+                    title: '教育局需求'
                     ,id: 6
                     ,field: 'dept6'
                 }]
@@ -780,11 +795,11 @@
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '公安分局'
+                    title: '公安分局需求'
                     ,id: 2
                     ,field: 'dept2'
                     ,children: [{
-                        title: '需求名称1'
+                        title: '区域名称1'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -801,7 +816,7 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称2'
+                        title: '区域名称2'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -818,16 +833,16 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称3'
+                        title: '区域名称3'
                         ,id: 2
                         ,field: 'dept2'
                     }]
                 },{
-                    title: '综合执法局'
+                    title: '综合执法局需求'
                     ,id: 3
                     ,field: 'dept3'
                     ,children: [{
-                        title: '需求名称1'
+                        title: '区域名称1'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -844,7 +859,7 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称2'
+                        title: '区域名称2'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -861,37 +876,37 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称3'
+                        title: '区域名称3'
                         ,id: 2
                         ,field: 'dept2'
                     }]
                 },{
-                    title: '应急管理局'
+                    title: '应急管理局需求'
                     ,id: 4
                     ,field: 'dept4'
                 },{
-                    title: '水利局'
+                    title: '水利局需求'
                     ,id: 5
                     ,field: 'dept5'
                 },{
-                    title: '教育局'
+                    title: '教育局需求'
                     ,id: 6
                     ,field: 'dept6'
                 }]
             }]
 
-            //模拟数--存档
+            //模拟数--归档
             ,data4 = [{
                 title: '2024年上半年公共视频监控建设计划'
                 ,id: 1
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '公安分局'
+                    title: '公安分局需求'
                     ,id: 2
                     ,field: 'dept2'
                     ,children: [{
-                        title: '需求名称1'
+                        title: '区域名称1'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -908,7 +923,7 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称2'
+                        title: '区域名称2'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -925,16 +940,16 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称3'
+                        title: '区域名称3'
                         ,id: 2
                         ,field: 'dept2'
                     }]
                 },{
-                    title: '综合执法局'
+                    title: '综合执法局需求'
                     ,id: 3
                     ,field: 'dept3'
                     ,children: [{
-                        title: '需求名称1'
+                        title: '区域名称1'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -951,7 +966,7 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称2'
+                        title: '区域名称2'
                         ,id: 2
                         ,field: 'dept2'
                         ,children: [{
@@ -968,23 +983,31 @@
                             ,field: 'dept2'
                         }]
                     },{
-                        title: '需求名称3'
+                        title: '区域名称3'
                         ,id: 2
                         ,field: 'dept2'
                     }]
                 },{
-                    title: '应急管理局'
+                    title: '应急管理局需求'
                     ,id: 4
                     ,field: 'dept4'
-                },{
-                    title: '水利局'
-                    ,id: 5
-                    ,field: 'dept5'
-                },{
-                    title: '教育局'
-                    ,id: 6
-                    ,field: 'dept6'
                 }]
+            }]
+
+            ,search_data1 = [{
+                title: '根目录'
+                ,id: 1
+                ,field: 'dept0'
+                ,spread: true
+                ,children: []
+            }]
+
+            ,search_data2 = [{
+                title: '未命名'
+                ,id: 1
+                ,field: 'dept0'
+                ,spread: true
+                ,children: []
             }]
 
         //仅节点左侧图标控制收缩
@@ -1068,11 +1091,59 @@
             }
         });
 
+        tree.render({
+            elem: '#test-tree-search1'
+            ,data: search_data1
+            ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+            ,click: function(obj){
+                $('#type').val(obj.data.field.substring(0,4));
+                $('#deptId').val(obj.data.field.substring(4,obj.data.field.length));
+                $('#deptName').val(obj.data.title);
+                table.reload('userReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        type: obj.data.field.substring(0,4),
+                        deptId: obj.data.field.substring(4,obj.data.field.length)
+                    }
+                }, 'data');
+            }
+        });
+
+        tree.render({
+            elem: '#test-tree-search2'
+            ,data: search_data2
+            ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+            ,click: function(obj){
+                $('#type').val(obj.data.field.substring(0,4));
+                $('#deptId').val(obj.data.field.substring(4,obj.data.field.length));
+                $('#deptName').val(obj.data.title);
+                table.reload('userReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        type: obj.data.field.substring(0,4),
+                        deptId: obj.data.field.substring(4,obj.data.field.length)
+                    }
+                }, 'data');
+            }
+        });
+
         $('.layui-fluid .layui-btn').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
     })
+    function show_search(){
+        document.getElementById('panel_search').style.display='block';
+        document.getElementById('panel_plan').style.display='none';
+    }
+    function show_plan(){
+        document.getElementById('panel_search').style.display='none';
+        document.getElementById('panel_plan').style.display='block';
+    }
 </script>
 </body>
 </html>

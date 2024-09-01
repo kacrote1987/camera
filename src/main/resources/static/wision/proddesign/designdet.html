@@ -14,81 +14,74 @@
 <div class="layui-fluid">
   <div class="layui-card">
     <div class="layui-card-body">
-      <div class="layui-tab">
-        <div class="layui-tab-content">
-          <div class="layui-tab-item layui-show">
-            <!--            基本情况页-->
-            <div class="layui-row layui-col-space12">
-              <div class="layui-col-md2">
-              </div>
-              <div class="layui-col-md8">
-                <div class="layui-card">
-                  <input id="action" type="text" name="action" placeholder="" autocomplete="off"
-                         class="layui-input" style="display: none">
-                  <input id="prodId" type="text" name="prodId" placeholder="" autocomplete="off"
-                         class="layui-input" style="display: none">
-                  <div class="layui-card-body">
-                    <form class="layui-form" action="" lay-filter="component-form-element">
-                      <div class="layui-row layui-col-space10 layui-form-item">
-                        <div class="layui-col-lg6">
-                          <label class="layui-form-label">产品类别</label>
-                          <div class="layui-input-block">
-                            <select id="prodType" name="prodType" lay-filter="prodType">
-                              <option value="">全部</option>
-                              <option value="智慧园区">智慧园区</option>
-                              <option value="未来社区">未来社区</option>
-                              <option value="智慧国企">智慧国企</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="layui-col-lg6">
-                          <label class="layui-form-label">产品状态</label>
-                          <div class="layui-input-block">
-                            <select id="prodState" lay-filter="prodState">
-                              <option value="下架">下架</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="layui-row layui-col-space10 layui-form-item">
-                          <div class="layui-col-lg6">
-                            <label class="layui-form-label">产品名称</label>
-                            <div class="layui-input-block">
-                              <input id="prodName" type="text" lay-verify="required" placeholder=""
-                                     autocomplete="off" class="layui-input">
-                            </div>
-                          </div>
-                          <div class="layui-col-lg6">
-                            <label class="layui-form-label">项目简称</label>
-                            <div class="layui-input-block">
-                              <input id="prodNikname" type="text" lay-verify="required" placeholder=""
-                                     autocomplete="off" class="layui-input">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="layui-row layui-col-space10 layui-form-item">
-                          <div class="layui-col-lg6">
-                            <label class="layui-form-label">版本号</label>
-                            <div class="layui-input-block">
-                              <input id="prodVer" type="text" lay-verify="required" placeholder=""
-                                     autocomplete="off" class="layui-input">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">产品说明</label>
-                          <div class="layui-input-block">
-                               <textarea id="prodExplain" placeholder="" class="layui-textarea"></textarea>
-                          </div>
-                        </div>
+      <div class="layui-row layui-col-space12">
+        <div class="layui-col-md2">
+        </div>
+        <div class="layui-col-md8">
+          <div class="layui-card">
+            <input id="action" type="text" name="action" placeholder="" autocomplete="off"
+                   class="layui-input" style="display: none">
+            <input id="prodId" type="text" name="prodId" placeholder="" autocomplete="off"
+                   class="layui-input" style="display: none">
+            <div class="layui-card-body">
+              <form class="layui-form" action="" lay-filter="component-form-element">
+                <div class="layui-row layui-col-space10 layui-form-item">
+                  <div class="layui-col-lg6">
+                    <label class="layui-form-label">产品类别</label>
+                    <div class="layui-input-block">
+                      <select id="prodType" name="prodType" lay-filter="prodType">
+                        <option value="">全部</option>
+                        <option value="智慧园区">智慧园区</option>
+                        <option value="未来社区">未来社区</option>
+                        <option value="智慧国企">智慧国企</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-col-lg6">
+                    <label class="layui-form-label">产品状态</label>
+                    <div class="layui-input-block">
+                      <select id="prodState" lay-filter="prodState">
+                        <option value="下架">下架</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-row layui-col-space10 layui-form-item">
+                    <div class="layui-col-lg6">
+                      <label class="layui-form-label">产品名称</label>
+                      <div class="layui-input-block">
+                        <input id="prodName" type="text" lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
                       </div>
-                    </form>
+                    </div>
+                    <div class="layui-col-lg6">
+                      <label class="layui-form-label">项目简称</label>
+                      <div class="layui-input-block">
+                        <input id="prodNikname" type="text" lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="layui-row layui-col-space10 layui-form-item">
+                    <div class="layui-col-lg6">
+                      <label class="layui-form-label">版本号</label>
+                      <div class="layui-input-block">
+                        <input id="prodVer" type="text" lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">产品说明</label>
+                    <div class="layui-input-block">
+                      <textarea id="prodExplain" placeholder="" class="layui-textarea"></textarea>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="layui-col-md2">
-              </div>
+              </form>
             </div>
           </div>
+        </div>
+        <div class="layui-col-md2">
         </div>
       </div>
     </div>

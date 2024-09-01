@@ -18,15 +18,15 @@
           <!--            基础库表-->
           <script type="text/html" id="test-table-toolbar-toolbarDemo">
             <div class="layui-btn-container">
-              <button class="layui-btn layui-btn-sm" lay-event="tbladd">导入</button>
-              <button class="layui-btn layui-btn-sm" lay-event="tbldel">删除</button>
+              <button class="layui-btn layui-btn-sm" lay-event="tblAdd">导入</button>
+              <button class="layui-btn layui-btn-sm" lay-event="tblDel">删除</button>
             </div>
           </script>
 
           <script type="text/html" id="test-table-toolbar-lay">
             <div class="layui-btn-container">
-              <button class="layui-btn layui-btn-sm" lay-event="tbldet">详细</button>
-              <button class="layui-btn layui-btn-sm" lay-event="tblupdate">更新</button>
+              <button class="layui-btn layui-btn-sm" lay-event="tblDet">详细</button>
+              <button class="layui-btn layui-btn-sm" lay-event="tblUpdate">更新</button>
             </div>
           </script>
 
@@ -85,25 +85,23 @@
     //头工具栏事件
     table.on('toolbar(test-table-toolbar)', function (obj) {
       var checkStatus = table.checkStatus(obj.config.id);
-      var params = {};
-      params.prodId = prodId;
       switch (obj.event) {
-        case 'import':
-
+        case 'tblAdd':
+          layer.open({
+            type: 2
+            ,title: '导入'
+            ,content: 'tblimp.html?' // + data.relatId
+            ,maxmin: true
+            ,area: ['700px', '500px']
+          });
           break;
-        case 'del':
-          params.menuId=checkStatus.data[0].menuId;
-          postdata(params,"/prod/menusave",function () {table.reload('prodReload');layer.msg("已删除！");});
+        case 'tblDel':
+          postdata(null,"/prod/tblDel?tblId=" + checkStatus.data[0].tblId,function () {table.reload('prodReload');layer.msg("已删除！");});
           break;
       };
     });
 
     $('.layui-fluid .layui-btn').on('click', function () {
-      var type = $(this).data('type');
-      active[type] ? active[type].call(this) : '';
-    });
-
-    $('.layui-fluid .layui-btn').on('click', function(){
       var type = $(this).data('type');
       active[type] ? active[type].call(this) : '';
     });

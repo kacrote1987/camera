@@ -14,85 +14,21 @@
 <div class="layui-fluid">
   <div class="layui-card">
     <div class="layui-card-body">
-      <div class="layui-tab">
-        <ul class="layui-tab-title">
-          <li class="layui-this">组件配置</li>
-          <li>组件展示</li>
-        </ul>
-        <div class="layui-tab-content">
-          <div class="layui-tab-item layui-show">
-            <!--            数据初始化-->
-            <div class="layui-row layui-col-space12">
-              <div class="layui-col-md2">
-              </div>
-              <div class="layui-col-md8">
-                <div class="layui-card">
-                  <input id="action" type="text" name="action" placeholder="" autocomplete="off"
-                         class="layui-input" style="display: none">
-                  <input id="prodId" type="text" name="prodId" placeholder="" autocomplete="off"
-                         class="layui-input" style="display: none">
-                  <div class="layui-card-body">
-                    <form class="layui-form" action="" lay-filter="component-form-element">
-                      <div class="layui-row layui-col-space10 layui-form-item">
-                        <div class="layui-col-lg6">
-                          <label class="layui-form-label">流程名称</label>
-                          <div class="layui-input-block">
-                            <input id="relatName" type="text" name="relatName"
-                                   lay-verify="required" placeholder=""
-                                   autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="layui-row layui-col-space10 layui-form-item">
-                        <div class="layui-col-lg6">
-                          <label class="layui-form-label">关联主表</label>
-                          <div class="layui-input-block">
-                            <select id="mainTbl" name="mainTbl">
-                              <option value="">全部</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="layui-row layui-col-space10 layui-form-item">
-                        <div class="layui-col-lg6">
-                          <label class="layui-form-label">开放配置</label>
-                          <div class="layui-input-block">
-                            <select id="relatOpen" name="relatOpen">
-                              <option value="">全部</option>
-                              <option value="是">是</option>
-                              <option value="否">否</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div class="layui-col-md2">
-              </div>
+      <div class="layui-row layui-col-space12">
+        <script type="text/html" id="test-table-toolbar-toolbarDemo">
+          <div class="layui-btn-container" id="actions">
+            <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+            <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+          </div>
+        </script>
+        <div class="layui-col-md10">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
             </div>
           </div>
-          <div class="layui-tab-item">
-            <!--            组件展示-->
-            <div class="layui-row layui-col-space12">
-              <script type="text/html" id="test-table-toolbar-toolbarDemo">
-                <div class="layui-btn-container" id="actions">
-                  <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-                  <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
-                </div>
-              </script>
-              <div class="layui-col-md10">
-                <div class="layui-card">
-                  <div class="layui-card-body">
-                    <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
-                  </div>
-                </div>
-              </div>
-              <div class="layui-col-md1">
-              </div>
-            </div>
-          </div>
+        </div>
+        <div class="layui-col-md1">
         </div>
       </div>
     </div>
@@ -129,18 +65,18 @@
       elem: '#test-table-toolbar'
       , id: 'flowReload'
       , method: 'post'
-      , url: '/prod/flowList?' + relatId
+      , url: '/prod/flowView?relatId=' + relatId
       , toolbar: '#test-table-toolbar-toolbarDemo'
       , title: '流程管理'
-      , page: false
+      , response: {
+        statusName: 'code',
+        statusCode: '200'
+      }
       , cols: [[
         {type: 'checkbox', fixed: 'left', width: '20%'}
         , {field: 'toolName', title: '流程名称', edit: 'text', width: '30%'}
         , {field: 'toolCode', title: '排序', edit: 'text', width: '30%'}
       ]]
-      ,done: function (res, curr, count) {
-        $(".layui-table-body, .layui-table-box, .layui-table-cell").css('overflow', 'visible');
-      }
     });
 
     //头工具栏事件
@@ -172,35 +108,7 @@
       postdata(params, "/prod/flowEdit", function () {table.reload('flowReload');layer.msg("更新成功");})
     });
 
-    $.ajax({
-      type: "post",
-      url: "/supp/relatdet",
-      contentType: "application/json;charset=utf-8",
-      dataType: "json",
-      data: relatId,
-      success: function (detObj) {
-        if (detObj.msg == "sucess") {
-          var detJson = detObj.data[0];
-          $('#relatName').val(detJson.relatName);
-          $('#relatOpen').val(detJson.relatOpen);
-          document.getElementById("mainTbl").options.add(new Option(detJson.mainTbl,detJson.basicTbl));
-          layui.form.render();
-        }
-      }
-    });
-
   });
-
-  function save() {
-    var params = {};
-    params.relatId = window.location.search.substring(1, window.location.search.length);
-    params.relatName = $('#relatName').val();
-    params.relatOpen = $('#relatOpen').val();
-    params.mainTbl = $('#mainTbl').val();
-    postdata(params, "/supp/relatsave", function () {
-      layer.msg("保存成功！");
-    });
-  }
 </script>
 </body>
 </html>

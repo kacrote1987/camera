@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>物芯数科</title>
+  <title>万像慧治</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
-  <link rel="shortcut icon" type="image/x-icon" href="../img/logo.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="../../config/img/logo.png" />
 
   <script>
     /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
@@ -52,7 +52,7 @@
       <div class="layui-side-scroll">
         <a href="index.html">
           <div class="layui-logo">
-            <span><img src="../img/logo.png">&nbsp;&nbsp;物芯数科</span>
+            <span><img src="../../config/img/logo.png">&nbsp;&nbsp;万像慧治</span>
           </div>
         </a>
 
@@ -61,7 +61,7 @@
           <li data-name="home" class="layui-nav-item layui-nav-itemed">
             <a href="javascript:;" lay-tips="应用支撑体系" lay-direction="2">
               <i class="layui-icon layui-icon-home"></i>
-              <cite>应用支撑体系</cite>
+              <cite>菜单</cite>
             </a>
             <dl class="layui-nav-child">
               <dd data-name="home"><a lay-href="prodlist.html">产品管理</a></dd>
@@ -116,7 +116,31 @@
     base: '../../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use('index');
+  }).use(['index', 'user'], function(){
+    var $ = layui.$
+            ,form = layui.form
+
+    var prodId = window.location.search.substring(1, window.location.search.length);
+    $.ajax({
+      type: "post",
+      url: "/prod/getProdName",
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      data: prodId,
+      success: function (detObj) {
+        if (detObj.msg == "success") {
+          var detJson = detObj.data;
+          document.getElementById("prodName").innerHTML = detJson;
+          document.getElementById("title").innerHTML = detJson;
+          //提交
+          form.on('submit(LAY-user-login-submit)', function(obj){
+            location.href = 'index.html?'+detJson.prodId; //后台主页
+          });
+        }
+      }
+    });
+
+  });
 </script>
 </body>
 </html>

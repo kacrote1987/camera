@@ -3,11 +3,11 @@ package com.wision.entity;
 public class RelatDetVo {
     private Long relatId;
     private Long toolId;
+    private Long tblId;
     private String relatName;
-    private String relatOpen;
     private String layoutType;
-    private String mainTbl;
-    private String basicTbl;
+    private String relateCol;
+    private String mainCol;
 
     public Long getRelatId() {
         return relatId;
@@ -25,20 +25,20 @@ public class RelatDetVo {
         this.toolId = toolId;
     }
 
+    public Long getTblId() {
+        return tblId;
+    }
+
+    public void setTblId(Long tblId) {
+        this.tblId = tblId;
+    }
+
     public String getRelatName() {
         return relatName;
     }
 
     public void setRelatName(String relatName) {
         this.relatName = relatName;
-    }
-
-    public String getRelatOpen() {
-        return relatOpen;
-    }
-
-    public void setRelatOpen(String relatOpen) {
-        this.relatOpen = relatOpen;
     }
 
     public String getLayoutType() {
@@ -49,19 +49,19 @@ public class RelatDetVo {
         this.layoutType = layoutType;
     }
 
-    public String getMainTbl() {
-        return mainTbl;
+    public String getRelateCol() {
+        return relateCol;
     }
 
-    public void setMainTbl(String mainTbl) {
-        this.mainTbl = mainTbl;
+    public void setRelateCol(String relateCol) {
+        this.relateCol = relateCol;
     }
 
-    public String getBasicTbl() {
-        return basicTbl;
+    public String getMainCol() {
+        return mainCol;
     }
 
-    public void setBasicTbl(String basicTbl) {
-        this.basicTbl = basicTbl;
+    public void setMainCol(String mainCol) {
+        this.mainCol = mainCol;
     }
 }

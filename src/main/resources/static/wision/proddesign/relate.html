@@ -33,6 +33,7 @@
                          class="layui-input" style="display: none">
                   <script type="text/html" id="test-table-toolbar-toolbarDemo2">
                     <a id="set" class="layui-btn layui-btn-xs" lay-event="set">配置</a>
+                    <a id="set" class="layui-btn layui-btn-xs" lay-event="display">展示</a>
                   </script>
 
                   <div class="layui-card-body">
@@ -146,11 +147,19 @@
         layer.open({
           type: 2
           ,title: '配置'
+          ,content: '../tools/config.html?' + data.relatId
+          ,maxmin: true
+          ,area: ['700px', '500px']
+        });
+      } else if(obj.event === 'display'){
+        layer.open({
+          type: 2
+          ,title: '展示'
           ,content: '../tools/'+ data.typeCode +'.html?' + data.relatId
           ,maxmin: true
           ,area: ['700px', '500px']
         });
-      }else{
+      } else {
         layer.msg("待开发");
       }
     });

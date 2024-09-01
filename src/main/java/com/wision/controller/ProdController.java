@@ -123,18 +123,32 @@ public class ProdController {
         return Result.success(toolSel);
     }
 
-    @ApiOperation("基础信息组件配置")
-    @PostMapping("/basicConf")
-    public Result basicConf(@RequestParam Long relatId){
-        RelatDetVo basicConf= prodService.basicConf(relatId);
-        return Result.success(basicConf);
+    @ApiOperation("组件配置")
+    @PostMapping("/toolConf")
+    public Result toolConf(@RequestParam Long relatId){
+        ToolConfVo toolConf= prodService.toolConf(relatId);
+        return Result.success(toolConf);
     }
 
-    @ApiOperation("基础信息组件展示")
+    @ApiOperation("组件字典-基础表")
+    @PostMapping("/tblDict")
+    public Result tblDict(@RequestParam Long relatId){
+        List<TblListVo> tblDict= prodService.tblDict(relatId);
+        return Result.success(tblDict);
+    }
+
+    @ApiOperation("组件展示-基础信息组件")
     @PostMapping("/basicView")
     public Result basicView(@RequestParam Long relatId){
-        List<BasicTblList> basicView= prodService.basicView(relatId);
+        List<BasicCol> basicView= prodService.basicView(relatId);
         return Result.success(basicView);
+    }
+
+    @ApiOperation("组件展示-流程组件")
+    @PostMapping("/flowView")
+    public Result flowView(@RequestParam Long relatId){
+        List<FlowViewVo> flowView= prodService.flowView(relatId);
+        return Result.success(flowView);
     }
 
 //    @ApiOperation("组件配置修改")
@@ -149,14 +163,6 @@ public class ProdController {
 //    public Result tblSave(@RequestBody BasicTblList params){
 //        prodService.tblSave(params);
 //        return Result.success();
-//    }
-//
-//
-//    @ApiOperation("流程组件列表")
-//    @PostMapping("/flowlist")
-//    public Result flowList(@RequestBody String params){
-//        List<FlowListVo> flowList= prodService.flowList(params);
-//        return Result.suclayer(flowList);
 //    }
 //
 //    @ApiOperation("流程组件保存")

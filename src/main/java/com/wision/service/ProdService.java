@@ -82,15 +82,25 @@ public interface ProdService {
      */
     PageInfo<ToolListVo> toolSel(String params,ToolListForm params1);
      /**
-     * 基础信息组件配置
+     * 组件配置
      * @return
      */
-     RelatDetVo basicConf(Long relatId);
+     ToolConfVo toolConf(Long relatId);
+    /**
+     * 组件字典-基础表
+     * @return
+     */
+    List<TblListVo> tblDict(Long relatId);
      /**
-     * 基础信息组件展示
+     * 组件展示-基础信息组件
      * @return
      */
-    List<BasicTblList> basicView(Long relatId);
+    List<BasicCol> basicView(Long relatId);
+    /**
+     * 组件展示-流程组件
+     * @return
+     */
+    List<FlowViewVo> flowView(Long relatId);
 //    /**
 //     * 产品演示
 //     * @return
@@ -107,11 +117,6 @@ public interface ProdService {
 //     * @return
 //     */
 //    void menuSave(MenuListForm params);
-//    /**
-//     * 流程组件列表
-//     * @return
-//     */
-////    List<FlowListVo> flowList(String params);
 ////    /**
 ////     * 流程组件保存
 ////     * @return
