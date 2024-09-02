@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>基础信息</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<script type="text/html" id="test-table-toolbar-toolbarDemo">
+  <div class="layui-btn-container" id="actions">
+    <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+    <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+  </div>
+</script>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+      <script type="text/html" id="imgTpl">
+        <img style="display: inline-block; width: 50%; height: 100%;" src={{ d.avatar }}>
+      </script>
+    </div>
+  </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../js/laypage.js"></script>
+<script src="../layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'table', 'laydate', 'laypage', 'layer'], function () {
+    var admin = layui.admin
+            , table = layui.table
+            , $ = layui.$;
+
+    var relatId = window.location.search.substring(1, window.location.search.length);
+    table.render({
+      elem: '#test-table-toolbar'
+      , id: 'prodReload'
+      , method: 'post'
+      , url: '/prod/basicView?relatId=' + relatId //数据接口
+      , toolbar: '#test-table-toolbar-toolbarDemo'
+      , title: '基础信息表'
+      , response: {
+        statusName: 'code',
+        statusCode: '200'
+      }
+      , cols: [[
+        {type: 'checkbox', fixed: 'left', width: '10%'}
+        , {field: 'toolName', title: '关联主表字段', width: '28%'}
+        , {field: 'toolType', title: '关联本表字段', width: '28%', templet: function (d) {
+            var opt = '<select id="toolType" name="toolType" class="province-selector" >\n'
+            if (d.toolType === "文本") {
+              opt = opt + ' <option value="文本" selected>文本</option>\n' +
+                      '      <option value="字典" >字典</option>\n'
+            } else {
+              opt = opt + ' <option value="文本" >文本</option>\n' +
+                      '      <option value="字典" selected>字典</option>\n'
+            }
+            opt = opt + '</select>'
+            return opt
+          }
+        }
+        , {field: 'resState', title: '展示本表字段', width: '28%', templet: function (d) {
+            var opt
+            if (d.resState === "1") {
+              opt = '<input type="checkbox" id="resState" name="resState" lay-skin="primary" checked>'
+            } else {
+              opt = '<input type="checkbox" id="resState" name="resState" lay-skin="primary" >'
+            }
+            return opt
+          }
+        }
+      ]]
+      , done: function (res, curr, count) {
+        count || this.elem.next('.layui-table-view').find('.layui-table-header').css('overflow', 'auto');
+        layui.each($('select'), function (index, item) {
+          var elem = $(item);
+          elem.val(elem.data('value')).parents('div.layui-table-cell').css('overflow', 'visible');
+        });
+      }
+    });
+
+    //监听单元格编辑
+    // table.on('edit(test-table-toolbar)', function (obj) {
+    //   var params = {};
+    //   params.extId = obj.data.extId;
+    //   params.field = obj.field;
+    //   params.value = obj.value;
+    //   postdata(params, "/supp/colsave", function () {table.reload('colReload');layer.msg("更新成功");})
+    // });
+
+    $('.layui-fluid .layui-btn').on('click', function () {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  });
+</script>
+</body>
+</html>
