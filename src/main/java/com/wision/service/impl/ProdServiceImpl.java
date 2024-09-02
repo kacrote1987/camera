@@ -173,6 +173,11 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
+    public void relatEdit(RelatForm params) {
+        prodMapper.relatEdit(params);
+    }
+
+    @Override
     public List<TblListVo> tblDict(Long relatId) {
         List<TblListVo> tblDict=prodMapper.tblDict(relatId);
         return tblDict;
@@ -188,6 +193,16 @@ public class ProdServiceImpl implements ProdService {
     public List<FlowViewVo> flowView(Long relatId) {
         List<FlowViewVo> flowView=prodMapper.flowView(relatId);
         return flowView;
+    }
+
+    @Override
+    public PageInfo<RuleListVo> ruleList() {
+        return null;
+    }
+
+    @Override
+    public RuleDetVo ruleDet(Long relatId) {
+        return null;
     }
 
 //    @Override

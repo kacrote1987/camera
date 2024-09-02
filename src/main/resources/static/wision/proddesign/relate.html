@@ -32,8 +32,9 @@
                   <input type="text" id="menuId" placeholder="请输入" autocomplete="off"
                          class="layui-input" style="display: none">
                   <script type="text/html" id="test-table-toolbar-toolbarDemo2">
-                    <a id="set" class="layui-btn layui-btn-xs" lay-event="set">配置</a>
-                    <a id="set" class="layui-btn layui-btn-xs" lay-event="display">展示</a>
+                    <a id="set" class="layui-btn layui-btn-xs" lay-event="source">数据源</a>
+                    <a id="set" class="layui-btn layui-btn-xs" lay-event="rule">规则</a>
+                    <a id="display" class="layui-btn layui-btn-xs" lay-event="display">展示</a>
                   </script>
 
                   <div class="layui-card-body">
@@ -143,11 +144,19 @@
     //监听行工具事件
     table.on('tool(test-table-toolbar)', function(obj){
       var data = obj.data;
-      if(obj.event === 'set'){
+      if(obj.event === 'source'){
         layer.open({
           type: 2
-          ,title: '配置'
+          ,title: '数据源'
           ,content: '../tools/config.html?' + data.relatId
+          ,maxmin: true
+          ,area: ['700px', '500px']
+        });
+      }else if(obj.event === 'rule'){
+        layer.open({
+          type: 2
+          ,title: '规则'
+          ,content: 'rule.html?' + data.relatId
           ,maxmin: true
           ,area: ['700px', '500px']
         });

@@ -82,10 +82,15 @@ public interface ProdService {
      */
     PageInfo<ToolListVo> toolSel(String params,ToolListForm params1);
      /**
-     * 组件配置
+     * 组件配置详细
      * @return
      */
      ToolConfVo toolConf(Long relatId);
+    /**
+     * 组件配置修改
+     * @return
+     */
+    void relatEdit(RelatForm params);
     /**
      * 组件字典-基础表
      * @return
@@ -101,6 +106,16 @@ public interface ProdService {
      * @return
      */
     List<FlowViewVo> flowView(Long relatId);
+    /**
+     * 规则配置列表
+     * @return
+     */
+    PageInfo<RuleListVo> ruleList();
+    /**
+     * 规则配置详细
+     * @return
+     */
+    RuleDetVo ruleDet(Long ruleId);
 //    /**
 //     * 产品演示
 //     * @return

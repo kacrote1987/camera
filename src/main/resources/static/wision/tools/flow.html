@@ -15,12 +15,6 @@
   <div class="layui-card">
     <div class="layui-card-body">
       <div class="layui-row layui-col-space12">
-        <script type="text/html" id="test-table-toolbar-toolbarDemo">
-          <div class="layui-btn-container" id="actions">
-            <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-            <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
-          </div>
-        </script>
         <div class="layui-col-md10">
           <div class="layui-card">
             <div class="layui-card-body">
@@ -31,15 +25,6 @@
         <div class="layui-col-md1">
         </div>
       </div>
-    </div>
-  </div>
-</div>
-<div class="layui-form-item layui-layout-admin">
-  <div class="layui-input-block">
-    <div class="layui-footer" style="left: 0;">
-      <button id="scienSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
-              onclick="save()">保存
-      </button>
     </div>
   </div>
 </div>
@@ -66,16 +51,14 @@
       , id: 'flowReload'
       , method: 'post'
       , url: '/prod/flowView?relatId=' + relatId
-      , toolbar: '#test-table-toolbar-toolbarDemo'
       , title: '流程管理'
       , response: {
         statusName: 'code',
         statusCode: '200'
       }
       , cols: [[
-        {type: 'checkbox', fixed: 'left', width: '20%'}
-        , {field: 'toolName', title: '流程名称', edit: 'text', width: '30%'}
-        , {field: 'toolCode', title: '排序', edit: 'text', width: '30%'}
+        {field: 'toolName', title: '流程名称', width: '50%'}
+        , {field: 'toolCode', title: '排序', width: '50%'}
       ]]
     });
 

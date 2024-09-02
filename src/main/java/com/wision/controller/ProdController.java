@@ -123,11 +123,18 @@ public class ProdController {
         return Result.success(toolSel);
     }
 
-    @ApiOperation("组件配置")
+    @ApiOperation("组件配置详细")
     @PostMapping("/toolConf")
     public Result toolConf(@RequestParam Long relatId){
         ToolConfVo toolConf= prodService.toolConf(relatId);
         return Result.success(toolConf);
+    }
+
+    @ApiOperation("组件配置修改")
+    @PostMapping("/relatEdit")
+    public Result relatEdit(@RequestBody RelatForm params){
+        prodService.relatEdit(params);
+        return Result.success();
     }
 
     @ApiOperation("组件字典-基础表")
@@ -151,12 +158,19 @@ public class ProdController {
         return Result.success(flowView);
     }
 
-//    @ApiOperation("组件配置修改")
-//    @PostMapping("/relatEdit")
-//    public Result relatSave(@RequestBody RelatForm params){
-//        prodService.relatSave(params);
-//        return Result.success();
-//    }
+    @ApiOperation("规则配置列表")
+    @PostMapping("/ruleList")
+    public Result ruleList(){
+        PageInfo<RuleListVo> ruleList= prodService.ruleList();
+        return Result.success(ruleList);
+    }
+
+    @ApiOperation("规则配置详细")
+    @PostMapping("/ruleDet")
+    public Result ruleDet(@RequestParam Long ruleId){
+        RuleDetVo ruleDet= prodService.ruleDet(ruleId);
+        return Result.success(ruleDet);
+    }
 
 //    @ApiOperation("基础表保存")
 //    @PostMapping("/tblsave")

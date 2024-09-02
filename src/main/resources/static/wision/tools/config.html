@@ -38,6 +38,7 @@
                                                     <option value="主表">主表</option>
                                                     <option value="按钮">按钮</option>
                                                     <option value="字典">字典</option>
+                                                    <option value="无">无</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -45,30 +46,6 @@
                                             <label class="layui-form-label">选择数据源</label>
                                             <div class="layui-input-block">
                                                 <select id="selfId">
-                                                    <option value="">全部</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-col-lg6">
-                                            <label class="layui-form-label">关联库表</label>
-                                            <div class="layui-input-block">
-                                                <select id="targetId">
-                                                    <option value="">全部</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-col-lg6">
-                                            <label class="layui-form-label">本表字段</label>
-                                            <div class="layui-input-block">
-                                                <select id="selfCol">
-                                                    <option value="">全部</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-col-lg6">
-                                            <label class="layui-form-label">关联表字段</label>
-                                            <div class="layui-input-block">
-                                                <select id="targetCol">
                                                     <option value="">全部</option>
                                                 </select>
                                             </div>
@@ -124,9 +101,6 @@
                     $('#layoutType').val(detJson.layoutType);
                     $('#selfId').val(detJson.selfId);
                     $('#tblName').val(detJson.tblName);
-                    $('#selfCol').val(detJson.selfCol);
-                    $('#targetId').val(detJson.targetId);
-                    $('#targetCol').val(detJson.targetCol);
                     layui.form.render();
                 }
             }
@@ -155,8 +129,7 @@
         params.relatId = window.location.search.substring(1, window.location.search.length);
         params.relatName = $('#relatName').val();
         params.layoutType = $('#layoutType').val();
-        params.basicCol = $('#basicCol').val();
-        params.mainCol = $('#mainCol').val();
+        params.selfId = $('#selfId').val();
         postdata(params, "/prod/relatEdit", function () {
           layer.msg("保存成功！");
         });

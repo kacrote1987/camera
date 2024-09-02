@@ -95,6 +95,9 @@
     <select id="toolConf" resultType="com.wision.entity.ToolConfVo" >
         select a.relat_id,a.relat_name,a.layout_type,a.self_id,b.tbl_name,a.self_col,a.target_id,a.target_col from t_supp_relat_main a left join t_supp_imp_tbl b on a.self_id=b.tbl_id where a.relat_id=#{relatId}
     </select>
+    <update id="relatEdit">
+        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},self_id=#{params.selfId} where relat_id=#{params.relatId}
+    </update>
     <select id="tblDict" resultType="com.wision.entity.TblListVo" >
         select distinct a.tbl_id,a.tbl_name,a.tbl_code from t_supp_imp_tbl a inner join t_supp_menu_main b on a.prod_id=b.prod_id inner join t_supp_relat_main c on b.menu_id=c.menu_id where c.relat_id=#{relatId}
     </select>
