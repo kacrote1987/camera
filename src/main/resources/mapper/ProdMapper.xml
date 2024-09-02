@@ -40,8 +40,8 @@
         update t_supp_prod_main set prod_state='作废' where prod_id=#{prodId}
     </update>
     <update id="updateProd">
-        update t_supp_prod_main set prod_type=#{params.prodType},prod_name=#{params.prodName},prod_nikname=#{params.prodNikname},prod_ver=#{params.prodVer}
-        ,prod_link=#{params.prodLink},prod_explain=#{params.prodExplain},prod_time=#{params.prodTime},prod_state=#{params.prodState} where prod_id=#{params.prodId}
+        update t_supp_prod_main set prod_type=#{params.prodType},prod_name=#{params.prodName},prod_nikname=#{params.prodNikname}
+        ,prod_ver=#{params.prodVer},prod_explain=#{params.prodExplain},prod_time=now() where prod_id=#{params.prodId}
     </update>
     <select id="tblList" resultType="com.wision.entity.TblListVo" >
         select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}
@@ -56,7 +56,7 @@
         select tool_id from t_supp_relat_main where menu_id=#{menuId}
     </select>
     <insert id="insertMenu">
-        insert into t_supp_menu_main(prod_id) values(#{prodId})
+        insert into t_supp_relat_main(prod_id) values(#{prodId})
     </insert>
     <delete id="deleteRelatExt">
         delete from t_supp_relat_ext where relat_id in (select relat_id from t_supp_relat_main where menu_id = #{menuId})
@@ -65,7 +65,7 @@
         delete from t_supp_relat_main where menu_id=#{menuId}
     </delete>
     <delete id="deleteMenuMain">
-        delete from t_supp_menu_main where menu_id=#{menuId}
+        delete from t_supp_relat_main where menu_id=#{menuId}
     </delete>
     <select id="checkRelat" resultType="Long" >
         select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id=#{toolId}
@@ -80,7 +80,7 @@
         delete from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds})
     </delete>
     <update id="updateMenu">
-        update t_supp_menu_main set ${field} = #{value} where menu_id=#{menuId}
+        update t_supp_relat_main set ${field} = #{value} where menu_id=#{menuId}
     </update>
     <select id="menuFather" resultType="com.wision.entity.MenuTreeVo" >
         select menu_name as title,menu_id as id,'true' as spread,null as children,tool_page from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')
