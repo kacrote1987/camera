@@ -23,7 +23,7 @@
               <form class="layui-form" action="" lay-filter="component-form-element">
                 <div class="layui-row layui-col-space10 layui-form-item">
                   <div class="layui-col-lg6">
-                    <label class="layui-form-label">关联主表字段</label>
+                    <label class="layui-form-label">主表字段</label>
                     <div class="layui-input-block">
                       <select id="mainCode">
                         <option value="">全部</option>
@@ -31,7 +31,7 @@
                     </div>
                   </div>
                   <div class="layui-col-lg6">
-                    <label class="layui-form-label">关联本表字段</label>
+                    <label class="layui-form-label">本表字段</label>
                     <div class="layui-input-block">
                       <select id="selfCode">
                         <option value="">全部</option>
@@ -39,7 +39,7 @@
                     </div>
                   </div>
                   <div class="layui-col-lg6">
-                    <label class="layui-form-label">展示本表字段</label>
+                    <label class="layui-form-label">展示字段</label>
                     <div class="layui-input-block">
                       <select id="selfName">
                         <option value="">全部</option>
@@ -87,16 +87,14 @@
     var relatId = window.location.search.substring(1, window.location.search.length);
     $.ajax({
       type: "post",
-      url: "/prod/ruleDet",
+      url: "/prod/ruleDict?relatId=" + relatId,
       contentType: "application/json;charset=utf-8",
       dataType: "json",
-      data: relatId,
       success: function (detObj) {
         if (detObj.msg == "success") {
-          var detJson = detObj.data[0];
+          var detJson = detObj.data;
+          alert(JSON.stringify(detJson.mainCode[0]));
           $('#mainCode').val(detJson.mainCode);
-          $('#selfCode').val(detJson.selfCode);
-          $('#selfName').val(detJson.selfName);
           layui.form.render();
         }
       }

@@ -202,8 +202,15 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public List<RuleDetVo> ruleDet(Long ruleId) {
-        return null;
+    public RuleDictVo ruleDict(Long relatId) {
+        RuleDictVo ruleDict = new RuleDictVo();
+        List<RuleDictExtVo> mainCode = prodMapper.getMainCode(relatId);
+//        List<RuleDictExtVo> selfCode = prodMapper.getSelfCode(relatId);
+//        List<RuleDictExtVo> selfName = prodMapper.getSelfName(relatId);
+        ruleDict.setMainCode(mainCode);
+//        ruleDict.get(0).setSelfCode(selfCode);
+//        ruleDict.get(0).setSelfName(selfName);
+        return ruleDict;
     }
 
 //    @Override
