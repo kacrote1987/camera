@@ -110,12 +110,12 @@ public interface ProdService {
      * 规则配置列表
      * @return
      */
-    PageInfo<RuleListVo> ruleList();
+    List<RuleListVo> ruleList(Long relatId);
     /**
      * 规则配置详细
      * @return
      */
-    RuleDetVo ruleDet(Long ruleId);
+    List<RuleDetVo> ruleDet(Long ruleId);
 //    /**
 //     * 产品演示
 //     * @return

@@ -48,9 +48,9 @@
     var relatId = window.location.search.substring(1, window.location.search.length);
     table.render({
       elem: '#test-table-toolbar'
-      , id: 'prodReload'
+      , id: 'ruleReload'
       , method: 'post'
-      , url: '/prod/basicView?relatId=' + relatId //数据接口
+      , url: '/prod/ruleList?relatId=' + relatId //数据接口
       , toolbar: '#test-table-toolbar-toolbarDemo'
       , title: '基础信息表'
       , response: {
@@ -59,48 +59,35 @@
       }
       , cols: [[
         {type: 'checkbox', fixed: 'left', width: '10%'}
-        , {field: 'toolName', title: '关联主表字段', width: '28%'}
-        , {field: 'toolType', title: '关联本表字段', width: '28%', templet: function (d) {
-            var opt = '<select id="toolType" name="toolType" class="province-selector" >\n'
-            if (d.toolType === "文本") {
-              opt = opt + ' <option value="文本" selected>文本</option>\n' +
-                      '      <option value="字典" >字典</option>\n'
-            } else {
-              opt = opt + ' <option value="文本" >文本</option>\n' +
-                      '      <option value="字典" selected>字典</option>\n'
-            }
-            opt = opt + '</select>'
-            return opt
-          }
-        }
-        , {field: 'resState', title: '展示本表字段', width: '28%', templet: function (d) {
-            var opt
-            if (d.resState === "1") {
-              opt = '<input type="checkbox" id="resState" name="resState" lay-skin="primary" checked>'
-            } else {
-              opt = '<input type="checkbox" id="resState" name="resState" lay-skin="primary" >'
-            }
-            return opt
-          }
-        }
+        , {field: 'mainCode', title: '关联主表字段', width: '30%'}
+        , {field: 'selfCode', title: '关联本表字段', width: '30%'}
+        , {field: 'selfName', title: '展示本表字段', width: '30%'}
       ]]
-      , done: function (res, curr, count) {
-        count || this.elem.next('.layui-table-view').find('.layui-table-header').css('overflow', 'auto');
-        layui.each($('select'), function (index, item) {
-          var elem = $(item);
-          elem.val(elem.data('value')).parents('div.layui-table-cell').css('overflow', 'visible');
-        });
-      }
     });
 
-    //监听单元格编辑
-    // table.on('edit(test-table-toolbar)', function (obj) {
-    //   var params = {};
-    //   params.extId = obj.data.extId;
-    //   params.field = obj.field;
-    //   params.value = obj.value;
-    //   postdata(params, "/supp/colsave", function () {table.reload('colReload');layer.msg("更新成功");})
-    // });
+    //头工具栏事件
+    table.on('toolbar(test-table-toolbar)', function(obj){
+      var checkStatus = table.checkStatus(obj.config.id);
+      switch(obj.event){
+        case 'add':
+          layer.open({
+            type: 2
+            ,title: '新增'
+            ,content: 'ruleadd.html?' +relatId
+            ,maxmin: true
+            ,area: ['700px', '500px']
+          });
+          break;
+        case 'del':
+          layer.confirm('是否删除？', {
+            btn: ['是','否'] //按钮
+          }, function(){
+            postdata(null,"/prod/ruleDel?relatId=" + checkStatus.data[0].relatId,function () {
+              table.reload('ruleReload');layer.msg("删除成功");})
+          });
+          break;
+      };
+    });
 
     $('.layui-fluid .layui-btn').on('click', function () {
       var type = $(this).data('type');

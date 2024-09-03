@@ -36,6 +36,7 @@ public interface ProdMapper {
     List<TblListVo> tblDict(Long relatId);
     List<BasicCol> getBasicCol(Long relatId);
     List<FlowViewVo> flowView(Long relatId);
+    List<RuleListVo> ruleList(Long relatId);
 //    List<ProdViewVo> prodView(Long params);
 //    String checkTblExists(String tblName);
 //    boolean dropTbl(String tblCode);

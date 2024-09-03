@@ -1,76 +1,49 @@
 package com.wision.entity;
 
 public class RuleListVo {
-    private Long prodId;
-    private String prodType;
-    private String prodName;
-    private String prodVer;
-    private String prodLink;
-    private String prodExplain;
-    private String prodTime;
-    private String prodState;
+    private Long ruleId;
+    private Long relatId;
+    private String mainCode;
+    private String selfCode;
+    private String selfName;
 
-    public Long getProdId() {
-        return prodId;
+    public Long getRuleId() {
+        return ruleId;
     }
 
-    public void setProdId(Long prodId) {
-        this.prodId = prodId;
+    public void setRuleId(Long ruleId) {
+        this.ruleId = ruleId;
     }
 
-    public String getProdType() {
-        return prodType;
+    public Long getRelatId() {
+        return relatId;
     }
 
-    public void setProdType(String prodType) {
-        this.prodType = prodType;
+    public void setRelatId(Long relatId) {
+        this.relatId = relatId;
     }
 
-    public String getProdName() {
-        return prodName;
+    public String getMainCode() {
+        return mainCode;
     }
 
-    public void setProdName(String prodName) {
-        this.prodName = prodName;
+    public void setMainCode(String mainCode) {
+        this.mainCode = mainCode;
     }
 
-    public String getProdVer() {
-        return prodVer;
+    public String getSelfCode() {
+        return selfCode;
     }
 
-    public void setProdVer(String prodVer) {
-        this.prodVer = prodVer;
+    public void setSelfCode(String selfCode) {
+        this.selfCode = selfCode;
     }
 
-    public String getProdLink() {
-        return prodLink;
+    public String getSelfName() {
+        return selfName;
     }
 
-    public void setProdLink(String prodLink) {
-        this.prodLink = prodLink;
-    }
-
-    public String getProdExplain() {
-        return prodExplain;
-    }
-
-    public void setProdExplain(String prodExplain) {
-        this.prodExplain = prodExplain;
-    }
-
-    public String getProdTime() {
-        return prodTime;
-    }
-
-    public void setProdTime(String prodTime) {
-        this.prodTime = prodTime;
-    }
-
-    public String getProdState() {
-        return prodState;
-    }
-
-    public void setProdState(String prodState) {
-        this.prodState = prodState;
+    public void setSelfName(String selfName) {
+        this.selfName = selfName;
     }
 }

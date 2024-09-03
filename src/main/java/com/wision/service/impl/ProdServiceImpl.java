@@ -196,12 +196,13 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public PageInfo<RuleListVo> ruleList() {
-        return null;
+    public List<RuleListVo> ruleList(Long relatId) {
+        List<RuleListVo> ruleList=prodMapper.ruleList(relatId);
+        return ruleList;
     }
 
     @Override
-    public RuleDetVo ruleDet(Long relatId) {
+    public List<RuleDetVo> ruleDet(Long ruleId) {
         return null;
     }
 

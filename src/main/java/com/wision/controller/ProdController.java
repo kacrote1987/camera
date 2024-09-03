@@ -160,17 +160,18 @@ public class ProdController {
 
     @ApiOperation("规则配置列表")
     @PostMapping("/ruleList")
-    public Result ruleList(){
-        PageInfo<RuleListVo> ruleList= prodService.ruleList();
+    public Result ruleList(@RequestParam Long relatId){
+        List<RuleListVo> ruleList= prodService.ruleList(relatId);
         return Result.success(ruleList);
     }
 
     @ApiOperation("规则配置详细")
     @PostMapping("/ruleDet")
     public Result ruleDet(@RequestParam Long ruleId){
-        RuleDetVo ruleDet= prodService.ruleDet(ruleId);
+        List<RuleDetVo> ruleDet= prodService.ruleDet(ruleId);
         return Result.success(ruleDet);
     }
+
 
 //    @ApiOperation("基础表保存")
 //    @PostMapping("/tblsave")
