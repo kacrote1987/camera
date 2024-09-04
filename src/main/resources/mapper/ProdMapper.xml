@@ -108,7 +108,7 @@
         select ext_id,tool_name,tool_code from t_supp_relat_ext where tool_tag='flow' and relat_id=#{relatId} order by tool_code
     </select>
     <select id="ruleList" resultType="com.wision.entity.RuleListVo" >
-        select rule_id,relat_id,main_code,self_code,self_name from t_sys_rule where relat_id=#{relatId}
+        select rule_id,relat_id,target,style,keyss,vals,shows from t_sys_rule where relat_id=#{relatId}
     </select>
     <select id="getMainCode" resultType="com.wision.entity.RuleDictExtVo" >
         select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}

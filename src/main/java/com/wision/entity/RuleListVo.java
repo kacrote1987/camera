@@ -3,9 +3,11 @@ package com.wision.entity;
 public class RuleListVo {
     private Long ruleId;
     private Long relatId;
-    private String mainCode;
-    private String selfCode;
-    private String selfName;
+    private String target;
+    private String style;
+    private String keyss;
+    private String vals;
+    private String shows;
 
     public Long getRuleId() {
         return ruleId;
@@ -23,27 +25,43 @@ public class RuleListVo {
         this.relatId = relatId;
     }
 
-    public String getMainCode() {
-        return mainCode;
+    public String getTarget() {
+        return target;
     }
 
-    public void setMainCode(String mainCode) {
-        this.mainCode = mainCode;
+    public void setTarget(String target) {
+        this.target = target;
     }
 
-    public String getSelfCode() {
-        return selfCode;
+    public String getStyle() {
+        return style;
     }
 
-    public void setSelfCode(String selfCode) {
-        this.selfCode = selfCode;
+    public void setStyle(String style) {
+        this.style = style;
     }
 
-    public String getSelfName() {
-        return selfName;
+    public String getKeyss() {
+        return keyss;
     }
 
-    public void setSelfName(String selfName) {
-        this.selfName = selfName;
+    public void setKeyss(String keyss) {
+        this.keyss = keyss;
+    }
+
+    public String getVals() {
+        return vals;
+    }
+
+    public void setVals(String vals) {
+        this.vals = vals;
+    }
+
+    public String getShows() {
+        return shows;
+    }
+
+    public void setShows(String shows) {
+        this.shows = shows;
     }
 }
