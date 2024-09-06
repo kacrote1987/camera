@@ -25,7 +25,7 @@
                   <div class="layui-col-lg6">
                     <label class="layui-form-label">关联方式</label>
                     <div class="layui-input-block">
-                      <select id="style">
+                      <select id="styles">
                         <option value="">全部</option>
                         <option value="inner join">inner join</option>
                         <option value="left join">left join</option>
@@ -44,10 +44,10 @@
                   <div class="layui-col-lg6">
                     <label class="layui-form-label">匹配方式</label>
                     <div class="layui-input-block">
-                      <select id="match">
+                      <select id="matches">
                         <option value="">全部</option>
-                        <option value="精确匹配">精确匹配</option>
-                        <option value="精确匹配">模糊匹配</option>
+                        <option value="精确">精确</option>
+                        <option value="模糊">模糊</option>
                       </select>
                     </div>
                   </div>
@@ -57,13 +57,6 @@
                       <select id="vals">
                         <option value="">全部</option>
                       </select>
-                    </div>
-                  </div>
-                  <div class="layui-col-lg6">
-                    <label class="layui-form-label">步长</label>
-                    <div class="layui-input-block">
-                      <input id="stepLen" type="text" lay-verify="required" placeholder=""
-                             autocomplete="off" class="layui-input">
                     </div>
                   </div>
                   <div class="layui-col-lg6">
@@ -133,9 +126,11 @@
   function save() {
     var params = {};
     params.relatId = window.location.search.substring(1, window.location.search.length);
-    params.mainCode = $('#mainCode').val();
-    params.selfCode = $('#selfCode').val();
-    params.selfName = $('#selfName').val();
+    params.styles = $('#styles').val();
+    params.keyss = $('#keyss').val();
+    params.matches = $('#matches').val();
+    params.vals = $('#vals').val();
+    params.shows = $('#shows').val();
     postdata(params, "/prod/ruleAdd", function () {
       layer.msg("保存成功！");
     });

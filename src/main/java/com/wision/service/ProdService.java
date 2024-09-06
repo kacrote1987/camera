@@ -116,6 +116,11 @@ public interface ProdService {
      * @return
      */
     RuleDictVo ruleDict(Long relatId);
+    /**
+     * 规则配置新增
+     * @return
+     */
+    void ruleAdd(RuleListForm params);
 //    /**
 //     * 产品演示
 //     * @return

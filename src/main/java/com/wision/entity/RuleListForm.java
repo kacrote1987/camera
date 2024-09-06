@@ -1,58 +1,67 @@
 package com.wision.entity;
 
 public class RuleListForm {
-    private String prodType;
-    private String prodName;
-    private String prodNickname;
-    private String prodState;
-    private Integer page;
-    private Integer limit;
+    private Long ruleId;
+    private Long relatId;
+    private String styles;
+    private String keyss;
+    private String matches;
+    private String vals;
+    private String shows;
 
-    public String getProdType() {
-        return prodType;
+    public Long getRuleId() {
+        return ruleId;
     }
 
-    public void setProdType(String prodType) {
-        this.prodType = prodType;
+    public void setRuleId(Long ruleId) {
+        this.ruleId = ruleId;
     }
 
-    public String getProdName() {
-        return prodName;
+    public Long getRelatId() {
+        return relatId;
     }
 
-    public void setProdName(String prodName) {
-        this.prodName = prodName;
+    public void setRelatId(Long relatId) {
+        this.relatId = relatId;
     }
 
-    public String getProdNickname() {
-        return prodNickname;
+    public String getStyles() {
+        return styles;
     }
 
-    public void setProdNickname(String prodNickname) {
-        this.prodNickname = prodNickname;
+    public void setStyles(String styles) {
+        this.styles = styles;
     }
 
-    public String getProdState() {
-        return prodState;
+    public String getKeyss() {
+        return keyss;
     }
 
-    public void setProdState(String prodState) {
-        this.prodState = prodState;
+    public void setKeyss(String keyss) {
+        this.keyss = keyss;
     }
 
-    public Integer getPage() {
-        return page;
+    public String getMatches() {
+        return matches;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public void setMatches(String matches) {
+        this.matches = matches;
     }
 
-    public Integer getLimit() {
-        return limit;
+    public String getVals() {
+        return vals;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
+    public void setVals(String vals) {
+        this.vals = vals;
+    }
+
+    public String getShows() {
+        return shows;
+    }
+
+    public void setShows(String shows) {
+        this.shows = shows;
     }
 }

@@ -3,9 +3,9 @@ package com.wision.entity;
 public class RuleListVo {
     private Long ruleId;
     private Long relatId;
-    private String target;
-    private String style;
+    private String styles;
     private String keyss;
+    private String matches;
     private String vals;
     private String shows;
 
@@ -25,20 +25,12 @@ public class RuleListVo {
         this.relatId = relatId;
     }
 
-    public String getTarget() {
-        return target;
+    public String getStyles() {
+        return styles;
     }
 
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
-    public String getStyle() {
-        return style;
-    }
-
-    public void setStyle(String style) {
-        this.style = style;
+    public void setStyles(String styles) {
+        this.styles = styles;
     }
 
     public String getKeyss() {
@@ -47,6 +39,14 @@ public class RuleListVo {
 
     public void setKeyss(String keyss) {
         this.keyss = keyss;
+    }
+
+    public String getMatches() {
+        return matches;
+    }
+
+    public void setMatches(String matches) {
+        this.matches = matches;
     }
 
     public String getVals() {

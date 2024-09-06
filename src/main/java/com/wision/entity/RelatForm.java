@@ -4,7 +4,7 @@ public class RelatForm {
     private Long relatId;
     private String relatName;
     private String layoutType;
-    private Long selfId;
+    private Long tblId;
 
     public Long getRelatId() {
         return relatId;
@@ -30,11 +30,11 @@ public class RelatForm {
         this.layoutType = layoutType;
     }
 
-    public Long getSelfId() {
-        return selfId;
+    public Long getTblId() {
+        return tblId;
     }
 
-    public void setSelfId(Long selfId) {
-        this.selfId = selfId;
+    public void setTblId(Long tblId) {
+        this.tblId = tblId;
     }
 }

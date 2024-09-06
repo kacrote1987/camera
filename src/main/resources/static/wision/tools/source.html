@@ -45,7 +45,7 @@
                                         <div class="layui-col-lg6">
                                             <label class="layui-form-label">选择数据源</label>
                                             <div class="layui-input-block">
-                                                <select id="selfId">
+                                                <select id="tblId">
                                                     <option value="">全部</option>
                                                 </select>
                                             </div>
@@ -99,7 +99,7 @@
                     var detJson = detObj.data;
                     $('#relatName').val(detJson.relatName);
                     $('#layoutType').val(detJson.layoutType);
-                    $('#selfId').val(detJson.selfId);
+                    $('#tblId').val(detJson.tblId);
                     $('#tblName').val(detJson.tblName);
                     layui.form.render();
                 }
@@ -114,9 +114,9 @@
             dataType: "json",
             success: function (detObj) {
                 if (detObj.msg == "success") {
-                    document.getElementById("selfId").options.length = 0;
+                    document.getElementById("tblId").options.length = 0;
                     for (var i=0; i<detObj.data.length; i++) {
-                        document.getElementById("selfId").options.add(new Option(detObj.data[i].tblName,detObj.data[i].tblId));
+                        document.getElementById("tblId").options.add(new Option(detObj.data[i].tblName,detObj.data[i].tblId));
                     }
                     layui.form.render();
                 }
@@ -129,7 +129,7 @@
         params.relatId = window.location.search.substring(1, window.location.search.length);
         params.relatName = $('#relatName').val();
         params.layoutType = $('#layoutType').val();
-        params.selfId = $('#selfId').val();
+        params.tblId = $('#tblId').val();
         postdata(params, "/prod/sourEdit", function () {
           layer.msg("保存成功！");
         });

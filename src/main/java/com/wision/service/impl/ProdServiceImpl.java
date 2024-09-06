@@ -213,6 +213,11 @@ public class ProdServiceImpl implements ProdService {
         return ruleDict;
     }
 
+    @Override
+    public void ruleAdd(RuleListForm params) {
+        prodMapper.insertRule(params);
+    }
+
 //    @Override
 //    public List<ProdViewVo> prodView(String params) {
 //        List<ProdViewVo> prodView=prodMapper.prodView(Long.valueOf(params));

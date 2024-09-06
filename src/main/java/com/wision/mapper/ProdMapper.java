@@ -40,6 +40,7 @@ public interface ProdMapper {
     List<RuleDictExtVo> getMainCode(Long relatId);
     List<RuleDictExtVo> getSelfCode(Long relatId);
     List<RuleDictExtVo> getSelfName(Long relatId);
+    boolean insertRule(@Param("params") RuleListForm params);
 //    List<ProdViewVo> prodView(Long params);
 //    String checkTblExists(String tblName);
 //    boolean dropTbl(String tblCode);

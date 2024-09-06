@@ -172,6 +172,13 @@ public class ProdController {
         return Result.success(ruleDict);
     }
 
+    @ApiOperation("规则配置新增")
+    @PostMapping("/ruleAdd")
+    public Result ruleAdd(@RequestBody RuleListForm params){
+        prodService.ruleAdd(params);
+        return Result.success();
+    }
+
 //    @ApiOperation("基础表保存")
 //    @PostMapping("/tblsave")
 //    public Result tblSave(@RequestBody BasicTblList params){

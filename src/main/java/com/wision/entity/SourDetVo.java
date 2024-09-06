@@ -4,11 +4,8 @@ public class SourDetVo {
     private Long relatId;
     private String relatName;
     private String layoutType;
-    private Long selfId;
+    private Long tblId;
     private String tblName;
-    private String selfCol;
-    private Long targetId;
-    private String targetCol;
 
     public Long getRelatId() {
         return relatId;
@@ -34,12 +31,12 @@ public class SourDetVo {
         this.layoutType = layoutType;
     }
 
-    public Long getSelfId() {
-        return selfId;
+    public Long getTblId() {
+        return tblId;
     }
 
-    public void setSelfId(Long selfId) {
-        this.selfId = selfId;
+    public void setTblId(Long tblId) {
+        this.tblId = tblId;
     }
 
     public String getTblName() {
@@ -48,29 +45,5 @@ public class SourDetVo {
 
     public void setTblName(String tblName) {
         this.tblName = tblName;
-    }
-
-    public String getSelfCol() {
-        return selfCol;
-    }
-
-    public void setSelfCol(String selfCol) {
-        this.selfCol = selfCol;
-    }
-
-    public Long getTargetId() {
-        return targetId;
-    }
-
-    public void setTargetId(Long targetId) {
-        this.targetId = targetId;
-    }
-
-    public String getTargetCol() {
-        return targetCol;
-    }
-
-    public void setTargetCol(String targetCol) {
-        this.targetCol = targetCol;
     }
 }
