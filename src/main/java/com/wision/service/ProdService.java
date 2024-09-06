@@ -82,15 +82,15 @@ public interface ProdService {
      */
     PageInfo<ToolListVo> toolSel(String params,ToolListForm params1);
      /**
-     * 组件配置详细
+     * 组件数据源详细
      * @return
      */
-     ToolConfVo toolConf(Long relatId);
+     SourDetVo sourDet(Long relatId);
     /**
-     * 组件配置修改
+     * 组件数据源修改
      * @return
      */
-    void relatEdit(RelatForm params);
+    void sourEdit(RelatForm params);
     /**
      * 组件字典-基础表
      * @return

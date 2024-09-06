@@ -123,17 +123,17 @@ public class ProdController {
         return Result.success(toolSel);
     }
 
-    @ApiOperation("组件配置详细")
-    @PostMapping("/toolConf")
-    public Result toolConf(@RequestParam Long relatId){
-        ToolConfVo toolConf= prodService.toolConf(relatId);
-        return Result.success(toolConf);
+    @ApiOperation("组件数据源详细")
+    @PostMapping("/sourDet")
+    public Result sourDet(@RequestParam Long relatId){
+        SourDetVo sourDet= prodService.sourDet(relatId);
+        return Result.success(sourDet);
     }
 
-    @ApiOperation("组件配置修改")
-    @PostMapping("/relatEdit")
-    public Result relatEdit(@RequestBody RelatForm params){
-        prodService.relatEdit(params);
+    @ApiOperation("组件数据源修改")
+    @PostMapping("/sourEdit")
+    public Result sourEdit(@RequestBody RelatForm params){
+        prodService.sourEdit(params);
         return Result.success();
     }
 

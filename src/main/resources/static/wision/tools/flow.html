@@ -15,6 +15,12 @@
   <div class="layui-card">
     <div class="layui-card-body">
       <div class="layui-row layui-col-space12">
+        <script type="text/html" id="test-table-toolbar-toolbarDemo">
+          <div class="layui-btn-container" id="actions">
+            <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+            <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+          </div>
+        </script>
         <div class="layui-col-md10">
           <div class="layui-card">
             <div class="layui-card-body">
@@ -51,14 +57,18 @@
       , id: 'flowReload'
       , method: 'post'
       , url: '/prod/flowView?relatId=' + relatId
-      , title: '流程管理'
       , response: {
         statusName: 'code',
         statusCode: '200'
       }
+      , toolbar: '#test-table-toolbar-toolbarDemo'
+      , title: '菜单管理'
+      , page: false
       , cols: [[
-        {field: 'toolName', title: '流程名称', width: '50%'}
-        , {field: 'toolCode', title: '排序', width: '50%'}
+        {type: 'checkbox', fixed: 'left', width: '10%'}
+        , {field: 'toolCode', title: '排序', edit: 'text', width: '15%'}
+        , {field: 'toolName', title: '菜单名称', edit: 'text', width: '30%'}
+        , {field: '', title: '扩展条件', width: '45%'}
       ]]
     });
 
@@ -70,12 +80,12 @@
       switch (obj.event) {
         case 'add':
           params.action="add";
-          postdata(params,"/prod/flowAdd",function () {table.reload('flowReload');layer.msg("添加成功！");});
+          postdata(params,"/supp/flowsave",function () {table.reload('flowReload');layer.msg("添加成功！");});
           break;
         case 'del':
           params.action="del";
           params.extId=checkStatus.data[0].extId;
-          postdata(params,"/prod/flowDel",function () {table.reload('flowReload');layer.msg("已删除！");});
+          postdata(params,"/supp/flowsave",function () {table.reload('flowReload');layer.msg("已删除！");});
           break;
       };
     });
@@ -88,7 +98,7 @@
       params.extId = obj.data.extId;
       params.field = obj.field;
       params.value = obj.value;
-      postdata(params, "/prod/flowEdit", function () {table.reload('flowReload');layer.msg("更新成功");})
+      postdata(params, "/supp/flowsave", function () {table.reload('flowReload');layer.msg("更新成功");})
     });
 
   });

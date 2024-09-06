@@ -23,21 +23,12 @@
               <form class="layui-form" action="" lay-filter="component-form-element">
                 <div class="layui-row layui-col-space10 layui-form-item">
                   <div class="layui-col-lg6">
-                    <label class="layui-form-label">目标表</label>
-                    <div class="layui-input-block">
-                      <select id="target">
-                        <option value="">全部</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="layui-col-lg6">
-                    <label class="layui-form-label">方式</label>
+                    <label class="layui-form-label">关联方式</label>
                     <div class="layui-input-block">
                       <select id="style">
                         <option value="">全部</option>
                         <option value="inner join">inner join</option>
                         <option value="left join">left join</option>
-                        <option value="right join">right join</option>
                         <option value="where">where</option>
                       </select>
                     </div>
@@ -51,11 +42,28 @@
                     </div>
                   </div>
                   <div class="layui-col-lg6">
+                    <label class="layui-form-label">匹配方式</label>
+                    <div class="layui-input-block">
+                      <select id="match">
+                        <option value="">全部</option>
+                        <option value="精确匹配">精确匹配</option>
+                        <option value="精确匹配">模糊匹配</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="layui-col-lg6">
                     <label class="layui-form-label">值</label>
                     <div class="layui-input-block">
                       <select id="vals">
                         <option value="">全部</option>
                       </select>
+                    </div>
+                  </div>
+                  <div class="layui-col-lg6">
+                    <label class="layui-form-label">步长</label>
+                    <div class="layui-input-block">
+                      <input id="stepLen" type="text" lay-verify="required" placeholder=""
+                             autocomplete="off" class="layui-input">
                     </div>
                   </div>
                   <div class="layui-col-lg6">

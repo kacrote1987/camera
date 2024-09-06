@@ -167,14 +167,14 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public ToolConfVo toolConf(Long relatId) {
-        ToolConfVo toolConf=prodMapper.toolConf(relatId);
-        return toolConf;
+    public SourDetVo sourDet(Long relatId) {
+        SourDetVo sourDet=prodMapper.sourDet(relatId);
+        return sourDet;
     }
 
     @Override
-    public void relatEdit(RelatForm params) {
-        prodMapper.relatEdit(params);
+    public void sourEdit(RelatForm params) {
+        prodMapper.sourEdit(params);
     }
 
     @Override

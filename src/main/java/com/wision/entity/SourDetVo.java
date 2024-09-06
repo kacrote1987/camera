@@ -1,6 +1,6 @@
 package com.wision.entity;
 
-public class ToolConfVo {
+public class SourDetVo {
     private Long relatId;
     private String relatName;
     private String layoutType;

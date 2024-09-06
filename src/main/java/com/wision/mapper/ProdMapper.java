@@ -31,8 +31,8 @@ public interface ProdMapper {
     List<MenuTreeVo> menuFather(Long prodId);
     List<children> menuChild(Long fatherId);
     List<ToolListVo> toolSel(Long menuId,@Param("params") ToolListForm params);
-    ToolConfVo toolConf(Long relatId);
-    boolean relatEdit(@Param("params") RelatForm params);
+    SourDetVo sourDet(Long relatId);
+    boolean sourEdit(@Param("params") RelatForm params);
     List<TblListVo> tblDict(Long relatId);
     List<BasicCol> getBasicCol(Long relatId);
     List<FlowViewVo> flowView(Long relatId);
