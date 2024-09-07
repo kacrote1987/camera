@@ -121,6 +121,7 @@
             ,form = layui.form
 
     var prodId = window.location.search.substring(1, window.location.search.length);
+    alert(prodId);
     $.ajax({
       type: "post",
       url: "/prod/getProdName",

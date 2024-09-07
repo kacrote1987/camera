@@ -88,10 +88,25 @@
     <select id="menuChild" resultType="com.wision.entity.children" >
         select menu_name as title,menu_id as id from t_supp_menu_main where father_id=#{fatherId}
     </select>
-    <select id="toolSel" resultType="com.wision.entity.ToolListVo" >
-        select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.type_code,b.tool_name,b.tool_ver,b.tool_explain,date_format(b.tool_time,'%Y-%m-%d') as tool_time
-             ,b.share_num,b.tool_state from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
+    <select id="toolSel" resultType="com.wision.entity.ToolSelVo" >
+        select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.type_code,b.tool_name,b.tool_ver,a.relat_name,date_format(b.tool_time,'%Y-%m-%d') as tool_time,b.tool_state
+        from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
     </select>
+    <select id="ruleList" resultType="com.wision.entity.RuleListVo" >
+        select rule_id,relat_id,styles,keyss,matches,vals,shows from t_sys_rule where relat_id=#{relatId}
+    </select>
+    <select id="getMainCode" resultType="com.wision.entity.RuleDictExtVo" >
+        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}
+    </select>
+    <select id="getSelfCode" resultType="com.wision.entity.RuleDictExtVo" >
+        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}
+    </select>
+    <select id="getSelfName" resultType="com.wision.entity.RuleDictExtVo" >
+        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}
+    </select>
+    <insert id="insertRule">
+        insert into t_sys_rule(relat_id,styles,keyss,matches,vals,shows) values(#{params.relatId},#{params.styles},#{params.keyss},#{params.matches},#{params.vals},#{params.shows})
+    </insert>
     <select id="sourDet" resultType="com.wision.entity.SourDetVo" >
         select a.relat_id,a.relat_name,a.layout_type,a.tbl_id,b.tbl_name from t_supp_relat_main a left join t_supp_imp_tbl b on a.tbl_id=b.tbl_id where a.relat_id=#{relatId}
     </select>
@@ -110,21 +125,18 @@
     <select id="flowView" resultType="com.wision.entity.FlowViewVo" >
         select ext_id,tool_name,tool_code from t_supp_relat_ext where tool_tag='flow' and relat_id=#{relatId} order by tool_code
     </select>
-    <select id="ruleList" resultType="com.wision.entity.RuleListVo" >
-        select rule_id,relat_id,styles,keyss,matches,vals,shows from t_sys_rule where relat_id=#{relatId}
-    </select>
-    <select id="getMainCode" resultType="com.wision.entity.RuleDictExtVo" >
-        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}
-    </select>
-    <select id="getSelfCode" resultType="com.wision.entity.RuleDictExtVo" >
-        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}
-    </select>
-    <select id="getSelfName" resultType="com.wision.entity.RuleDictExtVo" >
-        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}
-    </select>
-    <insert id="insertRule">
-        insert into t_sys_rule(relat_id,styles,keyss,matches,vals,shows) values(#{params.relatId},#{params.styles},#{params.keyss},#{params.matches},#{params.vals},#{params.shows})
+    <insert id="insertFlow">
+        insert into t_supp_relat_ext(relat_id,tool_tag) values(#{relatId},'flow')
     </insert>
+    <delete id="deleteFlow">
+        delete from t_supp_relat_ext where ext_id=#{extId}
+    </delete>
+    <update id="updateFlow">
+        update t_supp_relat_ext set ${field} = #{value} where ext_id=#{extId}
+    </update>
+<!--    <select id="selOtherTypeIds" resultType="String" >-->
+<!--        select step_id from t_supp_tool_step where step_id=#{oldTypeIds} and step_id!=#{stepId}-->
+<!--    </select>-->
 <!--    <select id="prodView" resultType="com.wision.entity.ProdViewVo" >-->
 <!--        select prod_id,prod_name from t_supp_prod_main where prod_id=#{prodId}-->
 <!--    </select>-->
@@ -145,18 +157,6 @@
 <!--    </select>-->
 <!--    <update id="updateTblByCode">-->
 <!--        update t_supp_imp_tbl set tbl_code=#{tblCode} where tbl_id=#{tblId}-->
-<!--    </update>-->
-<!--    <insert id="insertFlow">-->
-<!--        insert into t_supp_relat_ext(relat_id,tool_tag) values(#{relatId},'flow')-->
-<!--    </insert>-->
-<!--    <delete id="deleteFlow">-->
-<!--        delete from t_supp_relat_ext where ext_id=#{extId}-->
-<!--    </delete>-->
-<!--    <select id="selOtherTypeIds" resultType="String" >-->
-<!--        select step_id from t_supp_tool_step where step_id=#{oldTypeIds} and step_id!=#{stepId}-->
-<!--    </select>-->
-<!--    <update id="updateFlow">-->
-<!--        update t_supp_relat_ext set ${field} = #{value} where ext_id=#{extId}-->
 <!--    </update>-->
 <!--    <update id="updateTypeIds">-->
 <!--        update t_supp_relat_main set type_ids=#{newTypeIds} where relat_id=#{relatId}-->

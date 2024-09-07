@@ -74,13 +74,6 @@ public class ProdController {
         return Result.success(tblList);
     }
 
-    @ApiOperation("子系统获取项目名称")
-    @PostMapping("/getProdName")
-    public Result getProdName(@RequestBody Long prodId){
-        String getProdName= prodService.getProdName(prodId);
-        return Result.success(getProdName);
-    }
-
     @ApiOperation("菜单列表")
     @PostMapping("/menuList")
     public Result menuList(@RequestParam Long prodId){
@@ -119,8 +112,29 @@ public class ProdController {
     @ApiOperation("根据菜单树查组件")
     @PostMapping("/toolSel")
     public Result toolSel(@RequestBody String prodId,ToolListForm params){
-        PageInfo<ToolListVo> toolSel= prodService.toolSel(prodId,params);
+        PageInfo<ToolSelVo> toolSel= prodService.toolSel(prodId,params);
         return Result.success(toolSel);
+    }
+
+    @ApiOperation("规则配置列表")
+    @PostMapping("/ruleList")
+    public Result ruleList(@RequestParam Long relatId){
+        List<RuleListVo> ruleList= prodService.ruleList(relatId);
+        return Result.success(ruleList);
+    }
+
+    @ApiOperation("规则配置字典")
+    @PostMapping("/ruleDict")
+    public Result ruleDict(@RequestParam Long relatId){
+        RuleDictVo ruleDict= prodService.ruleDict(relatId);
+        return Result.success(ruleDict);
+    }
+
+    @ApiOperation("规则配置新增")
+    @PostMapping("/ruleAdd")
+    public Result ruleAdd(@RequestBody RuleListForm params){
+        prodService.ruleAdd(params);
+        return Result.success();
     }
 
     @ApiOperation("组件数据源详细")
@@ -165,24 +179,24 @@ public class ProdController {
         return Result.success(flowView);
     }
 
-    @ApiOperation("规则配置列表")
-    @PostMapping("/ruleList")
-    public Result ruleList(@RequestParam Long relatId){
-        List<RuleListVo> ruleList= prodService.ruleList(relatId);
-        return Result.success(ruleList);
+    @ApiOperation("流程组件-流程项新增")
+    @PostMapping("/flowAdd")
+    public Result flowAdd(@RequestParam Long relatId){
+        prodService.flowAdd(relatId);
+        return Result.success();
     }
 
-    @ApiOperation("规则配置字典")
-    @PostMapping("/ruleDict")
-    public Result ruleDict(@RequestParam Long relatId){
-        RuleDictVo ruleDict= prodService.ruleDict(relatId);
-        return Result.success(ruleDict);
+    @ApiOperation("流程组件-流程项删除")
+    @PostMapping("/flowDel")
+    public Result flowDel(@RequestParam Long extId){
+        prodService.flowDel(extId);
+        return Result.success();
     }
 
-    @ApiOperation("规则配置新增")
-    @PostMapping("/ruleAdd")
-    public Result ruleAdd(@RequestBody RuleListForm params){
-        prodService.ruleAdd(params);
+    @ApiOperation("流程组件-流程项修改")
+    @PostMapping("/flowEdit")
+    public Result flowEdit(@RequestBody FlowListForm params){
+        prodService.flowEdit(params);
         return Result.success();
     }
 
@@ -190,13 +204,6 @@ public class ProdController {
 //    @PostMapping("/tblsave")
 //    public Result tblSave(@RequestBody BasicTblList params){
 //        prodService.tblSave(params);
-//        return Result.success();
-//    }
-//
-//    @ApiOperation("流程组件保存")
-//    @PostMapping("/flowsave")
-//    public Result flowSave(@RequestBody FlowListForm params){
-//        prodService.flowSave(params);
 //        return Result.success();
 //    }
 //

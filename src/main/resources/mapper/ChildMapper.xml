@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wision.mapper.ChildMapper">
+    <select id="getProdName" resultType="String" >
+        select prod_name from t_supp_prod_main where prod_id=#{prodId}
+    </select>
+</mapper>

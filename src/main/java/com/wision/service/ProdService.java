@@ -47,11 +47,6 @@ public interface ProdService {
      */
     List<SourDictVo> tblList(Long prodId);
     /**
-     * 子系统获取项目名称
-     * @return
-     */
-    String getProdName(Long prodId);
-    /**
      * 菜单列表
      * @return
      */
@@ -80,7 +75,22 @@ public interface ProdService {
      * 根据菜单树查组件
      * @return
      */
-    PageInfo<ToolListVo> toolSel(String params,ToolListForm params1);
+    PageInfo<ToolSelVo> toolSel(String params,ToolListForm params1);
+    /**
+     * 规则配置列表
+     * @return
+     */
+    List<RuleListVo> ruleList(Long relatId);
+    /**
+     * 规则配置字典
+     * @return
+     */
+    RuleDictVo ruleDict(Long relatId);
+    /**
+     * 规则配置新增
+     * @return
+     */
+    void ruleAdd(RuleListForm params);
      /**
      * 组件数据源详细
      * @return
@@ -112,20 +122,20 @@ public interface ProdService {
      */
     List<FlowViewVo> flowView(Long relatId);
     /**
-     * 规则配置列表
+     * 流程组件-流程项新增
      * @return
      */
-    List<RuleListVo> ruleList(Long relatId);
+    void flowAdd(Long relatId);
     /**
-     * 规则配置字典
+     * 流程组件-流程项删除
      * @return
      */
-    RuleDictVo ruleDict(Long relatId);
+    void flowDel(Long extId);
     /**
-     * 规则配置新增
+     * 流程组件-流程项修改
      * @return
      */
-    void ruleAdd(RuleListForm params);
+    void flowEdit(FlowListForm params);
 //    /**
 //     * 产品演示
 //     * @return
@@ -142,11 +152,6 @@ public interface ProdService {
 //     * @return
 //     */
 //    void menuSave(MenuListForm params);
-////    /**
-////     * 流程组件保存
-////     * @return
-////     */
-////    void flowSave(FlowListForm params);
 //    /**
 //     * 基础库表列表
 //     * @return

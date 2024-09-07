@@ -121,17 +121,12 @@
     //头工具栏事件
     table.on('toolbar(test-table-toolbar)', function (obj) {
       var checkStatus = table.checkStatus(obj.config.id);
-      var params = {};
-      params.relatId = relatId;
       switch (obj.event) {
         case 'add':
-          params.action="add";
-          postdata(params,"/supp/flowsave",function () {table.reload('flowReload');layer.msg("添加成功！");});
+          postdata(null,"/prod/flowAdd?relatId=" + relatId,function () {table.reload('flowReload');layer.msg("添加成功！");});
           break;
         case 'del':
-          params.action="del";
-          params.extId=checkStatus.data[0].extId;
-          postdata(params,"/supp/flowsave",function () {table.reload('flowReload');layer.msg("已删除！");});
+          postdata(null,"/prod/flowDel?extId=" + checkStatus.data[0].extId,function () {table.reload('flowReload');layer.msg("已删除！");});
           break;
       };
     });
@@ -139,12 +134,11 @@
     //监听单元格编辑
     table.on('edit(test-table-toolbar)', function (obj) {
       var params = {};
-      params.action = "update";
       params.relatId=relatId;
       params.extId = obj.data.extId;
       params.field = obj.field;
       params.value = obj.value;
-      postdata(params, "/supp/flowsave", function () {table.reload('flowReload');layer.msg("更新成功");})
+      postdata(params, "/prod/flowEdit", function () {table.reload('flowReload');layer.msg("更新成功");})
     });
 
   });

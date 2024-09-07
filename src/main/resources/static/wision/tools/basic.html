@@ -103,18 +103,26 @@
                 {field: 'toolName', title: '字段名称', width: '20%'}
                 , {field: 'toolType', title: '字段类型', width: '20%', templet: function (d) {
                         var opt = '<select id="toolType" name="toolType" class="province-selector" >\n'
-                        if (d.toolType === "文本") {
+                        if (d.toolType === "text") {
                             opt = opt + ' <option value="文本" selected>文本</option>\n' +
                                 '      <option value="字典" >字典</option>\n'
                         } else {
-                            opt = opt + ' <option value="文本" >文本</option>\n' +
+                            opt = opt + ' <option value="文本">文本</option>\n' +
                                 '      <option value="字典" selected>字典</option>\n'
                         }
                         opt = opt + '</select>'
                         return opt
                     }
                 }
-                , {field: 'resState', title: '查询结果', width: '20%', templet: function (d) {
+                , {field: 'sourDict', title: '数据源', width: '20%', templet: function (d) {
+                        var opt = '<select id="sourDict" name="sourDict" class="province-selector" >\n'
+                        opt = opt + ' <option value="文本" >文本</option>\n' +
+                            '      <option value="字典" >字典</option>\n'
+                        opt = opt + '</select>'
+                        return opt
+                    }
+                }
+                , {field: 'resState', title: '查询结果', width: '18%', templet: function (d) {
                         var opt
                         if (d.resState === "1") {
                             opt = '<input type="checkbox" id="resState" name="resState" lay-skin="primary" checked>'
@@ -124,7 +132,7 @@
                         return opt
                     }
                 }
-                , {field: 'selState', title: '查询条件', width: '20%', templet: function (d) {
+                , {field: 'selState', title: '查询条件', width: '18%', templet: function (d) {
                         var opt
                         if (d.selState === "1") {
                             opt = '<input type="checkbox" id="selState" name="selState" lay-skin="primary" checked>'

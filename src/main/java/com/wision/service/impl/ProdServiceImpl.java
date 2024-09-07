@@ -78,12 +78,6 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public String getProdName(Long prodId) {
-        String prodName = prodMapper.getProdName(prodId);
-        return prodName;
-    }
-
-    @Override
     public List<MenuListVo> menuList(Long prodId) {
         List<MenuListVo> menuList=prodMapper.menuList(prodId);
         for(int i=0;i<menuList.size();i++){
@@ -151,19 +145,42 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public PageInfo<ToolListVo> toolSel(String prodId,ToolListForm params) {
+    public PageInfo<ToolSelVo> toolSel(String prodId,ToolListForm params) {
         Integer page = 0;
         if(params.getPage() != null){
             page = params.getPage();
         }
         PageHelper.startPage(page, 10);
         String menuId;
-        List<ToolListVo> toolSel = new ArrayList<>();
+        List<ToolSelVo> toolSel = new ArrayList<>();
         if(prodId.indexOf("menuId")>-1){
             menuId = prodId.substring(prodId.indexOf("menuId=")+7,prodId.length());
             toolSel = prodMapper.toolSel(Long.valueOf(menuId),params);
         }
         return PageInfo.of(toolSel);
+    }
+
+    @Override
+    public List<RuleListVo> ruleList(Long relatId) {
+        List<RuleListVo> ruleList=prodMapper.ruleList(relatId);
+        return ruleList;
+    }
+
+    @Override
+    public RuleDictVo ruleDict(Long relatId) {
+        RuleDictVo ruleDict = new RuleDictVo();
+        List<RuleDictExtVo> mainCode = prodMapper.getMainCode(relatId);
+//        List<RuleDictExtVo> selfCode = prodMapper.getSelfCode(relatId);
+//        List<RuleDictExtVo> selfName = prodMapper.getSelfName(relatId);
+        ruleDict.setMainCode(mainCode);
+//        ruleDict.get(0).setSelfCode(selfCode);
+//        ruleDict.get(0).setSelfName(selfName);
+        return ruleDict;
+    }
+
+    @Override
+    public void ruleAdd(RuleListForm params) {
+        prodMapper.insertRule(params);
     }
 
     @Override
@@ -201,26 +218,18 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public List<RuleListVo> ruleList(Long relatId) {
-        List<RuleListVo> ruleList=prodMapper.ruleList(relatId);
-        return ruleList;
+    public void flowAdd(Long relatId) {
+        prodMapper.insertFlow(relatId);
     }
 
     @Override
-    public RuleDictVo ruleDict(Long relatId) {
-        RuleDictVo ruleDict = new RuleDictVo();
-        List<RuleDictExtVo> mainCode = prodMapper.getMainCode(relatId);
-//        List<RuleDictExtVo> selfCode = prodMapper.getSelfCode(relatId);
-//        List<RuleDictExtVo> selfName = prodMapper.getSelfName(relatId);
-        ruleDict.setMainCode(mainCode);
-//        ruleDict.get(0).setSelfCode(selfCode);
-//        ruleDict.get(0).setSelfName(selfName);
-        return ruleDict;
+    public void flowDel(Long extId) {
+        prodMapper.deleteFlow(extId);
     }
 
     @Override
-    public void ruleAdd(RuleListForm params) {
-        prodMapper.insertRule(params);
+    public void flowEdit(FlowListForm params) {
+        prodMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
     }
 
 //    @Override
@@ -245,18 +254,6 @@ public class ProdServiceImpl implements ProdService {
 //            prodMapper.updateTblByCode(tblId,tblCode);
 //        }
 //    }
-////
-////    @Override
-////    public void flowSave(FlowListForm params) {
-////        if (params.getAction().equals("add")) {
-////            prodMapper.insertFlow(params.getRelatId());
-////        } else if (params.getAction().equals("del")) {
-////            prodMapper.deleteFlow(params.getExtId());
-////        } else {
-////            prodMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
-////        }
-////    }
-//
 //
 ////    @Override
 ////    public List<TblImpForm> tblList(String params) {
