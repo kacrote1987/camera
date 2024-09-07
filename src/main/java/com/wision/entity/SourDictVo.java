@@ -1,6 +1,6 @@
 package com.wision.entity;
 
-public class TblListVo {
+public class SourDictVo {
    private Long tblId;
    private String tblName;
    private String tblCode;

@@ -2,29 +2,63 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>基础信息</title>
+  <title>项目详细</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
 </head>
 <body>
-<script type="text/html" id="test-table-toolbar-toolbarDemo">
-  <div class="layui-btn-container" id="actions">
-    <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-    <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
-  </div>
-</script>
-
 <div class="layui-fluid">
   <div class="layui-card">
     <div class="layui-card-body">
-      <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
-      <script type="text/html" id="imgTpl">
-        <img style="display: inline-block; width: 50%; height: 100%;" src={{ d.avatar }}>
-      </script>
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <div class="layui-card">
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+              <div class="layui-form-item">
+                <div class="layui-inline">
+                  <label class="layui-form-label">业务名称</label>
+                  <div class="layui-input-block">
+                    <input id="relatName" type="text" lay-verify="required" placeholder=""
+                           autocomplete="off" class="layui-input">
+                  </div>
+                </div>
+                <div class="layui-inline">
+                  <label class="layui-form-label">展示形式</label>
+                  <div class="layui-input-block">
+                    <select id="layoutType" lay-filter="layoutType">
+                      <option value="">全部</option>
+                      <option value="主表">主表</option>
+                      <option value="按钮">按钮</option>
+                      <option value="字典">字典</option>
+                      <option value="无">无</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="layui-inline">
+                  <button class="layui-btn layuiadmin-btn-useradmin" onclick="save()">保存</button>
+                </div>
+              </div>
+            </div>
+
+            <script type="text/html" id="test-table-toolbar-toolbarDemo">
+              <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+                <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+              </div>
+            </script>
+
+            <div class="layui-card-body">
+              <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+              <script type="text/html" id="imgTpl">
+                <img style="display: inline-block; width: 50%; height: 100%;" src={{ d.avatar }}>
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -33,26 +67,40 @@
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
 <script src="../js/demo.js"></script>
-<script src="../js/laypage.js"></script>
 <script src="../layuiadmin/layui/layui.js"></script>
 <script>
   layui.config({
     base: '../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'form', 'table', 'laydate', 'laypage', 'layer'], function () {
-    var admin = layui.admin
-            , table = layui.table
-            , $ = layui.$;
+  }).use(['index', 'form', 'table','laydate','tree','layer'], function(){
+    var $ = layui.$
+            ,table = layui.table
+            , layer = layui.layer;
 
     var relatId = window.location.search.substring(1, window.location.search.length);
+
+    $.ajax({
+      type: "post",
+      url: "/prod/sourDet?relatId=" + relatId,
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      success: function (detObj) {
+        if (detObj.msg == "success") {
+          var detJson = detObj.data;
+          $('#relatName').val(detJson.relatName);
+          $('#layoutType').val(detJson.layoutType);
+          layui.form.render();
+        }
+      }
+    });
+
     table.render({
       elem: '#test-table-toolbar'
       , id: 'ruleReload'
       , method: 'post'
       , url: '/prod/ruleList?relatId=' + relatId //数据接口
       , toolbar: '#test-table-toolbar-toolbarDemo'
-      , title: '基础信息表'
       , response: {
         statusName: 'code',
         statusCode: '200'
@@ -67,7 +115,6 @@
       ]]
     });
 
-    //头工具栏事件
     table.on('toolbar(test-table-toolbar)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
       switch(obj.event){
@@ -95,7 +142,18 @@
       var type = $(this).data('type');
       active[type] ? active[type].call(this) : '';
     });
+
   });
+
+  function save() {
+    var params = {};
+    params.relatId = window.location.search.substring(1, window.location.search.length);
+    params.relatName = $('#relatName').val();
+    params.layoutType = $('#layoutType').val();
+    postdata(params, "/prod/layoutEdit", function () {
+      layer.msg("保存成功！");
+    });
+  }
 </script>
 </body>
 </html>

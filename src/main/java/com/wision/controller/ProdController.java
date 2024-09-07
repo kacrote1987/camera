@@ -70,7 +70,7 @@ public class ProdController {
     @ApiOperation("库表列表")
     @PostMapping("/tblList")
     public Result tblList(@RequestParam Long prodId){
-        List<TblListVo> tblList= prodService.tblList(prodId);
+        List<SourDictVo> tblList= prodService.tblList(prodId);
         return Result.success(tblList);
     }
 
@@ -130,6 +130,13 @@ public class ProdController {
         return Result.success(sourDet);
     }
 
+    @ApiOperation("组件布局修改")
+    @PostMapping("/layoutEdit")
+    public Result layoutEdit(@RequestBody RelatForm params){
+        prodService.layoutEdit(params);
+        return Result.success();
+    }
+
     @ApiOperation("组件数据源修改")
     @PostMapping("/sourEdit")
     public Result sourEdit(@RequestBody RelatForm params){
@@ -137,11 +144,11 @@ public class ProdController {
         return Result.success();
     }
 
-    @ApiOperation("组件字典-基础表")
-    @PostMapping("/tblDict")
-    public Result tblDict(@RequestParam Long relatId){
-        List<TblListVo> tblDict= prodService.tblDict(relatId);
-        return Result.success(tblDict);
+    @ApiOperation("组件数据源字典")
+    @PostMapping("/sourDict")
+    public Result sourDict(@RequestParam Long relatId){
+        List<SourDictVo> sourDict= prodService.sourDict(relatId);
+        return Result.success(sourDict);
     }
 
     @ApiOperation("组件展示-基础信息组件")

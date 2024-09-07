@@ -45,7 +45,7 @@ public interface ProdService {
      * 库表列表
      * @return
      */
-    List<TblListVo> tblList(Long prodId);
+    List<SourDictVo> tblList(Long prodId);
     /**
      * 子系统获取项目名称
      * @return
@@ -90,12 +90,17 @@ public interface ProdService {
      * 组件数据源修改
      * @return
      */
-    void sourEdit(RelatForm params);
+    void layoutEdit(RelatForm params);
     /**
-     * 组件字典-基础表
+     * 组件数据源修改
      * @return
      */
-    List<TblListVo> tblDict(Long relatId);
+    void sourEdit(RelatForm params);
+    /**
+     * 组件数据源字典
+     * @return
+     */
+    List<SourDictVo> sourDict(Long relatId);
      /**
      * 组件展示-基础信息组件
      * @return

@@ -43,7 +43,7 @@
         update t_supp_prod_main set prod_type=#{params.prodType},prod_name=#{params.prodName},prod_nikname=#{params.prodNikname}
         ,prod_ver=#{params.prodVer},prod_explain=#{params.prodExplain},prod_time=now() where prod_id=#{params.prodId}
     </update>
-    <select id="tblList" resultType="com.wision.entity.TblListVo" >
+    <select id="tblList" resultType="com.wision.entity.SourDictVo" >
         select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}
     </select>
     <select id="getProdName" resultType="String" >
@@ -95,10 +95,13 @@
     <select id="sourDet" resultType="com.wision.entity.SourDetVo" >
         select a.relat_id,a.relat_name,a.layout_type,a.tbl_id,b.tbl_name from t_supp_relat_main a left join t_supp_imp_tbl b on a.tbl_id=b.tbl_id where a.relat_id=#{relatId}
     </select>
-    <update id="sourEdit">
-        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},tbl_id=#{params.selfId} where relat_id=#{params.relatId}
+    <update id="layoutEdit">
+        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType} where relat_id=#{params.relatId}
     </update>
-    <select id="tblDict" resultType="com.wision.entity.TblListVo" >
+    <update id="sourEdit">
+        update t_supp_relat_main set tbl_id=#{params.tblId} where relat_id=#{params.relatId}
+    </update>
+    <select id="sourDict" resultType="com.wision.entity.SourDictVo" >
         select distinct a.tbl_id,a.tbl_name,a.tbl_code from t_supp_imp_tbl a inner join t_supp_menu_main b on a.prod_id=b.prod_id inner join t_supp_relat_main c on b.menu_id=c.menu_id where c.relat_id=#{relatId}
     </select>
     <select id="getBasicCol" resultType="com.wision.entity.BasicCol" >

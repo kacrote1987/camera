@@ -15,7 +15,7 @@ public interface ProdMapper {
     boolean insertProd(@Param("params") ProdDetForm params);
     boolean deleteProd(Long prodId);
     boolean updateProd(@Param("params") ProdDetForm params);
-    List<TblListVo> tblList(Long prodId);
+    List<SourDictVo> tblList(Long prodId);
     String getProdName(Long prodId);
     List<MenuListVo> menuList(Long prodId);
     List<RelatDetVo> getToolIdsByMenuId(Long menuId);
@@ -32,8 +32,9 @@ public interface ProdMapper {
     List<children> menuChild(Long fatherId);
     List<ToolListVo> toolSel(Long menuId,@Param("params") ToolListForm params);
     SourDetVo sourDet(Long relatId);
+    boolean layoutEdit(@Param("params") RelatForm params);
     boolean sourEdit(@Param("params") RelatForm params);
-    List<TblListVo> tblDict(Long relatId);
+    List<SourDictVo> sourDict(Long relatId);
     List<BasicCol> getBasicCol(Long relatId);
     List<FlowViewVo> flowView(Long relatId);
     List<RuleListVo> ruleList(Long relatId);

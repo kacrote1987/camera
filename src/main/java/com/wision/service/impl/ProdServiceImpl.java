@@ -72,8 +72,8 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public List<TblListVo> tblList(Long prodId) {
-        List<TblListVo> tblList = prodMapper.tblList(prodId);
+    public List<SourDictVo> tblList(Long prodId) {
+        List<SourDictVo> tblList = prodMapper.tblList(prodId);
         return tblList;
     }
 
@@ -173,14 +173,19 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
+    public void layoutEdit(RelatForm params) {
+        prodMapper.layoutEdit(params);
+    }
+
+    @Override
     public void sourEdit(RelatForm params) {
         prodMapper.sourEdit(params);
     }
 
     @Override
-    public List<TblListVo> tblDict(Long relatId) {
-        List<TblListVo> tblDict=prodMapper.tblDict(relatId);
-        return tblDict;
+    public List<SourDictVo> sourDict(Long relatId) {
+        List<SourDictVo> sourDict=prodMapper.sourDict(relatId);
+        return sourDict;
     }
 
     @Override

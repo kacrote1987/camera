@@ -14,23 +14,70 @@
 <div class="layui-fluid">
   <div class="layui-card">
     <div class="layui-card-body">
-      <div class="layui-row layui-col-space12">
-        <script type="text/html" id="test-table-toolbar-toolbarDemo">
-          <div class="layui-btn-container" id="actions">
-            <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-            <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+      <div class="layui-tab">
+        <ul class="layui-tab-title">
+          <li class="layui-this">组件展示</li>
+          <li>组件配置</li>
+        </ul>
+        <div class="layui-tab-content">
+          <div class="layui-tab-item layui-show">
+            <!--            组件展示-->
+            <div class="layui-row layui-col-space12">
+              <script type="text/html" id="test-table-toolbar-toolbarDemo">
+                <div class="layui-btn-container" id="actions">
+                  <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+                  <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+                </div>
+              </script>
+              <div class="layui-col-md10">
+                <div class="layui-card">
+                  <div class="layui-card-body">
+                    <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+                  </div>
+                </div>
+              </div>
+              <div class="layui-col-md1">
+              </div>
+            </div>
           </div>
-        </script>
-        <div class="layui-col-md10">
-          <div class="layui-card">
-            <div class="layui-card-body">
-              <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+          <div class="layui-tab-item">
+            <!--            组件配置-->
+            <div class="layui-row layui-col-space12">
+              <div class="layui-col-md2">
+              </div>
+              <div class="layui-col-md8">
+                <div class="layui-card">
+                  <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-element">
+                      <div class="layui-row layui-col-space10 layui-form-item">
+                        <div class="layui-col-lg6">
+                          <label class="layui-form-label"></label>
+                          <div class="layui-input-block">
+                            <input id="relatName" type="text" name="relatName"
+                                   lay-verify="required" placeholder=""
+                                   autocomplete="off" class="layui-input" style="display: none">
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="layui-col-md2">
+              </div>
             </div>
           </div>
         </div>
-        <div class="layui-col-md1">
-        </div>
       </div>
+    </div>
+  </div>
+</div>
+<div class="layui-form-item layui-layout-admin">
+  <div class="layui-input-block">
+    <div class="layui-footer" style="left: 0;">
+      <button id="scienSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
+              onclick="save()">保存
+      </button>
     </div>
   </div>
 </div>
@@ -56,19 +103,18 @@
       elem: '#test-table-toolbar'
       , id: 'flowReload'
       , method: 'post'
-      , url: '/prod/flowView?relatId=' + relatId
+      , url: '/prod/flowView?relatId=' + relatId //数据接口
+      , toolbar: '#test-table-toolbar-toolbarDemo'
+      , title: '菜单管理'
       , response: {
         statusName: 'code',
         statusCode: '200'
       }
-      , toolbar: '#test-table-toolbar-toolbarDemo'
-      , title: '菜单管理'
-      , page: false
       , cols: [[
         {type: 'checkbox', fixed: 'left', width: '10%'}
-        , {field: 'toolCode', title: '排序', edit: 'text', width: '15%'}
-        , {field: 'toolName', title: '菜单名称', edit: 'text', width: '30%'}
-        , {field: '', title: '扩展条件', width: '45%'}
+        , {field: 'toolCode', title: '排序', edit: 'text', width: '10%'}
+        , {field: 'toolName', title: '流程名称', edit: 'text', width: '20%'}
+        , {field: 'extCond', title: '扩展条件', width: '60%'}
       ]]
     });
 
