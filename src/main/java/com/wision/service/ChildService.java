@@ -1,9 +1,23 @@
 package com.wision.service;
 
+import com.github.pagehelper.PageInfo;
+import com.wision.entity.ChildMainVo;
+import com.wision.entity.TblContVo;
+
 public interface ChildService {
     /**
-     * 子系统获取项目名称
+     * 获取子系统项目名称
      * @return
      */
-    String getProdName(Long prodId);
+    String getChildName(Long prodId);
+    /**
+     * 获取子系统菜单
+     * @return
+     */
+    ChildMainVo getChildMain(Long prodId);
+    /**
+     * 获取子系统主表
+     * @return
+     */
+    PageInfo<TblContVo> tblCont(Long menuId);
 }

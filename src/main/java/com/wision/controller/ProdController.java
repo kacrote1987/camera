@@ -243,27 +243,6 @@ public class ProdController {
 //        return Result.success();
 //    }
 //
-//    @ApiOperation("子系统列名查看")
-//    @PostMapping("/childtblsel")
-//    public Result childTblSel(@RequestBody String menuId){
-//        List<ChildTblSelVo> childTblSel= prodService.childTblSel(menuId);
-//        return Result.success(childTblSel);
-//    }
-//
-//    @ApiOperation("子系统主表查看")
-//    @PostMapping("/childtblcont")
-//    public Result childTblCont(@RequestBody String menuId,ChildTblForm params){
-//        PageInfo<ChildTblForm> childTblCont= prodService.childTblCont(menuId,params);
-//        return Result.success(childTblCont);
-//    }
-//
-//    @ApiOperation("子系统详情页")
-//    @PostMapping("/childtbldet")
-//    public Result childTblDet(@RequestBody String params){
-//        ChildTblDetForm childTblDet= prodService.childTblDet(params);
-//        return Result.success(childTblDet);
-//    }
-//
 //    @ApiOperation("流程关联主表")
 //    @PostMapping("/maintbl")
 //    public Result mainTbl(@RequestBody String params){

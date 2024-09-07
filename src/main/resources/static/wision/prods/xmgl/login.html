@@ -58,10 +58,9 @@
         var prodId = window.location.search.substring(1, window.location.search.length);
         $.ajax({
             type: "post",
-            url: "/prod/getProdName",
+            url: "/child/getChildName?prodId=" + prodId,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            data: prodId,
             success: function (detObj) {
                 if (detObj.msg == "success") {
                     var detJson = detObj.data;
