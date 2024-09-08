@@ -232,6 +232,27 @@ public class ProdServiceImpl implements ProdService {
         prodMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
     }
 
+    @Override
+    public void authorize(Long prodId) {
+
+    }
+
+    @Override
+    public void generate(Long prodId) {
+//        1、创建代码目录  createDir;
+//        2、配置文件备份  copyConf;
+//        3、控制类代码生成  contr;
+//        4、接口类代码生成  service;
+//        5、实现类代码生成  impl;
+//        6、映射类代码生成  mapper;
+//        7、数据库脚本生成  dataMapper;
+//        8、jar文件生成  jar;
+//        9、执行文件脚本生成  run;
+//        10、数据库备份  dataBaseBak;
+//        11、说明文档生成  readMe;
+//        12、打包成压缩包（返回下载路径） zip;
+    }
+
 //    @Override
 //    public List<ProdViewVo> prodView(String params) {
 //        List<ProdViewVo> prodView=prodMapper.prodView(Long.valueOf(params));
