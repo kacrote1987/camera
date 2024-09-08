@@ -200,13 +200,6 @@ public class ProdController {
         return Result.success();
     }
 
-    @ApiOperation("授权信息设置")
-    @PostMapping("/authorize")
-    public Result authorize(@RequestParam Long prodId){
-        prodService.authorize(prodId);
-        return Result.success();
-    }
-
     @ApiOperation("代码自动生成")
     @PostMapping("/generate")
     public Result generate(@RequestParam Long prodId){

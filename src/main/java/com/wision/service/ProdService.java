@@ -137,11 +137,6 @@ public interface ProdService {
      */
     void flowEdit(FlowListForm params);
     /**
-     * 授权信息设置
-     * @return
-     */
-    void authorize(Long prodId);
-    /**
      * 代码自动生成
      * @return
      */

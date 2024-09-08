@@ -233,11 +233,6 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public void authorize(Long prodId) {
-
-    }
-
-    @Override
     public void generate(Long prodId) {
 //        1、创建代码目录  createDir;
 //        2、配置文件备份  copyConf;
@@ -246,11 +241,12 @@ public class ProdServiceImpl implements ProdService {
 //        5、实现类代码生成  impl;
 //        6、映射类代码生成  mapper;
 //        7、数据库脚本生成  dataMapper;
-//        8、jar文件生成  jar;
-//        9、执行文件脚本生成  run;
-//        10、数据库备份  dataBaseBak;
-//        11、说明文档生成  readMe;
-//        12、打包成压缩包（返回下载路径） zip;
+//        8、授权信息设置  authorize;
+//        9、jar文件生成  jar;
+//        10、执行文件脚本生成  run;
+//        11、数据库备份  dataBaseBak;
+//        12、说明文档生成  readMe;
+//        13、打包成压缩包（返回下载路径） zip;
     }
 
 //    @Override
