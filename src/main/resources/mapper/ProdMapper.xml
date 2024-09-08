@@ -249,16 +249,6 @@
 <!--    <update id="updateCol">-->
 <!--        update t_supp_relat_ext set ${field} = #{value} where ext_id=#{basicId}-->
 <!--    </update>-->
-<!--    <select id="getTblSel" resultType="com.wision.entity.ChildTblCol" >-->
-<!--        select b.tool_code as field,b.tool_name as title from t_supp_relat_main a inner join t_supp_relat_ext b-->
-<!--        on a.relat_id=b.relat_id where a.menu_id=#{menuId} and a.layout_type='主表'-->
-<!--        <if test="res!=null and res!=''">-->
-<!--            and b.res_state=1-->
-<!--        </if>-->
-<!--        <if test="sel!=null and sel!=''">-->
-<!--            and b.sel_state=1-->
-<!--        </if>-->
-<!--    </select>-->
 <!--    <select id="getBasicChildTbl" resultType="String" >-->
 <!--        select basic_tbl from t_supp_relat_main a where menu_id=#{menuId} and layout_type='主表'-->
 <!--    </select>-->

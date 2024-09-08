@@ -180,16 +180,6 @@ public interface ProdService {
 ////     */
 ////    void colSave(BasicCol params);
 ////    /**
-////     * 子系统查询条件和查询结果展示
-////     * @return
-////     */
-////    List<ChildTblSelVo> childTblSel(String menuId);
-////    /**
-////     * 子系统主表查看
-////     * @return
-////     */
-////    PageInfo<ChildTblForm> childTblCont(String menuId,ChildTblForm params);
-////    /**
 ////     * 子系统详情页
 ////     * @return
 ////     */

@@ -2,7 +2,11 @@ package com.wision.service;
 
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.ChildMainVo;
-import com.wision.entity.TblContVo;
+import com.wision.entity.ChildTblForm;
+import com.wision.entity.MainContVo;
+import com.wision.entity.MainSelVo;
+
+import java.util.List;
 
 public interface ChildService {
     /**
@@ -11,13 +15,18 @@ public interface ChildService {
      */
     String getChildName(Long prodId);
     /**
-     * 获取子系统菜单
+     * 获取子系统主要菜单
      * @return
      */
     ChildMainVo getChildMain(Long prodId);
     /**
-     * 获取子系统主表
+     * 子系统查询条件和查询结果展示
      * @return
      */
-    PageInfo<TblContVo> tblCont(Long menuId);
+    List<MainSelVo> mainSel(Long menuId);
+    /**
+     * 子系统主表查看
+     * @return
+     */
+    PageInfo<MainContVo> mainCont(Long menuId, ChildTblForm params);
 }

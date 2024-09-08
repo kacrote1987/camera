@@ -242,11 +242,11 @@ public class ProdServiceImpl implements ProdService {
 //        6、映射类代码生成  mapper;
 //        7、数据库脚本生成  dataMapper;
 //        8、授权信息设置  authorize;
-//        9、jar文件生成  jar;
+//        9、打包生成jar文件  package;
 //        10、执行文件脚本生成  run;
 //        11、数据库备份  dataBaseBak;
 //        12、说明文档生成  readMe;
-//        13、打包成压缩包（返回下载路径） zip;
+//        13、打包成压缩包（返回下载路径） compress;
     }
 
 //    @Override
@@ -384,41 +384,6 @@ public class ProdServiceImpl implements ProdService {
 //    @Override
 //    public void colSave(BasicCol params) {
 //        prodMapper.updateCol(params.getExtId(),method(params.getField()),params.getValue());
-//    }
-//
-//    @Override
-//    public List<ChildTblSelVo> childTblSel(String menuId) {
-//        List<ChildTblCol> childTblCol=new ArrayList<>();
-//        //增加选择框
-//        ChildTblCol childTblMenu1=new ChildTblCol();
-//        childTblMenu1.setType("checkbox");
-//        childTblCol.add(childTblMenu1);
-//        //获取查询结果列名
-//        List<ChildTblCol> childTblCol1=prodMapper.getTblSel(Long.valueOf(menuId),"1",null);
-//        for(int i=0;i<childTblCol1.size();i++){
-//            childTblCol.add(childTblCol1.get(i));
-//        }
-//        //增加操作菜单
-//        ChildTblCol childTblMenu2=new ChildTblCol();
-//        childTblMenu2.setTitle("操作");
-//        childTblMenu2.setToolbar("#test-table-toolbar-barDemo");
-//        childTblCol.add(childTblMenu2);
-//        //设置平均列间距
-////        String width=String.valueOf(100/childTblCol.size())+'%';
-//        String width="8%";
-//        for(int i=0;i<childTblCol.size();i++){
-//            childTblCol.get(i).setWidth(width);
-//        }
-//        //获取查询条件
-//        List<ChildTblCol> basicSel=prodMapper.getTblSel(Long.valueOf(menuId),null,"1");
-//        //将获取的列名插入ChildTblSel中
-//        ChildTblSelVo ChildTblSel= new ChildTblSelVo();
-//        ChildTblSel.setChildTblCol(childTblCol);
-//        ChildTblSel.setChildTblSel(basicSel);
-//        //将获取的列名插入ChildTblSelVo中
-//        List<ChildTblSelVo> ChildTblSelVo = new ArrayList<>();
-//        ChildTblSelVo.add(ChildTblSel);
-//        return ChildTblSelVo;
 //    }
 //
 //    @Override

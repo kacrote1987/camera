@@ -1,7 +1,8 @@
 package com.wision.entity;
 
-public class TblContVo {
-    private Long id;
+public class ChildTblForm {
+    private String menuId;
+    private Integer id;
     private String col1;
     private String col2;
     private String col3;
@@ -23,13 +24,25 @@ public class TblContVo {
     private String col19;
     private String col20;
     private String step;
-    private String tblName;
+    private Integer page;
+    private Integer limit;
+    private Integer stepVal;
+    private String search;
+    private String val;
 
-    public Long getId() {
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -201,11 +214,43 @@ public class TblContVo {
         this.step = step;
     }
 
-    public String getTblName() {
-        return tblName;
+    public Integer getPage() {
+        return page;
     }
 
-    public void setTblName(String tblName) {
-        this.tblName = tblName;
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public Integer getStepVal() {
+        return stepVal;
+    }
+
+    public void setStepVal(Integer stepVal) {
+        this.stepVal = stepVal;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getVal() {
+        return val;
+    }
+
+    public void setVal(String val) {
+        this.val = val;
     }
 }

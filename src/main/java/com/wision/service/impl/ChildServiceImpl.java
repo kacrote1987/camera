@@ -1,14 +1,14 @@
 package com.wision.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wision.entity.ChildMainVo;
-import com.wision.entity.ChildMenuVo;
-import com.wision.entity.TblContVo;
+import com.wision.entity.*;
 import com.wision.mapper.ChildMapper;
 import com.wision.service.ChildService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,11 +32,46 @@ public class ChildServiceImpl implements ChildService {
     }
 
     @Override
-    public PageInfo<TblContVo> tblCont(Long menuId) {
-//        //获取表名
-//        String tblName=childMapper.getBasicChildTbl(menuId);//tblName=t_imp_40_xmzb
-//        //获取导入表的内容
-//        PageHelper.startPage(params.getPage(), 10);
+    public List<MainSelVo> mainSel(Long menuId) {
+        List<ChildTblCol> childTblCol=new ArrayList<>();
+        //增加选择框
+        ChildTblCol childTblMenu1=new ChildTblCol();
+        childTblMenu1.setType("checkbox");
+        childTblCol.add(childTblMenu1);
+        //获取查询结果列名
+        List<ChildTblCol> childTblCol1=childMapper.getTblSel(menuId,"1",null);
+        for(int i=0;i<childTblCol1.size();i++){
+            childTblCol.add(childTblCol1.get(i));
+        }
+        //增加操作菜单
+        ChildTblCol childTblMenu2=new ChildTblCol();
+        childTblMenu2.setTitle("操作");
+        childTblMenu2.setToolbar("#test-table-toolbar-barDemo");
+        childTblCol.add(childTblMenu2);
+        //设置平均列间距
+//        String width=String.valueOf(100/childTblCol.size())+'%';
+        String width="8%";
+        for(int i=0;i<childTblCol.size();i++){
+            childTblCol.get(i).setWidth(width);
+        }
+        //获取查询条件
+        List<ChildTblCol> basicSel=childMapper.getTblSel(menuId,null,"1");
+        //将获取的列名插入ChildTblSel中
+        MainSelVo mainSelVo = new MainSelVo();
+        mainSelVo.setChildTblCol(childTblCol);
+        mainSelVo.setChildTblSel(basicSel);
+        //将获取的列名插入ChildTblSelVo中
+        List<MainSelVo> mainSelList = new ArrayList<>();
+        mainSelList.add(mainSelVo);
+        return mainSelList;
+    }
+
+    @Override
+    public PageInfo<MainContVo> mainCont(Long menuId, ChildTblForm params) {
+        //获取表名
+//        String tblName=childMapper.mainCont(menuId);//tblName=t_imp_40_xmzb
+        //获取导入表的内容
+        PageHelper.startPage(params.getPage(), 10);
 //        String search=params.getSearch()+",";
 //        String val=params.getVal();
 //        ChildTblCont params1 = new ChildTblCont();
@@ -97,8 +132,10 @@ public class ChildServiceImpl implements ChildService {
 ////            String jsonString = JSONObject.toJSONString(params1);
 ////            System.out.println("jsonString = " + jsonString);
 //        }
-//        List<TblContVo> childTblCont=childMapper.childTblCont(menuId);
-        return PageInfo.of(null);
+        String toolPage = childMapper.getToolPage(menuId);
+        String tblName = "t_ext_" + toolPage.replace("list.html","");
+        List<MainContVo> mainCont=childMapper.getMainCont(tblName);
+        return PageInfo.of(mainCont);
     }
 
     public static String method (String str){

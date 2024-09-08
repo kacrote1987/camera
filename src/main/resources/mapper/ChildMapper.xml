@@ -7,4 +7,20 @@
     <select id="getChildMenu" resultType="com.wision.entity.ChildMenuVo" >
         select menu_id,menu_name,tool_page from t_supp_menu_main where prod_id=#{prodId}
     </select>
+    <select id="getTblSel" resultType="com.wision.entity.ChildTblCol" >
+        select b.tool_code as field,b.tool_name as title from t_supp_relat_main a inner join t_supp_relat_ext b
+        on a.relat_id=b.relat_id where a.menu_id=#{menuId} and a.layout_type='主表'
+        <if test="res!=null and res!=''">
+            and b.res_state=1
+        </if>
+        <if test="sel!=null and sel!=''">
+            and b.sel_state=1
+        </if>
+    </select>
+    <select id="getToolPage" resultType="String" >
+        select CONCAT(prod_id,'_',tool_page) as tool_page from t_supp_menu_main where menu_id=#{menuId}
+    </select>
+    <select id="getMainCont" resultType="com.wision.entity.MainContVo" >
+        select * from ${tblName}
+    </select>
 </mapper>

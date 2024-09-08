@@ -81,7 +81,6 @@ public interface ProdMapper {
 //    boolean deleteHeader(String tblName);
 //    List<BasicCol> getColName(Long relatId);
 //    boolean updateCol(Long basicId,String field,String value);
-//    List<ChildTblCol> getTblSel(Long menuId, String res, String sel);
 //    String getBasicChildTbl(Long menuId);
 //    List<BasicCol> childTblHeadDet(Long menuId);
 //    ChildTblForm childTblContDet(String tblName,Long id);

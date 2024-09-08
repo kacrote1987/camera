@@ -91,40 +91,37 @@
     var menuId = window.location.search.substring(1, window.location.search.length);
     var detJson;
     var field;
-    // $.ajax({
-    //   type: "post",
-    //   url: "/child/tblSel",
-    //   contentType: "application/json;charset=utf-8",
-    //   dataType: "json",
-    //   data: menuId,
-    //   async: false,
-    //   success: function (detObj) {
-    //     if (detObj.msg == "success") {
-    //       detJson = detObj.data[0];
-    //       var showsel="";
-    //       var search="";
-    //       for (var i = 0; i < detJson.childTblSel.length; i++) {
-    //         showsel += '<div class="layui-inline"><label class="layui-form-label">'+ detJson.childTblSel[i].title +'</label><div class="layui-input-block"><input type="text" id="' + detJson.childTblSel[i].field + '" placeholder="请输入" autocomplete="off" class="layui-input"></div></div>';
-    //         field = detJson.childTblSel[2].field;
-    //         search += detJson.childTblSel[i].field +',';
-    //       }
-    //       showsel += '<div class="layui-inline"><button class="layui-btn layuiadmin-btn-useradmin" data-type="reload"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>'
-    //       document.getElementById("showsel").innerHTML = showsel;
-    //       document.getElementById("search").value = search.substring(0, search.length-1);
-    //     }
-    //   }
-    // });
+    $.ajax({
+      type: "post",
+      url: "/child/mainSel?menuId=" + menuId,
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      async: false,
+      success: function (detObj) {
+        if (detObj.msg == "success") {
+          detJson = detObj.data[0];
+          var showsel="";
+          var search="";
+          for (var i = 0; i < detJson.childTblSel.length; i++) {
+            showsel += '<div class="layui-inline"><label class="layui-form-label">'+ detJson.childTblSel[i].title +'</label><div class="layui-input-block"><input type="text" id="' + detJson.childTblSel[i].field + '" placeholder="请输入" autocomplete="off" class="layui-input"></div></div>';
+            field = detJson.childTblSel[2].field;
+            search += detJson.childTblSel[i].field +',';
+          }
+          showsel += '<div class="layui-inline"><button class="layui-btn layuiadmin-btn-useradmin" data-type="reload"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>'
+          document.getElementById("showsel").innerHTML = showsel;
+          document.getElementById("search").value = search.substring(0, search.length-1);
+        }
+      }
+    });
 
     table.render({
       elem: '#test-table-toolbar'
       ,id: 'projReload'
       ,method: 'post'
-      ,url:'/child/tblCont?menuId=' + menuId
+      ,url:'/child/mainCont?menuId=' + menuId
       ,response:{
-        statusName:'code',
-        statusCode:'200',
-        msgName:'msg',
-        dataName:'data'
+         statusName: 'code',
+         statusCode: '200'
       }
       ,toolbar: '#test-table-toolbar-toolbarDemo'
       ,title: '项目信息表'
