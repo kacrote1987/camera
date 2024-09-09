@@ -2,11 +2,12 @@ package com.wision.entity;
 
 public class RuleListVo {
     private Long ruleId;
-    private Long relatId;
-    private String styles;
-    private String keyss;
-    private String matches;
-    private String vals;
+    private String tbl1;
+    private String joinType;
+    private String tbl2;
+    private String key1;
+    private String matchType;
+    private String key2;
     private String shows;
 
     public Long getRuleId() {
@@ -17,44 +18,52 @@ public class RuleListVo {
         this.ruleId = ruleId;
     }
 
-    public Long getRelatId() {
-        return relatId;
+    public String getTbl1() {
+        return tbl1;
     }
 
-    public void setRelatId(Long relatId) {
-        this.relatId = relatId;
+    public void setTbl1(String tbl1) {
+        this.tbl1 = tbl1;
     }
 
-    public String getStyles() {
-        return styles;
+    public String getJoinType() {
+        return joinType;
     }
 
-    public void setStyles(String styles) {
-        this.styles = styles;
+    public void setJoinType(String joinType) {
+        this.joinType = joinType;
     }
 
-    public String getKeyss() {
-        return keyss;
+    public String getTbl2() {
+        return tbl2;
     }
 
-    public void setKeyss(String keyss) {
-        this.keyss = keyss;
+    public void setTbl2(String tbl2) {
+        this.tbl2 = tbl2;
     }
 
-    public String getMatches() {
-        return matches;
+    public String getKey1() {
+        return key1;
     }
 
-    public void setMatches(String matches) {
-        this.matches = matches;
+    public void setKey1(String key1) {
+        this.key1 = key1;
     }
 
-    public String getVals() {
-        return vals;
+    public String getMatchType() {
+        return matchType;
     }
 
-    public void setVals(String vals) {
-        this.vals = vals;
+    public void setMatchType(String matchType) {
+        this.matchType = matchType;
+    }
+
+    public String getKey2() {
+        return key2;
+    }
+
+    public void setKey2(String key2) {
+        this.key2 = key2;
     }
 
     public String getShows() {

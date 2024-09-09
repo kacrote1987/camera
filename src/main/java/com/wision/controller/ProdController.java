@@ -118,8 +118,8 @@ public class ProdController {
 
     @ApiOperation("规则配置列表")
     @PostMapping("/ruleList")
-    public Result ruleList(@RequestParam Long relatId){
-        List<RuleListVo> ruleList= prodService.ruleList(relatId);
+    public Result ruleList(@RequestParam Long menuId){
+        List<RuleListVo> ruleList= prodService.ruleList(menuId);
         return Result.success(ruleList);
     }
 

@@ -16,33 +16,6 @@
       <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
           <div class="layui-card">
-            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-              <div class="layui-form-item">
-                <div class="layui-inline">
-                  <label class="layui-form-label">业务名称</label>
-                  <div class="layui-input-block">
-                    <input id="relatName" type="text" lay-verify="required" placeholder=""
-                           autocomplete="off" class="layui-input">
-                  </div>
-                </div>
-                <div class="layui-inline">
-                  <label class="layui-form-label">展示形式</label>
-                  <div class="layui-input-block">
-                    <select id="layoutType" lay-filter="layoutType">
-                      <option value="">全部</option>
-                      <option value="主表">主表</option>
-                      <option value="按钮">按钮</option>
-                      <option value="字典">字典</option>
-                      <option value="无">无</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="layui-inline">
-                  <button class="layui-btn layuiadmin-btn-useradmin" onclick="save()">保存</button>
-                </div>
-              </div>
-            </div>
-
             <script type="text/html" id="test-table-toolbar-toolbarDemo">
               <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
@@ -78,40 +51,26 @@
             ,table = layui.table
             , layer = layui.layer;
 
-    var relatId = window.location.search.substring(1, window.location.search.length);
-
-    $.ajax({
-      type: "post",
-      url: "/prod/sourDet?relatId=" + relatId,
-      contentType: "application/json;charset=utf-8",
-      dataType: "json",
-      success: function (detObj) {
-        if (detObj.msg == "success") {
-          var detJson = detObj.data;
-          $('#relatName').val(detJson.relatName);
-          $('#layoutType').val(detJson.layoutType);
-          layui.form.render();
-        }
-      }
-    });
-
+    var menuId = window.location.search.substring(1, window.location.search.length);
     table.render({
       elem: '#test-table-toolbar'
       , id: 'ruleReload'
       , method: 'post'
-      , url: '/prod/ruleList?relatId=' + relatId //数据接口
+      , url: '/prod/ruleList?menuId=' + menuId //数据接口
       , toolbar: '#test-table-toolbar-toolbarDemo'
       , response: {
         statusName: 'code',
         statusCode: '200'
       }
       , cols: [[
-        {type: 'checkbox', fixed: 'left', width: '10%'}
-        , {field: 'styles', title: '关联方式', width: '18%'}
-        , {field: 'keyss', title: '关键字', width: '18%'}
-        , {field: 'matches', title: '匹配方式', width: '18%'}
-        , {field: 'vals', title: '值', width: '18%'}
-        , {field: 'shows', title: '展示', width: '18%'}
+        {type: 'checkbox', fixed: 'left', width: '12.5%'}
+        , {field: 'tbl1', title: '表1', width: '12.5%'}
+        , {field: 'joinType', title: '关联方式', width: '12.5%'}
+        , {field: 'tbl2', title: '表2', width: '12.5%'}
+        , {field: 'key1', title: '关键字1', width: '12.5%'}
+        , {field: 'matchType', title: '匹配方式', width: '12.5%'}
+        , {field: 'key2', title: '关键字2', width: '12.5%'}
+        , {field: 'shows', title: '展示', width: '12.5%'}
       ]]
     });
 
@@ -122,9 +81,9 @@
           layer.open({
             type: 2
             ,title: '新增'
-            ,content: 'ruleadd.html?' +relatId
+            ,content: 'ruleadd.html?' +menuId
             ,maxmin: true
-            ,area: ['700px', '500px']
+            ,area: ['1200px', '600px']
           });
           break;
         case 'del':

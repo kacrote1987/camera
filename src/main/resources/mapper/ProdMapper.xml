@@ -93,7 +93,7 @@
         from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
     </select>
     <select id="ruleList" resultType="com.wision.entity.RuleListVo" >
-        select rule_id,relat_id,styles,keyss,matches,vals,shows from t_sys_rule where relat_id=#{relatId}
+        select rule_id,menu_id,tbl1,join_type,tbl2,key1,match_type,key2,shows from t_supp_relat_rule where menu_id=#{menuId}
     </select>
     <select id="getMainCode" resultType="com.wision.entity.RuleDictExtVo" >
         select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}
