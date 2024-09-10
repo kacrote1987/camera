@@ -14,87 +14,23 @@
 <div class="layui-fluid">
   <div class="layui-card">
     <div class="layui-card-body">
-      <div class="layui-tab">
-        <ul class="layui-tab-title">
-          <li class="layui-this">组件展示</li>
-          <li>组件配置</li>
-        </ul>
-        <div class="layui-tab-content">
-          <div class="layui-tab-item layui-show">
-            <!--            组件展示-->
-            <div class="layui-row layui-col-space12">
-              <script type="text/html" id="test-table-toolbar-toolbarDemo">
-                <div class="layui-btn-container" id="actions">
-                  <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-                  <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
-                </div>
-              </script>
-              <div class="layui-col-md10">
-                <div class="layui-card">
-                  <div class="layui-card-body">
-                    <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
-                  </div>
-                </div>
-              </div>
-              <div class="layui-col-md1">
+      <div class="layui-tab-item layui-show">
+        <!--            组件展示-->
+        <div class="layui-row layui-col-space12">
+          <script type="text/html" id="test-table-toolbar-toolbarDemo">
+            <div class="layui-btn-container" id="actions">
+              <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+              <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+            </div>
+          </script>
+          <div class="layui-col-md10">
+            <div class="layui-card">
+              <div class="layui-card-body">
+                <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
               </div>
             </div>
           </div>
-          <div class="layui-tab-item">
-            <!--            组件配置-->
-            <div class="layui-row layui-col-space12">
-              <div class="layui-col-md2">
-              </div>
-              <div class="layui-col-md8">
-                <div class="layui-card">
-                  <div class="layui-card-body">
-                    <form class="layui-form" action="" lay-filter="component-form-element">
-                      <div class="layui-row layui-col-space10 layui-form-item">
-                        <div class="layui-col-lg6">
-                          <label class="layui-form-label">主表</label>
-                          <div class="layui-input-block">
-                            <select id="prodType" lay-filter="prodType">
-                              <option value="">请选择</option>
-                              <option value="主表">主表</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="layui-col-lg6">
-                          <label class="layui-form-label">主表字段</label>
-                          <div class="layui-input-block">
-                            <select id="prodState" lay-filter="prodState">
-                              <option value="">请选择</option>
-                              <option value="选择数据源">选择数据源</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                        <div class="layui-row layui-col-space10 layui-form-item">
-                          <div class="layui-col-lg6">
-                            <label class="layui-form-label">本表字段</label>
-                            <div class="layui-input-block">
-                              <select id="prodState" lay-filter="prodState">
-                                <option value="">请选择</option>
-                                <option value="选择数据源">选择数据源</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="layui-col-lg6">
-                            <label class="layui-form-label">展示名称</label>
-                            <div class="layui-input-block">
-                              <select id="prodState" lay-filter="prodState">
-                                <option value="">请选择</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div class="layui-col-md2">
-              </div>
-            </div>
+          <div class="layui-col-md1">
           </div>
         </div>
       </div>
@@ -132,7 +68,7 @@
       elem: '#test-table-toolbar'
       , id: 'flowReload'
       , method: 'post'
-      , url: '/prod/flowView?relatId=' + relatId //数据接口
+      , url: '/tool/flowView?relatId=' + relatId //数据接口
       , toolbar: '#test-table-toolbar-toolbarDemo'
       , title: '菜单管理'
       , response: {
@@ -141,9 +77,9 @@
       }
       , cols: [[
         {type: 'checkbox', fixed: 'left', width: '10%'}
-        , {field: 'toolCode', title: '排序', edit: 'text', width: '10%'}
         , {field: 'toolName', title: '流程名称', edit: 'text', width: '20%'}
-        , {field: 'extCond', title: '扩展条件', width: '60%'}
+        , {field: 'toolCode', title: '流转步骤', edit: 'text', width: '20%'}
+        , {field: 'extCond', title: '扩展条件', width: '50%'}
       ]]
     });
 
@@ -152,10 +88,10 @@
       var checkStatus = table.checkStatus(obj.config.id);
       switch (obj.event) {
         case 'add':
-          postdata(null,"/prod/flowAdd?relatId=" + relatId,function () {table.reload('flowReload');layer.msg("添加成功！");});
+          postdata(null,"/tool/flowAdd?relatId=" + relatId,function () {table.reload('flowReload');layer.msg("添加成功！");});
           break;
         case 'del':
-          postdata(null,"/prod/flowDel?extId=" + checkStatus.data[0].extId,function () {table.reload('flowReload');layer.msg("已删除！");});
+          postdata(null,"/tool/flowDel?extId=" + checkStatus.data[0].extId,function () {table.reload('flowReload');layer.msg("已删除！");});
           break;
       };
     });
@@ -167,7 +103,7 @@
       params.extId = obj.data.extId;
       params.field = obj.field;
       params.value = obj.value;
-      postdata(params, "/prod/flowEdit", function () {table.reload('flowReload');layer.msg("更新成功");})
+      postdata(params, "/tool/flowEdit", function () {table.reload('flowReload');layer.msg("更新成功");})
     });
 
   });

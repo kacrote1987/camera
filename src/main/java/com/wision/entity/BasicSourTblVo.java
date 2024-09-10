@@ -1,9 +1,8 @@
 package com.wision.entity;
 
-public class SourDictVo {
+public class BasicSourTblVo {
    private Long tblId;
    private String tblName;
-   private String tblCode;
 
     public Long getTblId() {
         return tblId;
@@ -19,13 +18,5 @@ public class SourDictVo {
 
     public void setTblName(String tblName) {
         this.tblName = tblName;
-    }
-
-    public String getTblCode() {
-        return tblCode;
-    }
-
-    public void setTblCode(String tblCode) {
-        this.tblCode = tblCode;
     }
 }

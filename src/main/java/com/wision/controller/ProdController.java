@@ -70,7 +70,7 @@ public class ProdController {
     @ApiOperation("库表列表")
     @PostMapping("/tblList")
     public Result tblList(@RequestParam Long prodId){
-        List<SourDictVo> tblList= prodService.tblList(prodId);
+        List<BasicSourVo> tblList= prodService.tblList(prodId);
         return Result.success(tblList);
     }
 
@@ -114,90 +114,6 @@ public class ProdController {
     public Result toolSel(@RequestBody String prodId,ToolListForm params){
         PageInfo<ToolSelVo> toolSel= prodService.toolSel(prodId,params);
         return Result.success(toolSel);
-    }
-
-    @ApiOperation("规则配置列表")
-    @PostMapping("/ruleList")
-    public Result ruleList(@RequestParam Long menuId){
-        List<RuleListVo> ruleList= prodService.ruleList(menuId);
-        return Result.success(ruleList);
-    }
-
-    @ApiOperation("规则配置字典")
-    @PostMapping("/ruleDict")
-    public Result ruleDict(@RequestParam Long relatId){
-        RuleDictVo ruleDict= prodService.ruleDict(relatId);
-        return Result.success(ruleDict);
-    }
-
-    @ApiOperation("规则配置新增")
-    @PostMapping("/ruleAdd")
-    public Result ruleAdd(@RequestBody RuleListForm params){
-        prodService.ruleAdd(params);
-        return Result.success();
-    }
-
-    @ApiOperation("组件数据源详细")
-    @PostMapping("/sourDet")
-    public Result sourDet(@RequestParam Long relatId){
-        SourDetVo sourDet= prodService.sourDet(relatId);
-        return Result.success(sourDet);
-    }
-
-    @ApiOperation("组件布局修改")
-    @PostMapping("/layoutEdit")
-    public Result layoutEdit(@RequestBody RelatForm params){
-        prodService.layoutEdit(params);
-        return Result.success();
-    }
-
-    @ApiOperation("组件数据源修改")
-    @PostMapping("/sourEdit")
-    public Result sourEdit(@RequestBody RelatForm params){
-        prodService.sourEdit(params);
-        return Result.success();
-    }
-
-    @ApiOperation("组件数据源字典")
-    @PostMapping("/sourDict")
-    public Result sourDict(@RequestParam Long relatId){
-        List<SourDictVo> sourDict= prodService.sourDict(relatId);
-        return Result.success(sourDict);
-    }
-
-    @ApiOperation("组件展示-基础信息组件")
-    @PostMapping("/basicView")
-    public Result basicView(@RequestParam Long relatId){
-        List<BasicCol> basicView= prodService.basicView(relatId);
-        return Result.success(basicView);
-    }
-
-    @ApiOperation("组件展示-流程组件")
-    @PostMapping("/flowView")
-    public Result flowView(@RequestParam Long relatId){
-        List<FlowViewVo> flowView= prodService.flowView(relatId);
-        return Result.success(flowView);
-    }
-
-    @ApiOperation("流程组件-流程项新增")
-    @PostMapping("/flowAdd")
-    public Result flowAdd(@RequestParam Long relatId){
-        prodService.flowAdd(relatId);
-        return Result.success();
-    }
-
-    @ApiOperation("流程组件-流程项删除")
-    @PostMapping("/flowDel")
-    public Result flowDel(@RequestParam Long extId){
-        prodService.flowDel(extId);
-        return Result.success();
-    }
-
-    @ApiOperation("流程组件-流程项修改")
-    @PostMapping("/flowEdit")
-    public Result flowEdit(@RequestBody FlowListForm params){
-        prodService.flowEdit(params);
-        return Result.success();
     }
 
     @ApiOperation("代码自动生成")

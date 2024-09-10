@@ -17,7 +17,6 @@
       <div class="layui-tab">
         <div class="layui-tab-content">
           <div class="layui-tab-item layui-show">
-            <!--            基本情况页-->
             <div class="layui-row layui-col-space12">
               <div class="layui-col-md2">
               </div>
@@ -27,54 +26,12 @@
                          class="layui-input" style="display: none">
                   <div class="layui-card-body">
                     <form class="layui-form" action="" lay-filter="component-form-element">
-                      <div class="layui-row layui-col-space10 layui-form-item">
-                        <div class="layui-col-lg6">
-                          <label class="layui-form-label">主表</label>
-                          <div class="layui-input-block">
-                            <select id="prodType" lay-filter="prodType">
-                              <option value="">请选择</option>
-                              <option value="主表">主表</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="layui-col-lg6">
-                          <label class="layui-form-label">附加表</label>
-                          <div class="layui-input-block">
-                            <select id="prodState" lay-filter="prodState">
-                              <option value="">请选择</option>
-                              <option value="选择数据源">选择数据源</option>
-                            </select>
-                          </div>
-                        </div>
                         <div class="layui-row layui-col-space10 layui-form-item">
                           <div class="layui-col-lg6">
-                            <label class="layui-form-label">主表字段</label>
+                            <label class="layui-form-label">本表字段</label>
                             <div class="layui-input-block">
                               <select id="prodState" lay-filter="prodState">
                                 <option value="">请选择</option>
-                                <option value="选择数据源">选择数据源</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="layui-col-lg6">
-                            <label class="layui-form-label">附加表字段</label>
-                            <div class="layui-input-block">
-                              <select id="prodState" lay-filter="prodState">
-                                <option value="">请选择</option>
-                                <option value="选择数据源">选择数据源</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="layui-row layui-col-space10 layui-form-item">
-                          <div class="layui-col-lg6">
-                            <label class="layui-form-label">关联方式</label>
-                            <div class="layui-input-block">
-                              <select id="prodState" lay-filter="prodState">
-                                <option value="">请选择</option>
-                                <option value="关联">关联</option>
-                                <option value="附属">附属</option>
-                                <option value="条件">条件</option>
                               </select>
                             </div>
                           </div>
@@ -83,29 +40,24 @@
                             <div class="layui-input-block">
                               <select id="prodState" lay-filter="prodState">
                                 <option value="">请选择</option>
-                                <option value="精确">精确</option>
-                                <option value="模糊">模糊</option>
+                                <option value="选择数据源">选择数据源</option>
                               </select>
                             </div>
                           </div>
                         </div>
                         <div class="layui-row layui-col-space10 layui-form-item">
                           <div class="layui-col-lg6">
-                            <label class="layui-form-label">主表条件</label>
+                            <label class="layui-form-label">值</label>
                             <div class="layui-input-block">
                               <input id="prodVer" type="text" lay-verify="required" placeholder=""
                                      autocomplete="off" class="layui-input">
                             </div>
                           </div>
                           <div class="layui-col-lg6">
-                            <label class="layui-form-label">展示</label>
-                            <div class="layui-input-block">
-                              <input id="prodVer" type="text" lay-verify="required" placeholder=""
-                                     autocomplete="off" class="layui-input">
-                            </div>
+                            <label class="layui-form-label"></label>
+                            <div class="layui-input-block"></div>
                           </div>
                         </div>
-                      </div>
                     </form>
                   </div>
                 </div>

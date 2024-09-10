@@ -1,10 +1,7 @@
 package com.wision.service;
 
 import com.github.pagehelper.PageInfo;
-import com.wision.entity.ToolDetForm;
-import com.wision.entity.ToolDetVo;
-import com.wision.entity.ToolListForm;
-import com.wision.entity.ToolListVo;
+import com.wision.entity.*;
 
 import java.util.List;
 
@@ -24,4 +21,64 @@ public interface ToolService {
      * @return
      */
     void toolSave(ToolDetForm params);
+    /**
+     * 基础信息组件-组件配置-数据源字典
+     * @return
+     */
+    BasicSourVo basicSour(Long relatId);
+    /**
+     * 基础信息组件-条件设置
+     * @return
+     */
+    List<BasicCondVo> basicCond(Long relatId);
+    /**
+     * 组件展示-基础信息组件
+     * @return
+     */
+    List<BasicCol> basicView(Long relatId);
+//    /**
+//     * 规则配置字典
+//     * @return
+//     */
+//    RuleDictVo ruleDict(Long relatId);
+//    /**
+//     * 规则配置新增
+//     * @return
+//     */
+//    void ruleAdd(RuleListForm params);
+//    /**
+//     * 组件数据源详细
+//     * @return
+//     */
+//    SourDetVo sourDet(Long relatId);
+//    /**
+//     * 组件数据源修改
+//     * @return
+//     */
+//    void layoutEdit(RelatForm params);
+//    /**
+//     * 组件数据源修改
+//     * @return
+//     */
+//    void sourEdit(RelatForm params);
+//    /**
+//     * 组件展示-流程组件
+//     * @return
+//     */
+//    List<FlowViewVo> flowView(Long relatId);
+//    /**
+//     * 流程组件-流程项新增
+//     * @return
+//     */
+//    void flowAdd(Long relatId);
+//    /**
+//     * 流程组件-流程项删除
+//     * @return
+//     */
+//    void flowDel(Long extId);
+//    /**
+//     * 流程组件-流程项修改
+//     * @return
+//     */
+//    void flowEdit(FlowListForm params);
 }

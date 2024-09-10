@@ -45,7 +45,7 @@ public interface ProdService {
      * 库表列表
      * @return
      */
-    List<SourDictVo> tblList(Long prodId);
+    List<BasicSourVo> tblList(Long prodId);
     /**
      * 菜单列表
      * @return
@@ -76,66 +76,6 @@ public interface ProdService {
      * @return
      */
     PageInfo<ToolSelVo> toolSel(String params,ToolListForm params1);
-    /**
-     * 规则配置列表
-     * @return
-     */
-    List<RuleListVo> ruleList(Long relatId);
-    /**
-     * 规则配置字典
-     * @return
-     */
-    RuleDictVo ruleDict(Long relatId);
-    /**
-     * 规则配置新增
-     * @return
-     */
-    void ruleAdd(RuleListForm params);
-     /**
-     * 组件数据源详细
-     * @return
-     */
-     SourDetVo sourDet(Long relatId);
-    /**
-     * 组件数据源修改
-     * @return
-     */
-    void layoutEdit(RelatForm params);
-    /**
-     * 组件数据源修改
-     * @return
-     */
-    void sourEdit(RelatForm params);
-    /**
-     * 组件数据源字典
-     * @return
-     */
-    List<SourDictVo> sourDict(Long relatId);
-     /**
-     * 组件展示-基础信息组件
-     * @return
-     */
-    List<BasicCol> basicView(Long relatId);
-    /**
-     * 组件展示-流程组件
-     * @return
-     */
-    List<FlowViewVo> flowView(Long relatId);
-    /**
-     * 流程组件-流程项新增
-     * @return
-     */
-    void flowAdd(Long relatId);
-    /**
-     * 流程组件-流程项删除
-     * @return
-     */
-    void flowDel(Long extId);
-    /**
-     * 流程组件-流程项修改
-     * @return
-     */
-    void flowEdit(FlowListForm params);
     /**
      * 代码自动生成
      * @return

@@ -2,10 +2,7 @@ package com.wision.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wision.entity.ToolDetForm;
-import com.wision.entity.ToolDetVo;
-import com.wision.entity.ToolListForm;
-import com.wision.entity.ToolListVo;
+import com.wision.entity.*;
 import com.wision.mapper.ToolMapper;
 import com.wision.service.ToolService;
 import org.springframework.stereotype.Service;
@@ -48,6 +45,81 @@ public class ToolServiceImpl implements ToolService {
             toolMapper.updateTool(params);
         }
     }
+
+    @Override
+    public BasicSourVo basicSour(Long relatId) {
+        BasicSourVo basicSour = new BasicSourVo();
+        basicSour.setRelatName(toolMapper.getRelatName(relatId));
+        basicSour.setRelatName(toolMapper.getLayoutType(relatId));
+        basicSour.setBasicSourTblVo(toolMapper.basicSourTbl(relatId));
+        return basicSour;
+    }
+
+    @Override
+    public List<BasicCondVo> basicCond(Long relatId) {
+        List<BasicCondVo> basicCond=toolMapper.basicCond(relatId);
+        return basicCond;
+    }
+
+    @Override
+    public List<BasicCol> basicView(Long relatId) {
+        List<BasicCol> basicView = toolMapper.getBasicCol(relatId);
+        return basicView;
+    }
+
+//    @Override
+//    public RuleDictVo ruleDict(Long relatId) {
+//        RuleDictVo ruleDict = new RuleDictVo();
+//        List<RuleDictExtVo> mainCode = toolMapper.getMainCode(relatId);
+////        List<RuleDictExtVo> selfCode = toolMapper.getSelfCode(relatId);
+////        List<RuleDictExtVo> selfName = toolMapper.getSelfName(relatId);
+//        ruleDict.setMainCode(mainCode);
+////        ruleDict.get(0).setSelfCode(selfCode);
+////        ruleDict.get(0).setSelfName(selfName);
+//        return ruleDict;
+//    }
+//
+//    @Override
+//    public void ruleAdd(RuleListForm params) {
+//        toolMapper.insertRule(params);
+//    }
+//
+//    @Override
+//    public SourDetVo sourDet(Long relatId) {
+//        SourDetVo sourDet=toolMapper.sourDet(relatId);
+//        return sourDet;
+//    }
+//
+//    @Override
+//    public void layoutEdit(RelatForm params) {
+//        toolMapper.layoutEdit(params);
+//    }
+//
+//    @Override
+//    public void sourEdit(RelatForm params) {
+//        toolMapper.sourEdit(params);
+//    }
+
+//    @Override
+//    public List<FlowViewVo> flowView(Long relatId) {
+//        List<FlowViewVo> flowView=toolMapper.flowView(relatId);
+//        return flowView;
+//    }
+//
+//    @Override
+//    public void flowAdd(Long relatId) {
+//        toolMapper.insertFlow(relatId);
+//    }
+//
+//    @Override
+//    public void flowDel(Long extId) {
+//        toolMapper.deleteFlow(extId);
+//    }
+//
+//    @Override
+//    public void flowEdit(FlowListForm params) {
+//        toolMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
+//    }
 
     public static String method (String str){
         String pos="";

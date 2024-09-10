@@ -72,8 +72,8 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public List<SourDictVo> tblList(Long prodId) {
-        List<SourDictVo> tblList = prodMapper.tblList(prodId);
+    public List<BasicSourVo> tblList(Long prodId) {
+        List<BasicSourVo> tblList = prodMapper.tblList(prodId);
         return tblList;
     }
 
@@ -158,78 +158,6 @@ public class ProdServiceImpl implements ProdService {
             toolSel = prodMapper.toolSel(Long.valueOf(menuId),params);
         }
         return PageInfo.of(toolSel);
-    }
-
-    @Override
-    public List<RuleListVo> ruleList(Long relatId) {
-        List<RuleListVo> ruleList=prodMapper.ruleList(relatId);
-        return ruleList;
-    }
-
-    @Override
-    public RuleDictVo ruleDict(Long relatId) {
-        RuleDictVo ruleDict = new RuleDictVo();
-        List<RuleDictExtVo> mainCode = prodMapper.getMainCode(relatId);
-//        List<RuleDictExtVo> selfCode = prodMapper.getSelfCode(relatId);
-//        List<RuleDictExtVo> selfName = prodMapper.getSelfName(relatId);
-        ruleDict.setMainCode(mainCode);
-//        ruleDict.get(0).setSelfCode(selfCode);
-//        ruleDict.get(0).setSelfName(selfName);
-        return ruleDict;
-    }
-
-    @Override
-    public void ruleAdd(RuleListForm params) {
-        prodMapper.insertRule(params);
-    }
-
-    @Override
-    public SourDetVo sourDet(Long relatId) {
-        SourDetVo sourDet=prodMapper.sourDet(relatId);
-        return sourDet;
-    }
-
-    @Override
-    public void layoutEdit(RelatForm params) {
-        prodMapper.layoutEdit(params);
-    }
-
-    @Override
-    public void sourEdit(RelatForm params) {
-        prodMapper.sourEdit(params);
-    }
-
-    @Override
-    public List<SourDictVo> sourDict(Long relatId) {
-        List<SourDictVo> sourDict=prodMapper.sourDict(relatId);
-        return sourDict;
-    }
-
-    @Override
-    public List<BasicCol> basicView(Long relatId) {
-        List<BasicCol> basicView = prodMapper.getBasicCol(relatId);
-        return basicView;
-    }
-
-    @Override
-    public List<FlowViewVo> flowView(Long relatId) {
-        List<FlowViewVo> flowView=prodMapper.flowView(relatId);
-        return flowView;
-    }
-
-    @Override
-    public void flowAdd(Long relatId) {
-        prodMapper.insertFlow(relatId);
-    }
-
-    @Override
-    public void flowDel(Long extId) {
-        prodMapper.deleteFlow(extId);
-    }
-
-    @Override
-    public void flowEdit(FlowListForm params) {
-        prodMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
     }
 
     @Override

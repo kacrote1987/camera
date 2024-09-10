@@ -14,66 +14,18 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-body">
-            <div class="layui-tab">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">组件展示</li>
-                    <li>组件配置</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">
-                        <!--            组件展示-->
-                        <div class="layui-row layui-col-space12">
-                            <div class="layui-col-md10">
-                                <div class="layui-card">
-                                    <div class="layui-card-body">
-                                        <table id="test-table-toolbar1" lay-filter="test-table-toolbar1"></table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md1">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-tab-item">
-                        <!--            组件配置-->
-                        <div class="layui-row layui-col-space6">
-                            <div class="layui-col-md4">
-                                <form class="layui-form" action="" lay-filter="component-form-element">
-                                    <div class="layui-row layui-col-space6 layui-form-item">
-                                        <div class="layui-col-lg6">
-                                            <label class="layui-form-label">数据源</label>
-                                            <div class="layui-input-block">
-                                                <select id="tblId" name="tblId">
-                                                    <option value="">全部</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="layui-col-md6">
-                                <div class="layui-card">
-                                </div>
-                            </div>
-                        </div>
-
+            <div class="layui-tab-item layui-show">
+                <!--            组件展示-->
+                <div class="layui-row layui-col-space12">
+                    <div class="layui-col-md10">
                         <div class="layui-card">
-                            <script type="text/html" id="test-table-toolbar-toolbarDemo">
-                                <div class="layui-btn-container">
-                                    <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-                                    <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
-                                </div>
-                            </script>
-
                             <div class="layui-card-body">
-                                <table id="test-table-toolbar2" lay-filter="test-table-toolbar2"></table>
-                                <script type="text/html" id="imgTpl">
-                                    <img style="display: inline-block; width: 50%; height: 100%;" src={{ d.avatar }}>
-                                </script>
+                                <table id="test-table-toolbar1" lay-filter="test-table-toolbar1"></table>
                             </div>
                         </div>
                     </div>
-
+                    <div class="layui-col-md1">
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,7 +62,7 @@
             elem: '#test-table-toolbar1'
             , id: 'prodReload'
             , method: 'post'
-            , url: '/prod/basicView?relatId=' + relatId //数据接口
+            , url: '/tool/basicView?relatId=' + relatId //数据接口
             , title: '基础信息表'
             , response: {
                 statusName: 'code',
@@ -180,7 +132,7 @@
 
         $.ajax({
             type: "post",
-            url: "/prod/sourDet?relatId=" + relatId,
+            url: "/tool/sourDet?relatId=" + relatId,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (detObj) {
@@ -196,7 +148,7 @@
         //数据源字典
         $.ajax({
             type: "post",
-            url: "/prod/sourDict?relatId=" + relatId,
+            url: "/tool/sourDict?relatId=" + relatId,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (detObj) {
@@ -215,7 +167,7 @@
             elem: '#test-table-toolbar2'
             , id: 'ruleReload'
             , method: 'post'
-            , url: '/prod/ruleList?menuId=' + menuId //数据接口
+            , url: '/tool/ruleList?menuId=' + menuId //数据接口
             , toolbar: '#test-table-toolbar-toolbarDemo'
             , response: {
                 statusName: 'code',
@@ -249,7 +201,7 @@
                     layer.confirm('是否删除？', {
                         btn: ['是','否'] //按钮
                     }, function(){
-                        postdata(null,"/prod/ruleDel?relatId=" + checkStatus.data[0].relatId,function () {
+                        postdata(null,"/tool/ruleDel?relatId=" + checkStatus.data[0].relatId,function () {
                             table.reload('ruleReload');layer.msg("删除成功");})
                     });
                     break;
@@ -267,7 +219,7 @@
         var params = {};
         params.relatId = window.location.search.substring(1, window.location.search.length);
         params.tblId = $('#tblId').val();
-        postdata(params, "/prod/sourEdit", function () {
+        postdata(params, "/tool/sourEdit", function () {
             layer.msg("保存成功！");
         });
     }

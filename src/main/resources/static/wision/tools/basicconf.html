@@ -2,11 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>组件属性</title>
+    <title>项目详细</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
 </head>
@@ -14,71 +13,60 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-body">
-            <div class="layui-tab">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">组件展示</li>
-                    <li>组件配置</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">
-                        <!--            组件展示-->
-                        <div class="layui-row layui-col-space12">
-                            <div class="layui-col-md10">
-                                <div class="layui-card">
-                                    <div class="layui-card-body">
-                                        <table id="test-table-toolbar1" lay-filter="test-table-toolbar1"></table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md1">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-tab-item">
-                        <!--            组件配置-->
-                        <div class="layui-row layui-col-space6">
-                            <div class="layui-col-md4">
-                                <form class="layui-form" action="" lay-filter="component-form-element">
-                                    <div class="layui-row layui-col-space6 layui-form-item">
-                                        <div class="layui-col-lg6">
-                                            <label class="layui-form-label">数据源</label>
-                                            <div class="layui-input-block">
-                                                <select id="tblId" name="tblId">
-                                                    <option value="">全部</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="layui-col-md6">
-                                <div class="layui-card">
-                                </div>
-                            </div>
-                        </div>
+            <div class="layui-tab-item layui-show">
+                <div class="layui-card">
+                    <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                        <div class="layui-form-item">
 
-                        <div class="layui-card">
-                            <script type="text/html" id="test-table-toolbar-toolbarDemo">
-                                <div class="layui-btn-container">
-                                    <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-                                    <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">选择数据源</label>
+                                <div class="layui-input-block">
+                                    <select id="tblId" lay-filter="">
+                                        <option value="">全部</option>
+                                    </select>
                                 </div>
-                            </script>
-
-                            <div class="layui-card-body">
-                                <table id="test-table-toolbar2" lay-filter="test-table-toolbar2"></table>
-                                <script type="text/html" id="imgTpl">
-                                    <img style="display: inline-block; width: 50%; height: 100%;" src={{ d.avatar }}>
-                                </script>
                             </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">展示方式</label>
+                                <div class="layui-input-block">
+                                    <select id="layoutType" lay-filter="">
+                                        <option value="">全部</option>
+                                        <option value="主表">主表</option>
+                                        <option value="字典">字典</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">业务名称</label>
+                                <div class="layui-input-block">
+                                    <input id="relatName" type="text" lay-verify="required" placeholder=""
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
+                </div>
+
+                <script type="text/html" id="test-table-toolbar-toolbarDemo">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+                    </div>
+                </script>
+
+                <div class="layui-card-body">
+                    <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+                    <script type="text/html" id="imgTpl111">
+                        <img style="display: inline-block; width: 50%; height: 100%;" src={{ d.avatar }}>
+                    </script>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="layui-form-item layui-layout-admin">
     <div class="layui-input-block">
         <div class="layui-footer" style="left: 0;">
@@ -99,159 +87,66 @@
         base: '../layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'form', 'table', 'laydate', 'layer', 'element', 'jquery'], function (table, layer, element, $, form) {
+    }).use(['index', 'form', 'table','laydate','tree','layer'], function(){
         var $ = layui.$
-            , form = layui.form
-            , table = layui.table
+            ,form = layui.form
+            ,table = layui.table
+            , layer = layui.layer;
 
         form.render(null, 'component-form-group');
         var relatId = window.location.search.substring(1, window.location.search.length);
-        table.render({
-            elem: '#test-table-toolbar1'
-            , id: 'prodReload'
-            , method: 'post'
-            , url: '/prod/basicView?relatId=' + relatId //数据接口
-            , title: '基础信息表'
-            , response: {
-                statusName: 'code',
-                statusCode: '200'
-            }
-            , cols: [[
-                {field: 'toolName', title: '字段名称', width: '20%'}
-                , {field: 'toolType', title: '字段类型', width: '20%', templet: function (d) {
-                        var opt = '<select id="toolType" name="toolType" class="province-selector" >\n'
-                        if (d.toolType === "text") {
-                            opt = opt + ' <option value="文本" selected>文本</option>\n' +
-                                '      <option value="字典" >字典</option>\n'
-                        } else {
-                            opt = opt + ' <option value="文本">文本</option>\n' +
-                                '      <option value="字典" selected>字典</option>\n'
-                        }
-                        opt = opt + '</select>'
-                        return opt
-                    }
-                }
-                , {field: 'sourDict', title: '数据源', width: '20%', templet: function (d) {
-                        var opt = '<select id="sourDict" name="sourDict" class="province-selector" >\n'
-                        opt = opt + ' <option value="文本" >文本</option>\n' +
-                            '      <option value="字典" >字典</option>\n'
-                        opt = opt + '</select>'
-                        return opt
-                    }
-                }
-                , {field: 'resState', title: '查询结果', width: '18%', templet: function (d) {
-                        var opt
-                        if (d.resState === "1") {
-                            opt = '<input type="checkbox" id="resState" name="resState" lay-skin="primary" checked>'
-                        } else {
-                            opt = '<input type="checkbox" id="resState" name="resState" lay-skin="primary" >'
-                        }
-                        return opt
-                    }
-                }
-                , {field: 'selState', title: '查询条件', width: '18%', templet: function (d) {
-                        var opt
-                        if (d.selState === "1") {
-                            opt = '<input type="checkbox" id="selState" name="selState" lay-skin="primary" checked>'
-                        } else {
-                            opt = '<input type="checkbox" id="selState" name="selState" lay-skin="primary" >'
-                        }
-                        return opt
-                    }
-                }
-            ]]
-            , done: function (res, curr, count) {
-                count || this.elem.next('.layui-table-view').find('.layui-table-header').css('overflow', 'auto');
-                layui.each($('select'), function (index, item) {
-                    var elem = $(item);
-                    elem.val(elem.data('value')).parents('div.layui-table-cell').css('overflow', 'visible');
-                });
-            }
-        });
-
-        //监听单元格编辑
-        table.on('edit(test-table-toolbar1)', function (obj) {
-            var params = {};
-            params.extId = obj.data.extId;
-            params.field = obj.field;
-            params.value = obj.value;
-            postdata(params, "/supp/colsave", function () {table.reload('colReload');layer.msg("更新成功");})
-        });
-
         $.ajax({
             type: "post",
-            url: "/prod/sourDet?relatId=" + relatId,
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (detObj) {
-                if (detObj.msg == "success") {
-                    var detJson = detObj.data;
-                    $('#tblId').val(detJson.tblId);
-                    $('#tblName').val(detJson.tblName);
-                    layui.form.render();
-                }
-            }
-        });
-
-        //数据源字典
-        $.ajax({
-            type: "post",
-            url: "/prod/sourDict?relatId=" + relatId,
+            url: "/tool/basicSour?relatId=" + relatId,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (detObj) {
                 if (detObj.msg == "success") {
                     document.getElementById("tblId").options.length = 0;
-                    for (var i=0; i<detObj.data.length; i++) {
-                        document.getElementById("tblId").options.add(new Option(detObj.data[i].tblName,detObj.data[i].tblId));
+                    for (var i=0; i<detObj.data.basicSourTblVo.length; i++) {
+                        document.getElementById("tblId").options.add(new Option(detObj.data.basicSourTblVo[i].tblName,detObj.data.basicSourTblVo[i].tblId));
                     }
+                    $('#relatName').val(detObj.data.relatName);
+                    $('#layoutType').val(detObj.data.layoutType);
                     layui.form.render();
                 }
             }
         });
 
-        var menuId = window.location.search.substring(1, window.location.search.length);
         table.render({
-            elem: '#test-table-toolbar2'
+            elem: '#test-table-toolbar'
             , id: 'ruleReload'
             , method: 'post'
-            , url: '/prod/ruleList?menuId=' + menuId //数据接口
+            , url: '/tool/basicCond?relatId=' + relatId //数据接口
             , toolbar: '#test-table-toolbar-toolbarDemo'
             , response: {
                 statusName: 'code',
                 statusCode: '200'
             }
             , cols: [[
-                {type: 'checkbox', fixed: 'left', width: '12.5%'}
-                , {field: 'tbl1', title: '表1', width: '12.5%'}
-                , {field: 'joinType', title: '关联方式', width: '12.5%'}
-                , {field: 'tbl2', title: '表2', width: '12.5%'}
-                , {field: 'key1', title: '关键字1', width: '12.5%'}
-                , {field: 'matchType', title: '匹配方式', width: '12.5%'}
-                , {field: 'key2', title: '关键字2', width: '12.5%'}
-                , {field: 'shows', title: '展示', width: '12.5%'}
+                {type: 'checkbox', fixed: 'left', width: '10%'}
+                , {field: 'ruleId', title: 'ID', width: '12%'}
+                , {field: 'key1', title: '本表字段', width: '26%'}
+                , {field: 'matchType', title: '匹配方式', width: '26%'}
+                , {field: 'val1', title: '值', width: '26%'}
             ]]
         });
 
-        table.on('toolbar(test-table-toolbar2)', function(obj){
+        //头工具栏事件
+        table.on('toolbar(test-table-toolbar)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
+            switch (obj.event) {
                 case 'add':
                     layer.open({
                         type: 2
                         ,title: '新增'
-                        ,content: 'basicadd.html?' + menuId
+                        ,content: 'basicadd.html?' // + data.relatId
                         ,maxmin: true
-                        ,area: ['1200px', '600px']
+                        ,area: ['700px', '500px']
                     });
                     break;
                 case 'del':
-                    layer.confirm('是否删除？', {
-                        btn: ['是','否'] //按钮
-                    }, function(){
-                        postdata(null,"/prod/ruleDel?relatId=" + checkStatus.data[0].relatId,function () {
-                            table.reload('ruleReload');layer.msg("删除成功");})
-                    });
+                    postdata(null,"/tool/tblDel?tblId=" + checkStatus.data[0].tblId,function () {table.reload('prodReload');layer.msg("已删除！");});
                     break;
             };
         });
@@ -265,9 +160,9 @@
 
     function save() {
         var params = {};
-        params.relatId = window.location.search.substring(1, window.location.search.length);
-        params.tblId = $('#tblId').val();
-        postdata(params, "/prod/sourEdit", function () {
+        params.prodId = $('#prodId').val();
+        params.prodType = $('#prodType').val();
+        postdata(params, "/prod/prodEdit", function () {
             layer.msg("保存成功！");
         });
     }
