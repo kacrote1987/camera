@@ -32,15 +32,9 @@
                   <input type="text" id="menuId" placeholder="请输入" autocomplete="off"
                          class="layui-input" style="display: none">
                   <script type="text/html" id="test-table-toolbar-toolbarDemo2">
-                    <a id="rule" class="layui-btn layui-btn-xs" lay-event="layout">布局</a>
-                    <a id="display" class="layui-btn layui-btn-xs" lay-event="display">属性</a>
-                  </script>
-
-                  <script type="text/html" id="test-table-toolbar-toolbarDemo">
-                    <div class="layui-btn-container">
-                      <button class="layui-btn layui-btn-sm" lay-event="rule">规则</button>
-                      <input id="prodVer" type="text" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display: none">
-                    </div>
+                    <a id="layout" class="layui-btn layui-btn-xs" lay-event="layout">布局</a>
+                    <a id="config" class="layui-btn layui-btn-xs" lay-event="config">配置</a>
+                    <a id="display" class="layui-btn layui-btn-xs" lay-event="display">展示</a>
                   </script>
 
                   <div class="layui-card-body">
@@ -123,18 +117,17 @@
         statusName: 'code',
         statusCode: '200'
       }
-      , toolbar: '#test-table-toolbar-toolbarDemo'
       , title: '资产基础信息表'
       , cols: [[
         {field: 'toolId', title: '组件ID', width: '6%'}
-        , {field: 'layoutType', title: '组件布局', sort: true, width: '12%'}
-        , {field: 'toolType', title: '组件类别', sort: true, width: '12%'}
-        , {field: 'toolName', title: '组件名称', sort: true, width: '12%'}
-        , {field: 'toolVer', title: '组件版本', sort: true, width: '12%'}
-        , {field: 'relatName', title: '业务名称', sort: true, width: '12%'}
-        , {field: 'toolTime', title: '上架时间', sort: true, width: '12%'}
-        , {field: 'toolState', title: '组件状态', sort: true, width: '12%'}
-        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-toolbarDemo2', width: '10%'}
+        , {field: 'layoutType', title: '组件布局', sort: true, width: '11%'}
+        , {field: 'toolType', title: '组件类别', sort: true, width: '11%'}
+        , {field: 'toolName', title: '组件名称', sort: true, width: '11%'}
+        , {field: 'toolVer', title: '组件版本', sort: true, width: '11%'}
+        , {field: 'relatName', title: '业务名称', sort: true, width: '14%'}
+        , {field: 'toolTime', title: '上架时间', sort: true, width: '11%'}
+        , {field: 'toolState', title: '组件状态', sort: true, width: '11%'}
+        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-toolbarDemo2', width: '14%'}
       ]]
       , page: true
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
@@ -145,21 +138,6 @@
           "data": res.data.list //解析数据列表
         };
       }
-    });
-
-    //头工具栏事件
-    table.on('toolbar(test-table-toolbar)', function(obj){
-      switch(obj.event){
-        case 'rule':
-          layer.open({
-            type: 2
-            ,title: '规则'
-            ,content: 'rulelist.html?' + $('#menuId').val()
-            ,maxmin: true
-            ,area: ['1200px', '600px']
-          });
-          break;
-      };
     });
 
     //监听行工具事件
@@ -173,11 +151,19 @@
           ,maxmin: true
           ,area: ['450px', '400px']
         });
+      } else if(obj.event === 'config'){
+        layer.open({
+          type: 2
+          ,title: '配置'
+          ,content: data.toolConf + data.relatId
+          ,maxmin: true
+          ,area: ['1000px', '600px']
+        });
       } else if(obj.event === 'display'){
         layer.open({
           type: 2
-          ,title: '属性'
-          ,content: '../tools/'+ data.typeCode +'.html?' + data.relatId
+          ,title: '展示'
+          ,content: data.toolDisp + data.relatId
           ,maxmin: true
           ,area: ['1000px', '600px']
         });

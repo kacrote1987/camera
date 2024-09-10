@@ -11,6 +11,8 @@ public class ToolSelVo {
     private String relatName;
     private String toolTime;
     private String toolState;
+    private String toolConf;
+    private String toolDisp;
 
     public Long getRelatId() {
         return relatId;
@@ -90,5 +92,21 @@ public class ToolSelVo {
 
     public void setToolState(String toolState) {
         this.toolState = toolState;
+    }
+
+    public String getToolConf() {
+        return toolConf;
+    }
+
+    public void setToolConf(String toolConf) {
+        this.toolConf = toolConf;
+    }
+
+    public String getToolDisp() {
+        return toolDisp;
+    }
+
+    public void setToolDisp(String toolDisp) {
+        this.toolDisp = toolDisp;
     }
 }
