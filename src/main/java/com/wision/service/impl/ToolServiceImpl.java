@@ -67,6 +67,16 @@ public class ToolServiceImpl implements ToolService {
         return basicView;
     }
 
+    @Override
+    public void basicCondAdd(Long params) {
+
+    }
+
+    @Override
+    public List<BasicCol> basicCondDel(Long relatId) {
+        return null;
+    }
+
 //    @Override
 //    public RuleDictVo ruleDict(Long relatId) {
 //        RuleDictVo ruleDict = new RuleDictVo();

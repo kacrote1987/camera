@@ -46,18 +46,32 @@ public class ToolController {
         return Result.success(basicSour);
     }
 
-    @ApiOperation("基础信息组件-条件设置")
+    @ApiOperation("基础信息组件-条件设置列表")
     @PostMapping("/basicCond")
     public Result basicCond(@RequestParam Long relatId){
         List<BasicCondVo> basicCond= toolService.basicCond(relatId);
         return Result.success(basicCond);
     }
 
-    @ApiOperation("基础信息组件-组件展示")
+    @ApiOperation("基础信息组件-条件设置字典+组件展示")
     @PostMapping("/basicView")
     public Result basicView(@RequestParam Long relatId){
         List<BasicCol> basicView= toolService.basicView(relatId);
         return Result.success(basicView);
+    }
+
+    @ApiOperation("基础信息组件-条件设置新增")
+    @PostMapping("/basicCondAdd")
+    public Result basicCondAdd(@RequestBody Long params){
+        toolService.basicCondAdd(params);
+        return Result.success();
+    }
+
+    @ApiOperation("基础信息组件-条件设置删除")
+    @PostMapping("/basicCondDel")
+    public Result basicCondDel(@RequestParam Long ruleId){
+        toolService.basicCondDel(ruleId);
+        return Result.success();
     }
 
 //    @ApiOperation("规则配置字典")

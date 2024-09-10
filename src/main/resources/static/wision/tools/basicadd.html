@@ -22,15 +22,13 @@
               </div>
               <div class="layui-col-md8">
                 <div class="layui-card">
-                  <input id="prodId" type="text" name="prodId" placeholder="" autocomplete="off"
-                         class="layui-input" style="display: none">
                   <div class="layui-card-body">
                     <form class="layui-form" action="" lay-filter="component-form-element">
                         <div class="layui-row layui-col-space10 layui-form-item">
                           <div class="layui-col-lg6">
                             <label class="layui-form-label">本表字段</label>
                             <div class="layui-input-block">
-                              <select id="prodState" lay-filter="prodState">
+                              <select id="kay1" lay-filter="">
                                 <option value="">请选择</option>
                               </select>
                             </div>
@@ -38,9 +36,10 @@
                           <div class="layui-col-lg6">
                             <label class="layui-form-label">匹配方式</label>
                             <div class="layui-input-block">
-                              <select id="prodState" lay-filter="prodState">
+                              <select id="matchType" lay-filter="">
                                 <option value="">请选择</option>
-                                <option value="选择数据源">选择数据源</option>
+                                <option value="精确">精确</option>
+                                <option value="模糊">模糊</option>
                               </select>
                             </div>
                           </div>
@@ -49,7 +48,7 @@
                           <div class="layui-col-lg6">
                             <label class="layui-form-label">值</label>
                             <div class="layui-input-block">
-                              <input id="prodVer" type="text" lay-verify="required" placeholder=""
+                              <input id="val1" type="text" lay-verify="required" placeholder=""
                                      autocomplete="off" class="layui-input">
                             </div>
                           </div>
@@ -99,17 +98,19 @@
             , table = layui.table;
 
     form.render(null, 'component-form-group');
-    var menuId = window.location.search.substring(1, window.location.search.length);
+    var relatId = window.location.search.substring(1, window.location.search.length);
     $.ajax({
       type: "post",
-      url: "/prod/ruleDict?menuId=" + menuId,
+      url: "/tool/basicView?relatId=" + relatId,
       contentType: "application/json;charset=utf-8",
       dataType: "json",
       success: function (detObj) {
         if (detObj.msg == "success") {
           var detJson = detObj.data;
-          alert(JSON.stringify(detJson.mainCode[0]));
-          $('#mainCode').val(detJson.mainCode);
+          document.getElementById("kay1").options.length = 0;
+          for (var i=0; i<detJson.length; i++) {
+            document.getElementById("kay1").options.add(new Option(detJson[i].toolName,detJson[i].toolCode));
+          }
           layui.form.render();
         }
       }
@@ -120,12 +121,10 @@
   function save() {
     var params = {};
     params.relatId = window.location.search.substring(1, window.location.search.length);
-    params.styles = $('#styles').val();
-    params.keyss = $('#keyss').val();
-    params.matches = $('#matches').val();
-    params.vals = $('#vals').val();
-    params.shows = $('#shows').val();
-    postdata(params, "/prod/ruleAdd", function () {
+    params.val1 = $('#val1').val();
+    params.matchType = $('#matchType').val();
+    params.vals = $('#val1').val();
+    postdata(params, "/tool/ruleAdd", function () {
       layer.msg("保存成功！");
     });
   }
