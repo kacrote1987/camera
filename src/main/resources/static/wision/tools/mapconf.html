@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>项目详细</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-tab-item layui-show">
+                <!--            组件配置-->
+                <div class="layui-row layui-col-space12">
+                    <div class="layui-col-md2">
+                    </div>
+                    <div class="layui-col-md8">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <form class="layui-form" action="" lay-filter="component-form-element">
+                                    <div class="layui-row layui-col-space10 layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">业务名称</label>
+                                            <div class="layui-input-block">
+                                                <input id="relatName" type="text" lay-verify="required" placeholder=""
+                                                       autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label"></label>
+                                            <div class="layui-input-block"></div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">悬浮窗展示</label>
+                                            <div class="layui-input-block">
+                                                <select id="prodState" lay-filter="prodState">
+                                                    <option value="开启-居左">开启-居左</option>
+                                                    <option value="开启-居左">开启-居右</option>
+                                                    <option value="关闭">关闭</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">悬浮窗参数</label>
+                                            <div class="layui-input-block">
+                                                <select id="prodState" lay-filter="prodState">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">可视域展示</label>
+                                            <div class="layui-input-block">
+                                                <select id="prodState" lay-filter="prodState">
+                                                    <option value="开启">开启</option>
+                                                    <option value="关闭">关闭</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">可视域参数</label>
+                                            <div class="layui-input-block">
+                                                <select id="prodState" lay-filter="prodState">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">地图框选</label>
+                                            <div class="layui-input-block">
+                                                <select id="prodState" lay-filter="prodState">
+                                                    <option value="开启">开启</option>
+                                                    <option value="关闭">关闭</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">POI搜索</label>
+                                            <div class="layui-input-block">
+                                                <select id="prodState" lay-filter="prodState">
+                                                    <option value="开启">开启</option>
+                                                    <option value="关闭">关闭</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">收藏夹</label>
+                                            <div class="layui-input-block">
+                                                <select id="prodState" lay-filter="prodState">
+                                                    <option value="开启">开启</option>
+                                                    <option value="关闭">关闭</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layui-form-item layui-layout-admin">
+    <div class="layui-input-block">
+        <div class="layui-footer" style="left: 0;">
+            <button id="scienSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
+                    onclick="save()">保存
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'table', 'laydate'], function () {
+        var $ = layui.$
+            , form = layui.form
+            ,table = layui.table
+
+        form.render(null, 'component-form-group');
+        var relatId = window.location.search.substring(1, window.location.search.length);
+        table.render({
+            elem: '#test-table-toolbar'
+            , id: 'flowReload'
+            , method: 'post'
+            , url: '/prod/flowView?relatId=' + relatId //数据接口
+            , toolbar: '#test-table-toolbar-toolbarDemo'
+            , title: '菜单管理'
+            , response: {
+                statusName: 'code',
+                statusCode: '200'
+            }
+            , cols: [[
+                {type: 'checkbox', fixed: 'left', width: '10%'}
+                , {field: 'toolCode', title: '排序', edit: 'text', width: '10%'}
+                , {field: 'toolName', title: '流程名称', edit: 'text', width: '20%'}
+                , {field: 'extCond', title: '扩展条件', width: '60%'}
+            ]]
+        });
+
+    });
+
+    function save() {
+        var params = {};
+        params.relatId = window.location.search.substring(1, window.location.search.length);
+        params.val1 = $('#val1').val();
+        params.matchType = $('#matchType').val();
+        params.vals = $('#val1').val();
+        postdata(params, "/tool/ruleAdd", function () {
+            layer.msg("保存成功！");
+        });
+    }
+</script>
+</body>
+</html>

@@ -77,6 +77,27 @@ public class ToolServiceImpl implements ToolService {
         return null;
     }
 
+    @Override
+    public List<FlowViewVo> flowView(Long relatId) {
+        List<FlowViewVo> flowView=toolMapper.flowView(relatId);
+        return flowView;
+    }
+
+    @Override
+    public void flowAdd(Long relatId) {
+        toolMapper.insertFlow(relatId);
+    }
+
+    @Override
+    public void flowDel(Long extId) {
+        toolMapper.deleteFlow(extId);
+    }
+
+    @Override
+    public void flowEdit(FlowListForm params) {
+        toolMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
+    }
+
 //    @Override
 //    public RuleDictVo ruleDict(Long relatId) {
 //        RuleDictVo ruleDict = new RuleDictVo();
@@ -108,27 +129,6 @@ public class ToolServiceImpl implements ToolService {
 //    @Override
 //    public void sourEdit(RelatForm params) {
 //        toolMapper.sourEdit(params);
-//    }
-
-//    @Override
-//    public List<FlowViewVo> flowView(Long relatId) {
-//        List<FlowViewVo> flowView=toolMapper.flowView(relatId);
-//        return flowView;
-//    }
-//
-//    @Override
-//    public void flowAdd(Long relatId) {
-//        toolMapper.insertFlow(relatId);
-//    }
-//
-//    @Override
-//    public void flowDel(Long extId) {
-//        toolMapper.deleteFlow(extId);
-//    }
-//
-//    @Override
-//    public void flowEdit(FlowListForm params) {
-//        toolMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
 //    }
 
     public static String method (String str){

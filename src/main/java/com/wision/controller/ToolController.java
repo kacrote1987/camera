@@ -74,6 +74,35 @@ public class ToolController {
         return Result.success();
     }
 
+    @ApiOperation("组件展示-流程组件")
+    @PostMapping("/flowView")
+    public Result flowView(@RequestParam Long relatId){
+        List<FlowViewVo> flowView= toolService.flowView(relatId);
+        return Result.success(flowView);
+    }
+
+    @ApiOperation("流程组件-流程项新增")
+    @PostMapping("/flowAdd")
+    public Result flowAdd(@RequestParam Long relatId){
+        toolService.flowAdd(relatId);
+        return Result.success();
+    }
+
+    @ApiOperation("流程组件-流程项删除")
+    @PostMapping("/flowDel")
+    public Result flowDel(@RequestParam Long extId){
+        toolService.flowDel(extId);
+        return Result.success();
+    }
+
+    @ApiOperation("流程组件-流程项修改")
+    @PostMapping("/flowEdit")
+    public Result flowEdit(@RequestBody FlowListForm params){
+        toolService.flowEdit(params);
+        return Result.success();
+    }
+
+
 //    @ApiOperation("规则配置字典")
 //    @PostMapping("/ruleDict")
 //    public Result ruleDict(@RequestParam Long relatId){
@@ -106,36 +135,6 @@ public class ToolController {
 //    @PostMapping("/sourEdit")
 //    public Result sourEdit(@RequestBody RelatForm params){
 //        toolService.sourEdit(params);
-//        return Result.success();
-//    }
-
-//      <分割线>
-
-//    @ApiOperation("组件展示-流程组件")
-//    @PostMapping("/flowView")
-//    public Result flowView(@RequestParam Long relatId){
-//        List<FlowViewVo> flowView= toolService.flowView(relatId);
-//        return Result.success(flowView);
-//    }
-//
-//    @ApiOperation("流程组件-流程项新增")
-//    @PostMapping("/flowAdd")
-//    public Result flowAdd(@RequestParam Long relatId){
-//        toolService.flowAdd(relatId);
-//        return Result.success();
-//    }
-//
-//    @ApiOperation("流程组件-流程项删除")
-//    @PostMapping("/flowDel")
-//    public Result flowDel(@RequestParam Long extId){
-//        toolService.flowDel(extId);
-//        return Result.success();
-//    }
-//
-//    @ApiOperation("流程组件-流程项修改")
-//    @PostMapping("/flowEdit")
-//    public Result flowEdit(@RequestBody FlowListForm params){
-//        toolService.flowEdit(params);
 //        return Result.success();
 //    }
 }

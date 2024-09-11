@@ -47,6 +47,18 @@
     <select id="getBasicCol" resultType="com.wision.entity.BasicCol" >
         select ext_id,tool_code,tool_name,tool_type,res_state,sel_state from t_supp_relat_ext where tool_tag='basic' and relat_id=#{relatId}
     </select>
+    <select id="flowView" resultType="com.wision.entity.FlowViewVo" >
+        select ext_id,tool_name,tool_code from t_supp_relat_ext where tool_tag='flow' and relat_id=#{relatId} order by tool_code
+    </select>
+    <insert id="insertFlow">
+        insert into t_supp_relat_ext(relat_id,tool_tag) values(#{relatId},'flow')
+    </insert>
+    <delete id="deleteFlow">
+        delete from t_supp_relat_ext where ext_id=#{extId}
+    </delete>
+    <update id="updateFlow">
+        update t_supp_relat_ext set ${field} = #{value} where ext_id=#{extId}
+    </update>
 <!--    <select id="getMainCode" resultType="com.wision.entity.RuleDictExtVo" >-->
 <!--        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}-->
 <!--    </select>-->
@@ -67,17 +79,5 @@
 <!--    </update>-->
 <!--    <update id="sourEdit">-->
 <!--        update t_supp_relat_main set tbl_id=#{params.tblId} where relat_id=#{params.relatId}-->
-<!--    </update>-->
-<!--    <select id="flowView" resultType="com.wision.entity.FlowViewVo" >-->
-<!--        select ext_id,tool_name,tool_code from t_supp_relat_ext where tool_tag='flow' and relat_id=#{relatId} order by tool_code-->
-<!--    </select>-->
-<!--    <insert id="insertFlow">-->
-<!--        insert into t_supp_relat_ext(relat_id,tool_tag) values(#{relatId},'flow')-->
-<!--    </insert>-->
-<!--    <delete id="deleteFlow">-->
-<!--        delete from t_supp_relat_ext where ext_id=#{extId}-->
-<!--    </delete>-->
-<!--    <update id="updateFlow">-->
-<!--        update t_supp_relat_ext set ${field} = #{value} where ext_id=#{extId}-->
 <!--    </update>-->
 </mapper>

@@ -46,6 +46,26 @@ public interface ToolService {
      * @return
      */
     List<BasicCol> basicCondDel(Long relatId);
+    /**
+     * 组件展示-流程组件
+     * @return
+     */
+    List<FlowViewVo> flowView(Long relatId);
+    /**
+     * 流程组件-流程项新增
+     * @return
+     */
+    void flowAdd(Long relatId);
+    /**
+     * 流程组件-流程项删除
+     * @return
+     */
+    void flowDel(Long extId);
+    /**
+     * 流程组件-流程项修改
+     * @return
+     */
+    void flowEdit(FlowListForm params);
 //    /**
 //     * 规则配置字典
 //     * @return
@@ -71,24 +91,4 @@ public interface ToolService {
 //     * @return
 //     */
 //    void sourEdit(RelatForm params);
-//    /**
-//     * 组件展示-流程组件
-//     * @return
-//     */
-//    List<FlowViewVo> flowView(Long relatId);
-//    /**
-//     * 流程组件-流程项新增
-//     * @return
-//     */
-//    void flowAdd(Long relatId);
-//    /**
-//     * 流程组件-流程项删除
-//     * @return
-//     */
-//    void flowDel(Long extId);
-//    /**
-//     * 流程组件-流程项修改
-//     * @return
-//     */
-//    void flowEdit(FlowListForm params);
 }
