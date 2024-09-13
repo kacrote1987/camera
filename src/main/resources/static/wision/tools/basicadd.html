@@ -28,7 +28,7 @@
                           <div class="layui-col-lg6">
                             <label class="layui-form-label">本表字段</label>
                             <div class="layui-input-block">
-                              <select id="kay1" lay-filter="">
+                              <select id="keyName" lay-filter="">
                                 <option value="">请选择</option>
                               </select>
                             </div>
@@ -38,8 +38,11 @@
                             <div class="layui-input-block">
                               <select id="matchType" lay-filter="">
                                 <option value="">请选择</option>
-                                <option value="精确">精确</option>
+                                <option value="=">=</option>
+                                <option value=">">></option>
+                                <option value="<"><</option>
                                 <option value="模糊">模糊</option>
+                                <option value="包含">包含</option>
                               </select>
                             </div>
                           </div>
@@ -48,7 +51,7 @@
                           <div class="layui-col-lg6">
                             <label class="layui-form-label">值</label>
                             <div class="layui-input-block">
-                              <input id="val1" type="text" lay-verify="required" placeholder=""
+                              <input id="keyValue" type="text" lay-verify="required" placeholder=""
                                      autocomplete="off" class="layui-input">
                             </div>
                           </div>
@@ -107,9 +110,9 @@
       success: function (detObj) {
         if (detObj.msg == "success") {
           var detJson = detObj.data;
-          document.getElementById("kay1").options.length = 0;
+          document.getElementById("keyName").options.length = 0;
           for (var i=0; i<detJson.length; i++) {
-            document.getElementById("kay1").options.add(new Option(detJson[i].toolName,detJson[i].toolCode));
+            document.getElementById("keyName").options.add(new Option(detJson[i].toolName,detJson[i].toolName));
           }
           layui.form.render();
         }
@@ -121,10 +124,10 @@
   function save() {
     var params = {};
     params.relatId = window.location.search.substring(1, window.location.search.length);
-    params.val1 = $('#val1').val();
+    params.keyName = $('#keyName').val();
     params.matchType = $('#matchType').val();
-    params.vals = $('#val1').val();
-    postdata(params, "/tool/ruleAdd", function () {
+    params.keyValue = $('#keyValue').val();
+    postdata(params, "/tool/basicCondAdd", function () {
       layer.msg("保存成功！");
     });
   }

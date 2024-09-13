@@ -62,19 +62,20 @@ public class ToolServiceImpl implements ToolService {
     }
 
     @Override
+    public void basicCondAdd(BasicCondForm params) {
+        String toolCode = toolMapper.getBasicCodeByName(params.getRelatId(),params.getKeyName());
+        toolMapper.insertBasicCond(params,toolCode);
+    }
+
+    @Override
     public List<BasicCol> basicView(Long relatId) {
         List<BasicCol> basicView = toolMapper.getBasicCol(relatId);
         return basicView;
     }
 
     @Override
-    public void basicCondAdd(Long params) {
-
-    }
-
-    @Override
-    public List<BasicCol> basicCondDel(Long relatId) {
-        return null;
+    public void basicCondDel(Long ruleId) {
+        toolMapper.deleteBasicCond(ruleId);
     }
 
     @Override

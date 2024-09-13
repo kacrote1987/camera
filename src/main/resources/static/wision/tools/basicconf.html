@@ -19,10 +19,22 @@
                         <div class="layui-form-item">
 
                             <div class="layui-inline">
-                                <label class="layui-form-label">业务名称</label>
+                                <label class="layui-form-label">* 业务名称</label>
                                 <div class="layui-input-block">
                                     <input id="relatName" type="text" lay-verify="required" placeholder=""
                                            autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">* 展示方式</label>
+                                <div class="layui-input-block">
+                                    <select id="layoutType" lay-filter="">
+                                        <option value="">全部</option>
+                                        <option value="主表">主表</option>
+                                        <option value="按钮">按钮</option>
+                                        <option value="下拉框">下拉框</option>
+                                        <option value="无">无</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="layui-inline">
@@ -34,12 +46,34 @@
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">展示方式</label>
+                                <label class="layui-form-label">主表</label>
                                 <div class="layui-input-block">
-                                    <select id="layoutType" lay-filter="">
-                                        <option value="">全部</option>
-                                        <option value="主表">主表</option>
-                                        <option value="字典">字典</option>
+                                    <select id="prodState" lay-filter="prodState">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">主表字段</label>
+                                <div class="layui-input-block">
+                                    <select id="prodState" lay-filter="prodState">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">本表字段</label>
+                                <div class="layui-input-block">
+                                    <select id="prodState" lay-filter="prodState">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">展示名称</label>
+                                <div class="layui-input-block">
+                                    <select id="prodState" lay-filter="prodState">
+                                        <option value="">请选择</option>
                                     </select>
                                 </div>
                             </div>
@@ -124,11 +158,11 @@
                 statusCode: '200'
             }
             , cols: [[
-                {type: 'checkbox', fixed: 'left', width: '10%'}
-                , {field: 'ruleId', title: 'ID', width: '12%'}
-                , {field: 'key1', title: '本表字段', width: '26%'}
-                , {field: 'matchType', title: '匹配方式', width: '26%'}
-                , {field: 'val1', title: '值', width: '26%'}
+                {type: 'checkbox', fixed: 'left', width: '9%'}
+                , {field: 'ruleId', title: 'ID', width: '10%'}
+                , {field: 'keyName', title: '字段名称', width: '27%'}
+                , {field: 'matchType', title: '匹配方式', width: '27%'}
+                , {field: 'keyValue', title: '值', width: '27%'}
             ]]
         });
 
@@ -146,7 +180,7 @@
                     });
                     break;
                 case 'del':
-                    postdata(null,"/tool/tblDel?tblId=" + checkStatus.data[0].tblId,function () {table.reload('prodReload');layer.msg("已删除！");});
+                    postdata(null,"/tool/basicCondDel?ruleId=" + checkStatus.data[0].ruleId,function () {table.reload('ruleReload');layer.msg("已删除！");});
                     break;
             };
         });

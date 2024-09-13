@@ -43,7 +43,7 @@
         update t_supp_prod_main set prod_type=#{params.prodType},prod_name=#{params.prodName},prod_nikname=#{params.prodNikname}
         ,prod_ver=#{params.prodVer},prod_explain=#{params.prodExplain},prod_time=now() where prod_id=#{params.prodId}
     </update>
-    <select id="tblList" resultType="com.wision.entity.BasicSourVo" >
+    <select id="tblList" resultType="com.wision.entity.TblListVo" >
         select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}
     </select>
     <select id="getProdName" resultType="String" >
@@ -122,9 +122,6 @@
 <!--    <update id="cleanNullTypeIds">-->
 <!--        update t_supp_relat_main set type_ids=replace("null","")-->
 <!--    </update>-->
-<!--    <select id="tblList" resultType="com.wision.entity.TblImpForm" >-->
-<!--        select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}-->
-<!--    </select>-->
 <!--    <select id="tblDet" resultType="com.wision.entity.TblImpForm" >-->
 <!--        select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where tbl_id=#{tblId}-->
 <!--    </select>-->

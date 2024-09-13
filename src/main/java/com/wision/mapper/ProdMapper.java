@@ -15,7 +15,7 @@ public interface ProdMapper {
     boolean insertProd(@Param("params") ProdDetForm params);
     boolean deleteProd(Long prodId);
     boolean updateProd(@Param("params") ProdDetForm params);
-    List<BasicSourVo> tblList(Long prodId);
+    List<TblListVo> tblList(Long prodId);
     List<MenuListVo> menuList(Long prodId);
     List<RelatDetVo> getToolIdsByMenuId(Long menuId);
     boolean insertMenu(Long prodId);

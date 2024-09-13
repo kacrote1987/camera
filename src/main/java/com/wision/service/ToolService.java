@@ -32,20 +32,20 @@ public interface ToolService {
      */
     List<BasicCondVo> basicCond(Long relatId);
     /**
-     * 基础信息组件-条件设置字典+组件展示
+     * 基础信息组件-条件设置新增
+     * @return
+     */
+    void basicCondAdd(BasicCondForm params);
+    /**
+     * 基础信息组件-本表字段字典+组件展示
      * @return
      */
     List<BasicCol> basicView(Long relatId);
     /**
-     * 基础信息组件-条件设置新增
-     * @return
-     */
-    void basicCondAdd(Long params);
-    /**
      * 基础信息组件-条件设置删除
      * @return
      */
-    List<BasicCol> basicCondDel(Long relatId);
+    void basicCondDel(Long ruleId);
     /**
      * 组件展示-流程组件
      * @return

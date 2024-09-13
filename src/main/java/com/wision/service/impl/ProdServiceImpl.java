@@ -72,8 +72,8 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public List<BasicSourVo> tblList(Long prodId) {
-        List<BasicSourVo> tblList = prodMapper.tblList(prodId);
+    public List<TblListVo> tblList(Long prodId) {
+        List<TblListVo> tblList = prodMapper.tblList(prodId);
         return tblList;
     }
 

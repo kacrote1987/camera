@@ -25,15 +25,23 @@
                                 <form class="layui-form" action="" lay-filter="component-form-element">
                                     <div class="layui-row layui-col-space10 layui-form-item">
                                         <div class="layui-inline">
-                                            <label class="layui-form-label">业务名称</label>
+                                            <label class="layui-form-label">* 业务名称</label>
                                             <div class="layui-input-block">
                                                 <input id="relatName" type="text" lay-verify="required" placeholder=""
                                                        autocomplete="off" class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
-                                            <label class="layui-form-label"></label>
-                                            <div class="layui-input-block"></div>
+                                            <label class="layui-form-label">* 展示方式</label>
+                                            <div class="layui-input-block">
+                                                <select id="layoutType" lay-filter="">
+                                                    <option value="">全部</option>
+                                                    <option value="主表">主表</option>
+                                                    <option value="按钮">按钮</option>
+                                                    <option value="下拉框">下拉框</option>
+                                                    <option value="无">无</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">悬浮窗展示</label>

@@ -45,7 +45,7 @@ public interface ProdService {
      * 库表列表
      * @return
      */
-    List<BasicSourVo> tblList(Long prodId);
+    List<TblListVo> tblList(Long prodId);
     /**
      * 菜单列表
      * @return

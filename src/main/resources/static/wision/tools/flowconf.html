@@ -25,15 +25,23 @@
                 <form class="layui-form" action="" lay-filter="component-form-element">
                   <div class="layui-row layui-col-space10 layui-form-item">
                     <div class="layui-inline">
-                      <label class="layui-form-label">业务名称</label>
+                      <label class="layui-form-label">* 业务名称</label>
                       <div class="layui-input-block">
                         <input id="relatName" type="text" lay-verify="required" placeholder=""
                                autocomplete="off" class="layui-input">
                       </div>
                     </div>
                     <div class="layui-inline">
-                      <label class="layui-form-label"></label>
-                      <div class="layui-input-block"></div>
+                      <label class="layui-form-label">* 展示方式</label>
+                      <div class="layui-input-block">
+                        <select id="layoutType" lay-filter="">
+                          <option value="">全部</option>
+                          <option value="主表">主表</option>
+                          <option value="按钮">按钮</option>
+                          <option value="下拉框">下拉框</option>
+                          <option value="无">无</option>
+                        </select>
+                      </div>
                     </div>
                     <div class="layui-inline">
                       <label class="layui-form-label">主表</label>
@@ -52,6 +60,14 @@
                       </div>
                     </div>
                     <div class="layui-inline">
+                      <label class="layui-form-label">展示名称</label>
+                      <div class="layui-input-block">
+                        <select id="prodState" lay-filter="prodState">
+                          <option value="">请选择</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="layui-inline">
                       <label class="layui-form-label">本表字段</label>
                       <div class="layui-input-block">
                         <select id="prodState" lay-filter="prodState">
@@ -60,11 +76,10 @@
                       </div>
                     </div>
                     <div class="layui-inline">
-                      <label class="layui-form-label">展示名称</label>
+                      <label class="layui-form-label">步长</label>
                       <div class="layui-input-block">
-                        <select id="prodState" lay-filter="prodState">
-                          <option value="">请选择</option>
-                        </select>
+                        <input id="relatName" type="text" lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
                       </div>
                     </div>
                   </div>
@@ -106,23 +121,22 @@
 
     form.render(null, 'component-form-group');
     var relatId = window.location.search.substring(1, window.location.search.length);
-    table.render({
-      elem: '#test-table-toolbar'
-      , id: 'flowReload'
-      , method: 'post'
-      , url: '/prod/flowView?relatId=' + relatId //数据接口
-      , toolbar: '#test-table-toolbar-toolbarDemo'
-      , title: '菜单管理'
-      , response: {
-        statusName: 'code',
-        statusCode: '200'
+    $.ajax({
+      type: "post",
+      url: "/tool/flowCond?relatId=" + relatId,
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      success: function (detObj) {
+        if (detObj.msg == "success") {
+          document.getElementById("tblId").options.length = 0;
+          for (var i=0; i<detObj.data.basicSourTblVo.length; i++) {
+            document.getElementById("tblId").options.add(new Option(detObj.data.basicSourTblVo[i].tblName,detObj.data.basicSourTblVo[i].tblId));
+          }
+          $('#relatName').val(detObj.data.relatName);
+          $('#layoutType').val(detObj.data.layoutType);
+          layui.form.render();
+        }
       }
-      , cols: [[
-        {type: 'checkbox', fixed: 'left', width: '10%'}
-        , {field: 'toolCode', title: '排序', edit: 'text', width: '10%'}
-        , {field: 'toolName', title: '流程名称', edit: 'text', width: '20%'}
-        , {field: 'extCond', title: '扩展条件', width: '60%'}
-      ]]
     });
 
   });
@@ -133,7 +147,7 @@
     params.val1 = $('#val1').val();
     params.matchType = $('#matchType').val();
     params.vals = $('#val1').val();
-    postdata(params, "/tool/ruleAdd", function () {
+    postdata(params, "/tool/flowCondEdit", function () {
       layer.msg("保存成功！");
     });
   }

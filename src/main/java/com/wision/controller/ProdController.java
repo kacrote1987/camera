@@ -70,7 +70,7 @@ public class ProdController {
     @ApiOperation("库表列表")
     @PostMapping("/tblList")
     public Result tblList(@RequestParam Long prodId){
-        List<BasicSourVo> tblList= prodService.tblList(prodId);
+        List<TblListVo> tblList= prodService.tblList(prodId);
         return Result.success(tblList);
     }
 

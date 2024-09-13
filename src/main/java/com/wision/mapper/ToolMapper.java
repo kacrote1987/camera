@@ -17,7 +17,10 @@ public interface ToolMapper {
     String getLayoutType(Long relatId);
     List<BasicSourTblVo> basicSourTbl(Long relatId);
     List<BasicCondVo> basicCond(Long relatId);
+    String getBasicCodeByName(Long relatId,String keyName);
+    boolean insertBasicCond(@Param("params") BasicCondForm params,String toolCode);
     List<BasicCol> getBasicCol(Long relatId);
+    boolean deleteBasicCond(Long ruleId);
     List<FlowViewVo> flowView(Long relatId);
     boolean insertFlow(Long relatId);
     boolean deleteFlow(Long extId);
@@ -25,7 +28,6 @@ public interface ToolMapper {
 //    List<RuleDictExtVo> getMainCode(Long relatId);
 //    List<RuleDictExtVo> getSelfCode(Long relatId);
 //    List<RuleDictExtVo> getSelfName(Long relatId);
-//    boolean insertRule(@Param("params") RuleListForm params);
 //    SourDetVo sourDet(Long relatId);
 //    boolean layoutEdit(@Param("params") RelatForm params);
 //    boolean sourEdit(@Param("params") RelatForm params);

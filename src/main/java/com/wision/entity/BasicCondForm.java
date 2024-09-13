@@ -1,26 +1,17 @@
 package com.wision.entity;
 
-public class BasicCondVo {
-    private Long ruleId;
-    private String keyCode;
+public class BasicCondForm {
+    private Long relatId;
     private String keyName;
     private String matchType;
     private String keyValue;
 
-    public Long getRuleId() {
-        return ruleId;
+    public Long getRelatId() {
+        return relatId;
     }
 
-    public void setRuleId(Long ruleId) {
-        this.ruleId = ruleId;
-    }
-
-    public String getKeyCode() {
-        return keyCode;
-    }
-
-    public void setKeyCode(String keyCode) {
-        this.keyCode = keyCode;
+    public void setRelatId(Long relatId) {
+        this.relatId = relatId;
     }
 
     public String getKeyName() {
