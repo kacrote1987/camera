@@ -1,6 +1,6 @@
 package com.wision.entity;
 
-public class BasicCondForm {
+public class BasicCondForm2 {
     private Long relatId;
     private String keyName;
     private String matchType;

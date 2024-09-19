@@ -39,84 +39,84 @@ public class ToolController {
         return Result.success();
     }
 
-    @ApiOperation("基础信息组件-配置-数据源字典")
+    @ApiOperation("组件配置-基础信息组件-数据源字典")
     @PostMapping("/basicSour")
     public Result basicSour(@RequestParam Long relatId){
         BasicSourVo basicSour= toolService.basicSour(relatId);
         return Result.success(basicSour);
     }
 
-//    @ApiOperation("基础信息组件-配置-数据源修改")
-//    @PostMapping("/basicSourEdit")
-//    public Result basicSourEdit(@RequestParam Long relatId){
-//        toolService.basicSourEdit(relatId);
-//        return Result.success(basicSourEdit);
-//    }
-
-    @ApiOperation("基础信息组件-条件设置列表")
+    @ApiOperation("组件配置-基础信息组件-组件设置")
     @PostMapping("/basicCond")
     public Result basicCond(@RequestParam Long relatId){
         List<BasicCondVo> basicCond= toolService.basicCond(relatId);
         return Result.success(basicCond);
     }
 
-    @ApiOperation("基础信息组件-条件设置新增")
+    @ApiOperation("组件配置-基础信息组件-配置修改")
+    @PostMapping("/basicCondEdit")
+    public Result basicCondEdit(@RequestBody BasicCondForm1 params){
+        toolService.basicCondEdit(params);
+        return Result.success();
+    }
+
+    @ApiOperation("组件配置-基础信息组件-条件新增")
     @PostMapping("/basicCondAdd")
-    public Result basicCondAdd(@RequestBody BasicCondForm params){
+    public Result basicCondAdd(@RequestBody BasicCondForm2 params){
         toolService.basicCondAdd(params);
         return Result.success();
     }
 
-    @ApiOperation("基础信息组件-本表字段字典+组件展示")
+    @ApiOperation("组件展示-基础信息组件-本表字段字典")
     @PostMapping("/basicView")
     public Result basicView(@RequestParam Long relatId){
         List<BasicCol> basicView= toolService.basicView(relatId);
         return Result.success(basicView);
     }
 
-    @ApiOperation("基础信息组件-条件设置删除")
+    @ApiOperation("组件配置-基础信息组件-条件设置删除")
     @PostMapping("/basicCondDel")
     public Result basicCondDel(@RequestParam Long ruleId){
         toolService.basicCondDel(ruleId);
         return Result.success();
     }
 
-//    @ApiOperation("组件展示-流程组件-组件配置")
-//    @PostMapping("/flowCond")
-//    public Result flowCond(@RequestParam Long relatId){
-//        List<FlowCondVo> flowCond= toolService.flowCond(relatId);
-//        return Result.success(flowCond);
-//    }
-//
-//    @ApiOperation("组件展示-流程组件-配置保存")
-//    @PostMapping("/flowCondEdit")
-//    public Result flowCondEdit(@RequestParam Long relatId){
-//        toolService.flowCondEdit(relatId);
-//        return Result.success();
-//    }
+    @ApiOperation("组件配置-流程组件-配置列表")
+    @PostMapping("/flowCond")
+    public Result flowCond(@RequestParam Long relatId){
+        FlowCondVo flowCond= toolService.flowCond(relatId);
+        return Result.success(flowCond);
+    }
 
-    @ApiOperation("组件展示-流程组件展示")
+    @ApiOperation("组件配置-流程组件-配置修改")
+    @PostMapping("/flowCondEdit")
+    public Result flowCondEdit(@RequestBody FlowCondForm params){
+        toolService.flowCondEdit(params);
+        return Result.success();
+    }
+
+    @ApiOperation("组件展示-流程组件")
     @PostMapping("/flowView")
     public Result flowView(@RequestParam Long relatId){
         List<FlowViewVo> flowView= toolService.flowView(relatId);
         return Result.success(flowView);
     }
 
-    @ApiOperation("流程组件-流程项新增")
+    @ApiOperation("组件展示-流程组件-流程项新增")
     @PostMapping("/flowAdd")
     public Result flowAdd(@RequestParam Long relatId){
         toolService.flowAdd(relatId);
         return Result.success();
     }
 
-    @ApiOperation("流程组件-流程项删除")
+    @ApiOperation("组件展示-流程组件-流程项删除")
     @PostMapping("/flowDel")
     public Result flowDel(@RequestParam Long extId){
         toolService.flowDel(extId);
         return Result.success();
     }
 
-    @ApiOperation("流程组件-流程项修改")
+    @ApiOperation("组件展示-流程组件-流程项修改")
     @PostMapping("/flowEdit")
     public Result flowEdit(@RequestBody FlowListForm params){
         toolService.flowEdit(params);

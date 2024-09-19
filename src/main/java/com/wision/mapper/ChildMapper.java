@@ -12,6 +12,6 @@ public interface ChildMapper {
     String getChildName(Long prodId);
     List<ChildMenuVo> getChildMenu(Long prodId);
     List<ChildTblCol> getTblSel(Long menuId, String res, String sel);
-    String getToolPage(Long menuId);
+    String getRealPage(Long menuId);
     List<MainContVo> getMainCont(String tblName);
 }

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>项目列表</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+  <div class="layui-fluid">
+    <div class="layui-card">
+      <input id="search" type="text" name="search" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display: none">
+      <input id="val" type="text" name="val" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display: none">
+      <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+        <div class="layui-form-item">
+          <div id="showsel" class="layui-form layui-card-header layuiadmin-card-header-auto"></div>
+        </div>
+      </div>
+      <div class="layui-card layui-form" lay-filter="component-form-element" id="LAY-component-projress">
+        <div class="layui-card-body layui-row layui-col-space10">
+          <div class="layui-col-md12">
+            <input class="layui-radio" type="radio" id="step0" name="stepCode" value="step0" title="全部" checked>
+            <input class="layui-radio" type="radio" id="step1" name="stepCode" value="step1" title="需求阶段">
+            <input class="layui-radio" type="radio" id="step2" name="stepCode" value="step2" title="方案阶段">
+            <input class="layui-radio" type="radio" id="step3" name="stepCode" value="step3" title="合同阶段">
+            <input class="layui-radio" type="radio" id="step4" name="stepCode" value="step4" title="实施阶段">
+            <input class="layui-radio" type="radio" id="step5" name="stepCode" value="step5" title="初验阶段">
+            <input class="layui-radio" type="radio" id="step6" name="stepCode" value="step6" title="试运行阶段">
+            <input class="layui-radio" type="radio" id="step7" name="stepCode" value="step7" title="终验阶段">
+            <input class="layui-radio" type="radio" id="step8" name="stepCode" value="step8" title="维护阶段">
+          </div>
+        </div>
+        <div class="layui-progress" lay-filter="component-progress-demo">
+          <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+        </div>
+      </div>
+
+      <script type="text/html" id="test-table-toolbar-toolbarDemo">
+        <div class="layui-btn-container">
+          <button class="layui-btn layui-btn-sm" lay-event="flow">流程图示</button>
+          <button class="layui-btn layui-btn-sm" lay-event="submit">提交</button>
+          <button class="layui-btn layui-btn-sm" lay-event="backoff">回退</button>
+          <button class="layui-btn layui-btn-sm" name="step1" lay-event="add" style="visibility: hidden">新增</button>
+          <button class="layui-btn layui-btn-sm" name="step1" lay-event="del" style="visibility: hidden">删除</button>
+          <button class="layui-btn layui-btn-sm" name="step2" lay-event="" style="visibility: hidden">合同操作</button>
+          <button class="layui-btn layui-btn-sm" name="step3" lay-event="" style="visibility: hidden">实施操作</button>
+          <button class="layui-btn layui-btn-sm" name="step4" lay-event="" style="visibility: hidden">初验操作</button>
+          <button class="layui-btn layui-btn-sm" name="step5" lay-event="" style="visibility: hidden">终验操作</button>
+        </div>
+      </script>
+
+      <script type="text/html" id="test-table-toolbar-barDemo">
+        <a name="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
+        <a name="det" class="layui-btn layui-btn-xs" lay-event="gantt">进度</a>
+        <a name="det" class="layui-btn layui-btn-xs" lay-event="log">例会</a>
+        <a name="det" class="layui-btn layui-btn-xs" lay-event="log">材料</a>
+      </script>
+
+      <div class="layui-card-body">
+        <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+        <script type="text/html" id="imgTpl">
+          <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+        </script>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+  <script src="../js/demo.js"></script>
+  <script src="../layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: '../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table', 'laydate','form'], function(){
+    var admin = layui.admin
+            ,table = layui.table
+            ,$ = layui.$
+            ,element = layui.element
+            ,laydate = layui.laydate
+            ,form = layui.form;
+
+    element.render('projReload');
+    var menuId = window.location.search.substring(1, window.location.search.length);
+    var detJson;
+    var field;
+    $.ajax({
+      type: "post",
+      url: "/child/mainSel?menuId=" + menuId,
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+      async: false,
+      success: function (detObj) {
+        if (detObj.msg == "success") {
+          detJson = detObj.data[0];
+          var showsel="";
+          var search="";
+          for (var i = 0; i < detJson.childTblSel.length; i++) {
+            showsel += '<div class="layui-inline"><label class="layui-form-label">'+ detJson.childTblSel[i].title +'</label><div class="layui-input-block"><input type="text" id="' + detJson.childTblSel[i].field + '" placeholder="请输入" autocomplete="off" class="layui-input"></div></div>';
+            field = detJson.childTblSel[2].field;
+            search += detJson.childTblSel[i].field +',';
+          }
+          showsel += '<div class="layui-inline"><button class="layui-btn layuiadmin-btn-useradmin" data-type="reload"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>'
+          document.getElementById("showsel").innerHTML = showsel;
+          document.getElementById("search").value = search.substring(0, search.length-1);
+        }
+      }
+    });
+
+    table.render({
+      elem: '#test-table-toolbar'
+      ,id: 'projReload'
+      ,method: 'post'
+      ,url:'/child/mainCont?menuId=' + menuId
+      ,response:{
+         statusName: 'code',
+         statusCode: '200'
+      }
+      ,toolbar: '#test-table-toolbar-toolbarDemo'
+      ,title: '项目信息表'
+      , cols: [detJson.childTblCol]
+      ,page: true
+      ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+          "count": res.data.total, //解析数据长度
+          "data": res.data.list //解析数据列表
+        };
+      }
+    });
+
+    //执行重载
+    var $ = layui.$, active = {
+      reload: function(){
+        var search=$('#search');
+        var arr=document.getElementById("search").value.split(",");
+        var val = "";
+        for(var i=0;i<arr.length;i++){
+          val += document.getElementById(arr[i]).value +',';
+        }
+        var projStepcode = $("input[type=radio]:checked");
+        var str=(projStepcode.val().substr(4,projStepcode.val().length))*12.5+'%';
+        table.reload('projReload', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          ,where: {
+            search: search.val(),
+            val: val,
+            projStepcode: projStepcode.val()
+          }
+        }, 'data');
+        element.progress('component-progress-demo', str);
+        for(var i=0;i<document.getElementsByName(projStepcode.val()).length;i++){
+          document.getElementsByName(projStepcode.val())[i].style.visibility='visible';
+        }
+      }
+    };
+
+    //头工具栏事件
+    table.on('toolbar(test-table-toolbar)', function(obj){
+      var checkStatus = table.checkStatus(obj.config.id);
+      switch(obj.event){
+        case 'flow':
+          layer.open({
+            type: 2
+            ,title: '项目流程'
+            ,content: 'projflow.html'
+            ,maxmin: true
+            ,area: ['1200px', '600px']
+          });
+          break;
+        case 'add':
+          layer.open({
+            type: 2
+            ,title: '项目新增'
+            ,content: 'projdet.html?add'
+            ,maxmin: true
+            ,area: ['1200px', '600px']
+          });
+          break;
+        case 'del':
+          layer.confirm('是否删除？', {
+            btn: ['是','否'] //按钮
+          }, function(){
+            var params={};
+            params.projId=checkStatus.data[0].projId;
+            params.action="del";
+            postdata(params,"/proj/projsave",function () {
+              table.reload('projReload');layer.msg("删除成功");})
+          });
+          break;
+        case 'submit':
+          layer.confirm('是否提交？', {
+            btn: ['是','否'] //按钮
+          }, function(){
+            for (var i = 0; i < checkStatus.data.length; i++) {
+              if(checkStatus.data[i].projStepcode==="" || checkStatus.data[i].projStepcode===null){
+                layer.msg("流程代码为空无法提交");
+              }else if(checkStatus.data[i].projStepcode==="8"){
+                layer.msg("已经是最后一步");
+              }else{
+                var params={};
+                params.projId=checkStatus.data[i].projId;
+                params.stepVal="1";
+                postdata(params,"/proj/projstep",function () {
+                table.reload('projReload');layer.msg("提交成功");});
+              }
+            }
+          });
+          break;
+        case 'backoff':
+          layer.confirm('是否回退？', {
+            btn: ['是','否'] //按钮
+          }, function(){
+            for (var i = 0; i < checkStatus.data.length; i++) {
+              if(checkStatus.data[i].projStepcode==="" || checkStatus.data[i].projStepcode===null){
+                layer.msg("流程代码为空无法回退");
+              }else if(checkStatus.data[i].projStepcode==="1"){
+                layer.msg("已经是第一步");
+              }else{
+                var params={};
+                params.projId=checkStatus.data[i].projId;
+                params.stepVal="-1";
+                postdata(params,"/proj/projstep",function () {
+                table.reload('projReload');layer.msg("回退成功");});}}
+          });
+          break;
+      };
+    });
+
+    //监听行工具事件
+    table.on('tool(test-table-toolbar)', function(obj){
+      var data = obj.data;
+      if(obj.event === 'det'){
+        layer.open({
+          type: 2
+          ,title: '详细'
+          ,content: 'xmzbdet.html?' + data.id + '&' + data.menuId
+          ,maxmin: true
+          ,area: ['1200px', '600px']
+        });
+      } else if(obj.event === 'gantt'){
+        layer.open({
+          type: 2
+          ,title: '进度'
+          ,content: 'projgantt.html?' + data.id
+          ,maxmin: true
+          ,area: ['1200px', '600px']
+        });
+      } else if(obj.event === 'log'){
+        layer.open({
+          type: 2
+          ,title: '项目例会'
+          ,content: 'meetlist.html?' + data.id
+          ,maxmin: true
+          ,area: ['1200px', '600px']
+        });
+      } else if (data.visitLink!=null){
+        window.open(data.visitLink);
+      } else {
+        alert("无访问地址");
+      }
+    });
+
+    laydate.render({
+      elem: '#projApptime1'
+    });
+
+    laydate.render({
+      elem: '#projApptime2'
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  });
+  </script>
+</body>
+</html>

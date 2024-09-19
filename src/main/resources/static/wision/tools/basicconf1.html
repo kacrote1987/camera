@@ -28,7 +28,7 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">* 展示方式</label>
                                 <div class="layui-input-block">
-                                    <select id="layoutType" lay-filter="">
+                                    <select id="layoutType" lay-filter="layoutType">
                                         <option value="">全部</option>
                                         <option value="主表">主表</option>
                                         <option value="按钮">按钮</option>
@@ -38,13 +38,14 @@
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">选择数据源</label>
+                                <label class="layui-form-label">* 选择数据源</label>
                                 <div class="layui-input-block">
                                     <select id="tblId" lay-filter="">
                                         <option value="">全部</option>
                                     </select>
                                 </div>
                             </div>
+                            <div id="showDict" style="display: none">
                             <div class="layui-inline">
                                 <label class="layui-form-label">主表</label>
                                 <div class="layui-input-block">
@@ -76,6 +77,7 @@
                                         <option value="">请选择</option>
                                     </select>
                                 </div>
+                            </div>
                             </div>
 
                         </div>
@@ -185,6 +187,18 @@
             };
         });
 
+        layui.use(['form'], function () {
+            form = layui.form;
+            form.on('select(layoutType)', function (data) {
+                if(data.value === "下拉框"){
+                    document.getElementById("showDict").style.display = 'block';
+                }else{
+                    document.getElementById("showDict").style.display = 'none';
+                }
+            });
+
+        });
+
         $('.layui-fluid .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
@@ -194,9 +208,11 @@
 
     function save() {
         var params = {};
-        params.prodId = $('#prodId').val();
-        params.prodType = $('#prodType').val();
-        postdata(params, "/prod/prodEdit", function () {
+        params.relatId = window.location.search.substring(1, window.location.search.length);
+        params.relatName = $('#relatName').val();
+        params.layoutType = $('#layoutType').val();
+        params.tblId = $('#tblId').val();
+        postdata(params, "/tool/basicCondEdit", function () {
             layer.msg("保存成功！");
         });
     }

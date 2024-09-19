@@ -44,6 +44,9 @@
     <select id="basicCond" resultType="com.wision.entity.BasicCondVo" >
         select rule_id,key_code,key_name,match_type,key_value from t_supp_relat_rule where relat_id=#{relatId}
     </select>
+    <update id="updateBasicCond">
+        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},tbl_id=#{params.tblId} where relat_id=#{params.relatId}
+    </update>
     <select id="getBasicCodeByName" resultType="String" >
         select tool_code from t_supp_relat_ext where tool_tag='basic' and relat_id=#{relatId} and tool_name=#{keyName}
     </select>
@@ -57,6 +60,12 @@
     <delete id="deleteBasicCond">
         delete from t_supp_relat_rule where rule_id=#{ruleId}
     </delete>
+    <select id="flowCond" resultType="com.wision.entity.FlowCondVo" >
+        select relat_name,layout_type,step_size from t_supp_relat_main where relat_id=#{relatId}
+    </select>
+    <update id="updateFlowCond">
+        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},step_size=#{params.stepSize} where relat_id=#{params.relatId}
+    </update>
     <select id="flowView" resultType="com.wision.entity.FlowViewVo" >
         select ext_id,tool_name,tool_code from t_supp_relat_ext where tool_tag='flow' and relat_id=#{relatId} order by tool_code
     </select>

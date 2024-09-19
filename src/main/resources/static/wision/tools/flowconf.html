@@ -44,41 +44,9 @@
                       </div>
                     </div>
                     <div class="layui-inline">
-                      <label class="layui-form-label">主表</label>
-                      <div class="layui-input-block">
-                        <select id="prodState" lay-filter="prodState">
-                          <option value="">请选择</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="layui-inline">
-                      <label class="layui-form-label">主表字段</label>
-                      <div class="layui-input-block">
-                        <select id="prodState" lay-filter="prodState">
-                          <option value="">请选择</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="layui-inline">
-                      <label class="layui-form-label">展示名称</label>
-                      <div class="layui-input-block">
-                        <select id="prodState" lay-filter="prodState">
-                          <option value="">请选择</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="layui-inline">
-                      <label class="layui-form-label">本表字段</label>
-                      <div class="layui-input-block">
-                        <select id="prodState" lay-filter="prodState">
-                          <option value="">请选择</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="layui-inline">
                       <label class="layui-form-label">步长</label>
                       <div class="layui-input-block">
-                        <input id="relatName" type="text" lay-verify="required" placeholder=""
+                        <input id="stepSize" type="text" lay-verify="required" placeholder=""
                                autocomplete="off" class="layui-input">
                       </div>
                     </div>
@@ -128,12 +96,9 @@
       dataType: "json",
       success: function (detObj) {
         if (detObj.msg == "success") {
-          document.getElementById("tblId").options.length = 0;
-          for (var i=0; i<detObj.data.basicSourTblVo.length; i++) {
-            document.getElementById("tblId").options.add(new Option(detObj.data.basicSourTblVo[i].tblName,detObj.data.basicSourTblVo[i].tblId));
-          }
           $('#relatName').val(detObj.data.relatName);
           $('#layoutType').val(detObj.data.layoutType);
+          $('#stepSize').val(detObj.data.stepSize);
           layui.form.render();
         }
       }
@@ -144,9 +109,9 @@
   function save() {
     var params = {};
     params.relatId = window.location.search.substring(1, window.location.search.length);
-    params.val1 = $('#val1').val();
-    params.matchType = $('#matchType').val();
-    params.vals = $('#val1').val();
+    params.relatName = $('#relatName').val();
+    params.layoutType = $('#layoutType').val();
+    params.stepSize = $('#stepSize').val();
     postdata(params, "/tool/flowCondEdit", function () {
       layer.msg("保存成功！");
     });

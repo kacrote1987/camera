@@ -50,7 +50,7 @@ public class ToolServiceImpl implements ToolService {
     public BasicSourVo basicSour(Long relatId) {
         BasicSourVo basicSour = new BasicSourVo();
         basicSour.setRelatName(toolMapper.getRelatName(relatId));
-        basicSour.setRelatName(toolMapper.getLayoutType(relatId));
+        basicSour.setLayoutType(toolMapper.getLayoutType(relatId));
         basicSour.setBasicSourTblVo(toolMapper.basicSourTbl(relatId));
         return basicSour;
     }
@@ -62,7 +62,12 @@ public class ToolServiceImpl implements ToolService {
     }
 
     @Override
-    public void basicCondAdd(BasicCondForm params) {
+    public void basicCondEdit(BasicCondForm1 params) {
+        toolMapper.updateBasicCond(params);
+    }
+
+    @Override
+    public void basicCondAdd(BasicCondForm2 params) {
         String toolCode = toolMapper.getBasicCodeByName(params.getRelatId(),params.getKeyName());
         toolMapper.insertBasicCond(params,toolCode);
     }
@@ -76,6 +81,17 @@ public class ToolServiceImpl implements ToolService {
     @Override
     public void basicCondDel(Long ruleId) {
         toolMapper.deleteBasicCond(ruleId);
+    }
+
+    @Override
+    public FlowCondVo flowCond(Long relatId) {
+        FlowCondVo flowCond = toolMapper.flowCond(relatId);
+        return flowCond;
+    }
+
+    @Override
+    public void flowCondEdit(FlowCondForm params) {
+        toolMapper.updateFlowCond(params);
     }
 
     @Override

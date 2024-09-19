@@ -17,10 +17,13 @@ public interface ToolMapper {
     String getLayoutType(Long relatId);
     List<BasicSourTblVo> basicSourTbl(Long relatId);
     List<BasicCondVo> basicCond(Long relatId);
+    boolean updateBasicCond(@Param("params") BasicCondForm1 params);
     String getBasicCodeByName(Long relatId,String keyName);
-    boolean insertBasicCond(@Param("params") BasicCondForm params,String toolCode);
+    boolean insertBasicCond(@Param("params") BasicCondForm2 params, String toolCode);
     List<BasicCol> getBasicCol(Long relatId);
     boolean deleteBasicCond(Long ruleId);
+    FlowCondVo flowCond(Long relatId);
+    boolean updateFlowCond(@Param("params") FlowCondForm params);
     List<FlowViewVo> flowView(Long relatId);
     boolean insertFlow(Long relatId);
     boolean deleteFlow(Long extId);

@@ -132,8 +132,8 @@ public class ChildServiceImpl implements ChildService {
 ////            String jsonString = JSONObject.toJSONString(params1);
 ////            System.out.println("jsonString = " + jsonString);
 //        }
-        String toolPage = childMapper.getToolPage(menuId);
-        String tblName = "t_ext_" + toolPage.replace("list.html","");
+        String realPage = childMapper.getRealPage(menuId);
+        String tblName = "t_ext_" + realPage.replace(".html","");
         List<MainContVo> mainCont=childMapper.getMainCont(tblName);
         return PageInfo.of(mainCont);
     }

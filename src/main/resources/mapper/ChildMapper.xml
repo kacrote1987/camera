@@ -17,8 +17,8 @@
             and b.sel_state=1
         </if>
     </select>
-    <select id="getToolPage" resultType="String" >
-        select CONCAT(prod_id,'_',tool_page) as tool_page from t_supp_menu_main where menu_id=#{menuId}
+    <select id="getRealPage" resultType="String" >
+        select CONCAT(prod_id,'_',real_page) as real_page from t_supp_menu_main where menu_id=#{menuId}
     </select>
     <select id="getMainCont" resultType="com.wision.entity.MainContVo" >
         select * from ${tblName}
