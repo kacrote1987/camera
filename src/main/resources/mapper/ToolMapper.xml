@@ -32,6 +32,12 @@
         ,tool_explain=#{params.toolExplain},tool_time=#{params.toolTime},share_num=#{params.shareNum},tool_state=#{params.toolState}
         where tool_id=#{params.toolId}
     </update>
+    <select id="getToolPage" resultType="String" >
+        select tool_page from t_supp_relat_main where relat_id=#{relatId}
+    </select>
+    <select id="getRealPage" resultType="String" >
+        select real_page from t_supp_relat_main where relat_id=#{relatId}
+    </select>
     <select id="getRelatName" resultType="String" >
         select relat_name from t_supp_relat_main where relat_id=#{relatId}
     </select>

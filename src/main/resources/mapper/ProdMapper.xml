@@ -83,7 +83,7 @@
         update t_supp_relat_main set ${field} = #{value} where menu_id=#{menuId}
     </update>
     <select id="menuFather" resultType="com.wision.entity.MenuTreeVo" >
-        select menu_name as title,menu_id as id,'true' as spread,null as children,tool_page from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')
+        select menu_name as title,menu_id as id,'true' as spread,null as children from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')
     </select>
     <select id="menuChild" resultType="com.wision.entity.children" >
         select menu_name as title,menu_id as id from t_supp_menu_main where father_id=#{fatherId}

@@ -5,7 +5,9 @@
         select prod_name from t_supp_prod_main where prod_id=#{prodId}
     </select>
     <select id="getChildMenu" resultType="com.wision.entity.ChildMenuVo" >
-        select menu_id,menu_name,tool_page from t_supp_menu_main where prod_id=#{prodId}
+        select c.menu_id,c.menu_name,'' as real_page from t_supp_menu_main c where (c.father_id='' or c.father_id is null)
+        and c.prod_id=#{prodId} union select a.menu_id,a.menu_name,b.real_page from t_supp_menu_main a left join t_supp_relat_main b
+        on a.menu_id=b.menu_id where b.layout_type='主表' and a.prod_id=#{prodId}
     </select>
     <select id="getTblSel" resultType="com.wision.entity.ChildTblCol" >
         select b.tool_code as field,b.tool_name as title from t_supp_relat_main a inner join t_supp_relat_ext b
@@ -18,7 +20,8 @@
         </if>
     </select>
     <select id="getRealPage" resultType="String" >
-        select CONCAT(prod_id,'_',real_page) as real_page from t_supp_menu_main where menu_id=#{menuId}
+        select CONCAT(a.prod_id,'_',b.real_page) from t_supp_menu_main a inner join t_supp_relat_main b on a.menu_id=b.menu_id
+        where b.layout_type='主表' and a.menu_id=#{menuId}
     </select>
     <select id="getMainCont" resultType="com.wision.entity.MainContVo" >
         select * from ${tblName}

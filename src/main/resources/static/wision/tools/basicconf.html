@@ -37,6 +37,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <button id="createPage" class="layui-btn layui-btn-sm" onclick="createPage()">生成</button>
                             <div class="layui-inline">
                                 <label class="layui-form-label">* 选择数据源</label>
                                 <div class="layui-input-block">
@@ -106,9 +107,7 @@
 <div class="layui-form-item layui-layout-admin">
     <div class="layui-input-block">
         <div class="layui-footer" style="left: 0;">
-            <button id="scienSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
-                    onclick="save()">保存
-            </button>
+            <button class="layui-btn" onclick="save()">保存</button>
         </div>
     </div>
 </div>
@@ -195,6 +194,11 @@
                 }else{
                     document.getElementById("showDict").style.display = 'none';
                 }
+                if(data.value === "主表"){
+                    document.getElementById("createPage").style.display = 'block';
+                }else{
+                    document.getElementById("createPage").style.display = 'none';
+                }
             });
 
         });
@@ -214,6 +218,12 @@
         params.tblId = $('#tblId').val();
         postdata(params, "/tool/basicCondEdit", function () {
             layer.msg("保存成功！");
+        });
+    }
+    function createPage() {
+        var relatId = window.location.search.substring(1, window.location.search.length);
+        postdata(null, "/tool/createPage?relatId=" + relatId, function () {
+            layer.msg("创建成功！");
         });
     }
 </script>

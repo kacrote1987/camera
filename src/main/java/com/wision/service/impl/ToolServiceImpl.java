@@ -8,6 +8,9 @@ import com.wision.service.ToolService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -43,6 +46,25 @@ public class ToolServiceImpl implements ToolService {
             toolMapper.deleteTool(params.getToolId());
         } else {
             toolMapper.updateTool(params);
+        }
+    }
+
+    @Override
+    public void createPage(Long relatId) {
+        String toolPage=toolMapper.getToolPage(relatId);
+        String realPage=toolMapper.getRealPage(relatId);
+        String sourceFilePath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\tools\\" + toolPage;
+        String destinationFilePath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prods\\xmgl\\" + realPage;
+        try (FileInputStream fis = new FileInputStream(sourceFilePath);
+             FileOutputStream fos = new FileOutputStream(destinationFilePath)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                fos.write(buffer, 0, bytesRead);
+            }
+            System.out.println("文件复制成功！");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
