@@ -221,9 +221,13 @@
         });
     }
     function createPage() {
-        var relatId = window.location.search.substring(1, window.location.search.length);
-        postdata(null, "/tool/createPage?relatId=" + relatId, function () {
-            layer.msg("创建成功！");
+        layer.confirm('准备创建子系统？', {
+            btn: ['是','否'] //按钮
+        }, function(){
+            var relatId = window.location.search.substring(1, window.location.search.length);
+            postdata(null, "/tool/createPage?relatId=" + relatId, function () {
+                layer.msg("创建成功！");
+            });
         });
     }
 </script>
