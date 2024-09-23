@@ -13,9 +13,6 @@ public interface ToolMapper {
     boolean insertTool(@Param("params") ToolDetForm params);
     boolean deleteTool(Long params);
     boolean updateTool(@Param("params") ToolDetForm params);
-    String getProdNikName(Long relatId);
-    String getToolPage(Long relatId);
-    String getRealPage(Long relatId);
     String getRelatName(Long relatId);
     String getLayoutType(Long relatId);
     List<BasicSourTblVo> basicSourTbl(Long relatId);

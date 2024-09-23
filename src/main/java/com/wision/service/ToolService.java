@@ -9,7 +9,6 @@ public interface ToolService {
     PageInfo<ToolListVo> toolList(ToolListForm params);
     List<ToolDetVo> toolDet(String params);
     void toolSave(ToolDetForm params);
-    void createPage(Long relatId);
     BasicSourVo basicSour(Long relatId);
     List<BasicCondVo> basicCond(Long relatId);
     void basicCondEdit(BasicCondForm1 params);

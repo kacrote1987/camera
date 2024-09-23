@@ -158,7 +158,13 @@
         // layer.msg("入口");
         window.open(data.prodLink + '?' + data.prodId,'_blank');
       }else if (obj.event === 'package') {
-        layer.msg("打包");
+        layer.confirm('准备打包生成子系统？', {
+          btn: ['是','否'] //按钮
+        }, function(){
+          postdata(null, "/prod/generate?prodId=" + data.prodId, function () {
+            layer.msg("创建成功！");
+          });
+        });
       }else if (obj.event === 'offline') {
         layer.confirm('是否下架？', {
           btn: ['是','否'] //按钮

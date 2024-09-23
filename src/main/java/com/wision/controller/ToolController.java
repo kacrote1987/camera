@@ -39,13 +39,6 @@ public class ToolController {
         return Result.success();
     }
 
-    @ApiOperation("创建子系统页面")
-    @PostMapping("/createPage")
-    public Result createPage(@RequestParam Long relatId){
-        toolService.createPage(relatId);
-        return Result.success();
-    }
-
     @ApiOperation("组件配置-基础信息组件-数据源字典")
     @PostMapping("/basicSour")
     public Result basicSour(@RequestParam Long relatId){
