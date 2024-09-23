@@ -6,7 +6,7 @@ import com.wision.entity.ChildMainVo;
 import com.wision.entity.ChildTblForm;
 import com.wision.entity.MainContVo;
 import com.wision.entity.MainSelVo;
-import com.wision.service.ChildService;
+import com.wision.service.ProdStoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -14,38 +14,38 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Api(description = "子系统管理")
+@Api(description = "产品库")
 @RestController
-@RequestMapping("/child")
-public class ChildController {
+@RequestMapping("/prodSto")
+public class ProdStoController {
     @Resource
-    ChildService childService;
+    ProdStoService prodStoService;
 
     @ApiOperation("获取子系统项目名称")
     @PostMapping("/getChildName")
     public Result getChildName(@RequestParam Long prodId){
-        String childName= childService.getChildName(prodId);
+        String childName= prodStoService.getChildName(prodId);
         return Result.success(childName);
     }
 
     @ApiOperation("获取子系统主要菜单")
     @PostMapping("/getChildMain")
     public Result getChildMain(@RequestParam Long prodId){
-        ChildMainVo childMain = childService.getChildMain(prodId);
+        ChildMainVo childMain = prodStoService.getChildMain(prodId);
         return Result.success(childMain);
     }
 
     @ApiOperation("子系统列名查看")
     @PostMapping("/mainSel")
     public Result mainSel(@RequestParam Long menuId){
-        List<MainSelVo> mainSel= childService.mainSel(menuId);
+        List<MainSelVo> mainSel= prodStoService.mainSel(menuId);
         return Result.success(mainSel);
     }
 
     @ApiOperation("子系统主表查看")
     @PostMapping("/mainCont")
     public Result mainCont(@RequestParam Long menuId, ChildTblForm params){
-        PageInfo<MainContVo> mainCont= childService.mainCont(menuId,params);
+        PageInfo<MainContVo> mainCont= prodStoService.mainCont(menuId,params);
         return Result.success(mainCont);
     }
 

@@ -37,7 +37,6 @@
                                     </select>
                                 </div>
                             </div>
-                            <button id="createPage" class="layui-btn layui-btn-sm" onclick="createPage()">生成</button>
                             <div class="layui-inline">
                                 <label class="layui-form-label">* 选择数据源</label>
                                 <div class="layui-input-block">
@@ -218,16 +217,6 @@
         params.tblId = $('#tblId').val();
         postdata(params, "/tool/basicCondEdit", function () {
             layer.msg("保存成功！");
-        });
-    }
-    function createPage() {
-        layer.confirm('准备创建子系统？', {
-            btn: ['是','否'] //按钮
-        }, function(){
-            var relatId = window.location.search.substring(1, window.location.search.length);
-            postdata(null, "/tool/createPage?relatId=" + relatId, function () {
-                layer.msg("创建成功！");
-            });
         });
     }
 </script>

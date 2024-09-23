@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface ProdMapper {
+public interface ProdDesMapper {
     List<ProdListVo> prodList(@Param("params") ProdListForm params);
     List<ProdDetVo> prodDet(Long prodId);
     boolean changeState(String prodId,String state);
@@ -30,6 +30,9 @@ public interface ProdMapper {
     List<MenuTreeVo> menuFather(Long prodId);
     List<children> menuChild(Long fatherId);
     List<ToolSelVo> toolSel(Long menuId,@Param("params") ToolListForm params);
+    String getProdNikName(Long prodId);
+    String getToolPage(Long relatId);
+    String getRealPage(Long relatId);
 //    List<ProdViewVo> prodView(Long params);
 //    String checkTblExists(String tblName);
 //    boolean dropTbl(String tblCode);
