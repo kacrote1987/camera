@@ -5,7 +5,7 @@ import com.wision.entity.*;
 
 import java.util.List;
 
-public interface ToolService {
+public interface ToolStoService {
     PageInfo<ToolListVo> toolList(ToolListForm params);
     List<ToolDetVo> toolDet(String params);
     void toolSave(ToolDetForm params);

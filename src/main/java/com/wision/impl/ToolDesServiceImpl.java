@@ -3,17 +3,17 @@ package com.wision.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
-import com.wision.mapper.ToolMapper;
-import com.wision.service.ToolService;
+import com.wision.mapper.ToolDesMapper;
+import com.wision.service.ToolDesService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class ToolServiceImpl implements ToolService {
+public class ToolDesServiceImpl implements ToolDesService {
     @Resource
-    ToolMapper toolMapper;
+    ToolDesMapper toolDesMapper;
 
     @Override
     public PageInfo<ToolListVo> toolList(ToolListForm params) {
@@ -22,7 +22,7 @@ public class ToolServiceImpl implements ToolService {
             page = params.getPage();
         }
         PageHelper.startPage(page, 10);
-        List<ToolListVo> toolList = toolMapper.toolList(params);
+        List<ToolListVo> toolList = toolDesMapper.toolList(params);
         return PageInfo.of(toolList);
     }
 
@@ -30,7 +30,7 @@ public class ToolServiceImpl implements ToolService {
     public List<ToolDetVo> toolDet(String params) {
         List<ToolDetVo> toolDet = null;
         if (!params.equals("add")) {
-            toolDet = toolMapper.toolDet(Long.valueOf(params));
+            toolDet = toolDesMapper.toolDet(Long.valueOf(params));
         }
         return toolDet;
     }
@@ -38,81 +38,81 @@ public class ToolServiceImpl implements ToolService {
     @Override
     public void toolSave(ToolDetForm params) {
         if (params.getAction().equals("add")) {
-            toolMapper.insertTool(params);
+            toolDesMapper.insertTool(params);
         } else if (params.getAction().equals("del")) {
-            toolMapper.deleteTool(params.getToolId());
+            toolDesMapper.deleteTool(params.getToolId());
         } else {
-            toolMapper.updateTool(params);
+            toolDesMapper.updateTool(params);
         }
     }
 
     @Override
     public BasicSourVo basicSour(Long relatId) {
         BasicSourVo basicSour = new BasicSourVo();
-        basicSour.setRelatName(toolMapper.getRelatName(relatId));
-        basicSour.setLayoutType(toolMapper.getLayoutType(relatId));
-        basicSour.setBasicSourTblVo(toolMapper.basicSourTbl(relatId));
+        basicSour.setRelatName(toolDesMapper.getRelatName(relatId));
+        basicSour.setLayoutType(toolDesMapper.getLayoutType(relatId));
+        basicSour.setBasicSourTblVo(toolDesMapper.basicSourTbl(relatId));
         return basicSour;
     }
 
     @Override
     public List<BasicCondVo> basicCond(Long relatId) {
-        List<BasicCondVo> basicCond=toolMapper.basicCond(relatId);
+        List<BasicCondVo> basicCond=toolDesMapper.basicCond(relatId);
         return basicCond;
     }
 
     @Override
     public void basicCondEdit(BasicCondForm1 params) {
-        toolMapper.updateBasicCond(params);
+        toolDesMapper.updateBasicCond(params);
     }
 
     @Override
     public void basicCondAdd(BasicCondForm2 params) {
-        String toolCode = toolMapper.getBasicCodeByName(params.getRelatId(),params.getKeyName());
-        toolMapper.insertBasicCond(params,toolCode);
+        String toolCode = toolDesMapper.getBasicCodeByName(params.getRelatId(),params.getKeyName());
+        toolDesMapper.insertBasicCond(params,toolCode);
     }
 
     @Override
     public List<BasicCol> basicView(Long relatId) {
-        List<BasicCol> basicView = toolMapper.getBasicCol(relatId);
+        List<BasicCol> basicView = toolDesMapper.getBasicCol(relatId);
         return basicView;
     }
 
     @Override
     public void basicCondDel(Long ruleId) {
-        toolMapper.deleteBasicCond(ruleId);
+        toolDesMapper.deleteBasicCond(ruleId);
     }
 
     @Override
     public FlowCondVo flowCond(Long relatId) {
-        FlowCondVo flowCond = toolMapper.flowCond(relatId);
+        FlowCondVo flowCond = toolDesMapper.flowCond(relatId);
         return flowCond;
     }
 
     @Override
     public void flowCondEdit(FlowCondForm params) {
-        toolMapper.updateFlowCond(params);
+        toolDesMapper.updateFlowCond(params);
     }
 
     @Override
     public List<FlowViewVo> flowView(Long relatId) {
-        List<FlowViewVo> flowView=toolMapper.flowView(relatId);
+        List<FlowViewVo> flowView=toolDesMapper.flowView(relatId);
         return flowView;
     }
 
     @Override
     public void flowAdd(Long relatId) {
-        toolMapper.insertFlow(relatId);
+        toolDesMapper.insertFlow(relatId);
     }
 
     @Override
     public void flowDel(Long extId) {
-        toolMapper.deleteFlow(extId);
+        toolDesMapper.deleteFlow(extId);
     }
 
     @Override
     public void flowEdit(FlowListForm params) {
-        toolMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
+        toolDesMapper.updateFlow(params.getExtId(),method(params.getField()),params.getValue());
     }
 
 //    @Override

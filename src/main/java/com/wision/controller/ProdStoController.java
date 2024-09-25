@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Api(description = "产品库")
+@Api(description = "产品商店")
 @RestController
 @RequestMapping("/prodSto")
 public class ProdStoController {

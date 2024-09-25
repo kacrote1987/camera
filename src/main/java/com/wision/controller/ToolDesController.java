@@ -2,7 +2,7 @@ package com.wision.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
-import com.wision.service.ToolService;
+import com.wision.service.ToolDesService;
 import com.wision.config.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,115 +11,115 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Api(description = "组件管理")
+@Api(description = "组件设计")
 @RestController
-@RequestMapping("/tool")
-public class ToolController {
+@RequestMapping("/toolDes")
+public class ToolDesController {
     @Resource
-    ToolService toolService;
+    ToolDesService toolDesService;
 
     @ApiOperation("组件列表")
     @PostMapping("/toolList")
     public Result toolList(ToolListForm params){
-        PageInfo<ToolListVo> toolList= toolService.toolList(params);
+        PageInfo<ToolListVo> toolList= toolDesService.toolList(params);
         return Result.success(toolList);
     }
 
     @ApiOperation("组件详细")
     @PostMapping("/toolDet")
     public Result toolDet(@RequestBody String params){
-        List<ToolDetVo> toolDet= toolService.toolDet(params);
+        List<ToolDetVo> toolDet= toolDesService.toolDet(params);
         return Result.success(toolDet);
     }
 
     @ApiOperation("组件保存")
     @PostMapping("/toolSave")
     public Result toolSave(@RequestBody ToolDetForm params){
-        toolService.toolSave(params);
+        toolDesService.toolSave(params);
         return Result.success();
     }
 
     @ApiOperation("组件配置-基础信息组件-数据源字典")
     @PostMapping("/basicSour")
     public Result basicSour(@RequestParam Long relatId){
-        BasicSourVo basicSour= toolService.basicSour(relatId);
+        BasicSourVo basicSour= toolDesService.basicSour(relatId);
         return Result.success(basicSour);
     }
 
     @ApiOperation("组件配置-基础信息组件-组件设置")
     @PostMapping("/basicCond")
     public Result basicCond(@RequestParam Long relatId){
-        List<BasicCondVo> basicCond= toolService.basicCond(relatId);
+        List<BasicCondVo> basicCond= toolDesService.basicCond(relatId);
         return Result.success(basicCond);
     }
 
     @ApiOperation("组件配置-基础信息组件-配置修改")
     @PostMapping("/basicCondEdit")
     public Result basicCondEdit(@RequestBody BasicCondForm1 params){
-        toolService.basicCondEdit(params);
+        toolDesService.basicCondEdit(params);
         return Result.success();
     }
 
     @ApiOperation("组件配置-基础信息组件-条件新增")
     @PostMapping("/basicCondAdd")
     public Result basicCondAdd(@RequestBody BasicCondForm2 params){
-        toolService.basicCondAdd(params);
+        toolDesService.basicCondAdd(params);
         return Result.success();
     }
 
     @ApiOperation("组件展示-基础信息组件-本表字段字典")
     @PostMapping("/basicView")
     public Result basicView(@RequestParam Long relatId){
-        List<BasicCol> basicView= toolService.basicView(relatId);
+        List<BasicCol> basicView= toolDesService.basicView(relatId);
         return Result.success(basicView);
     }
 
     @ApiOperation("组件配置-基础信息组件-条件设置删除")
     @PostMapping("/basicCondDel")
     public Result basicCondDel(@RequestParam Long ruleId){
-        toolService.basicCondDel(ruleId);
+        toolDesService.basicCondDel(ruleId);
         return Result.success();
     }
 
     @ApiOperation("组件配置-流程组件-配置列表")
     @PostMapping("/flowCond")
     public Result flowCond(@RequestParam Long relatId){
-        FlowCondVo flowCond= toolService.flowCond(relatId);
+        FlowCondVo flowCond= toolDesService.flowCond(relatId);
         return Result.success(flowCond);
     }
 
     @ApiOperation("组件配置-流程组件-配置修改")
     @PostMapping("/flowCondEdit")
     public Result flowCondEdit(@RequestBody FlowCondForm params){
-        toolService.flowCondEdit(params);
+        toolDesService.flowCondEdit(params);
         return Result.success();
     }
 
     @ApiOperation("组件展示-流程组件")
     @PostMapping("/flowView")
     public Result flowView(@RequestParam Long relatId){
-        List<FlowViewVo> flowView= toolService.flowView(relatId);
+        List<FlowViewVo> flowView= toolDesService.flowView(relatId);
         return Result.success(flowView);
     }
 
     @ApiOperation("组件展示-流程组件-流程项新增")
     @PostMapping("/flowAdd")
     public Result flowAdd(@RequestParam Long relatId){
-        toolService.flowAdd(relatId);
+        toolDesService.flowAdd(relatId);
         return Result.success();
     }
 
     @ApiOperation("组件展示-流程组件-流程项删除")
     @PostMapping("/flowDel")
     public Result flowDel(@RequestParam Long extId){
-        toolService.flowDel(extId);
+        toolDesService.flowDel(extId);
         return Result.success();
     }
 
     @ApiOperation("组件展示-流程组件-流程项修改")
     @PostMapping("/flowEdit")
     public Result flowEdit(@RequestBody FlowListForm params){
-        toolService.flowEdit(params);
+        toolDesService.flowEdit(params);
         return Result.success();
     }
 
