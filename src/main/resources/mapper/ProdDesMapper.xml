@@ -1,25 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wision.mapper.ProdDesMapper">
-    <select id="prodList" resultType="com.wision.entity.ProdListVo" >
-        select a.prod_id,a.prod_type,a.prod_name,a.prod_ver,a.prod_link,a.prod_explain,date_format(a.prod_time,'%Y-%m-%d') as prod_time
-        ,a.prod_state from t_supp_prod_main a where prod_state not in ('下架','作废')
-        <if test="params.prodType!=null and params.prodType!=''">
-            and a.prod_type = #{params.prodType}
-        </if>
-        <if test="params.prodName!=null and params.prodName!=''">
-            and a.prod_name like #{params.prodName} '%'
-        </if>
-        <if test="params.prodState!=null and params.prodState!=''">
-            and a.prod_state = #{params.prodState}
-        </if>
-        order by a.prod_time desc
-    </select>
-    <select id="prodDet" resultType="com.wision.entity.ProdDetVo" >
-        select a.prod_id,a.prod_type,a.prod_name,a.prod_nikname,a.prod_ver,a.prod_explain,a.prod_state from t_supp_prod_main a where a.prod_id=#{prodId}
-    </select>
-    <update id="changeState">
-        update t_supp_prod_main set prod_state=#{state} where prod_id=#{prodId}
+    <update id="onLine">
+        update t_supp_prod_main set prod_state='在用' where prod_id=#{prodId}
     </update>
     <select id="prodDesign" resultType="com.wision.entity.ProdDesignVo" >
         select a.prod_id,a.prod_type,a.prod_name,a.prod_ver,a.prod_link,a.prod_explain,date_format(a.prod_time,'%Y-%m-%d') as prod_time
@@ -31,6 +14,9 @@
             and a.prod_name like #{params.prodName} '%'
         </if>
         order by a.prod_time desc
+    </select>
+    <select id="prodDet" resultType="com.wision.entity.ProdDetVo" >
+        select a.prod_id,a.prod_type,a.prod_name,a.prod_nikname,a.prod_ver,a.prod_explain,a.prod_state from t_supp_prod_main a where a.prod_id=#{prodId}
     </select>
     <insert id="insertProd">
         insert into t_supp_prod_main(prod_type,prod_name,prod_nikname,prod_ver,prod_link,prod_explain,prod_time,prod_state)
@@ -50,13 +36,13 @@
         select prod_name from t_supp_prod_main where prod_id=#{prodId}
     </select>
     <select id="menuList" resultType="com.wision.entity.MenuListVo" >
-        select menu_id,menu_name,father_id,tool_page,menu_order from t_supp_menu_main where prod_id=#{prodId} order by menu_order
+        select menu_id,menu_name,father_id,menu_order from t_supp_menu_main where prod_id=#{prodId} order by menu_order
     </select>
     <select id="getToolIdsByMenuId" resultType="com.wision.entity.RelatDetVo" >
         select tool_id from t_supp_relat_main where menu_id=#{menuId}
     </select>
     <insert id="insertMenu">
-        insert into t_supp_relat_main(prod_id) values(#{prodId})
+        insert into t_supp_menu_main(prod_id) values(#{prodId})
     </insert>
     <delete id="deleteRelatExt">
         delete from t_supp_relat_ext where relat_id in (select relat_id from t_supp_relat_main where menu_id = #{menuId})
@@ -65,7 +51,7 @@
         delete from t_supp_relat_main where menu_id=#{menuId}
     </delete>
     <delete id="deleteMenuMain">
-        delete from t_supp_relat_main where menu_id=#{menuId}
+        delete from t_supp_menu_main where menu_id=#{menuId}
     </delete>
     <select id="checkRelat" resultType="Long" >
         select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id=#{toolId}
@@ -80,7 +66,7 @@
         delete from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds})
     </delete>
     <update id="updateMenu">
-        update t_supp_relat_main set ${field} = #{value} where menu_id=#{menuId}
+        update t_supp_menu_main set ${field} = #{value} where menu_id=#{menuId}
     </update>
     <select id="menuFather" resultType="com.wision.entity.MenuTreeVo" >
         select menu_name as title,menu_id as id,'true' as spread,null as children from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')

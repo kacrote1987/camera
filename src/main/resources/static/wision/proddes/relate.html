@@ -76,7 +76,7 @@
     var detJson;
     $.ajax({
       type:"post",
-      url:"/prod/menuTree?prodId=" + prodId,
+      url:"/prodDes/menuTree?prodId=" + prodId,
       contentType:"application/json;charset=utf-8",
       dataType:"json",
       async:false,
@@ -111,7 +111,7 @@
       elem: '#test-table-toolbar2'
       , id: 'toolSel'
       , method: 'post'
-      , url: '/prod/toolSel/' //数据接口
+      , url: '/prodDes/toolSel/' //数据接口
       , response: {
         statusName: 'code',
         statusCode: '200'

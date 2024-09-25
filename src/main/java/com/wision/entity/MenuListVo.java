@@ -5,7 +5,6 @@ public class MenuListVo {
     private String menuName;
     private String fatherId;
     private String toolIds;
-    private String toolPage;
     private Long menuOrder;
 
     public Long getMenuId() {
@@ -38,14 +37,6 @@ public class MenuListVo {
 
     public void setToolIds(String toolIds) {
         this.toolIds = toolIds;
-    }
-
-    public String getToolPage() {
-        return toolPage;
-    }
-
-    public void setToolPage(String toolPage) {
-        this.toolPage = toolPage;
     }
 
     public Long getMenuOrder() {

@@ -89,7 +89,7 @@
     var relatId = window.location.search.substring(1, window.location.search.length);
     $.ajax({
       type: "post",
-      url: "/tool/flowCond?relatId=" + relatId,
+      url: "/toolSto/flowCond?relatId=" + relatId,
       contentType: "application/json;charset=utf-8",
       dataType: "json",
       success: function (detObj) {
@@ -110,7 +110,7 @@
     params.relatName = $('#relatName').val();
     params.layoutType = $('#layoutType').val();
     params.stepSize = $('#stepSize').val();
-    postdata(params, "/tool/flowCondEdit", function () {
+    postdata(params, "/toolSto/flowCondEdit", function () {
       layer.msg("保存成功！");
     });
   }

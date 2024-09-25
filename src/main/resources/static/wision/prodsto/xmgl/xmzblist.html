@@ -93,7 +93,7 @@
     var field;
     $.ajax({
       type: "post",
-      url: "/child/mainSel?menuId=" + menuId,
+      url: "/prodSto/mainSel?menuId=" + menuId,
       contentType: "application/json;charset=utf-8",
       dataType: "json",
       async: false,
@@ -118,7 +118,7 @@
       elem: '#test-table-toolbar'
       ,id: 'projReload'
       ,method: 'post'
-      ,url:'/child/mainCont?menuId=' + menuId
+      ,url:'/prodSto/mainCont?menuId=' + menuId
       ,response:{
          statusName: 'code',
          statusCode: '200'

@@ -17,6 +17,28 @@ public class ProdStoServiceImpl implements ProdStoService {
     ProdStoMapper prodStoMapper;
 
     @Override
+    public PageInfo<ProdListVo> prodList(ProdListForm params) {
+        Integer page = 0;
+        if(params.getPage() != null){
+            page = params.getPage();
+        }
+        PageHelper.startPage(page, 10);
+        List<ProdListVo> prodList = prodStoMapper.prodList(params);
+        return PageInfo.of(prodList);
+    }
+
+    @Override
+    public List<ProdDetVo> prodDet(Long prodId) {
+        List<ProdDetVo> prodDet=prodStoMapper.prodDet(prodId);
+        return prodDet;
+    }
+
+    @Override
+    public void offLine(Long prodId) {
+        prodStoMapper.offLine(prodId);
+    }
+
+    @Override
     public String getChildName(Long prodId) {
         String childName = prodStoMapper.getChildName(prodId);
         return childName;

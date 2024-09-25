@@ -6,10 +6,9 @@ import com.wision.entity.*;
 import java.util.List;
 
 public interface ProdDesService {
-    PageInfo<ProdListVo> prodList(ProdListForm params);
-    List<ProdDetVo> prodDet(Long prodId);
-    void changeState(ProdStateForm params);
+    void onLine(Long prodId);
     PageInfo<ProdDesignVo> prodDesign(ProdDesignForm params);
+    List<ProdDetVo> prodDet(Long prodId);
     void prodAdd(ProdDetForm params);
     void prodDel(Long prodId);
     void prodEdit(ProdDetForm params);

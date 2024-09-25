@@ -60,7 +60,7 @@
             elem: '#test-table-toolbar1'
             , id: 'prodReload'
             , method: 'post'
-            , url: '/tool/basicView?relatId=' + relatId //数据接口
+            , url: '/toolSto/basicView?relatId=' + relatId //数据接口
             , title: '基础信息表'
             , response: {
                 statusName: 'code',
@@ -130,7 +130,7 @@
 
         $.ajax({
             type: "post",
-            url: "/tool/sourDet?relatId=" + relatId,
+            url: "/toolSto/sourDet?relatId=" + relatId,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (detObj) {
@@ -146,7 +146,7 @@
         //数据源字典
         $.ajax({
             type: "post",
-            url: "/tool/sourDict?relatId=" + relatId,
+            url: "/toolSto/sourDict?relatId=" + relatId,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (detObj) {
@@ -165,7 +165,7 @@
             elem: '#test-table-toolbar2'
             , id: 'ruleReload'
             , method: 'post'
-            , url: '/tool/ruleList?menuId=' + menuId //数据接口
+            , url: '/toolSto/ruleList?menuId=' + menuId //数据接口
             , toolbar: '#test-table-toolbar-toolbarDemo'
             , response: {
                 statusName: 'code',

@@ -209,10 +209,7 @@
         layer.confirm('是否上架？', {
           btn: ['是','否'] //按钮
         }, function(){
-          var params={};
-          params.prodId = data.prodId;
-          params.state = "在用";
-          postdata(params,"/prod/changeState",function () {
+          postdata(null,"/prodDes/onLine?prodId=" + data.prodId,function () {
             table.reload('prodReload');layer.msg("已上架");});
         });
       }else{

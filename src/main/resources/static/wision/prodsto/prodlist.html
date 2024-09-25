@@ -95,7 +95,7 @@
       elem: '#test-table-toolbar'
       , id: 'prodReload'
       , method: 'post'
-      , url: '/prodDes/prodList/' //数据接口
+      , url: '/prodSto/prodList/' //数据接口
       , response: {
         statusName: 'code',
         statusCode: '200'
@@ -170,10 +170,7 @@
         layer.confirm('是否下架？', {
           btn: ['是','否'] //按钮
         }, function(){
-          var params={};
-          params.prodId = data.prodId;
-          params.state = "下架";
-          postdata(params,"/prod/changeState",function () {
+          postdata(null,"/prodSto/offLine?prodId=" + data.prodId,function () {
             table.reload('prodReload');layer.msg("已下架");});
         });
       }else{

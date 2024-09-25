@@ -8,10 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface ProdDesMapper {
-    List<ProdListVo> prodList(@Param("params") ProdListForm params);
-    List<ProdDetVo> prodDet(Long prodId);
-    boolean changeState(String prodId,String state);
+    boolean onLine(Long prodId);
     List<ProdDesignVo> prodDesign(@Param("params") ProdDesignForm params);
+    List<ProdDetVo> prodDet(Long prodId);
     boolean insertProd(@Param("params") ProdDetForm params);
     boolean deleteProd(Long prodId);
     boolean updateProd(@Param("params") ProdDetForm params);

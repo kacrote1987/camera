@@ -2,10 +2,7 @@ package com.wision.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.wision.config.Result;
-import com.wision.entity.ChildMainVo;
-import com.wision.entity.ChildTblForm;
-import com.wision.entity.MainContVo;
-import com.wision.entity.MainSelVo;
+import com.wision.entity.*;
 import com.wision.service.ProdStoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +17,27 @@ import java.util.List;
 public class ProdStoController {
     @Resource
     ProdStoService prodStoService;
+
+    @ApiOperation("产品列表")
+    @PostMapping("/prodList")
+    public Result prodList(ProdListForm params){
+        PageInfo<ProdListVo> prodList= prodStoService.prodList(params);
+        return Result.success(prodList);
+    }
+
+    @ApiOperation("产品详细")
+    @PostMapping("/prodDet")
+    public Result prodDet(@RequestBody Long prodId){
+        List<ProdDetVo> prodDet= prodStoService.prodDet(prodId);
+        return Result.success(prodDet);
+    }
+
+    @ApiOperation("产品下架")
+    @PostMapping("/offLine")
+    public Result offLine(@RequestParam Long prodId){
+        prodStoService.offLine(prodId);
+        return Result.success();
+    }
 
     @ApiOperation("获取子系统项目名称")
     @PostMapping("/getChildName")

@@ -18,24 +18,10 @@ public class ProdDesController {
     @Resource
     ProdDesService prodDesService;
 
-    @ApiOperation("产品上架列表")
-    @PostMapping("/prodList")
-    public Result prodList(ProdListForm params){
-        PageInfo<ProdListVo> prodList= prodDesService.prodList(params);
-        return Result.success(prodList);
-    }
-
-    @ApiOperation("产品详细")
-    @PostMapping("/prodDet")
-    public Result prodDet(@RequestBody Long prodId){
-        List<ProdDetVo> prodDet= prodDesService.prodDet(prodId);
-        return Result.success(prodDet);
-    }
-
-    @ApiOperation("产品上下架")
-    @PostMapping("/changeState")
-    public Result changeState(@RequestBody ProdStateForm params){
-        prodDesService.changeState(params);
+    @ApiOperation("产品上架")
+    @PostMapping("/onLine")
+    public Result onLine(@RequestParam Long prodId){
+        prodDesService.onLine(prodId);
         return Result.success();
     }
 
@@ -44,6 +30,13 @@ public class ProdDesController {
     public Result prodDesign(ProdDesignForm params){
         PageInfo<ProdDesignVo> prodDesign= prodDesService.prodDesign(params);
         return Result.success(prodDesign);
+    }
+
+    @ApiOperation("产品详细")
+    @PostMapping("/prodDet")
+    public Result prodDet(@RequestBody Long prodId){
+        List<ProdDetVo> prodDet= prodDesService.prodDet(prodId);
+        return Result.success(prodDet);
     }
 
     @ApiOperation("产品新增")
