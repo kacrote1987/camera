@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wision.mapper.ToolMapper">
+    <select id="toolList" resultType="com.wision.entity.ToolListVo" >
+        select a.tool_id,a.tool_type,a.tool_name,a.tool_ver,tool_conf,a.tool_explain,date_format(a.tool_time,'%Y-%m-%d') as tool_time,a.share_num,a.tool_state
+        from t_supp_tool_basic a where 1=1
+        <if test="params.toolType!=null and params.toolType!=''">
+            and a.tool_type = #{params.toolType}
+        </if>
+        <if test="params.toolName!=null and params.toolName!=''">
+            and a.tool_name like #{params.toolName} '%'
+        </if>
+        <if test="params.toolState!=null and params.toolState!=''">
+            and a.tool_state = #{params.toolState}
+        </if>
+        order by a.tool_id
+    </select>
+    <select id="toolDet" resultType="com.wision.entity.ToolDetVo" >
+        select tool_id,tool_type,tool_name,tool_ver,tool_explain,date_format(tool_time,'%Y-%m-%d') as tool_time,share_num,tool_state
+        from t_supp_tool_basic where tool_id=#{toolId}
+    </select>
+    <insert id="insertTool">
+        insert into t_supp_tool_basic(tool_type,tool_name,tool_ver,tool_explain,tool_time,share_num,tool_state)
+        values(#{params.toolType},#{params.toolName},#{params.toolVer},#{params.toolExplain},#{params.toolTime}
+        ,#{params.shareNum},#{params.toolState})
+    </insert>
+    <delete id="deleteTool">
+        delete from t_supp_tool_basic where tool_id=#{params}
+    </delete>
+    <update id="updateTool">
+        update t_supp_tool_basic set tool_type=#{params.toolType},tool_name=#{params.toolName},tool_ver=#{params.toolVer}
+        ,tool_explain=#{params.toolExplain},tool_time=#{params.toolTime},share_num=#{params.shareNum},tool_state=#{params.toolState}
+        where tool_id=#{params.toolId}
+    </update>
+    <select id="getRelatName" resultType="String" >
+        select relat_name from t_supp_relat_main where relat_id=#{relatId}
+    </select>
+    <select id="getLayoutType" resultType="String" >
+        select layout_type from t_supp_relat_main where relat_id=#{relatId}
+    </select>
+    <select id="basicSourTbl" resultType="com.wision.entity.BasicSourTblVo" >
+        select distinct a.tbl_id,a.tbl_name from t_supp_imp_tbl a inner join t_supp_menu_main b on a.prod_id=b.prod_id inner join t_supp_relat_main c on b.menu_id=c.menu_id where c.relat_id=#{relatId}
+    </select>
+    <select id="basicCond" resultType="com.wision.entity.BasicCondVo" >
+        select rule_id,key_code,key_name,match_type,key_value from t_supp_relat_rule where relat_id=#{relatId}
+    </select>
+    <update id="updateBasicCond">
+        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},tbl_id=#{params.tblId} where relat_id=#{params.relatId}
+    </update>
+    <select id="getBasicCodeByName" resultType="String" >
+        select tool_code from t_supp_relat_ext where tool_tag='basic' and relat_id=#{relatId} and tool_name=#{keyName}
+    </select>
+    <insert id="insertBasicCond">
+        insert into t_supp_relat_rule(relat_id,rule_type,key_code,key_name,match_type,key_value)
+        values(#{params.relatId},'basic',#{toolCode},#{params.keyName},#{params.matchType},#{params.keyValue})
+    </insert>
+    <select id="getBasicCol" resultType="com.wision.entity.BasicCol" >
+        select ext_id,tool_code,tool_name,tool_type,res_state,sel_state from t_supp_relat_ext where tool_tag='basic' and relat_id=#{relatId}
+    </select>
+    <delete id="deleteBasicCond">
+        delete from t_supp_relat_rule where rule_id=#{ruleId}
+    </delete>
+    <select id="flowCond" resultType="com.wision.entity.FlowCondVo" >
+        select relat_name,layout_type,step_size from t_supp_relat_main where relat_id=#{relatId}
+    </select>
+    <update id="updateFlowCond">
+        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},step_size=#{params.stepSize} where relat_id=#{params.relatId}
+    </update>
+    <select id="flowView" resultType="com.wision.entity.FlowViewVo" >
+        select ext_id,tool_name,tool_code from t_supp_relat_ext where tool_tag='flow' and relat_id=#{relatId} order by tool_code
+    </select>
+    <insert id="insertFlow">
+        insert into t_supp_relat_ext(relat_id,tool_tag) values(#{relatId},'flow')
+    </insert>
+    <delete id="deleteFlow">
+        delete from t_supp_relat_ext where ext_id=#{extId}
+    </delete>
+    <update id="updateFlow">
+        update t_supp_relat_ext set ${field} = #{value} where ext_id=#{extId}
+    </update>
+<!--    <select id="getMainCode" resultType="com.wision.entity.RuleDictExtVo" >-->
+<!--        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}-->
+<!--    </select>-->
+<!--    <select id="getSelfCode" resultType="com.wision.entity.RuleDictExtVo" >-->
+<!--        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}-->
+<!--    </select>-->
+<!--    <select id="getSelfName" resultType="com.wision.entity.RuleDictExtVo" >-->
+<!--        select tool_code as code,tool_name as value from t_supp_relat_ext where relat_id=#{relatId}-->
+<!--    </select>-->
+<!--    <insert id="insertRule">-->
+<!--        insert into t_sys_rule(relat_id,styles,keyss,matches,vals,shows) values(#{params.relatId},#{params.styles},#{params.keyss},#{params.matches},#{params.vals},#{params.shows})-->
+<!--    </insert>-->
+<!--    <select id="sourDet" resultType="com.wision.entity.SourDetVo" >-->
+<!--        select a.relat_id,a.relat_name,a.layout_type,a.tbl_id,b.tbl_name from t_supp_relat_main a left join t_supp_imp_tbl b on a.tbl_id=b.tbl_id where a.relat_id=#{relatId}-->
+<!--    </select>-->
+<!--    <update id="layoutEdit">-->
+<!--        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType} where relat_id=#{params.relatId}-->
+<!--    </update>-->
+<!--    <update id="sourEdit">-->
+<!--        update t_supp_relat_main set tbl_id=#{params.tblId} where relat_id=#{params.relatId}-->
+<!--    </update>-->
+</mapper>
