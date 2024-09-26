@@ -159,8 +159,8 @@
             }
             , cols: [[
                 {type: 'checkbox', fixed: 'left', width: '9%'}
-                , {field: 'ruleId', title: 'ID', width: '10%'}
-                , {field: 'keyName', title: '字段名称', width: '27%'}
+                , {field: 'extId', title: 'ID', width: '10%'}
+                , {field: 'toolName', title: '字段名称', width: '27%'}
                 , {field: 'matchType', title: '匹配方式', width: '27%'}
                 , {field: 'keyValue', title: '值', width: '27%'}
             ]]
@@ -180,7 +180,7 @@
                     });
                     break;
                 case 'del':
-                    postdata(null,"/tool/basicCondDel?ruleId=" + checkStatus.data[0].ruleId,function () {table.reload('ruleReload');layer.msg("已删除！");});
+                    postdata(null,"/toolSto/basicCondDel?ruleId=" + checkStatus.data[0].ruleId,function () {table.reload('ruleReload');layer.msg("已删除！");});
                     break;
             };
         });

@@ -1,34 +1,34 @@
 package com.wision.entity;
 
 public class BasicCondVo {
-    private Long ruleId;
-    private String keyCode;
-    private String keyName;
+    private Long extId;
+    private String toolCode;
+    private String toolName;
     private String matchType;
     private String keyValue;
 
-    public Long getRuleId() {
-        return ruleId;
+    public Long getExtId() {
+        return extId;
     }
 
-    public void setRuleId(Long ruleId) {
-        this.ruleId = ruleId;
+    public void setExtId(Long extId) {
+        this.extId = extId;
     }
 
-    public String getKeyCode() {
-        return keyCode;
+    public String getToolCode() {
+        return toolCode;
     }
 
-    public void setKeyCode(String keyCode) {
-        this.keyCode = keyCode;
+    public void setToolCode(String toolCode) {
+        this.toolCode = toolCode;
     }
 
-    public String getKeyName() {
-        return keyName;
+    public String getToolName() {
+        return toolName;
     }
 
-    public void setKeyName(String keyName) {
-        this.keyName = keyName;
+    public void setToolName(String toolName) {
+        this.toolName = toolName;
     }
 
     public String getMatchType() {

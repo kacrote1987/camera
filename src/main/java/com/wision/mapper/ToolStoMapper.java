@@ -21,7 +21,7 @@ public interface ToolStoMapper {
     String getBasicCodeByName(Long relatId,String keyName);
     boolean insertBasicCond(@Param("params") BasicCondForm2 params, String toolCode);
     List<BasicCol> getBasicCol(Long relatId);
-    boolean deleteBasicCond(Long ruleId);
+    boolean deleteBasicCond(Long extId);
     FlowCondVo flowCond(Long relatId);
     boolean updateFlowCond(@Param("params") FlowCondForm params);
     List<FlowViewVo> flowView(Long relatId);

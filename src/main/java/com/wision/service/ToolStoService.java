@@ -14,7 +14,7 @@ public interface ToolStoService {
     void basicCondEdit(BasicCondForm1 params);
     void basicCondAdd(BasicCondForm2 params);
     List<BasicCol> basicView(Long relatId);
-    void basicCondDel(Long ruleId);
+    void basicCondDel(Long extId);
     FlowCondVo flowCond(Long relatId);
     void flowCondEdit(FlowCondForm params);
     List<FlowViewVo> flowView(Long relatId);

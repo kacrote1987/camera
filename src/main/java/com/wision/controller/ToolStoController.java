@@ -77,8 +77,8 @@ public class ToolStoController {
 
     @ApiOperation("组件配置-基础信息组件-条件设置删除")
     @PostMapping("/basicCondDel")
-    public Result basicCondDel(@RequestParam Long ruleId){
-        toolStoService.basicCondDel(ruleId);
+    public Result basicCondDel(@RequestParam Long extId){
+        toolStoService.basicCondDel(extId);
         return Result.success();
     }
 

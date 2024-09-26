@@ -80,8 +80,8 @@ public class ToolStoServiceImpl implements ToolStoService {
     }
 
     @Override
-    public void basicCondDel(Long ruleId) {
-        toolStoMapper.deleteBasicCond(ruleId);
+    public void basicCondDel(Long extId) {
+        toolStoMapper.deleteBasicCond(extId);
     }
 
     @Override

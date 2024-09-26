@@ -42,7 +42,7 @@
         select distinct a.tbl_id,a.tbl_name from t_supp_imp_tbl a inner join t_supp_menu_main b on a.prod_id=b.prod_id inner join t_supp_relat_main c on b.menu_id=c.menu_id where c.relat_id=#{relatId}
     </select>
     <select id="basicCond" resultType="com.wision.entity.BasicCondVo" >
-        select rule_id,key_code,key_name,match_type,key_value from t_supp_relat_rule where relat_id=#{relatId}
+        select ext_id,tool_code,tool_name,match_type,key_value from t_supp_relat_ext where tool_tag='basic' and show_type='none' and relat_id=#{relatId}
     </select>
     <update id="updateBasicCond">
         update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},tbl_id=#{params.tblId} where relat_id=#{params.relatId}
@@ -51,14 +51,14 @@
         select tool_code from t_supp_relat_ext where tool_tag='basic' and relat_id=#{relatId} and tool_name=#{keyName}
     </select>
     <insert id="insertBasicCond">
-        insert into t_supp_relat_rule(relat_id,rule_type,key_code,key_name,match_type,key_value)
-        values(#{params.relatId},'basic',#{toolCode},#{params.keyName},#{params.matchType},#{params.keyValue})
+        insert into t_supp_relat_ext(relat_id,tool_tag,show_type,tool_code,tool_name,match_type,key_value)
+        values(#{params.relatId},'basic','none',#{toolCode},#{params.keyName},#{params.matchType},#{params.keyValue})
     </insert>
     <select id="getBasicCol" resultType="com.wision.entity.BasicCol" >
         select ext_id,tool_code,tool_name,tool_type,res_state,sel_state from t_supp_relat_ext where tool_tag='basic' and relat_id=#{relatId}
     </select>
     <delete id="deleteBasicCond">
-        delete from t_supp_relat_rule where rule_id=#{ruleId}
+        delete from t_supp_relat_ext where ext_id=#{extId}
     </delete>
     <select id="flowCond" resultType="com.wision.entity.FlowCondVo" >
         select relat_name,layout_type,step_size from t_supp_relat_main where relat_id=#{relatId}
