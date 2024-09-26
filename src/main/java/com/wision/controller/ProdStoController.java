@@ -73,4 +73,11 @@ public class ProdStoController {
 //        ChildTblDetForm childTblDet= prodService.childTblDet(params);
 //        return Result.success(childTblDet);
 //    }
+
+    @ApiOperation("代码自动生成")
+    @PostMapping("/generate")
+    public Result generate(@RequestParam Long prodId){
+        prodStoService.generate(prodId);
+        return Result.success();
+    }
 }

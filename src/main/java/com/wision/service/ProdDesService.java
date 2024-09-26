@@ -19,7 +19,7 @@ public interface ProdDesService {
     void menuEdit(MenuEditForm params);
     List<MenuTreeVo> menuTree(Long prodId);
     PageInfo<ToolSelVo> toolSel(String params,ToolListForm params1);
-    void generate(Long prodId);
+    void createPage(Long relatId);
 //    /**
 //     * 产品演示
 //     * @return

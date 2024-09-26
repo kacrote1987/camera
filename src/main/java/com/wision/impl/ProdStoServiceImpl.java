@@ -8,6 +8,9 @@ import com.wision.service.ProdStoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,10 +157,88 @@ public class ProdStoServiceImpl implements ProdStoService {
 ////            String jsonString = JSONObject.toJSONString(params1);
 ////            System.out.println("jsonString = " + jsonString);
 //        }
-        String realPage = prodStoMapper.getRealPage(menuId);
+        String realPage = prodStoMapper.getRealPageByMenu(menuId);
         String tblName = "t_ext_" + realPage.replace("list.html","");
         List<MainContVo> mainCont=prodStoMapper.getMainCont(tblName);
         return PageInfo.of(mainCont);
+    }
+
+    @Override
+    public void generate(Long prodId) {
+//        1、创建代码目录  createDir;
+//        2、配置文件备份  copyConf;
+//        3、控制类代码生成  contr;
+//        4、接口类代码生成  service;
+//        5、实现类代码生成  impl;
+//        6、映射类代码生成  mapper;
+//        7、数据库脚本生成  dataMapper;
+//        8、授权信息设置  authorize;
+//        9、打包生成jar文件  package;
+//        10、执行文件脚本生成  run;
+//        11、数据库备份  dataBaseBak;
+//        12、说明文档生成  readMe;
+//        13、打包成压缩包（返回下载路径） compress;
+
+        //1-创建文件夹（有问题）
+//        String folderPath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prods";
+//        Path path = Paths.get(folderPath);
+//        try {
+//            Files.createDirectories(path);
+//            System.out.println("文件夹创建成功");
+//        } catch (IOException e) {
+//            System.out.println("文件夹创建失败");
+//            e.printStackTrace();
+//        }
+        //2-获取文件(包含页面、java类文件、mapper文件)
+        List<String> sourceFilePath = new ArrayList<>();
+        List<String> destinationFilePath = new ArrayList<>();
+        //2.1-获取页面文件路径
+        String prodNikName=prodStoMapper.getProdNikName(prodId);
+        String toolPage=prodStoMapper.getToolPage(prodId);  //??
+        String realPage=prodStoMapper.getRealPage(prodId);  //??
+        String sourceFilePath1 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\tools\\" + toolPage;
+        String destinationFilePath1 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prods\\" + prodNikName + "\\" + realPage;
+        sourceFilePath.add(sourceFilePath1);
+        destinationFilePath.add(destinationFilePath1);
+        //2.2-获取controller文件路径
+        String sourceFilePath2 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\java\\com\\wision\\controller\\ChildController.java";
+        String destinationFilePath2 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\java\\com\\wision\\controller\\prods\\xmgl\\ChildController.java";
+        sourceFilePath.add(sourceFilePath2);
+        destinationFilePath.add(destinationFilePath2);
+        //2.3-获取service文件路径
+        String sourceFilePath3 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\java\\com\\wision\\service\\ChildService.java";
+        String destinationFilePath3 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\java\\com\\wision\\controller\\prods\\xmgl\\ChildService.java";
+        sourceFilePath.add(sourceFilePath3);
+        destinationFilePath.add(destinationFilePath3);
+        //2.4-获取impl文件路径
+        String sourceFilePath4 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\java\\com\\wision\\service\\impl\\ChildServiceImpl.java";
+        String destinationFilePath4 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\java\\com\\wision\\controller\\prods\\xmgl\\ChildServiceImpl.java";
+        sourceFilePath.add(sourceFilePath4);
+        destinationFilePath.add(destinationFilePath4);
+        //2.5-获取类mapper文件路径
+        String sourceFilePath5 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\java\\com\\wision\\mapper\\ChildMapper.java";
+        String destinationFilePath5 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\java\\com\\wision\\controller\\prods\\xmgl\\ChildMapper.java";
+        sourceFilePath.add(sourceFilePath5);
+        destinationFilePath.add(destinationFilePath5);
+        //2.6-获取xml文件路径
+        String sourceFilePath6 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\mapper\\ChildMapper.xml";
+        String destinationFilePath6 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\java\\com\\wision\\controller\\prods\\xmgl\\ChildMapper.xml";
+        sourceFilePath.add(sourceFilePath6);
+        destinationFilePath.add(destinationFilePath6);
+        //3-循环复制
+        for(int i=0;i<sourceFilePath.size();i++){
+            try (FileInputStream fis = new FileInputStream(sourceFilePath.get(i));
+                 FileOutputStream fos = new FileOutputStream(destinationFilePath.get(i))) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = fis.read(buffer)) != -1) {
+                    fos.write(buffer, 0, bytesRead);
+                }
+                System.out.println("文件复制成功！");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static String method (String str){

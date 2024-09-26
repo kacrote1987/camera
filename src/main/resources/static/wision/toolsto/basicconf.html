@@ -37,6 +37,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <button id="createPage" class="layui-btn layui-btn-sm" onclick="createPage()">生成页面</button>
                             <div class="layui-inline">
                                 <label class="layui-form-label">* 选择数据源</label>
                                 <div class="layui-input-block">
@@ -208,6 +209,13 @@
         });
 
     });
+
+    function createPage() {
+        var relatId = window.location.search.substring(1, window.location.search.length);
+        postdata(null, "/prodDes/createPage?relatId=" + relatId, function () {
+            layer.msg("页面生成成功！");
+        });
+    }
 
     function save() {
         var params = {};

@@ -109,10 +109,10 @@ public class ProdDesController {
         return Result.success(toolSel);
     }
 
-    @ApiOperation("代码自动生成")
-    @PostMapping("/generate")
-    public Result generate(@RequestParam Long prodId){
-        prodDesService.generate(prodId);
+    @ApiOperation("生成页面")
+    @PostMapping("/createPage")
+    public Result createPage(@RequestParam Long relatId){
+        prodDesService.createPage(relatId);
         return Result.success();
     }
 

@@ -13,4 +13,5 @@ public interface ProdStoService {
     ChildMainVo getChildMain(Long prodId);
     List<MainSelVo> mainSel(Long menuId);
     PageInfo<MainContVo> mainCont(Long menuId, ChildTblForm params);
+    void generate(Long prodId);
 }

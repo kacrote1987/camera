@@ -78,15 +78,6 @@
         select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.type_code,b.tool_name,b.tool_ver,a.relat_name,date_format(b.tool_time,'%Y-%m-%d') as tool_time,b.tool_state,b.tool_conf,b.tool_disp
         from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
     </select>
-    <select id="getProdNikName" resultType="String" >
-        select prod_nikname from t_supp_prod_main where prod_id=#{prodId}
-    </select>
-    <select id="getToolPage" resultType="String" >
-        select tool_page from t_supp_relat_main where relat_id=#{relatId}
-    </select>
-    <select id="getRealPage" resultType="String" >
-        select real_page from t_supp_relat_main where relat_id=#{relatId}
-    </select>
 <!--    <select id="selOtherTypeIds" resultType="String" >-->
 <!--        select step_id from t_supp_tool_step where step_id=#{oldTypeIds} and step_id!=#{stepId}-->
 <!--    </select>-->

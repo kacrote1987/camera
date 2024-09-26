@@ -53,9 +53,9 @@
 
     <script type="text/html" id="test-table-toolbar-barDemo">
       <a id="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
-      <a id="ui" class="layui-btn layui-btn-xs" lay-event="ui">布局</a>
+      <a id="ui" class="layui-btn layui-btn-xs" lay-event="ui">UI设计</a>
       <a id="tbl" class="layui-btn layui-btn-xs" lay-event="tbl">库表</a>
-      <a id="tool" class="layui-btn layui-btn-xs" lay-event="tool">组件</a>
+      <a id="tool" class="layui-btn layui-btn-xs" lay-event="tool">元素</a>
       <a id="relate" class="layui-btn layui-btn-xs" lay-event="relate">关联</a>
       <a id="test" class="layui-btn layui-btn-xs" lay-event="test">测试</a>
       <a id="online" class="layui-btn layui-btn-xs" lay-event="online">上架</a>
@@ -110,9 +110,9 @@
         , {field: 'prodType', title: '产品类别' , width: '10%'}
         , {field: 'prodName', title: '产品名称', width: '10%'}
         , {field: 'prodVer', title: '产品版本', width: '10%'}
-        , {field: 'prodExplain', title: '产品说明', width: '28%'}
+        , {field: 'prodExplain', title: '产品说明', width: '27%'}
         , {field: 'prodTime', title: '更新时间', width: '10%'}
-        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-barDemo', width: '22%'}
+        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-barDemo', width: '23%'}
       ]]
       , page: true
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
@@ -178,7 +178,7 @@
           , area: ['1200px', '600px']
         });
       }else if (obj.event === 'ui') {
-        layer.msg("布局");
+        layer.msg("UI设计");
       }else if (obj.event === 'tbl') {
         layer.open({
           type: 2
@@ -190,8 +190,8 @@
       }else if (obj.event === 'tool') {
         layer.open({
           type: 2
-          , title: '组件'
-          , content: 'tool.html?' + data.prodId
+          , title: '元素'
+          , content: 'element.html?' + data.prodId
           , maxmin: true
           , area: ['1200px', '600px']
         });
@@ -204,7 +204,7 @@
           , area: ['1200px', '600px']
         });
       }else if (obj.event === 'test') {
-        window.open( '../' + data.prodLink + '?' + data.prodId,'_blank');
+        window.open( '../prodsto/' + data.prodLink + '?' + data.prodId,'_blank');
       }else if (obj.event === 'online') {
         layer.confirm('是否上架？', {
           btn: ['是','否'] //按钮

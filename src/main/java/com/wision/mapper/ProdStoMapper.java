@@ -14,6 +14,9 @@ public interface ProdStoMapper {
     String getChildName(Long prodId);
     List<ChildMenuVo> getChildMenu(Long prodId);
     List<ChildTblCol> getTblSel(Long menuId, String res, String sel);
-    String getRealPage(Long menuId);
+    String getRealPageByMenu(Long menuId);
     List<MainContVo> getMainCont(String tblName);
+    String getProdNikName(Long prodId);
+    String getToolPage(Long relatId);
+    String getRealPage(Long relatId);
 }
