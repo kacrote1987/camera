@@ -8,9 +8,7 @@ import com.wision.service.ProdDesService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -155,6 +153,32 @@ public class ProdDesServiceImpl implements ProdDesService {
     @Override
     public void createPage(Long relatId) {
         System.out.println("relatId="+relatId);
+        List<SourcePathForm> sourcePathList = new ArrayList<>();
+        SourcePathForm sourcePathForm = new SourcePathForm();
+        String sourcePath1 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\basic\\basiclist1.html"; // 源页面路径
+        sourcePathForm.setSourcePath(sourcePath1);
+        sourcePathList.add(sourcePathForm);
+        String sourcePath2 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\basic\\basiclist2.html"; // 源页面路径
+        sourcePathForm.setSourcePath(sourcePath2);
+        sourcePathList.add(sourcePathForm);
+        String sourcePath3 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\basic\\basiclist3.html"; // 源页面路径
+        sourcePathForm.setSourcePath(sourcePath3);
+        sourcePathList.add(sourcePathForm);
+        String destinationPath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\demo.html"; // 目标页面路径
+
+        for(int i=0;i<sourcePathList.size();i++){
+            try (BufferedReader reader = new BufferedReader(new FileReader(sourcePathList.get(i).getSourcePath()));
+                 PrintWriter writer = new PrintWriter(new FileWriter(destinationPath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    writer.println(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
 //        //2-获取文件(包含页面)
 //        List<String> sourceFilePath = new ArrayList<>();
 //        List<String> destinationFilePath = new ArrayList<>();
