@@ -172,7 +172,7 @@ public class ProdDesServiceImpl implements ProdDesService {
             List<PagePathVo> sourcePath = prodDesMapper.getSourcePath(relatId,destinyPath.get(i).getDestinyPath());
             String destinationPath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\"  + destinyPath.get(i).getDestinyPath(); // 目标页面路径
             for(int j=0;j<sourcePath.size();j++){
-                sourcePath.get(j).setSourcePath("D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\" + sourcePath.get(j).getSourcePath()); // 源页面完整路径替换
+                sourcePath.get(j).setSourcePath("D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\" + sourcePath.get(j).getSourcePath()); // 替换成页面完整路径
                 try (FileReader fr = new FileReader(sourcePath.get(j).getSourcePath());
                      BufferedReader br = new BufferedReader(fr);
                      FileWriter fw = new FileWriter(destinationPath, true); // 注意这里的true，表示追加
