@@ -56,3 +56,57 @@
         </div>
     </div>
 </div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../js/demo.js"></script>
+<script src="../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'table', 'laydate'], function () {
+        var $ = layui.$
+            , form = layui.form;
+
+        form.render(null, 'component-form-group');
+        var params = window.location.search.substring(1, window.location.search.length);
+        $.ajax({
+            type: "post",
+            url: "/supp/childtbldet",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: params,
+            success: function (detObj) {
+                if (detObj.msg == "success") {
+                    var detJson = detObj.data;
+                    $('#toolHead').val("code");
+                    $('#toolCont').val("value");
+                    // for(var i=0;i<detJson.childTblHeadDet.length;i++){
+                    // $('#toolHead' + i).val(detJson.childTblHeadDet[i].toolName);
+                    // for(var j=0;i<detJson.childTblHeadDet.length;j++){
+                    // var dd = "detJson.childTblContDet." + detJson.childTblHeadDet[0].toolCode;
+                    //     $('#toolCont' + j).val(detJson.childTblContDet[detJson.childTblHeadDet[0].toolCode]);
+                    // }
+                    // }
+                    layui.form.render();
+                }
+            }
+        });
+
+    });
+
+    // function save() {
+    //     var params = {};
+    //     params.prodId = $('#prodId').val();
+    //     params.prodType = $('#prodType').val();
+    //     params.prodName = $('#prodName').val();
+    //     postdata(params, "/supp/prodsave", function () {
+    //         layer.msg("保存成功！");
+    //     });
+    // }
+</script>
+</body>
+</html>

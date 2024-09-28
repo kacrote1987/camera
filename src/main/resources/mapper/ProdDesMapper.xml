@@ -85,7 +85,7 @@
         select distinct destiny_path from t_supp_relat_page where relat_id=#{relatId}
     </select>
     <select id="getSourcePath" resultType="com.wision.entity.PagePathVo" >
-        select source_path from t_supp_relat_page where relat_id=#{relatId} and destiny_path=#{destinyPath}
+        select source_path from t_supp_relat_page where relat_id=#{relatId} and destiny_path=#{destinyPath} order by page_order
     </select>
 <!--    <select id="selOtherTypeIds" resultType="String" >-->
 <!--        select step_id from t_supp_tool_step where step_id=#{oldTypeIds} and step_id!=#{stepId}-->
