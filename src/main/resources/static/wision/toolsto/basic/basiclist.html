@@ -6,77 +6,77 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
-  <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
 </head>
 <body>
-  <div class="layui-fluid">
-    <div class="layui-card">
-      <input id="search" type="text" name="search" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display: none">
-      <input id="val" type="text" name="val" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display: none">
-      <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-        <div class="layui-form-item">
-          <div id="showsel" class="layui-form layui-card-header layuiadmin-card-header-auto"></div>
-        </div>
-      </div>
-      <div class="layui-card layui-form" lay-filter="component-form-element" id="LAY-component-projress">
-        <div class="layui-card-body layui-row layui-col-space10">
-          <div class="layui-col-md12">
-            <input class="layui-radio" type="radio" id="step0" name="stepCode" value="step0" title="全部" checked>
-            <input class="layui-radio" type="radio" id="step1" name="stepCode" value="step1" title="需求阶段">
-            <input class="layui-radio" type="radio" id="step2" name="stepCode" value="step2" title="方案阶段">
-            <input class="layui-radio" type="radio" id="step3" name="stepCode" value="step3" title="合同阶段">
-            <input class="layui-radio" type="radio" id="step4" name="stepCode" value="step4" title="实施阶段">
-            <input class="layui-radio" type="radio" id="step5" name="stepCode" value="step5" title="初验阶段">
-            <input class="layui-radio" type="radio" id="step6" name="stepCode" value="step6" title="试运行阶段">
-            <input class="layui-radio" type="radio" id="step7" name="stepCode" value="step7" title="终验阶段">
-            <input class="layui-radio" type="radio" id="step8" name="stepCode" value="step8" title="维护阶段">
-          </div>
-        </div>
-        <div class="layui-progress" lay-filter="component-progress-demo">
-          <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
-        </div>
-      </div>
-
-      <script type="text/html" id="test-table-toolbar-toolbarDemo">
-        <div class="layui-btn-container">
-          <button class="layui-btn layui-btn-sm" lay-event="flow">流程图示</button>
-          <button class="layui-btn layui-btn-sm" lay-event="submit">提交</button>
-          <button class="layui-btn layui-btn-sm" lay-event="backoff">回退</button>
-          <button class="layui-btn layui-btn-sm" name="step1" lay-event="add" style="visibility: hidden">新增</button>
-          <button class="layui-btn layui-btn-sm" name="step1" lay-event="del" style="visibility: hidden">删除</button>
-          <button class="layui-btn layui-btn-sm" name="step2" lay-event="" style="visibility: hidden">合同操作</button>
-          <button class="layui-btn layui-btn-sm" name="step3" lay-event="" style="visibility: hidden">实施操作</button>
-          <button class="layui-btn layui-btn-sm" name="step4" lay-event="" style="visibility: hidden">初验操作</button>
-          <button class="layui-btn layui-btn-sm" name="step5" lay-event="" style="visibility: hidden">终验操作</button>
-        </div>
-      </script>
-
-      <script type="text/html" id="test-table-toolbar-barDemo">
-        <a name="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
-        <a name="det" class="layui-btn layui-btn-xs" lay-event="gantt">进度</a>
-        <a name="det" class="layui-btn layui-btn-xs" lay-event="log">例会</a>
-        <a name="det" class="layui-btn layui-btn-xs" lay-event="log">材料</a>
-      </script>
-
-      <div class="layui-card-body">
-        <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
-        <script type="text/html" id="imgTpl">
-          <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
-        </script>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <input id="search" type="text" name="search" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display: none">
+    <input id="val" type="text" name="val" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display: none">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+      <div class="layui-form-item">
+        <div id="showsel" class="layui-form layui-card-header layuiadmin-card-header-auto"></div>
       </div>
     </div>
+    <div class="layui-card layui-form" lay-filter="component-form-element" id="LAY-component-projress">
+      <div class="layui-card-body layui-row layui-col-space10">
+        <div class="layui-col-md12">
+          <input class="layui-radio" type="radio" id="step0" name="stepCode" value="step0" title="全部" checked>
+          <input class="layui-radio" type="radio" id="step1" name="stepCode" value="step1" title="需求阶段">
+          <input class="layui-radio" type="radio" id="step2" name="stepCode" value="step2" title="方案阶段">
+          <input class="layui-radio" type="radio" id="step3" name="stepCode" value="step3" title="合同阶段">
+          <input class="layui-radio" type="radio" id="step4" name="stepCode" value="step4" title="实施阶段">
+          <input class="layui-radio" type="radio" id="step5" name="stepCode" value="step5" title="初验阶段">
+          <input class="layui-radio" type="radio" id="step6" name="stepCode" value="step6" title="试运行阶段">
+          <input class="layui-radio" type="radio" id="step7" name="stepCode" value="step7" title="终验阶段">
+          <input class="layui-radio" type="radio" id="step8" name="stepCode" value="step8" title="维护阶段">
+        </div>
+      </div>
+      <div class="layui-progress" lay-filter="component-progress-demo">
+        <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+      </div>
+    </div>
+
+    <script type="text/html" id="test-table-toolbar-toolbarDemo">
+      <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="flow">流程图示</button>
+        <button class="layui-btn layui-btn-sm" lay-event="submit">提交</button>
+        <button class="layui-btn layui-btn-sm" lay-event="backoff">回退</button>
+        <button class="layui-btn layui-btn-sm" name="step1" lay-event="add" style="visibility: hidden">新增</button>
+        <button class="layui-btn layui-btn-sm" name="step1" lay-event="del" style="visibility: hidden">删除</button>
+        <button class="layui-btn layui-btn-sm" name="step2" lay-event="" style="visibility: hidden">合同操作</button>
+        <button class="layui-btn layui-btn-sm" name="step3" lay-event="" style="visibility: hidden">实施操作</button>
+        <button class="layui-btn layui-btn-sm" name="step4" lay-event="" style="visibility: hidden">初验操作</button>
+        <button class="layui-btn layui-btn-sm" name="step5" lay-event="" style="visibility: hidden">终验操作</button>
+      </div>
+    </script>
+
+    <script type="text/html" id="test-table-toolbar-barDemo">
+      <a name="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
+      <a name="det" class="layui-btn layui-btn-xs" lay-event="gantt">进度</a>
+      <a name="det" class="layui-btn layui-btn-xs" lay-event="log">例会</a>
+      <a name="det" class="layui-btn layui-btn-xs" lay-event="log">材料</a>
+    </script>
+
+    <div class="layui-card-body">
+      <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+      <script type="text/html" id="imgTpl">
+        <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+      </script>
+    </div>
   </div>
+</div>
 
 
-  <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
-  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-  <script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
-  <script src="../js/demo.js"></script>
-  <script src="../layuiadmin/layui/layui.js"></script>
-  <script>
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../js/demo.js"></script>
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
   layui.config({
-    base: '../layuiadmin/' //静态资源所在路径
+    base: '../../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
   }).use(['index', 'table', 'laydate','form'], function(){
@@ -93,7 +93,7 @@
     var field;
     $.ajax({
       type: "post",
-      url: "/child/mainSel?menuId=" + menuId,
+      url: "/prodSto/mainSel?menuId=" + menuId,
       contentType: "application/json;charset=utf-8",
       dataType: "json",
       async: false,
@@ -118,10 +118,10 @@
       elem: '#test-table-toolbar'
       ,id: 'projReload'
       ,method: 'post'
-      ,url:'/child/mainCont?menuId=' + menuId
+      ,url:'/prodSto/mainCont?menuId=' + menuId
       ,response:{
-         statusName: 'code',
-         statusCode: '200'
+        statusName: 'code',
+        statusCode: '200'
       }
       ,toolbar: '#test-table-toolbar-toolbarDemo'
       ,title: '项目信息表'
@@ -212,7 +212,7 @@
                 params.projId=checkStatus.data[i].projId;
                 params.stepVal="1";
                 postdata(params,"/proj/projstep",function () {
-                table.reload('projReload');layer.msg("提交成功");});
+                  table.reload('projReload');layer.msg("提交成功");});
               }
             }
           });
@@ -231,7 +231,7 @@
                 params.projId=checkStatus.data[i].projId;
                 params.stepVal="-1";
                 postdata(params,"/proj/projstep",function () {
-                table.reload('projReload');layer.msg("回退成功");});}}
+                  table.reload('projReload');layer.msg("回退成功");});}}
           });
           break;
       };
@@ -284,6 +284,6 @@
       active[type] ? active[type].call(this) : '';
     });
   });
-  </script>
+</script>
 </body>
 </html>

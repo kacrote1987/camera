@@ -152,58 +152,44 @@ public class ProdDesServiceImpl implements ProdDesService {
 
     @Override
     public void createPage(Long relatId) {
-        System.out.println("relatId="+relatId);
+        String pageName = "xmzb";
+        //1-删除同名html文件
+        String filePath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\xmgl\\" + pageName + "list.html";
+        File htmlFile = new File(filePath);
+        htmlFile.delete();
+        //2-创建一个空的html文件
+        String filepath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\xmgl\\" + pageName + "list.html";
+        File file = new File(filepath);
+        try {
+            file.createNewFile();
+            System.out.println("文件创建成功！");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //3-生成新的页面
         List<SourcePathForm> sourcePathList = new ArrayList<>();
-        SourcePathForm sourcePathForm = new SourcePathForm();
         String sourcePath1 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\basic\\basiclist1.html"; // 源页面路径
-        sourcePathForm.setSourcePath(sourcePath1);
-        sourcePathList.add(sourcePathForm);
+        SourcePathForm sourcePathForm1 = new SourcePathForm();
+        sourcePathForm1.setSourcePath(sourcePath1);
+        sourcePathList.add(sourcePathForm1);
         String sourcePath2 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\basic\\basiclist2.html"; // 源页面路径
-        sourcePathForm.setSourcePath(sourcePath2);
-        sourcePathList.add(sourcePathForm);
-        String sourcePath3 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\basic\\basiclist3.html"; // 源页面路径
-        sourcePathForm.setSourcePath(sourcePath3);
-        sourcePathList.add(sourcePathForm);
-        String destinationPath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\demo.html"; // 目标页面路径
-
+        SourcePathForm sourcePathForm2 = new SourcePathForm();
+        sourcePathForm2.setSourcePath(sourcePath2);
+        sourcePathList.add(sourcePathForm2);
+        String destinationPath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\xmgl\\"  + pageName + "list.html"; // 目标页面路径
         for(int i=0;i<sourcePathList.size();i++){
-            try (BufferedReader reader = new BufferedReader(new FileReader(sourcePathList.get(i).getSourcePath()));
-                 PrintWriter writer = new PrintWriter(new FileWriter(destinationPath))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    writer.println(line);
+            try (FileReader fr = new FileReader(sourcePathList.get(i).getSourcePath());
+                 BufferedReader br = new BufferedReader(fr);
+                 FileWriter fw = new FileWriter(destinationPath, true); // 注意这里的true，表示追加
+                 BufferedWriter bw = new BufferedWriter(fw)) {
+                String currentLine;
+                while ((currentLine = br.readLine()) != null) {
+                    bw.write(currentLine + System.lineSeparator()); // 追加内容并换行
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-
-//        //2-获取文件(包含页面)
-//        List<String> sourceFilePath = new ArrayList<>();
-//        List<String> destinationFilePath = new ArrayList<>();
-//        //2.1-获取页面文件路径
-//        String prodNikName=prodDesMapper.getProdNikName(relatId);
-//        String toolPage=prodDesMapper.getToolPage(relatId);  //??
-//        String realPage=prodDesMapper.getRealPage(relatId);  //??
-//        String sourceFilePath1 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\tools\\" + toolPage;
-//        String destinationFilePath1 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prods\\" + prodNikName + "\\" + realPage;
-//        sourceFilePath.add(sourceFilePath1);
-//        destinationFilePath.add(destinationFilePath1);
-//        //3-循环复制
-//        for(int i=0;i<sourceFilePath.size();i++){
-//            try (FileInputStream fis = new FileInputStream(sourceFilePath.get(i));
-//                 FileOutputStream fos = new FileOutputStream(destinationFilePath.get(i))) {
-//                byte[] buffer = new byte[1024];
-//                int bytesRead;
-//                while ((bytesRead = fis.read(buffer)) != -1) {
-//                    fos.write(buffer, 0, bytesRead);
-//                }
-//                System.out.println("文件复制成功！");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
 //    @Override

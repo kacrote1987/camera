@@ -19,14 +19,19 @@
           <div class="layui-fluid">
             <div class="layui-row layui-col-space15">
               <div class="layui-col-md2">
-
                 <div class="layui-card">
                   <div class="layui-card-body">
                     <div id="test-tree-demo4"></div>
                   </div>
                 </div>
-
               </div>
+
+              <script type="text/html" id="test-table-toolbar-toolbarDemo">
+                <div class="layui-btn-container">
+                  <button id="createPage" class="layui-btn layui-btn-sm" onclick="createPage()">生成页面</button>
+                </div>
+              </script>
+
               <div class="layui-col-md10">
                 <div class="layui-card">
                   <input type="text" id="menuId" placeholder="请输入" autocomplete="off"
@@ -116,6 +121,7 @@
         statusName: 'code',
         statusCode: '200'
       }
+      , toolbar: '#test-table-toolbar-toolbarDemo'
       , title: '资产基础信息表'
       , cols: [[
         {field: 'toolId', title: '组件ID', width: '6%'}
@@ -169,6 +175,13 @@
     });
 
   });
+
+  function createPage() {
+    var relatId = window.location.search.substring(1, window.location.search.length);
+    postdata(null, "/prodDes/createPage?relatId=" + relatId, function () {
+      layer.msg("页面生成成功！");
+    });
+  }
 </script>
 </body>
 </html>
