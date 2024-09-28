@@ -111,8 +111,8 @@ public class ProdDesController {
 
     @ApiOperation("生成页面")
     @PostMapping("/createPage")
-    public Result createPage(@RequestParam Long relatId){
-        prodDesService.createPage(relatId);
+    public Result createPage(@RequestParam Long menuId){
+        prodDesService.createPage(menuId);
         return Result.success();
     }
 

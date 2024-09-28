@@ -29,6 +29,9 @@ public interface ProdDesMapper {
     List<MenuTreeVo> menuFather(Long prodId);
     List<children> menuChild(Long fatherId);
     List<ToolSelVo> toolSel(Long menuId,@Param("params") ToolListForm params);
+    Long getMainRelatId(Long menuId);
+    List<PagePathVo> getDestinyPath(Long relatId);
+    List<PagePathVo> getSourcePath(Long relatId,String destinyPath);
 //    List<ProdViewVo> prodView(Long params);
 //    String checkTblExists(String tblName);
 //    boolean dropTbl(String tblCode);

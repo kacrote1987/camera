@@ -151,43 +151,39 @@ public class ProdDesServiceImpl implements ProdDesService {
     }
 
     @Override
-    public void createPage(Long relatId) {
-        String pageName = "xmzb";
-        //1-删除同名html文件
-        String filePath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\xmgl\\" + pageName + "list.html";
-        File htmlFile = new File(filePath);
-        htmlFile.delete();
-        //2-创建一个空的html文件
-        String filepath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\xmgl\\" + pageName + "list.html";
-        File file = new File(filepath);
-        try {
-            file.createNewFile();
-            System.out.println("文件创建成功！");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        //3-生成新的页面
-        List<SourcePathForm> sourcePathList = new ArrayList<>();
-        String sourcePath1 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\basic\\basiclist1.html"; // 源页面路径
-        SourcePathForm sourcePathForm1 = new SourcePathForm();
-        sourcePathForm1.setSourcePath(sourcePath1);
-        sourcePathList.add(sourcePathForm1);
-        String sourcePath2 = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\basic\\basiclist2.html"; // 源页面路径
-        SourcePathForm sourcePathForm2 = new SourcePathForm();
-        sourcePathForm2.setSourcePath(sourcePath2);
-        sourcePathList.add(sourcePathForm2);
-        String destinationPath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\xmgl\\"  + pageName + "list.html"; // 目标页面路径
-        for(int i=0;i<sourcePathList.size();i++){
-            try (FileReader fr = new FileReader(sourcePathList.get(i).getSourcePath());
-                 BufferedReader br = new BufferedReader(fr);
-                 FileWriter fw = new FileWriter(destinationPath, true); // 注意这里的true，表示追加
-                 BufferedWriter bw = new BufferedWriter(fw)) {
-                String currentLine;
-                while ((currentLine = br.readLine()) != null) {
-                    bw.write(currentLine + System.lineSeparator()); // 追加内容并换行
-                }
+    public void createPage(Long menuId) {
+        Long relatId = prodDesMapper.getMainRelatId(menuId);
+        List<PagePathVo> destinyPath = prodDesMapper.getDestinyPath(relatId);
+        for(int i=0;i<destinyPath.size();i++){
+            //1-删除同名html文件
+            String filePath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
+            File htmlFile = new File(filePath);
+            htmlFile.delete();
+            //2-创建一个空的html文件
+            String filepath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
+            File file = new File(filepath);
+            try {
+                file.createNewFile();
+                System.out.println("文件创建成功！");
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+            //3-生成新的页面
+            List<PagePathVo> sourcePath = prodDesMapper.getSourcePath(relatId,destinyPath.get(i).getDestinyPath());
+            String destinationPath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\"  + destinyPath.get(i).getDestinyPath(); // 目标页面路径
+            for(int j=0;j<sourcePath.size();j++){
+                sourcePath.get(j).setSourcePath("D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\" + sourcePath.get(j).getSourcePath()); // 源页面完整路径替换
+                try (FileReader fr = new FileReader(sourcePath.get(j).getSourcePath());
+                     BufferedReader br = new BufferedReader(fr);
+                     FileWriter fw = new FileWriter(destinationPath, true); // 注意这里的true，表示追加
+                     BufferedWriter bw = new BufferedWriter(fw)) {
+                    String currentLine;
+                    while ((currentLine = br.readLine()) != null) {
+                        bw.write(currentLine + System.lineSeparator()); // 追加内容并换行
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

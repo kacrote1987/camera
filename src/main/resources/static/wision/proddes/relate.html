@@ -177,8 +177,7 @@
   });
 
   function createPage() {
-    var relatId = window.location.search.substring(1, window.location.search.length);
-    postdata(null, "/prodDes/createPage?relatId=" + relatId, function () {
+    postdata(null, "/prodDes/createPage?menuId=" + $('#menuId').val(), function () {
       layer.msg("页面生成成功！");
     });
   }
