@@ -151,6 +151,12 @@ public class ProdDesServiceImpl implements ProdDesService {
     }
 
     @Override
+    public List<ChildListVo> childList(Long relatId) {
+        List<ChildListVo> childList = prodDesMapper.childList(relatId);
+        return childList;
+    }
+
+    @Override
     public void createPage(Long menuId) {
         Long relatId = prodDesMapper.getMainRelatId(menuId);
         List<PagePathVo> destinyPath = prodDesMapper.getDestinyPath(relatId);

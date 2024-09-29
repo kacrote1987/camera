@@ -39,6 +39,7 @@
                   <script type="text/html" id="test-table-toolbar-toolbarDemo2">
                     <a id="config" class="layui-btn layui-btn-xs" lay-event="config">配置</a>
                     <a id="display" class="layui-btn layui-btn-xs" lay-event="display">展示</a>
+                    <a id="child" class="layui-btn layui-btn-xs" lay-event="child">子页面</a>
                   </script>
 
                   <div class="layui-card-body">
@@ -125,14 +126,14 @@
       , title: '资产基础信息表'
       , cols: [[
         {field: 'toolId', title: '组件ID', width: '6%'}
-        , {field: 'layoutType', title: '组件布局', sort: true, width: '12%'}
-        , {field: 'toolType', title: '组件类别', sort: true, width: '12%'}
-        , {field: 'toolName', title: '组件名称', sort: true, width: '12%'}
-        , {field: 'toolVer', title: '组件版本', sort: true, width: '12%'}
-        , {field: 'relatName', title: '业务名称', sort: true, width: '12%'}
-        , {field: 'toolTime', title: '上架时间', sort: true, width: '12%'}
-        , {field: 'toolState', title: '组件状态', sort: true, width: '12%'}
-        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-toolbarDemo2', width: '10%'}
+        , {field: 'layoutType', title: '组件布局', sort: true, width: '10%'}
+        , {field: 'toolType', title: '组件类别', sort: true, width: '10%'}
+        , {field: 'toolName', title: '组件名称', sort: true, width: '15%'}
+        , {field: 'toolVer', title: '组件版本', sort: true, width: '10%'}
+        , {field: 'relatName', title: '业务名称', sort: true, width: '15%'}
+        , {field: 'toolTime', title: '上架时间', sort: true, width: '10%'}
+        , {field: 'toolState', title: '组件状态', sort: true, width: '10%'}
+        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-toolbarDemo2', width: '14%'}
       ]]
       , page: true
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
@@ -164,6 +165,14 @@
           ,maxmin: true
           ,area: ['1000px', '600px']
         });
+      } else if(obj.event === 'child'){
+        layer.open({
+          type: 2
+          ,title: '子页面'
+          ,content: 'childlist.html?' + data.relatId
+          ,maxmin: true
+          ,area: ['1000px', '600px']
+        });
       } else {
         layer.msg("待开发");
       }
@@ -177,13 +186,17 @@
   });
 
   function createPage() {
-    if($('#menuId').val()==="" || $('#menuId').val()===null){
-      alert("无法生成空页面");
-    }else{
-      postdata(null, "/prodDes/createPage?menuId=" + $('#menuId').val(), function () {
-        layer.msg("页面生成成功！");
-      });
-    }
+    layer.confirm('是否生成页面？', {
+      btn: ['是','否'] //按钮
+    }, function(){
+      if($('#menuId').val()==="" || $('#menuId').val()===null){
+        alert("无法生成空页面");
+      }else{
+        postdata(null, "/prodDes/createPage?menuId=" + $('#menuId').val(), function () {
+          layer.msg("页面生成成功！");
+        });
+      }
+    });
   }
 </script>
 </body>

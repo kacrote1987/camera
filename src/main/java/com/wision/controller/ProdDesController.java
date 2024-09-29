@@ -109,6 +109,13 @@ public class ProdDesController {
         return Result.success(toolSel);
     }
 
+    @ApiOperation("子页面清单")
+    @PostMapping("/childList")
+    public Result childList(@RequestParam Long relatId){
+        List<ChildListVo> childList = prodDesService.childList(relatId);
+        return Result.success(childList);
+    }
+
     @ApiOperation("生成页面")
     @PostMapping("/createPage")
     public Result createPage(@RequestParam Long menuId){
