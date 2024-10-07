@@ -111,8 +111,8 @@ public class ProdDesController {
 
     @ApiOperation("子页面清单")
     @PostMapping("/childList")
-    public Result childList(@RequestParam Long relatId){
-        List<ChildListVo> childList = prodDesService.childList(relatId);
+    public Result childList(@RequestParam Long menuId){
+        List<ChildListVo> childList = prodDesService.childList(menuId);
         return Result.success(childList);
     }
 

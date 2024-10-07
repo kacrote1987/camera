@@ -105,10 +105,16 @@ public class ProdDesServiceImpl implements ProdDesService {
             String toolIdsTemp = params.getValue()+',';
             while(toolIdsTemp.indexOf(',')>0){
                 String toolId=toolIdsTemp.substring(0,toolIdsTemp.indexOf(','));
+
+//                List<RelatDetVo> toolIdList = prodDesMapper.getToolIdsByMenuId();
+//                params.getValue()
+
                 Long checkRelat=prodDesMapper.checkRelat(params.getMenuId(),Long.valueOf(toolId));
                 if(checkRelat==null){
                     prodDesMapper.insertRelat(params.getMenuId(),Long.valueOf(toolId));
                 }
+
+
                 toolIdsTemp=toolIdsTemp.substring(toolIdsTemp.indexOf(',')+1,toolIdsTemp.length());
             }
 //          清除多余数据
@@ -151,8 +157,8 @@ public class ProdDesServiceImpl implements ProdDesService {
     }
 
     @Override
-    public List<ChildListVo> childList(Long relatId) {
-        List<ChildListVo> childList = prodDesMapper.childList(relatId);
+    public List<ChildListVo> childList(Long menuId) {
+        List<ChildListVo> childList = prodDesMapper.childList(menuId);
         return childList;
     }
 

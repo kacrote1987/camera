@@ -55,12 +55,12 @@
             , table = layui.table
 
         form.render(null, 'component-form-group');
-        var relatId = window.location.search.substring(1, window.location.search.length);
+        var menuId = window.location.search.substring(1, window.location.search.length);
         table.render({
             elem: '#test-table-toolbar1'
             , id: 'prodReload'
             , method: 'post'
-            , url: '/prodDes/childList?relatId=' + relatId //数据接口
+            , url: '/prodDes/childList?menuId=' + menuId //数据接口
             , title: '基础信息表'
             , response: {
                 statusName: 'code',

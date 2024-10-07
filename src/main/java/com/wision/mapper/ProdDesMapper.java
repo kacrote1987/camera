@@ -29,7 +29,7 @@ public interface ProdDesMapper {
     List<MenuTreeVo> menuFather(Long prodId);
     List<children> menuChild(Long fatherId);
     List<ToolSelVo> toolSel(Long menuId,@Param("params") ToolListForm params);
-    List<ChildListVo> childList(Long relatId);
+    List<ChildListVo> childList(Long menuId);
     Long getMainRelatId(Long menuId);
     List<PagePathVo> getDestinyPath(Long relatId);
     List<PagePathVo> getSourcePath(Long relatId,String destinyPath);

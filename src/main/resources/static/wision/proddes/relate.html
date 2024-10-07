@@ -28,7 +28,7 @@
 
               <script type="text/html" id="test-table-toolbar-toolbarDemo">
                 <div class="layui-btn-container">
-                  <button id="createPage" class="layui-btn layui-btn-sm" onclick="createPage()">生成页面</button>
+                  <button class="layui-btn layui-btn-sm" lay-event="childList">子页面管理</button>
                 </div>
               </script>
 
@@ -39,7 +39,6 @@
                   <script type="text/html" id="test-table-toolbar-toolbarDemo2">
                     <a id="config" class="layui-btn layui-btn-xs" lay-event="config">配置</a>
                     <a id="display" class="layui-btn layui-btn-xs" lay-event="display">展示</a>
-                    <a id="child" class="layui-btn layui-btn-xs" lay-event="child">子页面</a>
                   </script>
 
                   <div class="layui-card-body">
@@ -146,6 +145,21 @@
       }
     });
 
+    //头工具栏事件
+    table.on('toolbar(test-table-toolbar)', function(obj){
+      switch(obj.event){
+        case 'childList':
+          layer.open({
+            type: 2
+            ,title: '子页面管理'
+            ,content: 'childlist.html?menuId=' + $('#menuId').val()
+            ,maxmin: true
+            ,area: ['1200px', '600px']
+          });
+          break;
+      };
+    });
+
     //监听行工具事件
     table.on('tool(test-table-toolbar)', function(obj){
       var data = obj.data;
@@ -162,14 +176,6 @@
           type: 2
           ,title: '组件展示'
           ,content: '../toolsto/' + data.typeCode + '/' + data.toolDisp + '?' + data.relatId
-          ,maxmin: true
-          ,area: ['1000px', '600px']
-        });
-      } else if(obj.event === 'child'){
-        layer.open({
-          type: 2
-          ,title: '子页面'
-          ,content: 'childlist.html?' + data.relatId
           ,maxmin: true
           ,area: ['1000px', '600px']
         });

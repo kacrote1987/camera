@@ -79,7 +79,7 @@
         from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
     </select>
     <select id="childList" resultType="com.wision.entity.ChildListVo" >
-        select page_id,source_path,destiny_path,page_order from t_supp_relat_page where relat_id=#{relatId} order by page_order
+        select child_id,child_type,child_name,child_order from t_supp_tool_child where tool_id in (select tool_id from t_supp_relat_main where menu_id=#{menu_id})
     </select>
     <select id="getMainRelatId" resultType="Long" >
         select relat_id from t_supp_relat_main where menu_id=#{menuId} and layout_type='主表' limit 1
