@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Api(description = "产品设计")
+@Api(description = "产品设计111")
 @RestController
 @RequestMapping("/prodDes")
 public class ProdDesController {
