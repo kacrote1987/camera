@@ -190,20 +190,6 @@
     });
 
   });
-
-  function createPage() {
-    layer.confirm('是否生成页面？', {
-      btn: ['是','否'] //按钮
-    }, function(){
-      if($('#menuId').val()==="" || $('#menuId').val()===null){
-        alert("无法生成空页面");
-      }else{
-        postdata(null, "/prodDes/createPage?menuId=" + $('#menuId').val(), function () {
-          layer.msg("页面生成成功！");
-        });
-      }
-    });
-  }
 </script>
 </body>
 </html>

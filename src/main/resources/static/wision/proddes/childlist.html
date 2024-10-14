@@ -34,7 +34,7 @@
 <div class="layui-form-item layui-layout-admin">
     <div class="layui-input-block">
         <div class="layui-footer" style="left: 0;">
-            <button class="layui-btn" onclick="save()">保存</button>
+            <button class="layui-btn" onclick="createPage()">生成页面</button>
         </div>
     </div>
 </div>
@@ -60,26 +60,16 @@
             elem: '#test-table-toolbar1'
             , id: 'prodReload'
             , method: 'post'
-            , url: '/prodDes/childList?menuId=' + menuId //数据接口
+            , url: '/prodDes/childList?' + menuId //数据接口
             , title: '基础信息表'
             , response: {
                 statusName: 'code',
                 statusCode: '200'
             }
             , cols: [[
-                {field: 'pageOrder', title: '排序', width: '10%'}
-                ,{field: 'sourcePath', title: '页面路径', width: '30%'}
-                ,{field: 'sourcePath', title: '源路径', width: '30%'}
-                , {field: 'selState', title: '选择', width: '25%', templet: function (d) {
-                        var opt
-                        if (d.selState === "1") {
-                            opt = '<input type="checkbox" id="selState" name="selState" lay-skin="primary" checked>'
-                        } else {
-                            opt = '<input type="checkbox" id="selState" name="selState" lay-skin="primary" >'
-                        }
-                        return opt
-                    }
-                }
+                {field: 'childOrder', title: '排序', width: '15%'}
+                ,{field: 'pageName', title: '页面名称', width: '40%'}
+                ,{field: 'childName', title: '子项名称', width: '40%'}
             ]]
             , done: function (res, curr, count) {
                 count || this.elem.next('.layui-table-view').find('.layui-table-header').css('overflow', 'auto');
@@ -97,12 +87,14 @@
 
     });
 
-    function save() {
-        var params = {};
-        params.relatId = window.location.search.substring(1, window.location.search.length);
-        params.tblId = $('#tblId').val();
-        postdata(params, "/tool/sourEdit", function () {
-            layer.msg("保存成功！");
+    function createPage() {
+        layer.confirm('是否生成页面？', {
+            btn: ['是','否'] //按钮
+        }, function(){
+            postdata(null, "/prodDes/createPage?" + window.location.search.substring(1, window.location.search.length)
+                ,function () {
+                layer.msg("页面生成成功！");
+            });
         });
     }
 </script>

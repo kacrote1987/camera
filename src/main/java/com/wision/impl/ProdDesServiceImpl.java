@@ -168,11 +168,11 @@ public class ProdDesServiceImpl implements ProdDesService {
         List<PagePathVo> destinyPath = prodDesMapper.getDestinyPath(relatId);
         for(int i=0;i<destinyPath.size();i++){
             //1-删除同名html文件
-            String filePath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
+            String filePath = "D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
             File htmlFile = new File(filePath);
             htmlFile.delete();
             //2-创建一个空的html文件
-            String filepath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
+            String filepath = "D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
             File file = new File(filepath);
             try {
                 file.createNewFile();
@@ -182,9 +182,9 @@ public class ProdDesServiceImpl implements ProdDesService {
             }
             //3-生成新的页面
             List<PagePathVo> sourcePath = prodDesMapper.getSourcePath(relatId,destinyPath.get(i).getDestinyPath());
-            String destinationPath = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\"  + destinyPath.get(i).getDestinyPath(); // 目标页面路径
+            String destinationPath = "D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\"  + destinyPath.get(i).getDestinyPath(); // 目标页面路径
             for(int j=0;j<sourcePath.size();j++){
-                sourcePath.get(j).setSourcePath("D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\" + sourcePath.get(j).getSourcePath()); // 替换成页面完整路径
+                sourcePath.get(j).setSourcePath("D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\" + sourcePath.get(j).getSourcePath()); // 替换成页面完整路径
                 try (FileReader fr = new FileReader(sourcePath.get(j).getSourcePath());
                      BufferedReader br = new BufferedReader(fr);
                      FileWriter fw = new FileWriter(destinationPath, true); // 注意这里的true，表示追加

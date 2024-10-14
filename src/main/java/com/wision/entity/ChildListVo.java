@@ -1,11 +1,14 @@
 package com.wision.entity;
 
+import jnr.ffi.LibraryOption;
+
 public class ChildListVo {
     private Long pageId;
+    private String toolId;
     private String pageName;
-    private String sourcePath;
-    private String destinyPath;
-    private String pageOrder;
+    private String childName;
+    private Long childOrder;
+    private Long pageSel;
 
     public Long getPageId() {
         return pageId;
@@ -13,6 +16,14 @@ public class ChildListVo {
 
     public void setPageId(Long pageId) {
         this.pageId = pageId;
+    }
+
+    public String getToolId() {
+        return toolId;
+    }
+
+    public void setToolId(String toolId) {
+        this.toolId = toolId;
     }
 
     public String getPageName() {
@@ -23,27 +34,27 @@ public class ChildListVo {
         this.pageName = pageName;
     }
 
-    public String getSourcePath() {
-        return sourcePath;
+    public String getChildName() {
+        return childName;
     }
 
-    public void setSourcePath(String sourcePath) {
-        this.sourcePath = sourcePath;
+    public void setChildName(String childName) {
+        this.childName = childName;
     }
 
-    public String getDestinyPath() {
-        return destinyPath;
+    public Long getChildOrder() {
+        return childOrder;
     }
 
-    public void setDestinyPath(String destinyPath) {
-        this.destinyPath = destinyPath;
+    public void setChildOrder(Long childOrder) {
+        this.childOrder = childOrder;
     }
 
-    public String getPageOrder() {
-        return pageOrder;
+    public Long getPageSel() {
+        return pageSel;
     }
 
-    public void setPageOrder(String pageOrder) {
-        this.pageOrder = pageOrder;
+    public void setPageSel(Long pageSel) {
+        this.pageSel = pageSel;
     }
 }
