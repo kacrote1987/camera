@@ -44,6 +44,24 @@
                       </div>
                     </div>
                     <div class="layui-inline">
+                      <label class="layui-form-label">关联主表</label>
+                      <div class="layui-input-block">
+                        <select id="relatState" lay-filter="relatState">
+                          <option value="">请选择</option>
+                          <option value="是">是</option>
+                          <option value="否">否</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">步长</label>
+                      <div class="layui-input-block">
+                        <input id="stepSize" type="text" lay-verify="required" placeholder=""
+                               autocomplete="off" class="layui-input">
+                      </div>
+                    </div>
+                    <div id="showDict" style="display: none">
+                    <div class="layui-inline">
                       <label class="layui-form-label">主表字段</label>
                       <div class="layui-input-block">
                         <select id="mainCol" lay-filter="">
@@ -54,25 +72,11 @@
                     <div class="layui-inline">
                       <label class="layui-form-label">本表字段</label>
                       <div class="layui-input-block">
-                        <select id="selfCol" lay-filter="">
+                        <select id="relatCol" lay-filter="">
                           <option value="">无</option>
                         </select>
                       </div>
                     </div>
-                    <div class="layui-inline">
-                      <label class="layui-form-label">展示名称</label>
-                      <div class="layui-input-block">
-                        <select id="selfName" lay-filter="">
-                          <option value="">无</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="layui-inline">
-                      <label class="layui-form-label">步长</label>
-                      <div class="layui-input-block">
-                        <input id="stepSize" type="text" lay-verify="required" placeholder=""
-                               autocomplete="off" class="layui-input">
-                      </div>
                     </div>
                   </div>
                 </form>
@@ -113,17 +117,47 @@
     var relatId = window.location.search.substring(1, window.location.search.length);
     $.ajax({
       type: "post",
-      url: "/toolSto/flowCond?relatId=" + relatId,
+      url: "/toolSto/flowCondMain?relatId=" + relatId,
       contentType: "application/json;charset=utf-8",
       dataType: "json",
       success: function (detObj) {
         if (detObj.msg == "success") {
-          $('#relatName').val(detObj.data.relatName);
-          $('#layoutType').val(detObj.data.layoutType);
-          $('#stepSize').val(detObj.data.stepSize);
+          $('#relatName').val(detObj.data.flowCondVo.relatName);
+          $('#layoutType').val(detObj.data.flowCondVo.layoutType);
+          $('#relatState').val(detObj.data.flowCondVo.relatState);
+          $('#stepSize').val(detObj.data.flowCondVo.stepSize);
+          if(detObj.data.relatState === "是"){
+            document.getElementById("showDict").style.display = 'block';
+          }else{
+            document.getElementById("showDict").style.display = 'none';
+          }
+          document.getElementById("mainCol").options.length = 0;
+          for (var i=0; i<detObj.data.mainColVo.length; i++) {
+            document.getElementById("mainCol").options.add(new Option(detObj.data.mainColVo[i].tblName,detObj.data.mainColVo[i].tblId));
+          }
+          document.getElementById("relatCol").options.length = 0;
+          for (var i=0; i<detObj.data.relatColVo.length; i++) {
+            document.getElementById("relatCol").options.add(new Option(detObj.data.relatColVo[i].tblName,detObj.data.relatColVo[i].tblName));
+          }
           layui.form.render();
         }
       }
+    });
+
+    layui.use(['form'], function () {
+      form = layui.form;
+      form.on('select(relatState)', function (data) {
+        if(data.value === "是"){
+          document.getElementById("showDict").style.display = 'block';
+        }else{
+          document.getElementById("showDict").style.display = 'none';
+        }
+      });
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function () {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
     });
 
   });
@@ -133,7 +167,10 @@
     params.relatId = window.location.search.substring(1, window.location.search.length);
     params.relatName = $('#relatName').val();
     params.layoutType = $('#layoutType').val();
+    params.relatState = $('#relatState').val();
     params.stepSize = $('#stepSize').val();
+    params.mainCol = $('#mainCol').val();
+    params.relatCol = $('#relatCol').val();
     postdata(params, "/toolSto/flowCondEdit", function () {
       layer.msg("保存成功！");
     });

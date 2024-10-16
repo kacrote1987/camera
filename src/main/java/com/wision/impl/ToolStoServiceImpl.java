@@ -85,9 +85,12 @@ public class ToolStoServiceImpl implements ToolStoService {
     }
 
     @Override
-    public FlowCondVo flowCond(Long relatId) {
-        FlowCondVo flowCond = toolStoMapper.flowCond(relatId);
-        return flowCond;
+    public FlowCondMainVo flowCondMain(Long relatId) {
+        FlowCondMainVo flowCondMain = new FlowCondMainVo();
+        flowCondMain.setFlowCondVo(toolStoMapper.flowCond(relatId));
+        flowCondMain.setMainColVo(toolStoMapper.getMainCol(relatId));
+        flowCondMain.setRelatColVo(toolStoMapper.getRelatCol(relatId));
+        return flowCondMain;
     }
 
     @Override

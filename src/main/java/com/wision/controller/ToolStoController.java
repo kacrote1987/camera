@@ -83,9 +83,9 @@ public class ToolStoController {
     }
 
     @ApiOperation("组件配置-流程组件-配置列表")
-    @PostMapping("/flowCond")
-    public Result flowCond(@RequestParam Long relatId){
-        FlowCondVo flowCond= toolStoService.flowCond(relatId);
+    @PostMapping("/flowCondMain")
+    public Result flowCondMain(@RequestParam Long relatId){
+        FlowCondMainVo flowCond= toolStoService.flowCondMain(relatId);
         return Result.success(flowCond);
     }
 

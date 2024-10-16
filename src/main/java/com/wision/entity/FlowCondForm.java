@@ -4,6 +4,9 @@ public class FlowCondForm {
     private Long relatId;
     private String relatName;
     private String layoutType;
+    private String relatState;
+    private String mainCol;
+    private String relatCol;
     private Long stepSize;
 
     public Long getRelatId() {
@@ -28,6 +31,30 @@ public class FlowCondForm {
 
     public void setLayoutType(String layoutType) {
         this.layoutType = layoutType;
+    }
+
+    public String getRelatState() {
+        return relatState;
+    }
+
+    public void setRelatState(String relatState) {
+        this.relatState = relatState;
+    }
+
+    public String getMainCol() {
+        return mainCol;
+    }
+
+    public void setMainCol(String mainCol) {
+        this.mainCol = mainCol;
+    }
+
+    public String getRelatCol() {
+        return relatCol;
+    }
+
+    public void setRelatCol(String relatCol) {
+        this.relatCol = relatCol;
     }
 
     public Long getStepSize() {

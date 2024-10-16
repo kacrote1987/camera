@@ -5,7 +5,7 @@ import java.util.List;
 public class BasicSourVo {
    private String relatName;
    private String layoutType;
-   private List<BasicSourTblVo> basicSourTblVo;
+   private List<SourTblVo> basicSourTblVo;
 
     public String getRelatName() {
         return relatName;
@@ -23,11 +23,11 @@ public class BasicSourVo {
         this.layoutType = layoutType;
     }
 
-    public List<BasicSourTblVo> getBasicSourTblVo() {
+    public List<SourTblVo> getBasicSourTblVo() {
         return basicSourTblVo;
     }
 
-    public void setBasicSourTblVo(List<BasicSourTblVo> basicSourTblVo) {
+    public void setBasicSourTblVo(List<SourTblVo> basicSourTblVo) {
         this.basicSourTblVo = basicSourTblVo;
     }
 }

@@ -15,7 +15,7 @@ public interface ToolStoMapper {
     boolean updateTool(@Param("params") ToolDetForm params);
     String getRelatName(Long relatId);
     String getLayoutType(Long relatId);
-    List<BasicSourTblVo> basicSourTbl(Long relatId);
+    List<SourTblVo> basicSourTbl(Long relatId);
     List<BasicCondVo> basicCond(Long relatId);
     boolean updateBasicCond(@Param("params") BasicCondForm1 params);
     String getBasicCodeByName(Long relatId,String keyName);
@@ -23,6 +23,8 @@ public interface ToolStoMapper {
     List<BasicCol> getBasicCol(Long relatId);
     boolean deleteBasicCond(Long extId);
     FlowCondVo flowCond(Long relatId);
+    List<SourTblVo> getMainCol(Long tblName);
+    List<SourTblVo> getRelatCol(Long relatId);
     boolean updateFlowCond(@Param("params") FlowCondForm params);
     List<FlowViewVo> flowView(Long relatId);
     boolean insertFlow(Long relatId);

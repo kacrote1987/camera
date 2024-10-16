@@ -1,6 +1,6 @@
 package com.wision.entity;
 
-public class BasicSourTblVo {
+public class SourTblVo {
    private Long tblId;
    private String tblName;
 

@@ -38,7 +38,7 @@
     <select id="getLayoutType" resultType="String" >
         select layout_type from t_supp_relat_main where relat_id=#{relatId}
     </select>
-    <select id="basicSourTbl" resultType="com.wision.entity.BasicSourTblVo" >
+    <select id="basicSourTbl" resultType="com.wision.entity.SourTblVo" >
         select distinct a.tbl_id,a.tbl_name from t_supp_imp_tbl a inner join t_supp_menu_main b on a.prod_id=b.prod_id inner join t_supp_relat_main c on b.menu_id=c.menu_id where c.relat_id=#{relatId}
     </select>
     <select id="basicCond" resultType="com.wision.entity.BasicCondVo" >
@@ -61,10 +61,18 @@
         delete from t_supp_relat_ext where ext_id=#{extId}
     </delete>
     <select id="flowCond" resultType="com.wision.entity.FlowCondVo" >
-        select relat_name,layout_type,step_size from t_supp_relat_main where relat_id=#{relatId}
+        select relat_name,layout_type,relat_state,main_col,relat_col,step_size from t_supp_relat_main where relat_id=#{relatId}
+    </select>
+    <select id="getMainCol" resultType="com.wision.entity.SourTblVo" >
+        select b.ext_id as tbl_id,b.tool_name as tbl_name from t_supp_relat_main a inner join t_supp_relat_ext b on a.relat_id=b.relat_id
+        where a.layout_type='主表' and a.menu_id=(select menu_id from t_supp_relat_main where relat_id=#{relatId})
+    </select>
+    <select id="getRelatCol" resultType="com.wision.entity.SourTblVo" >
+        select distinct tool_tag as tbl_name from t_supp_relat_ext where relat_id=#{relatId}
     </select>
     <update id="updateFlowCond">
-        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},step_size=#{params.stepSize} where relat_id=#{params.relatId}
+        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},main_col=#{params.mainCol},relat_col=#{params.relatCol}
+        ,relat_state=#{params.relatState},step_size=#{params.stepSize} where relat_id=#{params.relatId}
     </update>
     <select id="flowView" resultType="com.wision.entity.FlowViewVo" >
         select ext_id,tool_name,tool_code from t_supp_relat_ext where tool_tag='flow' and relat_id=#{relatId} order by tool_code
