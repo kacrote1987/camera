@@ -210,6 +210,17 @@
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
         </dependency>
+<!--        二维码生成-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.4.1</version>
+        </dependency>
 
 
 
