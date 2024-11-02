@@ -2,103 +2,44 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>测试</title>
+  <title>按钮</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
 </head>
 <body>
 
 <div class="layui-fluid">
-  <div class="layui-card">
-    <div class="layui-form layui-card-header layuiadmin-card-header-auto"></div>
-
-    <script type="text/html" id="test-table-toolbar-barDemo">
-      <a id="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
-      <a id="preview" class="layui-btn layui-btn-xs" lay-event="entrance">入口</a>
-      <a id="package" class="layui-btn layui-btn-xs" lay-event="package">打包</a>
-      <a id="offline" class="layui-btn layui-btn-xs" lay-event="offline">下架</a>
-    </script>
-
-    <div class="layui-card-body">
-      <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
-      <script type="text/html" id="imgTpl">
-        <img style="display: inline-block; width: 50%; height: 100%;" src={{ d.avatar }}>
-      </script>
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">按钮列表</div>
+        <div class="layui-card-body">
+          <div class="layui-btn-container">
+            <button class="layui-btn" onclick="qrcode()">生成二维码</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
 <script src="../js/demo.js"></script>
-<script src="../js/laypage.js"></script>
 <script src="../layuiadmin/layui/layui.js"></script>
 <script>
   layui.config({
     base: '../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'form', 'table', 'laydate', 'laypage', 'layer'], function () {
-    var admin = layui.admin
-            , table = layui.table
-            , $ = layui.$
-            , element = layui.element
-            , layer = layui.layer
-            , form = layui.form;
+  }).use(['index']);
 
-    element.render('progress');
-
-    table.render({
-      elem: '#test-table-toolbar'
-      , id: 'prodReload'
-      , method: 'post'
-      , url: '/test/empty' //数据接口
-      , response: {
-        statusName: 'code',
-        statusCode: '200'
-      }
-      , toolbar: '#test-table-toolbar-toolbarDemo'
-      , title: '资产基础信息表'
-      , cols: [[
-        {type: 'checkbox', fixed: 'left', width: '10%'}
-        , {field: 'textName', title: '名称', width: '70%'}
-        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-barDemo', width: '20%'}
-      ]]
-      , page: true
-      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
-        return {
-          "code": res.code, //解析接口状态
-          "msg": res.msg, //解析提示文本
-          "count": res.data.total, //解析数据长度
-          "data": res.data.list //解析数据列表
-        };
-      }
+  function qrcode(){
+    postdata(null, "/test/qrcode", function () {
+      layer.msg("生成成功！");
     });
-
-    //监听行工具事件
-    table.on('tool(test-table-toolbar)', function (obj) {
-      var data = obj.data;
-      if (obj.event === 'det') {
-        layer.open({
-          type: 2
-          , title: '产品详细'
-          , content: 'proddet.html?' + data.prodId
-          , maxmin: true
-          , area: ['1200px', '600px']
-        });
-      }
-    });
-
-    $('.layui-fluid .layui-btn').on('click', function () {
-      var type = $(this).data('type');
-      active[type] ? active[type].call(this) : '';
-    });
-  });
+  }
 </script>
 </body>
 </html>
