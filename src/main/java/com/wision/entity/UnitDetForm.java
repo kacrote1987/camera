@@ -1,7 +1,7 @@
 package com.wision.entity;
 
-public class ToolDetVo {
-    private Long rowNum;
+public class UnitDetForm {
+    private String action;
     private Long toolId;
     private String toolType;
     private String toolName;
@@ -11,12 +11,12 @@ public class ToolDetVo {
     private String shareNum;
     private String toolState;
 
-    public Long getRowNum() {
-        return rowNum;
+    public String getAction() {
+        return action;
     }
 
-    public void setRowNum(Long rowNum) {
-        this.rowNum = rowNum;
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public Long getToolId() {

@@ -28,7 +28,7 @@ public interface ProdDesMapper {
     boolean updateMenu(Long menuId,String field,String value);
     List<MenuTreeVo> menuFather(Long prodId);
     List<children> menuChild(Long fatherId);
-    List<ToolSelVo> toolSel(Long menuId,@Param("params") ToolListForm params);
+    List<UnitSelVo> toolSel(Long menuId, @Param("params") UnitListForm params);
     List<ChildListVo> childList(Long menuId);
     Long getMainRelatId(Long menuId);
     List<PagePathVo> getDestinyPath(Long relatId);

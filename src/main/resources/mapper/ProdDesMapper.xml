@@ -74,7 +74,7 @@
     <select id="menuChild" resultType="com.wision.entity.children" >
         select menu_name as title,menu_id as id from t_supp_menu_main where father_id=#{fatherId}
     </select>
-    <select id="toolSel" resultType="com.wision.entity.ToolSelVo" >
+    <select id="toolSel" resultType="com.wision.entity.UnitSelVo" >
         select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.type_code,b.tool_name,b.tool_ver,a.relat_name,date_format(b.tool_time,'%Y-%m-%d') as tool_time,b.tool_state,b.tool_conf,b.tool_disp
         from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
     </select>

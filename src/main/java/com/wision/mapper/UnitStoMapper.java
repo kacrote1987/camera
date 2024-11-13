@@ -7,12 +7,12 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface ToolStoMapper {
-    List<ToolListVo> toolList(@Param("params") ToolListForm params);
-    List<ToolDetVo> toolDet(Long params);
-    boolean insertTool(@Param("params") ToolDetForm params);
+public interface UnitStoMapper {
+    List<UnitListVo> toolList(@Param("params") UnitListForm params);
+    List<UnitDetVo> toolDet(Long params);
+    boolean insertTool(@Param("params") UnitDetForm params);
     boolean deleteTool(Long params);
-    boolean updateTool(@Param("params") ToolDetForm params);
+    boolean updateTool(@Param("params") UnitDetForm params);
     String getRelatName(Long relatId);
     String getLayoutType(Long relatId);
     List<SourTblVo> basicSourTbl(Long relatId);

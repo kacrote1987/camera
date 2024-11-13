@@ -1,6 +1,8 @@
 package com.wision.entity;
 
-public class ToolSelVo {
+public class UnitListVo {
+    private Long rowNum;
+    private Long menuId;
     private Long relatId;
     private String layoutType;
     private Long toolId;
@@ -8,11 +10,26 @@ public class ToolSelVo {
     private String typeCode;
     private String toolName;
     private String toolVer;
-    private String relatName;
+    private String toolConf;
+    private String toolExplain;
     private String toolTime;
     private String toolState;
-    private String toolConf;
-    private String toolDisp;
+
+    public Long getRowNum() {
+        return rowNum;
+    }
+
+    public void setRowNum(Long rowNum) {
+        this.rowNum = rowNum;
+    }
+
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
 
     public Long getRelatId() {
         return relatId;
@@ -70,12 +87,20 @@ public class ToolSelVo {
         this.toolVer = toolVer;
     }
 
-    public String getRelatName() {
-        return relatName;
+    public String getToolConf() {
+        return toolConf;
     }
 
-    public void setRelatName(String relatName) {
-        this.relatName = relatName;
+    public void setToolConf(String toolConf) {
+        this.toolConf = toolConf;
+    }
+
+    public String getToolExplain() {
+        return toolExplain;
+    }
+
+    public void setToolExplain(String toolExplain) {
+        this.toolExplain = toolExplain;
     }
 
     public String getToolTime() {
@@ -92,21 +117,5 @@ public class ToolSelVo {
 
     public void setToolState(String toolState) {
         this.toolState = toolState;
-    }
-
-    public String getToolConf() {
-        return toolConf;
-    }
-
-    public void setToolConf(String toolConf) {
-        this.toolConf = toolConf;
-    }
-
-    public String getToolDisp() {
-        return toolDisp;
-    }
-
-    public void setToolDisp(String toolDisp) {
-        this.toolDisp = toolDisp;
     }
 }

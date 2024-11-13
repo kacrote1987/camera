@@ -3,26 +3,26 @@ package com.wision.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
-import com.wision.mapper.ToolDesMapper;
-import com.wision.service.ToolDesService;
+import com.wision.mapper.UnitDesMapper;
+import com.wision.service.UnitDesService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class ToolDesServiceImpl implements ToolDesService {
+public class UnitDesServiceImpl implements UnitDesService {
     @Resource
-    ToolDesMapper toolDesMapper;
+    UnitDesMapper toolDesMapper;
 
     @Override
-    public PageInfo<ToolListVo> toolList(ToolListForm params) {
+    public PageInfo<UnitListVo> toolList(UnitListForm params) {
         Integer page = 0;
         if(params.getPage() != null){
             page = params.getPage();
         }
         PageHelper.startPage(page, 10);
-        List<ToolListVo> toolList = toolDesMapper.toolList(params);
+        List<UnitListVo> toolList = toolDesMapper.toolList(params);
         return PageInfo.of(toolList);
     }
 

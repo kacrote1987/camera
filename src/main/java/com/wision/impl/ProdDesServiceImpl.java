@@ -141,14 +141,14 @@ public class ProdDesServiceImpl implements ProdDesService {
     }
 
     @Override
-    public PageInfo<ToolSelVo> toolSel(String prodId,ToolListForm params) {
+    public PageInfo<UnitSelVo> toolSel(String prodId, UnitListForm params) {
         Integer page = 0;
         if(params.getPage() != null){
             page = params.getPage();
         }
         PageHelper.startPage(page, 10);
         String menuId;
-        List<ToolSelVo> toolSel = new ArrayList<>();
+        List<UnitSelVo> toolSel = new ArrayList<>();
         if(prodId.indexOf("menuId")>-1){
             menuId = prodId.substring(prodId.indexOf("menuId=")+7,prodId.length());
             toolSel = prodDesMapper.toolSel(Long.valueOf(menuId),params);

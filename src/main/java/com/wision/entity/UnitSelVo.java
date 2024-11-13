@@ -1,22 +1,33 @@
 package com.wision.entity;
 
-public class ToolDetForm {
-    private String action;
+public class UnitSelVo {
+    private Long relatId;
+    private String layoutType;
     private Long toolId;
     private String toolType;
+    private String typeCode;
     private String toolName;
     private String toolVer;
-    private String toolExplain;
+    private String relatName;
     private String toolTime;
-    private String shareNum;
     private String toolState;
+    private String toolConf;
+    private String toolDisp;
 
-    public String getAction() {
-        return action;
+    public Long getRelatId() {
+        return relatId;
     }
 
-    public void setAction(String action) {
-        this.action = action;
+    public void setRelatId(Long relatId) {
+        this.relatId = relatId;
+    }
+
+    public String getLayoutType() {
+        return layoutType;
+    }
+
+    public void setLayoutType(String layoutType) {
+        this.layoutType = layoutType;
     }
 
     public Long getToolId() {
@@ -35,6 +46,14 @@ public class ToolDetForm {
         this.toolType = toolType;
     }
 
+    public String getTypeCode() {
+        return typeCode;
+    }
+
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
+    }
+
     public String getToolName() {
         return toolName;
     }
@@ -51,12 +70,12 @@ public class ToolDetForm {
         this.toolVer = toolVer;
     }
 
-    public String getToolExplain() {
-        return toolExplain;
+    public String getRelatName() {
+        return relatName;
     }
 
-    public void setToolExplain(String toolExplain) {
-        this.toolExplain = toolExplain;
+    public void setRelatName(String relatName) {
+        this.relatName = relatName;
     }
 
     public String getToolTime() {
@@ -67,19 +86,27 @@ public class ToolDetForm {
         this.toolTime = toolTime;
     }
 
-    public String getShareNum() {
-        return shareNum;
-    }
-
-    public void setShareNum(String shareNum) {
-        this.shareNum = shareNum;
-    }
-
     public String getToolState() {
         return toolState;
     }
 
     public void setToolState(String toolState) {
         this.toolState = toolState;
+    }
+
+    public String getToolConf() {
+        return toolConf;
+    }
+
+    public void setToolConf(String toolConf) {
+        this.toolConf = toolConf;
+    }
+
+    public String getToolDisp() {
+        return toolDisp;
+    }
+
+    public void setToolDisp(String toolDisp) {
+        this.toolDisp = toolDisp;
     }
 }

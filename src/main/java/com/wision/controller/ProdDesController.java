@@ -104,8 +104,8 @@ public class ProdDesController {
 
     @ApiOperation("根据菜单树查组件")
     @PostMapping("/toolSel")
-    public Result toolSel(@RequestBody String prodId,ToolListForm params){
-        PageInfo<ToolSelVo> toolSel= prodDesService.toolSel(prodId,params);
+    public Result toolSel(@RequestBody String prodId, UnitListForm params){
+        PageInfo<UnitSelVo> toolSel= prodDesService.toolSel(prodId,params);
         return Result.success(toolSel);
     }
 

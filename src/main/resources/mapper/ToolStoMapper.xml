@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wision.mapper.ToolStoMapper">
-    <select id="toolList" resultType="com.wision.entity.ToolListVo" >
+<mapper namespace="com.wision.mapper.UnitStoMapper">
+    <select id="toolList" resultType="com.wision.entity.UnitListVo" >
         select a.tool_id,a.tool_type,a.tool_name,a.tool_ver,tool_conf,a.tool_explain,date_format(a.tool_time,'%Y-%m-%d') as tool_time,a.share_num,a.tool_state
         from t_supp_tool_basic a where 1=1
         <if test="params.toolType!=null and params.toolType!=''">
@@ -15,7 +15,7 @@
         </if>
         order by a.tool_id
     </select>
-    <select id="toolDet" resultType="com.wision.entity.ToolDetVo" >
+    <select id="toolDet" resultType="com.wision.entity.UnitDetVo" >
         select tool_id,tool_type,tool_name,tool_ver,tool_explain,date_format(tool_time,'%Y-%m-%d') as tool_time,share_num,tool_state
         from t_supp_tool_basic where tool_id=#{toolId}
     </select>
