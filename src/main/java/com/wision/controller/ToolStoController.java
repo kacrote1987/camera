@@ -24,6 +24,13 @@ public class ToolStoController {
         return Result.success();
     }
 
+    @ApiOperation("微信扫码支付")
+    @PostMapping("/payByWx")
+    public Result payByWx(){
+        toolStoService.payByWx();
+        return Result.success();
+    }
+
     @ApiOperation("kafka")
     @PostMapping("/kafka")
     public Result kafka(){

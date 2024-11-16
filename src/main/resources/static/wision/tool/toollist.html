@@ -19,6 +19,7 @@
         <div class="layui-card-body">
           <div class="layui-btn-container">
             <button class="layui-btn" onclick="qrcode()">生成二维码</button>
+            <button class="layui-btn" onclick="payByWx()">扫码支付</button>
           </div>
         </div>
       </div>
@@ -39,7 +40,13 @@
   }).use(['index']);
 
   function qrcode(){
-    postdata(null,"/test/qrcode", function () {
+    postdata(null,"/toolSto/qrcode", function () {
+      layer.msg("生成成功！");
+    });
+  }
+
+  function payByWx(){
+    postdata(null,"/toolSto/payByWx", function () {
       layer.msg("生成成功！");
     });
   }
