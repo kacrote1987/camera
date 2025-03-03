@@ -55,7 +55,7 @@
       <a id="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
       <a id="ui" class="layui-btn layui-btn-xs" lay-event="ui">UI设计</a>
       <a id="tbl" class="layui-btn layui-btn-xs" lay-event="tbl">库表</a>
-      <a id="tool" class="layui-btn layui-btn-xs" lay-event="tool">元素</a>
+      <a id="tool" class="layui-btn layui-btn-xs" lay-event="element">元素</a>
       <a id="relate" class="layui-btn layui-btn-xs" lay-event="relate">关联</a>
       <a id="test" class="layui-btn layui-btn-xs" lay-event="test">测试</a>
       <a id="online" class="layui-btn layui-btn-xs" lay-event="online">上架</a>
@@ -187,7 +187,7 @@
           , maxmin: true
           , area: ['1200px', '600px']
         });
-      }else if (obj.event === 'tool') {
+      }else if (obj.event === 'element') {
         layer.open({
           type: 2
           , title: '元素'

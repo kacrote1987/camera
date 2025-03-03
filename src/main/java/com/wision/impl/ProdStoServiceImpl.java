@@ -94,7 +94,7 @@ public class ProdStoServiceImpl implements ProdStoService {
     @Override
     public PageInfo<MainContVo> mainCont(Long menuId, ChildTblForm params) {
         //获取表名
-//        String tblName=childMapper.mainCont(menuId);//tblName=t_imp_40_xmzb
+        String tblName=prodStoMapper.getTblNameByMenuId(menuId);//tblName=t_imp_40_xmzb
         //获取导入表的内容
         PageHelper.startPage(params.getPage(), 10);
 //        String search=params.getSearch()+",";
@@ -158,7 +158,7 @@ public class ProdStoServiceImpl implements ProdStoService {
 ////            System.out.println("jsonString = " + jsonString);
 //        }
         String realPage = prodStoMapper.getRealPageByMenu(menuId);
-        String tblName = "t_ext_" + realPage.replace("list.html","");
+        tblName = "t_ext_" + realPage.replace("list.html","");
         List<MainContVo> mainCont=prodStoMapper.getMainCont(tblName);
         return PageInfo.of(mainCont);
     }

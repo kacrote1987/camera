@@ -55,4 +55,7 @@
     <select id="getRealPage" resultType="String" >
         select real_page from t_supp_relat_main where relat_id=#{relatId}
     </select>
+    <select id="getTblNameByMenuId" resultType="String" >
+        select table_name from t_supp_relat_main where relat_id=#{relatId}
+    </select>
 </mapper>

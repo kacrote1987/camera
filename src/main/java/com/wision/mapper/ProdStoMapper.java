@@ -19,4 +19,5 @@ public interface ProdStoMapper {
     String getProdNikName(Long prodId);
     String getToolPage(Long relatId);
     String getRealPage(Long relatId);
+    String getTblNameByMenuId(Long menuId);
 }

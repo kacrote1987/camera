@@ -29,11 +29,13 @@
                   <div class="layui-col-lg6">
                     <label class="layui-form-label">产品类别</label>
                     <div class="layui-input-block">
-                      <select id="prodType" name="prodType" lay-filter="prodType">
+                      <select id="prodType" lay-filter="prodType">
                         <option value="">全部</option>
+                        <option value="智慧城市">智慧城市</option>
                         <option value="智慧园区">智慧园区</option>
-                        <option value="未来社区">未来社区</option>
+                        <option value="智慧工厂">智慧工厂</option>
                         <option value="智慧国企">智慧国企</option>
+                        <option value="未来社区">未来社区</option>
                       </select>
                     </div>
                   </div>
@@ -147,7 +149,7 @@
     params.prodExplain = $('#prodExplain').val();
     params.prodTime = $('#prodTime').val();
     params.prodState = $('#prodState').val();
-    postdata(params, "/prod/prodEdit", function () {
+    postdata(params, "/prodDes/prodEdit", function () {
       layer.msg("保存成功！");
     });
   }
