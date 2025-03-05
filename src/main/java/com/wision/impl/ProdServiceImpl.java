@@ -101,48 +101,47 @@ public class ProdServiceImpl implements ProdService {
         }
         return menuList;
     }
-//
-//    @Override
-//    public void menuAdd(Long prodId) {
-//        prodDesMapper.insertMenu(prodId);
-//    }
-//
-//    @Override
-//    public void menuDel(Long menuId) {
-////      先删除对应关系,再删除菜单
-//        prodDesMapper.deleteRelatExt(menuId);
-//        prodDesMapper.deleteRelatMain(menuId);
-//        prodDesMapper.deleteMenuMain(menuId);
-//    }
-//
-//
-//    @Override
-//    public void menuEdit(MenuEditForm params) {
-//        if(Objects.equals(params.getField(), "toolIds")){
-////          在t_supp_relat_main表中新增菜单
-//            String toolIdsTemp = params.getValue()+',';
-//            while(toolIdsTemp.indexOf(',')>0){
-//                String toolId=toolIdsTemp.substring(0,toolIdsTemp.indexOf(','));
-//
-////                List<RelatDetVo> toolIdList = prodDesMapper.getToolIdsByMenuId();
-////                params.getValue()
-//
-//                Long checkRelat=prodDesMapper.checkRelat(params.getMenuId(),Long.valueOf(toolId));
-//                if(checkRelat==null){
-//                    prodDesMapper.insertRelat(params.getMenuId(),Long.valueOf(toolId));
-//                }
-//
-//
-//                toolIdsTemp=toolIdsTemp.substring(toolIdsTemp.indexOf(',')+1,toolIdsTemp.length());
-//            }
-////          清除多余数据
-//            prodDesMapper.cleanExt(params.getMenuId(),params.getValue());
-//            prodDesMapper.cleanRelat(params.getMenuId(),params.getValue());
-//        }else {
-////          更新其余信息时，仅更新菜单
-//            prodDesMapper.updateMenu(params.getMenuId(), method(params.getField()), params.getValue());
-//        }
-//    }
+
+    @Override
+    public void menuAdd(Long prodId) {
+        prodMapper.insertMenu(prodId);
+    }
+
+    @Override
+    public void menuDel(Long menuId) {
+//      先删除对应关系,再删除菜单
+        prodMapper.deleteRelatExt(menuId);
+        prodMapper.deleteRelatMain(menuId);
+        prodMapper.deleteMenuMain(menuId);
+    }
+
+    @Override
+    public void menuEdit(MenuEditForm params) {
+        if(Objects.equals(params.getField(), "toolIds")){
+//          在t_supp_relat_main表中新增菜单
+            String toolIdsTemp = params.getValue()+',';
+            while(toolIdsTemp.indexOf(',')>0){
+                String toolId=toolIdsTemp.substring(0,toolIdsTemp.indexOf(','));
+
+//                List<RelatDetVo> toolIdList = prodDesMapper.getToolIdsByMenuId();
+//                params.getValue()
+
+                Long checkRelat=prodMapper.checkRelat(params.getMenuId(),Long.valueOf(toolId));
+                if(checkRelat==null){
+                    prodMapper.insertRelat(params.getMenuId(),Long.valueOf(toolId));
+                }
+
+
+                toolIdsTemp=toolIdsTemp.substring(toolIdsTemp.indexOf(',')+1,toolIdsTemp.length());
+            }
+//          清除多余数据
+            prodMapper.cleanExt(params.getMenuId(),params.getValue());
+            prodMapper.cleanRelat(params.getMenuId(),params.getValue());
+        }else {
+//          更新其余信息时，仅更新菜单
+            prodMapper.updateMenu(params.getMenuId(), method(params.getField()), params.getValue());
+        }
+    }
 //
 //    @Override
 //    public List<MenuTreeVo> menuTree(Long prodId) {

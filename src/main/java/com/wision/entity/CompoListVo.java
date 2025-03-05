@@ -1,6 +1,6 @@
 package com.wision.entity;
 
-public class UnitListVo {
+public class CompoListVo {
     private Long rowNum;
     private Long menuId;
     private Long relatId;

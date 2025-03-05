@@ -87,27 +87,27 @@ public class ProdController {
         List<MenuListVo> menuList= prodService.menuList(prodId);
         return Result.success(menuList);
     }
-//
-//    @ApiOperation("菜单新增")
-//    @PostMapping("/menuAdd")
-//    public Result menuAdd(@RequestParam Long prodId){
-//        prodService.menuAdd(prodId);
-//        return Result.success();
-//    }
-//
-//    @ApiOperation("菜单删除")
-//    @PostMapping("/menuDel")
-//    public Result menuDel(@RequestParam Long menuId){
-//        prodService.menuDel(menuId);
-//        return Result.success();
-//    }
-//
-//    @ApiOperation("菜单修改")
-//    @PostMapping("/menuEdit")
-//    public Result menuSave(@RequestBody MenuEditForm params){
-//        prodService.menuEdit(params);
-//        return Result.success();
-//    }
+
+    @ApiOperation("菜单新增")
+    @PostMapping("/menuAdd")
+    public Result menuAdd(@RequestParam Long prodId){
+        prodService.menuAdd(prodId);
+        return Result.success();
+    }
+
+    @ApiOperation("菜单删除")
+    @PostMapping("/menuDel")
+    public Result menuDel(@RequestParam Long menuId){
+        prodService.menuDel(menuId);
+        return Result.success();
+    }
+
+    @ApiOperation("菜单修改")
+    @PostMapping("/menuEdit")
+    public Result menuSave(@RequestBody MenuEditForm params){
+        prodService.menuEdit(params);
+        return Result.success();
+    }
 //
 //    @ApiOperation("菜单树")
 //    @PostMapping("/menuTree")

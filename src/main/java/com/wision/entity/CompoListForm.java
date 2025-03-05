@@ -1,6 +1,6 @@
 package com.wision.entity;
 
-public class UnitListForm {
+public class CompoListForm {
     private Long prodId;
     private Long menuId;
     private String toolType;

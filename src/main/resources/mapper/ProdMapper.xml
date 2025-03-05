@@ -41,36 +41,36 @@
     <select id="getToolIdsByMenuId" resultType="com.wision.entity.RelatDetVo" >
         select tool_id from t_supp_relat_main where menu_id=#{menuId}
     </select>
+    <insert id="insertMenu">
+        insert into t_supp_menu_main(prod_id) values(#{prodId})
+    </insert>
+    <delete id="deleteRelatExt">
+        delete from t_supp_relat_ext where relat_id in (select relat_id from t_supp_relat_main where menu_id = #{menuId})
+    </delete>
+    <delete id="deleteRelatMain">
+        delete from t_supp_relat_main where menu_id=#{menuId}
+    </delete>
+    <delete id="deleteMenuMain">
+        delete from t_supp_menu_main where menu_id=#{menuId}
+    </delete>
+    <select id="checkRelat" resultType="Long" >
+        select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id=#{toolId}
+    </select>
+    <insert id="insertRelat">
+        insert into t_supp_relat_main(menu_id,tool_id) values (#{menuId},#{toolId})
+    </insert>
+    <delete id="cleanExt">
+        delete from t_supp_relat_ext where relat_id in (select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds}))
+    </delete>
+    <delete id="cleanRelat">
+        delete from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds})
+    </delete>
+    <update id="updateMenu">
+        update t_supp_menu_main set ${field} = #{value} where menu_id=#{menuId}
+    </update>
 <!--    <select id="getProdName" resultType="String" >-->
 <!--        select prod_name from t_supp_prod_main where prod_id=#{prodId}-->
 <!--    </select>-->
-<!--    <insert id="insertMenu">-->
-<!--        insert into t_supp_menu_main(prod_id) values(#{prodId})-->
-<!--    </insert>-->
-<!--    <delete id="deleteRelatExt">-->
-<!--        delete from t_supp_relat_ext where relat_id in (select relat_id from t_supp_relat_main where menu_id = #{menuId})-->
-<!--    </delete>-->
-<!--    <delete id="deleteRelatMain">-->
-<!--        delete from t_supp_relat_main where menu_id=#{menuId}-->
-<!--    </delete>-->
-<!--    <delete id="deleteMenuMain">-->
-<!--        delete from t_supp_menu_main where menu_id=#{menuId}-->
-<!--    </delete>-->
-<!--    <select id="checkRelat" resultType="Long" >-->
-<!--        select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id=#{toolId}-->
-<!--    </select>-->
-<!--    <insert id="insertRelat">-->
-<!--        insert into t_supp_relat_main(menu_id,tool_id) values (#{menuId},#{toolId})-->
-<!--    </insert>-->
-<!--    <delete id="cleanExt">-->
-<!--        delete from t_supp_relat_ext where relat_id in (select relat_id from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds}))-->
-<!--    </delete>-->
-<!--    <delete id="cleanRelat">-->
-<!--        delete from t_supp_relat_main where menu_id=#{menuId} and tool_id not in (${toolIds})-->
-<!--    </delete>-->
-<!--    <update id="updateMenu">-->
-<!--        update t_supp_menu_main set ${field} = #{value} where menu_id=#{menuId}-->
-<!--    </update>-->
 <!--    <select id="menuFather" resultType="com.wision.entity.MenuTreeVo" >-->
 <!--        select menu_name as title,menu_id as id,'true' as spread,null as children from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')-->
 <!--    </select>-->
