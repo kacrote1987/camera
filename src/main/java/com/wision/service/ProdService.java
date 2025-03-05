@@ -5,22 +5,24 @@ import com.wision.entity.*;
 
 import java.util.List;
 
-public interface ProdDesService {
-    void onLine(Long prodId);
-    PageInfo<ProdDesignVo> prodDesign(ProdDesignForm params);
+public interface ProdService {
+    PageInfo<ProdListVo> storeList(ProdListForm params);
+    PageInfo<ProdListVo> prodList(ProdListForm params);
     List<ProdDetVo> prodDet(Long prodId);
+    void prodEdit(ProdDetForm params);
     void prodAdd(ProdDetForm params);
     void prodDel(Long prodId);
-    void prodEdit(ProdDetForm params);
+    void onLine(Long prodId);
+    void offLine(Long prodId);
     List<TblListVo> tblList(Long prodId);
-    List<MenuListVo> menuList(Long prodId);
-    void menuAdd(Long prodId);
-    void menuDel(Long menuId);
-    void menuEdit(MenuEditForm params);
-    List<MenuTreeVo> menuTree(Long prodId);
-    PageInfo<UnitSelVo> toolSel(String params, UnitListForm params1);
-    List<ChildListVo> childList(Long menuId);
-    void createPage(Long menuId);
+//    List<MenuListVo> menuList(Long prodId);
+//    void menuAdd(Long prodId);
+//    void menuDel(Long menuId);
+//    void menuEdit(MenuEditForm params);
+//    List<MenuTreeVo> menuTree(Long prodId);
+//    PageInfo<UnitSelVo> toolSel(String params, UnitListForm params1);
+//    List<ChildListVo> childList(Long menuId);
+//    void createPage(Long menuId);
 //    /**
 //     * 产品演示
 //     * @return

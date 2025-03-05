@@ -3,8 +3,8 @@ package com.wision.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
-import com.wision.mapper.ProdDesMapper;
-import com.wision.service.ProdDesService;
+import com.wision.mapper.ProdMapper;
+import com.wision.service.ProdService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,36 +14,49 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ProdDesServiceImpl implements ProdDesService {
+public class ProdServiceImpl implements ProdService {
     @Resource
-    ProdDesMapper prodDesMapper;
+    ProdMapper prodMapper;
 
     @Override
-    public void onLine(Long prodId) {
-        prodDesMapper.onLine(prodId);
-    }
-
-    @Override
-    public PageInfo<ProdDesignVo> prodDesign(ProdDesignForm params) {
+    public PageInfo<ProdListVo> storeList(ProdListForm params) {
         Integer page = 0;
+        String prodState = "上架";
         if(params.getPage() != null){
             page = params.getPage();
         }
         PageHelper.startPage(page, 10);
-        List<ProdDesignVo> prodDesign = prodDesMapper.prodDesign(params);
-        return PageInfo.of(prodDesign);
+        List<ProdListVo> prodList = prodMapper.prodList(params,prodState);
+        return PageInfo.of(prodList);
+    }
+
+    @Override
+    public PageInfo<ProdListVo> prodList(ProdListForm params) {
+        Integer page = 0;
+        String prodState = "下架";
+        if(params.getPage() != null){
+            page = params.getPage();
+        }
+        PageHelper.startPage(page, 10);
+        List<ProdListVo> prodList = prodMapper.prodList(params,prodState);
+        return PageInfo.of(prodList);
     }
 
     @Override
     public List<ProdDetVo> prodDet(Long prodId) {
-        List<ProdDetVo> prodDet=prodDesMapper.prodDet(prodId);
+        List<ProdDetVo> prodDet = prodMapper.prodDet(prodId);
         return prodDet;
     }
 
     @Override
+    public void prodEdit(ProdDetForm params) {
+        prodMapper.updateProd(params);
+    }
+
+    @Override
     public void prodAdd(ProdDetForm params) {
-        prodDesMapper.insertProd(params);
-        //创建java文件夹
+        prodMapper.insertProd(params);
+//        创建java文件夹
 //        String dirStr = "D:\\MyProgame\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\dist\\views\\supp\\prodlist\\mytest";
 //        File directory = new File(dirStr);
 //        directory.mkdir();
@@ -53,152 +66,157 @@ public class ProdDesServiceImpl implements ProdDesService {
 
     @Override
     public void prodDel(Long prodId) {
-        prodDesMapper.deleteProd(prodId);
+        prodMapper.deleteProd(prodId);
     }
 
     @Override
-    public void prodEdit(ProdDetForm params) {
-        prodDesMapper.updateProd(params);
+    public void onLine(Long prodId) {
+        prodMapper.onLine(prodId);
+    }
+
+    @Override
+    public void offLine(Long prodId) {
+        prodMapper.offLine(prodId);
     }
 
     @Override
     public List<TblListVo> tblList(Long prodId) {
-        List<TblListVo> tblList = prodDesMapper.tblList(prodId);
+        List<TblListVo> tblList = prodMapper.tblList(prodId);
         return tblList;
     }
-
-    @Override
-    public List<MenuListVo> menuList(Long prodId) {
-        List<MenuListVo> menuList=prodDesMapper.menuList(prodId);
-        for(int i=0;i<menuList.size();i++){
-            List<RelatDetVo> toolList=prodDesMapper.getToolIdsByMenuId(menuList.get(i).getMenuId());
-            String toolIds="";
-            if(toolList.size()>0){
-                for(int j=0;j<toolList.size();j++){
-                    toolIds = toolIds + toolList.get(j).getToolId() + ",";
-                }
-                toolIds=toolIds.substring(0,toolIds.length()-1);
-            }
-            menuList.get(i).setToolIds(toolIds);
-        }
-        return menuList;
-    }
-
-    @Override
-    public void menuAdd(Long prodId) {
-        prodDesMapper.insertMenu(prodId);
-    }
-
-    @Override
-    public void menuDel(Long menuId) {
-//      先删除对应关系,再删除菜单
-        prodDesMapper.deleteRelatExt(menuId);
-        prodDesMapper.deleteRelatMain(menuId);
-        prodDesMapper.deleteMenuMain(menuId);
-    }
-
-
-    @Override
-    public void menuEdit(MenuEditForm params) {
-        if(Objects.equals(params.getField(), "toolIds")){
-//          在t_supp_relat_main表中新增菜单
-            String toolIdsTemp = params.getValue()+',';
-            while(toolIdsTemp.indexOf(',')>0){
-                String toolId=toolIdsTemp.substring(0,toolIdsTemp.indexOf(','));
-
-//                List<RelatDetVo> toolIdList = prodDesMapper.getToolIdsByMenuId();
-//                params.getValue()
-
-                Long checkRelat=prodDesMapper.checkRelat(params.getMenuId(),Long.valueOf(toolId));
-                if(checkRelat==null){
-                    prodDesMapper.insertRelat(params.getMenuId(),Long.valueOf(toolId));
-                }
-
-
-                toolIdsTemp=toolIdsTemp.substring(toolIdsTemp.indexOf(',')+1,toolIdsTemp.length());
-            }
-//          清除多余数据
-            prodDesMapper.cleanExt(params.getMenuId(),params.getValue());
-            prodDesMapper.cleanRelat(params.getMenuId(),params.getValue());
-        }else {
-//          更新其余信息时，仅更新菜单
-            prodDesMapper.updateMenu(params.getMenuId(), method(params.getField()), params.getValue());
-        }
-    }
-
-    @Override
-    public List<MenuTreeVo> menuTree(Long prodId) {
-        List<MenuTreeVo> MenuTreeVo=prodDesMapper.menuFather(prodId);
-        for(int i=0;i<MenuTreeVo.size();i++){
-            List<children> menuChild=prodDesMapper.menuChild(MenuTreeVo.get(i).getId());
-            if(menuChild.size()!=0){
-                MenuTreeVo.get(i).setChildren(menuChild);
-            }else {
-                i++;
-            }
-        }
-        return MenuTreeVo;
-    }
-
-    @Override
-    public PageInfo<UnitSelVo> toolSel(String prodId, UnitListForm params) {
-        Integer page = 0;
-        if(params.getPage() != null){
-            page = params.getPage();
-        }
-        PageHelper.startPage(page, 10);
-        String menuId;
-        List<UnitSelVo> toolSel = new ArrayList<>();
-        if(prodId.indexOf("menuId")>-1){
-            menuId = prodId.substring(prodId.indexOf("menuId=")+7,prodId.length());
-            toolSel = prodDesMapper.toolSel(Long.valueOf(menuId),params);
-        }
-        return PageInfo.of(toolSel);
-    }
-
-    @Override
-    public List<ChildListVo> childList(Long menuId) {
-        List<ChildListVo> childList = prodDesMapper.childList(menuId);
-        return childList;
-    }
-
-    @Override
-    public void createPage(Long menuId) {
-        Long relatId = prodDesMapper.getMainRelatId(menuId);
-        List<PagePathVo> destinyPath = prodDesMapper.getDestinyPath(relatId);
-        for(int i=0;i<destinyPath.size();i++){
-            //1-删除同名html文件
-            String filePath = "D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
-            File htmlFile = new File(filePath);
-            htmlFile.delete();
-            //2-创建一个空的html文件
-            String filepath = "D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
-            File file = new File(filepath);
-            try {
-                file.createNewFile();
-                System.out.println("文件创建成功！");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            //3-生成新的页面
-            List<PagePathVo> sourcePath = prodDesMapper.getSourcePath(relatId,destinyPath.get(i).getDestinyPath());
-            String destinationPath = "D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\"  + destinyPath.get(i).getDestinyPath(); // 目标页面路径
-            for(int j=0;j<sourcePath.size();j++){
-                sourcePath.get(j).setSourcePath("D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\" + sourcePath.get(j).getSourcePath()); // 替换成页面完整路径
-                try (FileReader fr = new FileReader(sourcePath.get(j).getSourcePath());
-                     BufferedReader br = new BufferedReader(fr);
-                     FileWriter fw = new FileWriter(destinationPath, true); // 注意这里的true，表示追加
-                     BufferedWriter bw = new BufferedWriter(fw)) {
-                    String currentLine;
-                    while ((currentLine = br.readLine()) != null) {
-                        bw.write(currentLine + System.lineSeparator()); // 追加内容并换行
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//
+//    @Override
+//    public List<MenuListVo> menuList(Long prodId) {
+//        List<MenuListVo> menuList=prodDesMapper.menuList(prodId);
+//        for(int i=0;i<menuList.size();i++){
+//            List<RelatDetVo> toolList=prodDesMapper.getToolIdsByMenuId(menuList.get(i).getMenuId());
+//            String toolIds="";
+//            if(toolList.size()>0){
+//                for(int j=0;j<toolList.size();j++){
+//                    toolIds = toolIds + toolList.get(j).getToolId() + ",";
+//                }
+//                toolIds=toolIds.substring(0,toolIds.length()-1);
+//            }
+//            menuList.get(i).setToolIds(toolIds);
+//        }
+//        return menuList;
+//    }
+//
+//    @Override
+//    public void menuAdd(Long prodId) {
+//        prodDesMapper.insertMenu(prodId);
+//    }
+//
+//    @Override
+//    public void menuDel(Long menuId) {
+////      先删除对应关系,再删除菜单
+//        prodDesMapper.deleteRelatExt(menuId);
+//        prodDesMapper.deleteRelatMain(menuId);
+//        prodDesMapper.deleteMenuMain(menuId);
+//    }
+//
+//
+//    @Override
+//    public void menuEdit(MenuEditForm params) {
+//        if(Objects.equals(params.getField(), "toolIds")){
+////          在t_supp_relat_main表中新增菜单
+//            String toolIdsTemp = params.getValue()+',';
+//            while(toolIdsTemp.indexOf(',')>0){
+//                String toolId=toolIdsTemp.substring(0,toolIdsTemp.indexOf(','));
+//
+////                List<RelatDetVo> toolIdList = prodDesMapper.getToolIdsByMenuId();
+////                params.getValue()
+//
+//                Long checkRelat=prodDesMapper.checkRelat(params.getMenuId(),Long.valueOf(toolId));
+//                if(checkRelat==null){
+//                    prodDesMapper.insertRelat(params.getMenuId(),Long.valueOf(toolId));
+//                }
+//
+//
+//                toolIdsTemp=toolIdsTemp.substring(toolIdsTemp.indexOf(',')+1,toolIdsTemp.length());
+//            }
+////          清除多余数据
+//            prodDesMapper.cleanExt(params.getMenuId(),params.getValue());
+//            prodDesMapper.cleanRelat(params.getMenuId(),params.getValue());
+//        }else {
+////          更新其余信息时，仅更新菜单
+//            prodDesMapper.updateMenu(params.getMenuId(), method(params.getField()), params.getValue());
+//        }
+//    }
+//
+//    @Override
+//    public List<MenuTreeVo> menuTree(Long prodId) {
+//        List<MenuTreeVo> MenuTreeVo=prodDesMapper.menuFather(prodId);
+//        for(int i=0;i<MenuTreeVo.size();i++){
+//            List<children> menuChild=prodDesMapper.menuChild(MenuTreeVo.get(i).getId());
+//            if(menuChild.size()!=0){
+//                MenuTreeVo.get(i).setChildren(menuChild);
+//            }else {
+//                i++;
+//            }
+//        }
+//        return MenuTreeVo;
+//    }
+//
+//    @Override
+//    public PageInfo<UnitSelVo> toolSel(String prodId, UnitListForm params) {
+//        Integer page = 0;
+//        if(params.getPage() != null){
+//            page = params.getPage();
+//        }
+//        PageHelper.startPage(page, 10);
+//        String menuId;
+//        List<UnitSelVo> toolSel = new ArrayList<>();
+//        if(prodId.indexOf("menuId")>-1){
+//            menuId = prodId.substring(prodId.indexOf("menuId=")+7,prodId.length());
+//            toolSel = prodDesMapper.toolSel(Long.valueOf(menuId),params);
+//        }
+//        return PageInfo.of(toolSel);
+//    }
+//
+//    @Override
+//    public List<ChildListVo> childList(Long menuId) {
+//        List<ChildListVo> childList = prodDesMapper.childList(menuId);
+//        return childList;
+//    }
+//
+//    @Override
+//    public void createPage(Long menuId) {
+//        Long relatId = prodDesMapper.getMainRelatId(menuId);
+//        List<PagePathVo> destinyPath = prodDesMapper.getDestinyPath(relatId);
+//        for(int i=0;i<destinyPath.size();i++){
+//            //1-删除同名html文件
+//            String filePath = "D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
+//            File htmlFile = new File(filePath);
+//            htmlFile.delete();
+//            //2-创建一个空的html文件
+//            String filepath = "D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\" + destinyPath.get(i).getDestinyPath();
+//            File file = new File(filepath);
+//            try {
+//                file.createNewFile();
+//                System.out.println("文件创建成功！");
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//            //3-生成新的页面
+//            List<PagePathVo> sourcePath = prodDesMapper.getSourcePath(relatId,destinyPath.get(i).getDestinyPath());
+//            String destinationPath = "D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\prodsto\\"  + destinyPath.get(i).getDestinyPath(); // 目标页面路径
+//            for(int j=0;j<sourcePath.size();j++){
+//                sourcePath.get(j).setSourcePath("D:\\MyProject\\Workspaces\\wision\\src\\main\\resources\\static\\wision\\toolsto\\" + sourcePath.get(j).getSourcePath()); // 替换成页面完整路径
+//                try (FileReader fr = new FileReader(sourcePath.get(j).getSourcePath());
+//                     BufferedReader br = new BufferedReader(fr);
+//                     FileWriter fw = new FileWriter(destinationPath, true); // 注意这里的true，表示追加
+//                     BufferedWriter bw = new BufferedWriter(fw)) {
+//                    String currentLine;
+//                    while ((currentLine = br.readLine()) != null) {
+//                        bw.write(currentLine + System.lineSeparator()); // 追加内容并换行
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 
 //    @Override
 //    public List<ProdViewVo> prodView(String params) {
