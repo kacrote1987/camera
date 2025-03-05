@@ -16,8 +16,8 @@ public interface ProdMapper {
     boolean onLine(Long prodId);
     boolean offLine(Long prodId);
     List<TblListVo> tblList(Long prodId);
-//    List<MenuListVo> menuList(Long prodId);
-//    List<RelatDetVo> getToolIdsByMenuId(Long menuId);
+    List<MenuListVo> menuList(Long prodId);
+    List<RelatDetVo> getToolIdsByMenuId(Long menuId);
 //    boolean insertMenu(Long prodId);
 //    boolean deleteRelatExt(Long menuId);
 //    boolean deleteRelatMain(Long menuId);

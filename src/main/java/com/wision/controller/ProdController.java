@@ -80,13 +80,13 @@ public class ProdController {
         List<TblListVo> tblList= prodService.tblList(prodId);
         return Result.success(tblList);
     }
-//
-//    @ApiOperation("菜单列表")
-//    @PostMapping("/menuList")
-//    public Result menuList(@RequestParam Long prodId){
-//        List<MenuListVo> menuList= prodService.menuList(prodId);
-//        return Result.success(menuList);
-//    }
+
+    @ApiOperation("菜单列表")
+    @PostMapping("/menuList")
+    public Result menuList(@RequestParam Long prodId){
+        List<MenuListVo> menuList= prodService.menuList(prodId);
+        return Result.success(menuList);
+    }
 //
 //    @ApiOperation("菜单新增")
 //    @PostMapping("/menuAdd")

@@ -15,7 +15,7 @@ public interface ProdService {
     void onLine(Long prodId);
     void offLine(Long prodId);
     List<TblListVo> tblList(Long prodId);
-//    List<MenuListVo> menuList(Long prodId);
+    List<MenuListVo> menuList(Long prodId);
 //    void menuAdd(Long prodId);
 //    void menuDel(Long menuId);
 //    void menuEdit(MenuEditForm params);

@@ -84,23 +84,23 @@ public class ProdServiceImpl implements ProdService {
         List<TblListVo> tblList = prodMapper.tblList(prodId);
         return tblList;
     }
-//
-//    @Override
-//    public List<MenuListVo> menuList(Long prodId) {
-//        List<MenuListVo> menuList=prodDesMapper.menuList(prodId);
-//        for(int i=0;i<menuList.size();i++){
-//            List<RelatDetVo> toolList=prodDesMapper.getToolIdsByMenuId(menuList.get(i).getMenuId());
-//            String toolIds="";
-//            if(toolList.size()>0){
-//                for(int j=0;j<toolList.size();j++){
-//                    toolIds = toolIds + toolList.get(j).getToolId() + ",";
-//                }
-//                toolIds=toolIds.substring(0,toolIds.length()-1);
-//            }
-//            menuList.get(i).setToolIds(toolIds);
-//        }
-//        return menuList;
-//    }
+
+    @Override
+    public List<MenuListVo> menuList(Long prodId) {
+        List<MenuListVo> menuList=prodMapper.menuList(prodId);
+        for(int i=0;i<menuList.size();i++){
+            List<RelatDetVo> toolList=prodMapper.getToolIdsByMenuId(menuList.get(i).getMenuId());
+            String toolIds="";
+            if(toolList.size()>0){
+                for(int j=0;j<toolList.size();j++){
+                    toolIds = toolIds + toolList.get(j).getToolId() + ",";
+                }
+                toolIds=toolIds.substring(0,toolIds.length()-1);
+            }
+            menuList.get(i).setToolIds(toolIds);
+        }
+        return menuList;
+    }
 //
 //    @Override
 //    public void menuAdd(Long prodId) {

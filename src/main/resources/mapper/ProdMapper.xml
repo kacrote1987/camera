@@ -35,14 +35,14 @@
     <select id="tblList" resultType="com.wision.entity.TblListVo" >
         select tbl_id,tbl_name,tbl_code from t_supp_imp_tbl where prod_id=#{prodId}
     </select>
+    <select id="menuList" resultType="com.wision.entity.MenuListVo" >
+        select menu_id,menu_name,father_id,menu_order from t_supp_menu_main where prod_id=#{prodId} order by menu_order
+    </select>
+    <select id="getToolIdsByMenuId" resultType="com.wision.entity.RelatDetVo" >
+        select tool_id from t_supp_relat_main where menu_id=#{menuId}
+    </select>
 <!--    <select id="getProdName" resultType="String" >-->
 <!--        select prod_name from t_supp_prod_main where prod_id=#{prodId}-->
-<!--    </select>-->
-<!--    <select id="menuList" resultType="com.wision.entity.MenuListVo" >-->
-<!--        select menu_id,menu_name,father_id,menu_order from t_supp_menu_main where prod_id=#{prodId} order by menu_order-->
-<!--    </select>-->
-<!--    <select id="getToolIdsByMenuId" resultType="com.wision.entity.RelatDetVo" >-->
-<!--        select tool_id from t_supp_relat_main where menu_id=#{menuId}-->
 <!--    </select>-->
 <!--    <insert id="insertMenu">-->
 <!--        insert into t_supp_menu_main(prod_id) values(#{prodId})-->
