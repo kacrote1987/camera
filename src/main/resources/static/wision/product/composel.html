@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>组件列表</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <!--            逻辑-->
+          <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+              <div class="layui-col-md2">
+                <div class="layui-card">
+                  <div class="layui-card-body">
+                    <div id="test-tree-demo4"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="layui-card">
+                <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label">组件类别</label>
+                      <div class="layui-input-block">
+                        <select id="toolType" name="toolType" lay-filter="toolType">
+                          <option value="">全部</option>
+                          <option value="基础类">基础类</option>
+                          <option value="框架类">框架类</option>
+                          <option value="视频类">视频类</option>
+                          <option value="图像类">图像类</option>
+                          <option value="流程类">流程类</option>
+                          <option value="数据类">数据类</option>
+                          <option value="物联类">物联类</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label">组件名称</label>
+                      <div class="layui-input-block">
+                        <input type="text" id="toolName" placeholder="请输入" autocomplete="off"
+                               class="layui-input">
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                      <button class="layui-btn layuiadmin-btn-useradmin" data-type="reload">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <script type="text/html" id="test-table-toolbar-toolbarDemo1">
+                  <a id="config" class="layui-btn layui-btn-xs" lay-event="add">添加</a>
+                </script>
+
+                <div class="layui-card-body">
+                  <table id="test-table-toolbar1" lay-filter="test-table-toolbar"></table>
+                  <script type="text/html" id="imgTpl">
+                    <img style="display: inline-block; width: 50%; height: 100%;" src={{ d.avatar }}>
+                  </script>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../js/demo.js"></script>
+<script src="../layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'table','laydate','tree','layer'], function(){
+    var $ = layui.$
+            ,form = layui.form
+            ,tree = layui.tree
+            ,table = layui.table
+            , layer = layui.layer;
+
+    form.render(null, 'component-form-group');
+    var prodId=window.location.search.substring(1,window.location.search.length);
+    // 组件查询
+    table.render({
+      elem: '#test-table-toolbar1'
+      , id: 'toolReload'
+      , method: 'post'
+      , url: '/component/compoList/' //数据接口
+      , response: {
+        statusName: 'code',
+        statusCode: '200'
+      }
+      , title: '资产基础信息表'
+      , cols: [[
+        {field: 'toolId', title: '组件ID', width: '80'}
+        , {field: 'toolType', title: '组件类别', sort: true, width: '100'}
+        , {field: 'toolName', title: '组件名称', sort: true, width: '100'}
+        , {field: 'toolVer', title: '组件版本', sort: true, width: '100'}
+        , {field: 'toolExplain', title: '组件说明', sort: true, width: '200'}
+        , {field: 'toolTime', title: '上架时间', sort: true, width: '150'}
+        , {field: 'toolState', title: '组件状态', sort: true, width: '100'}
+        , {field: 'sel', title: '选中状态', sort: true, width: '100'}
+        , {fixed: 'right', title: '操作', toolbar: '#test-table-toolbar-toolbarDemo1', width: '8%'}
+      ]]
+      , page: true
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+          "count": res.data.total, //解析数据长度
+          "data": res.data.list //解析数据列表
+        };
+      }
+    });
+
+    //执行重载
+    var $ = layui.$, active = {
+      reload: function () {
+        var toolType = $('#toolType');
+        var toolName = $('#toolName');
+        var toolState = $('#toolState');
+        table.reload('toolReload', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          , where: {
+            toolType: toolType.val(),
+            toolName: toolName.val(),
+            toolState: toolState.val()
+          }
+        }, 'data');
+      }
+    };
+
+    //监听行工具事件
+    table.on('tool(test-table-toolbar)', function(obj){
+      var data = obj.data;
+      if(obj.event === 'add'){
+
+      } else if(obj.event === 'del'){
+
+      } else {
+        layer.msg("待开发");
+      }
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+
+  });
+</script>
+</body>
+</html>
