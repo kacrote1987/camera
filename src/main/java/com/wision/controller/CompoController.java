@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Api(description = "组件库")
 @RestController
@@ -38,19 +39,19 @@ public class CompoController {
 //        return Result.success();
 //    }
 //
-//    @ApiOperation("组件配置-基础信息组件-数据源字典")
-//    @PostMapping("/basicSour")
-//    public Result basicSour(@RequestParam Long relatId){
-//        BasicSourVo basicSour= toolStoService.basicSour(relatId);
-//        return Result.success(basicSour);
-//    }
-//
-//    @ApiOperation("组件配置-基础信息组件-组件设置")
-//    @PostMapping("/basicCond")
-//    public Result basicCond(@RequestParam Long relatId){
-//        List<BasicCondVo> basicCond= toolStoService.basicCond(relatId);
-//        return Result.success(basicCond);
-//    }
+    @ApiOperation("组件配置-基础信息组件-数据源字典")
+    @PostMapping("/basicSour")
+    public Result basicSour(@RequestParam Long relatId){
+        BasicSourVo basicSour= compoService.basicSour(relatId);
+        return Result.success(basicSour);
+    }
+
+    @ApiOperation("组件配置-基础信息组件-组件设置")
+    @PostMapping("/basicCond")
+    public Result basicCond(@RequestParam Long relatId){
+        List<BasicCondVo> basicCond= compoService.basicCond(relatId);
+        return Result.success(basicCond);
+    }
 //
 //    @ApiOperation("组件配置-基础信息组件-配置修改")
 //    @PostMapping("/basicCondEdit")
@@ -66,12 +67,12 @@ public class CompoController {
 //        return Result.success();
 //    }
 //
-//    @ApiOperation("组件展示-基础信息组件-本表字段字典")
-//    @PostMapping("/basicView")
-//    public Result basicView(@RequestParam Long relatId){
-//        List<BasicCol> basicView= toolStoService.basicView(relatId);
-//        return Result.success(basicView);
-//    }
+    @ApiOperation("组件展示-基础信息组件-本表字段字典")
+    @PostMapping("/basicView")
+    public Result basicView(@RequestParam Long relatId){
+        List<BasicCol> basicView= compoService.basicView(relatId);
+        return Result.success(basicView);
+    }
 //
 //    @ApiOperation("组件配置-基础信息组件-条件设置删除")
 //    @PostMapping("/basicCondDel")

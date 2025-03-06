@@ -131,7 +131,7 @@
         var relatId = window.location.search.substring(1, window.location.search.length);
         $.ajax({
             type: "post",
-            url: "/toolSto/basicSour?relatId=" + relatId,
+            url: "/component/basicSour?relatId=" + relatId,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (detObj) {
@@ -151,7 +151,7 @@
             elem: '#test-table-toolbar'
             , id: 'ruleReload'
             , method: 'post'
-            , url: '/toolSto/basicCond?relatId=' + relatId //数据接口
+            , url: '/component/basicCond?relatId=' + relatId //数据接口
             , toolbar: '#test-table-toolbar-toolbarDemo'
             , response: {
                 statusName: 'code',

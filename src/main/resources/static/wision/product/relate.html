@@ -28,7 +28,8 @@
 
               <script type="text/html" id="test-table-toolbar-toolbarDemo">
                 <div class="layui-btn-container">
-                  <button class="layui-btn layui-btn-sm" lay-event="childList">子页面管理</button>
+                  <button class="layui-btn layui-btn-sm" lay-event="childList">子页面列表</button>
+                  <button class="layui-btn layui-btn-sm" lay-event="compoSel">组件选择</button>
                 </div>
               </script>
 
@@ -39,6 +40,7 @@
                   <script type="text/html" id="test-table-toolbar-toolbarDemo2">
                     <a id="config" class="layui-btn layui-btn-xs" lay-event="config">配置</a>
                     <a id="display" class="layui-btn layui-btn-xs" lay-event="display">展示</a>
+                    <a id="del" class="layui-btn layui-btn-xs" lay-event="del">删除</a>
                   </script>
 
                   <div class="layui-card-body">
@@ -48,7 +50,6 @@
                     </script>
                   </div>
                 </div>
-
               </div>
 
             </div>
@@ -81,7 +82,7 @@
     var detJson;
     $.ajax({
       type:"post",
-      url:"/prodDes/menuTree?prodId=" + prodId,
+      url:"/product/menuTree?prodId=" + prodId,
       contentType:"application/json;charset=utf-8",
       dataType:"json",
       async:false,
@@ -116,7 +117,7 @@
       elem: '#test-table-toolbar2'
       , id: 'toolSel'
       , method: 'post'
-      , url: '/prodDes/toolSel/' //数据接口
+      , url: '/product/compoSel/' //数据接口
       , response: {
         statusName: 'code',
         statusCode: '200'
@@ -151,8 +152,17 @@
         case 'childList':
           layer.open({
             type: 2
-            ,title: '子页面管理'
+            ,title: '子页面列表'
             ,content: 'childlist.html?menuId=' + $('#menuId').val()
+            ,maxmin: true
+            ,area: ['1200px', '600px']
+          });
+          break;
+        case 'compoSel':
+          layer.open({
+            type: 2
+            ,title: '组件选择'
+            ,content: 'composel.html?menuId=' + $('#menuId').val()
             ,maxmin: true
             ,area: ['1200px', '600px']
           });
@@ -167,7 +177,7 @@
         layer.open({
           type: 2
           ,title: '组件配置'
-          ,content: '../unitsto/' + data.typeCode + '/' + data.toolConf + '?' + data.relatId
+          ,content: '../component/' + data.typeCode + '/' + data.toolConf + '?' + data.relatId
           ,maxmin: true
           ,area: ['1200px', '600px']
         });
@@ -175,9 +185,16 @@
         layer.open({
           type: 2
           ,title: '组件展示'
-          ,content: '../unitsto/' + data.typeCode + '/' + data.toolDisp + '?' + data.relatId
+          ,content: '../component/' + data.typeCode + '/' + data.toolDisp + '?' + data.relatId
           ,maxmin: true
           ,area: ['1000px', '600px']
+        });
+      } else if (obj.event === 'del') {
+        layer.confirm('是否删除？', {
+          btn: ['是','否'] //按钮
+        }, function(){
+          // postdata(null,"/product/offLine?prodId=" + data.prodId,function () {
+          //   table.reload('toolSel');layer.msg("已删除");});
         });
       } else {
         layer.msg("待开发");

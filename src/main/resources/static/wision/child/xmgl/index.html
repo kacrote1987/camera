@@ -115,7 +115,7 @@
     var prodId = window.location.search.substring(1, window.location.search.length);
     $.ajax({
       type: "post",
-      url: "/prodSto/getChildMain?prodId=" + prodId,
+      url: "/child/getChildMain?prodId=" + prodId,
       contentType: "application/json;charset=utf-8",
       dataType: "json",
       success: function (detObj) {

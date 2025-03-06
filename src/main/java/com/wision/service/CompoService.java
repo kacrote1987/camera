@@ -3,15 +3,17 @@ package com.wision.service;
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
 
+import java.util.List;
+
 public interface CompoService {
     PageInfo<CompoListVo> compoList(CompoListForm params);
 //    List<UnitDetVo> toolDet(String params);
 //    void toolSave(UnitDetForm params);
-//    BasicSourVo basicSour(Long relatId);
-//    List<BasicCondVo> basicCond(Long relatId);
+    BasicSourVo basicSour(Long relatId);
+    List<BasicCondVo> basicCond(Long relatId);
 //    void basicCondEdit(BasicCondForm1 params);
 //    void basicCondAdd(BasicCondForm2 params);
-//    List<BasicCol> basicView(Long relatId);
+    List<BasicCol> basicView(Long relatId);
 //    void basicCondDel(Long extId);
 //    FlowCondMainVo flowCondMain(Long relatId);
 //    void flowCondEdit(FlowCondForm params);

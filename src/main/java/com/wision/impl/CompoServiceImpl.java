@@ -46,21 +46,21 @@ public class CompoServiceImpl implements CompoService {
 //        }
 //    }
 //
-//    @Override
-//    public BasicSourVo basicSour(Long relatId) {
-//        BasicSourVo basicSour = new BasicSourVo();
-//        basicSour.setRelatName(toolStoMapper.getRelatName(relatId));
-//        basicSour.setLayoutType(toolStoMapper.getLayoutType(relatId));
-//        basicSour.setBasicSourTblVo(toolStoMapper.basicSourTbl(relatId));
-//        return basicSour;
-//    }
-//
-//    @Override
-//    public List<BasicCondVo> basicCond(Long relatId) {
-//        List<BasicCondVo> basicCond=toolStoMapper.basicCond(relatId);
-//        return basicCond;
-//    }
-//
+    @Override
+    public BasicSourVo basicSour(Long relatId) {
+        BasicSourVo basicSour = new BasicSourVo();
+        basicSour.setRelatName(compoMapper.getRelatName(relatId));
+        basicSour.setLayoutType(compoMapper.getLayoutType(relatId));
+        basicSour.setBasicSourTblVo(compoMapper.basicSourTbl(relatId));
+        return basicSour;
+    }
+
+    @Override
+    public List<BasicCondVo> basicCond(Long relatId) {
+        List<BasicCondVo> basicCond=compoMapper.basicCond(relatId);
+        return basicCond;
+    }
+
 //    @Override
 //    public void basicCondEdit(BasicCondForm1 params) {
 //        toolStoMapper.updateBasicCond(params);
@@ -72,11 +72,11 @@ public class CompoServiceImpl implements CompoService {
 //        toolStoMapper.insertBasicCond(params,toolCode);
 //    }
 //
-//    @Override
-//    public List<BasicCol> basicView(Long relatId) {
-//        List<BasicCol> basicView = toolStoMapper.getBasicCol(relatId);
-//        return basicView;
-//    }
+    @Override
+    public List<BasicCol> basicView(Long relatId) {
+        List<BasicCol> basicView = compoMapper.getBasicCol(relatId);
+        return basicView;
+    }
 //
 //    @Override
 //    public void basicCondDel(Long extId) {

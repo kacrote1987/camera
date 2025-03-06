@@ -1,6 +1,6 @@
 package com.wision.entity;
 
-public class UnitSelVo {
+public class CompoSelVo {
     private Long relatId;
     private String layoutType;
     private Long toolId;

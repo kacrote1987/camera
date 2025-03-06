@@ -27,9 +27,9 @@ public interface ProdMapper {
     boolean cleanExt(Long menuId,String toolIds);
     boolean cleanRelat(Long menuId,String toolIds);
     boolean updateMenu(Long menuId,String field,String value);
-//    List<MenuTreeVo> menuFather(Long prodId);
-//    List<children> menuChild(Long fatherId);
-//    List<UnitSelVo> toolSel(Long menuId, @Param("params") UnitListForm params);
+    List<MenuTreeVo> menuFather(Long prodId);
+    List<children> menuChild(Long fatherId);
+    List<CompoSelVo> compoSel(Long menuId, @Param("params") CompoListForm params);
 //    List<ChildListVo> childList(Long menuId);
 //    Long getMainRelatId(Long menuId);
 //    List<PagePathVo> getDestinyPath(Long relatId);

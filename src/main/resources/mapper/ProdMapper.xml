@@ -68,18 +68,18 @@
     <update id="updateMenu">
         update t_supp_menu_main set ${field} = #{value} where menu_id=#{menuId}
     </update>
+    <select id="menuFather" resultType="com.wision.entity.MenuTreeVo" >
+        select menu_name as title,menu_id as id,'true' as spread,null as children from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')
+    </select>
+    <select id="menuChild" resultType="com.wision.entity.children" >
+        select menu_name as title,menu_id as id from t_supp_menu_main where father_id=#{fatherId}
+    </select>
+    <select id="compoSel" resultType="com.wision.entity.CompoSelVo" >
+        select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.type_code,b.tool_name,b.tool_ver,a.relat_name,date_format(b.tool_time,'%Y-%m-%d') as tool_time,b.tool_state,b.tool_conf,b.tool_disp
+        from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}
+    </select>
 <!--    <select id="getProdName" resultType="String" >-->
 <!--        select prod_name from t_supp_prod_main where prod_id=#{prodId}-->
-<!--    </select>-->
-<!--    <select id="menuFather" resultType="com.wision.entity.MenuTreeVo" >-->
-<!--        select menu_name as title,menu_id as id,'true' as spread,null as children from t_supp_menu_main where prod_id=#{prodId} and (father_id is null or father_id='')-->
-<!--    </select>-->
-<!--    <select id="menuChild" resultType="com.wision.entity.children" >-->
-<!--        select menu_name as title,menu_id as id from t_supp_menu_main where father_id=#{fatherId}-->
-<!--    </select>-->
-<!--    <select id="toolSel" resultType="com.wision.entity.UnitSelVo" >-->
-<!--        select a.relat_id,a.layout_type,b.tool_id,b.tool_type,b.type_code,b.tool_name,b.tool_ver,a.relat_name,date_format(b.tool_time,'%Y-%m-%d') as tool_time,b.tool_state,b.tool_conf,b.tool_disp-->
-<!--        from t_supp_relat_main a left join t_supp_tool_basic b on a.tool_id=b.tool_id where a.menu_id = #{params.menuId}-->
 <!--    </select>-->
 <!--    <select id="childList" resultType="com.wision.entity.ChildListVo" >-->
 <!--        select page_id,tool_id,page_name,child_name,child_order,page_sel from t_supp_tool_page where is_config is null and tool_id in (select tool_id from t_supp_relat_main where menu_id=#{menu_id}) order by page_name,child_order-->

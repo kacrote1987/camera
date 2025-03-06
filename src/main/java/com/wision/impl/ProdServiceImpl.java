@@ -8,7 +8,6 @@ import com.wision.service.ProdService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -142,36 +141,36 @@ public class ProdServiceImpl implements ProdService {
             prodMapper.updateMenu(params.getMenuId(), method(params.getField()), params.getValue());
         }
     }
-//
-//    @Override
-//    public List<MenuTreeVo> menuTree(Long prodId) {
-//        List<MenuTreeVo> MenuTreeVo=prodDesMapper.menuFather(prodId);
-//        for(int i=0;i<MenuTreeVo.size();i++){
-//            List<children> menuChild=prodDesMapper.menuChild(MenuTreeVo.get(i).getId());
-//            if(menuChild.size()!=0){
-//                MenuTreeVo.get(i).setChildren(menuChild);
-//            }else {
-//                i++;
-//            }
-//        }
-//        return MenuTreeVo;
-//    }
-//
-//    @Override
-//    public PageInfo<UnitSelVo> toolSel(String prodId, UnitListForm params) {
-//        Integer page = 0;
-//        if(params.getPage() != null){
-//            page = params.getPage();
-//        }
-//        PageHelper.startPage(page, 10);
-//        String menuId;
-//        List<UnitSelVo> toolSel = new ArrayList<>();
-//        if(prodId.indexOf("menuId")>-1){
-//            menuId = prodId.substring(prodId.indexOf("menuId=")+7,prodId.length());
-//            toolSel = prodDesMapper.toolSel(Long.valueOf(menuId),params);
-//        }
-//        return PageInfo.of(toolSel);
-//    }
+
+    @Override
+    public List<MenuTreeVo> menuTree(Long prodId) {
+        List<MenuTreeVo> MenuTreeVo=prodMapper.menuFather(prodId);
+        for(int i=0;i<MenuTreeVo.size();i++){
+            List<children> menuChild=prodMapper.menuChild(MenuTreeVo.get(i).getId());
+            if(menuChild.size()!=0){
+                MenuTreeVo.get(i).setChildren(menuChild);
+            }else {
+                i++;
+            }
+        }
+        return MenuTreeVo;
+    }
+
+    @Override
+    public PageInfo<CompoSelVo> compoSel(String prodId, CompoListForm params) {
+        Integer page = 0;
+        if(params.getPage() != null){
+            page = params.getPage();
+        }
+        PageHelper.startPage(page, 10);
+        String menuId;
+        List<CompoSelVo> compoSel = new ArrayList<>();
+        if(prodId.indexOf("menuId")>-1){
+            menuId = prodId.substring(prodId.indexOf("menuId=")+7,prodId.length());
+            compoSel = prodMapper.compoSel(Long.valueOf(menuId),params);
+        }
+        return PageInfo.of(compoSel);
+    }
 //
 //    @Override
 //    public List<ChildListVo> childList(Long menuId) {

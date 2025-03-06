@@ -32,18 +32,18 @@
 <!--        ,tool_explain=#{params.toolExplain},tool_time=#{params.toolTime},share_num=#{params.shareNum},tool_state=#{params.toolState}-->
 <!--        where tool_id=#{params.toolId}-->
 <!--    </update>-->
-<!--    <select id="getRelatName" resultType="String" >-->
-<!--        select relat_name from t_supp_relat_main where relat_id=#{relatId}-->
-<!--    </select>-->
-<!--    <select id="getLayoutType" resultType="String" >-->
-<!--        select layout_type from t_supp_relat_main where relat_id=#{relatId}-->
-<!--    </select>-->
-<!--    <select id="basicSourTbl" resultType="com.wision.entity.SourTblVo" >-->
-<!--        select distinct a.tbl_id,a.tbl_name from t_supp_imp_tbl a inner join t_supp_menu_main b on a.prod_id=b.prod_id inner join t_supp_relat_main c on b.menu_id=c.menu_id where c.relat_id=#{relatId}-->
-<!--    </select>-->
-<!--    <select id="basicCond" resultType="com.wision.entity.BasicCondVo" >-->
-<!--        select ext_id,tool_code,tool_name,match_type,key_value from t_supp_relat_ext where tool_tag='basic' and show_type='none' and relat_id=#{relatId}-->
-<!--    </select>-->
+    <select id="getRelatName" resultType="String" >
+        select relat_name from t_supp_relat_main where relat_id=#{relatId}
+    </select>
+    <select id="getLayoutType" resultType="String" >
+        select layout_type from t_supp_relat_main where relat_id=#{relatId}
+    </select>
+    <select id="basicSourTbl" resultType="com.wision.entity.SourTblVo" >
+        select distinct a.tbl_id,a.tbl_name from t_supp_imp_tbl a inner join t_supp_menu_main b on a.prod_id=b.prod_id inner join t_supp_relat_main c on b.menu_id=c.menu_id where c.relat_id=#{relatId}
+    </select>
+    <select id="basicCond" resultType="com.wision.entity.BasicCondVo" >
+        select ext_id,tool_code,tool_name,match_type,key_value from t_supp_relat_ext where tool_tag='basic' and show_type='none' and relat_id=#{relatId}
+    </select>
 <!--    <update id="updateBasicCond">-->
 <!--        update t_supp_relat_main set relat_name=#{params.relatName},layout_type=#{params.layoutType},tbl_id=#{params.tblId} where relat_id=#{params.relatId}-->
 <!--    </update>-->
@@ -54,9 +54,9 @@
 <!--        insert into t_supp_relat_ext(relat_id,tool_tag,show_type,tool_code,tool_name,match_type,key_value)-->
 <!--        values(#{params.relatId},'basic','none',#{toolCode},#{params.keyName},#{params.matchType},#{params.keyValue})-->
 <!--    </insert>-->
-<!--    <select id="getBasicCol" resultType="com.wision.entity.BasicCol" >-->
-<!--        select ext_id,tool_code,tool_name,tool_type,res_state,sel_state from t_supp_relat_ext where tool_tag='basic' and relat_id=#{relatId}-->
-<!--    </select>-->
+    <select id="getBasicCol" resultType="com.wision.entity.BasicCol" >
+        select ext_id,tool_code,tool_name,tool_type,res_state,sel_state from t_supp_relat_ext where tool_tag='basic' and relat_id=#{relatId}
+    </select>
 <!--    <delete id="deleteBasicCond">-->
 <!--        delete from t_supp_relat_ext where ext_id=#{extId}-->
 <!--    </delete>-->

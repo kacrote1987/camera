@@ -108,20 +108,20 @@ public class ProdController {
         prodService.menuEdit(params);
         return Result.success();
     }
-//
-//    @ApiOperation("菜单树")
-//    @PostMapping("/menuTree")
-//    public Result menuTree(@RequestParam Long prodId){
-//        List<MenuTreeVo> menuTree= prodService.menuTree(prodId);
-//        return Result.success(menuTree);
-//    }
-//
-//    @ApiOperation("根据菜单树查组件")
-//    @PostMapping("/toolSel")
-//    public Result toolSel(@RequestBody String prodId, UnitListForm params){
-//        PageInfo<UnitSelVo> toolSel= prodService.toolSel(prodId,params);
-//        return Result.success(toolSel);
-//    }
+
+    @ApiOperation("菜单树")
+    @PostMapping("/menuTree")
+    public Result menuTree(@RequestParam Long prodId){
+        List<MenuTreeVo> menuTree= prodService.menuTree(prodId);
+        return Result.success(menuTree);
+    }
+
+    @ApiOperation("根据菜单树查组件")
+    @PostMapping("/compoSel")
+    public Result compoSel(@RequestBody String prodId, CompoListForm params){
+        PageInfo<CompoSelVo> compoSel= prodService.compoSel(prodId,params);
+        return Result.success(compoSel);
+    }
 //
 //    @ApiOperation("子页面清单")
 //    @PostMapping("/childList")

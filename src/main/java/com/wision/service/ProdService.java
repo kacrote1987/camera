@@ -19,8 +19,8 @@ public interface ProdService {
     void menuAdd(Long prodId);
     void menuDel(Long menuId);
     void menuEdit(MenuEditForm params);
-//    List<MenuTreeVo> menuTree(Long prodId);
-//    PageInfo<UnitSelVo> toolSel(String params, UnitListForm params1);
+    List<MenuTreeVo> menuTree(Long prodId);
+    PageInfo<CompoSelVo> compoSel(String params, CompoListForm params1);
 //    List<ChildListVo> childList(Long menuId);
 //    void createPage(Long menuId);
 //    /**
