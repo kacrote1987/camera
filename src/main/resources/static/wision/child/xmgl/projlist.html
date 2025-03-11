@@ -10,42 +10,81 @@
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
 </head>
 <body>
-<div class="layui-fluid">
-  <div class="layui-card">
-    <input id="search" type="text" name="search" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display: none">
-    <input id="val" type="text" name="val" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display: none">
-    <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-      <div class="layui-form-item">
-        <div id="showsel" class="layui-form layui-card-header layuiadmin-card-header-auto"></div>
+  <div class="layui-fluid">
+    <div class="layui-card">
+      <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-label">业务部门</label>
+            <div class="layui-input-block">
+              <select id="col1" name="col1">
+                <option value="">全部</option>
+                <option value="区委改革办">区委改革办</option>
+                <option value="人大办">人大办</option>
+                <option value="大数据局">大数据局</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">项目名称</label>
+            <div class="layui-input-block">
+              <input type="text" id="col2" name="col2" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">项目经理</label>
+            <div class="layui-input-block">
+              <input type="text" id="col5" name="col5" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">流转状态</label>
+            <div class="layui-input-block">
+              <select id="step" name="step">
+                <option value="">全部</option>
+                <option value="项目实施">项目实施</option>
+                <option value="初验完成">初验完成</option>
+                <option value="终验完成">终验完成</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <button class="layui-btn layuiadmin-btn-useradmin" data-type="reload">
+              <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <script type="text/html" id="test-table-toolbar-toolbarDemo">
-      <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
-        <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
-        <button class="layui-btn layui-btn-sm" lay-event="submit">提交</button>
-        <button class="layui-btn layui-btn-sm" lay-event="backoff">回退</button>
-      </div>
-    </script>
-    <script type="text/html" id="test-table-toolbar-barDemo">
-      <a name="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
-    </script>
-    <div class="layui-card-body">
-      <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
-      <script type="text/html" id="imgTpl">
-        <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+      <script type="text/html" id="test-table-toolbar-toolbarDemo">
+        <div class="layui-btn-container">
+          <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+          <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+          <button class="layui-btn layui-btn-sm" lay-event="submit">提交</button>
+          <button class="layui-btn layui-btn-sm" lay-event="backoff">回退</button>
+        </div>
       </script>
+
+      <script type="text/html" id="test-table-toolbar-barDemo">
+        <a name="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
+      </script>
+
+      <div class="layui-card-body">
+        <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+        <script type="text/html" id="imgTpl">
+          <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+        </script>
+      </div>
     </div>
   </div>
-</div>
 
-<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
-<script src="../../js/demo.js"></script>
-<script src="../../layuiadmin/layui/layui.js"></script>
-<script>
+
+  <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+  <script src="../../js/demo.js"></script>
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
   layui.config({
     base: '../../layuiadmin/' //静态资源所在路径
   }).extend({
@@ -59,42 +98,33 @@
             ,form = layui.form;
 
     element.render('projReload');
-    var menuId = window.location.search.substring(1, window.location.search.length);
-    var detJson;
-    $.ajax({
-      type: "post",
-      url: "/child/mainSel?menuId=" + menuId,
-      contentType: "application/json;charset=utf-8",
-      dataType: "json",
-      async: false,
-      success: function (detObj) {
-        if (detObj.msg == "success") {
-          detJson = detObj.data[0];
-          var showsel="";
-          var search="";
-          for (var i = 0; i < detJson.childTblSel.length; i++) {
-            showsel += '<div class="layui-inline"><label id="'+ detJson.childTblSel[i].field +'" class="layui-form-label">'+ detJson.childTblSel[i].title +'</label><div class="layui-input-block"><input type="text" id="' + detJson.childTblSel[i].field + '" placeholder="请输入" autocomplete="off" class="layui-input"></div></div>';
-            search += detJson.childTblSel[i].field +',';
-          }
-          showsel += '<div class="layui-inline"><button class="layui-btn layuiadmin-btn-useradmin" data-type="reload"><i class="layui-icon layui-icon-search layuiadmin-button-btn"></i></button>'
-          document.getElementById("showsel").innerHTML = showsel;
-          document.getElementById("search").value = search.substring(0, search.length-1);
-        }
-      }
-    });
 
     table.render({
       elem: '#test-table-toolbar'
       ,id: 'projReload'
       ,method: 'post'
-      ,url:'/child/mainCont?menuId=' + menuId
+      ,url:'/proj/projlist/'
       ,response:{
-        statusName: 'code',
-        statusCode: '200'
+        statusName:'code',
+        statusCode:'200'
       }
       ,toolbar: '#test-table-toolbar-toolbarDemo'
       ,title: '项目信息表'
-      , cols: [detJson.childTblCol]
+      ,cols: [[
+        {type: 'checkbox', fixed: 'left', width:'5%'}
+        ,{type: 'numbers', title: '序号', width:'5%'}
+        ,{field: 'col1', title: '业务部门',sort: true, width:'8.5%'}
+        ,{field: 'col2', title: '项目名称',sort: true, width:'8.5%'}
+        ,{field: 'col3', title: '收入',sort: true, width:'8.5%'}
+        ,{field: 'col4', title: '项目简介',sort: true, width:'8.5%'}
+        ,{field: 'col5', title: '项目经理',sort: true, width:'8.5%'}
+        ,{field: 'col6', title: '合同签订',sort: true, width:'8.5%'}
+        ,{field: 'col7', title: '累计收入金额',sort: true, width:'8.5%'}
+        ,{field: 'col8', title: '累计收入比例',sort: true, width:'8.5%'}
+        ,{field: 'col9', title: '收入完成情况',sort: true, width:'8.5%'}
+        ,{field: 'step', title: '项目状态',sort: true, width:'8.5%'}
+        ,{fixed: 'right', title:'操作', toolbar: '#test-table-toolbar-barDemo', width:'5%'}
+      ]]
       ,page: true
       ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
         return {
@@ -109,29 +139,19 @@
     //执行重载
     var $ = layui.$, active = {
       reload: function(){
-        var search=$('#search');
-        var arr=document.getElementById("search").value.split(",");
-        var val = "";
-        alert(search);
-        setTimeout(() => {
-          const element = document.getElementById('search').value;
-          if (element) {
-            alert(element); // 输出: 动态插入的值
-          } else {
-            alert('元素未找到');
-          }
-        }, 0);
-
-        for(var i=0;i<arr.length;i++){
-          val = document.getElementById(arr[i]).value;
-        }
+        var col1 = $('#col1');
+        var col2 = $('#col2');
+        var col5 = $('#col5');
+        var step = $('#step');
         table.reload('projReload', {
           page: {
             curr: 1 //重新从第 1 页开始
           }
           ,where: {
-            search: search.val(),
-            val: val.val()
+            col1: col1.val(),
+            col2: col2.val(),
+            col5: col5.val(),
+            step: step.val()
           }
         }, 'data');
       }
@@ -175,7 +195,7 @@
                 params.projId=checkStatus.data[i].projId;
                 params.stepVal="1";
                 postdata(params,"/proj/projstep",function () {
-                  table.reload('projReload');layer.msg("提交成功");});
+                table.reload('projReload');layer.msg("提交成功");});
               }
             }
           });
@@ -194,7 +214,7 @@
                 params.projId=checkStatus.data[i].projId;
                 params.stepVal="-1";
                 postdata(params,"/proj/projstep",function () {
-                  table.reload('projReload');layer.msg("回退成功");});}}
+                table.reload('projReload');layer.msg("回退成功");});}}
           });
           break;
       };
@@ -207,7 +227,7 @@
         layer.open({
           type: 2
           ,title: '详细'
-          ,content: 'xmzbdet.html?' + data.id + '&' + data.menuId
+          ,content: 'projdet.html?' + data.projId
           ,maxmin: true
           ,area: ['1200px', '600px']
         });
@@ -215,7 +235,7 @@
         layer.open({
           type: 2
           ,title: '进度'
-          ,content: 'projgantt.html?' + data.id
+          ,content: 'projgantt.html?' + data.projId
           ,maxmin: true
           ,area: ['1200px', '600px']
         });
@@ -223,7 +243,7 @@
         layer.open({
           type: 2
           ,title: '项目例会'
-          ,content: 'meetlist.html?' + data.id
+          ,content: 'meetlist.html?' + data.projId
           ,maxmin: true
           ,area: ['1200px', '600px']
         });
@@ -247,6 +267,6 @@
       active[type] ? active[type].call(this) : '';
     });
   });
-</script>
+  </script>
 </body>
 </html>

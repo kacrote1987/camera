@@ -1,5 +1,6 @@
 package com.wision.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
@@ -52,10 +53,17 @@ public class ChildServiceImpl implements ChildService {
         childTblMenu2.setToolbar("#test-table-toolbar-barDemo");
         childTblCol.add(childTblMenu2);
         //设置平均列间距
-//        String width=String.valueOf(100/childTblCol.size())+'%';
+        childTblCol.get(0).setWidth("5%");
         String width="8%";
-        for(int i=0;i<childTblCol.size();i++){
-            childTblCol.get(i).setWidth(width);
+        if(childTblCol.size()>10){
+            for(int i=1;i<childTblCol.size();i++){
+                childTblCol.get(i).setWidth(width);
+            }
+        }else{
+            width=String.valueOf(100/childTblCol.size())+'%';
+            for(int i=1;i<childTblCol.size();i++){
+                childTblCol.get(i).setWidth(width);
+            }
         }
         //获取查询条件
         List<ChildTblCol> basicSel=childMapper.getTblSel(menuId,null,"1");
@@ -69,77 +77,75 @@ public class ChildServiceImpl implements ChildService {
         return mainSelList;
     }
 
-//    @Override
-//    public PageInfo<MainContVo> mainCont(Long menuId, ChildTblForm params) {
-//        //获取表名
-//        String tblName=prodStoMapper.getTblNameByMenuId(menuId);//tblName=t_imp_40_xmzb
-//        //获取导入表的内容
-//        PageHelper.startPage(params.getPage(), 10);
-////        String search=params.getSearch()+",";
-////        String val=params.getVal();
-////        ChildTblCont params1 = new ChildTblCont();
-////        params1.setTblName(tblName);
-////        if(val!=null){
-////            while (search.indexOf(",")>0){
-////                String key=search.substring(0,search.indexOf(","));
-////                String value=val.substring(0,val.indexOf(","));
-////                if(key.equals("col1")){
-////                    params1.setCol1(value);
-////                }else if(key.equals("col2")){
-////                    params1.setCol2(value);
-////                }else if(key.equals("col3")){
-////                    params1.setCol3(value);
-////                }else if(key.equals("col4")){
-////                    params1.setCol4(value);
-////                }else if(key.equals("col5")){
-////                    params1.setCol5(value);
-////                }else if(key.equals("col6")){
-////                    params1.setCol6(value);
-////                }else if(key.equals("col7")){
-////                    params1.setCol7(value);
-////                }else if(key.equals("col8")){
-////                    params1.setCol8(value);
-////                }else if(key.equals("col9")){
-////                    params1.setCol9(value);
-////                }else if(key.equals("col10")){
-////                    params1.setCol10(value);
-////                }else if(key.equals("col11")){
-////                    params1.setCol11(value);
-////                }else if(key.equals("col12")){
-////                    params1.setCol12(value);
-////                }else if(key.equals("col13")){
-////                    params1.setCol13(value);
-////                }else if(key.equals("col14")){
-////                    params1.setCol14(value);
-////                }else if(key.equals("col15")){
-////                    params1.setCol15(value);
-////                }else if(key.equals("col16")){
-////                    params1.setCol16(value);
-////                }else if(key.equals("col17")){
-////                    params1.setCol17(value);
-////                }else if(key.equals("col18")){
-////                    params1.setCol18(value);
-////                }else if(key.equals("col19")){
-////                    params1.setCol19(value);
-////                }else if(key.equals("col20")){
-////                    params1.setCol20(value);
-////                }else{
-////                    params1.setStep(value);
-//////                    if(projStepcode==null){
-//////                        projStepcode="step0"; }
-//////                    projStepcode=projStepcode.substring(4,projStepcode.length());
-////                }
-////                search=search.substring(search.indexOf(",")+1,search.length());
-////                val=val.substring(val.indexOf(",")+1,val.length());
-////            }
-//////            String jsonString = JSONObject.toJSONString(params1);
-//////            System.out.println("jsonString = " + jsonString);
-////        }
-//        String realPage = prodStoMapper.getRealPageByMenu(menuId);
-//        tblName = "t_ext_" + realPage.replace("list.html","");
-//        List<MainContVo> mainCont=prodStoMapper.getMainCont(tblName);
-//        return PageInfo.of(mainCont);
-//    }
+    @Override
+    public PageInfo<MainContVo> mainCont(Long menuId, ChildTblForm params) {
+        //获取表名
+        String tblName = "t_ext_" + menuId.toString() + "_" + childMapper.getNickNameByMenuId(menuId); //tblName=t_ext_59_xmzb
+        //获取导入表的内容
+        PageHelper.startPage(params.getPage(), 10);
+        System.out.println("x="+params.getSearch());
+        String search=params.getSearch()+",";
+        String val=params.getVal();
+        ChildTblCont params1 = new ChildTblCont();
+        params1.setTblName(tblName);
+        if(val!=null){
+            while (search.indexOf(",")>0){
+                String key=search.substring(0,search.indexOf(","));
+                String value=val.substring(0,val.indexOf(","));
+                if(key.equals("col1")){
+                    params1.setCol1(value);
+                }else if(key.equals("col2")){
+                    params1.setCol2(value);
+                }else if(key.equals("col3")){
+                    params1.setCol3(value);
+                }else if(key.equals("col4")){
+                    params1.setCol4(value);
+                }else if(key.equals("col5")){
+                    params1.setCol5(value);
+                }else if(key.equals("col6")){
+                    params1.setCol6(value);
+                }else if(key.equals("col7")){
+                    params1.setCol7(value);
+                }else if(key.equals("col8")){
+                    params1.setCol8(value);
+                }else if(key.equals("col9")){
+                    params1.setCol9(value);
+                }else if(key.equals("col10")){
+                    params1.setCol10(value);
+                }else if(key.equals("col11")){
+                    params1.setCol11(value);
+                }else if(key.equals("col12")){
+                    params1.setCol12(value);
+                }else if(key.equals("col13")){
+                    params1.setCol13(value);
+                }else if(key.equals("col14")){
+                    params1.setCol14(value);
+                }else if(key.equals("col15")){
+                    params1.setCol15(value);
+                }else if(key.equals("col16")){
+                    params1.setCol16(value);
+                }else if(key.equals("col17")){
+                    params1.setCol17(value);
+                }else if(key.equals("col18")){
+                    params1.setCol18(value);
+                }else if(key.equals("col19")){
+                    params1.setCol19(value);
+                }else if(key.equals("col20")){
+                    params1.setCol20(value);
+                }else{
+                    params1.setStep(value);
+//                    if(projStepcode==null){
+//                        projStepcode="step0"; }
+//                    projStepcode=projStepcode.substring(4,projStepcode.length());
+                }
+                search=search.substring(search.indexOf(",")+1,search.length());
+                val=val.substring(val.indexOf(",")+1,val.length());
+            }
+            String jsonString = JSONObject.toJSONString(params1);
+        }
+        List<MainContVo> mainCont=childMapper.getMainCont(tblName);
+        return PageInfo.of(mainCont);
+    }
 //
 //    @Override
 //    public void generate(Long prodId) {

@@ -39,13 +39,13 @@ public class ChildController {
         return Result.success(mainSel);
     }
 
-//    @ApiOperation("子系统主表查看")
-//    @PostMapping("/mainCont")
-//    public Result mainCont(@RequestParam Long menuId, ChildTblForm params){
-//        PageInfo<MainContVo> mainCont= prodStoService.mainCont(menuId,params);
-//        return Result.success(mainCont);
-//    }
-//
+    @ApiOperation("子系统主表查看")
+    @PostMapping("/mainCont")
+    public Result mainCont(@RequestParam Long menuId, ChildTblForm params){
+        PageInfo<MainContVo> mainCont= childService.mainCont(menuId,params);
+        return Result.success(mainCont);
+    }
+
 ////    @ApiOperation("子系统详情页")
 ////    @PostMapping("/childtbldet")
 ////    public Result childTblDet(@RequestBody String params){

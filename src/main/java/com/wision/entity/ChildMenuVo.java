@@ -3,7 +3,7 @@ package com.wision.entity;
 public class ChildMenuVo {
     private Long menuId;
     private String menuName;
-    private String realPage;
+    private String nickName;
 
     public Long getMenuId() {
         return menuId;
@@ -21,11 +21,11 @@ public class ChildMenuVo {
         this.menuName = menuName;
     }
 
-    public String getRealPage() {
-        return realPage;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setRealPage(String realPage) {
-        this.realPage = realPage;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }
