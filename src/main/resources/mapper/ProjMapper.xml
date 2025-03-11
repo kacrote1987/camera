@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wision.mapper.ProjMapper">
+    <select id="selProjList" resultType="com.wision.entity.ProjListForm" >
+        select id,col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,col11,col12,col13,col14,col15,col16,col17,col18,col19,step
+        from t_ext_59_xmzb where 1=1
+        <if test="params.col1!=null and params.col1!=''">
+            and col1 like '%' #{params.col1} '%'
+        </if>
+        <if test="params.col2!=null and params.col2!=''">
+            and col2 like '%' #{params.col2} '%'
+        </if>
+        <if test="params.col5!=null and params.col5!=''">
+            and col5 like '%' #{params.col5} '%'
+        </if>
+        <if test="params.step!=null and params.step!=''">
+            and step = #{params.step}
+        </if>
+        order by id
+    </select>
+</mapper>
