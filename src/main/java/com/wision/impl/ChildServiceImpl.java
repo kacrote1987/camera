@@ -146,7 +146,13 @@ public class ChildServiceImpl implements ChildService {
         List<MainContVo> mainCont=childMapper.getMainCont(tblName);
         return PageInfo.of(mainCont);
     }
-//
+
+    @Override
+    public ChildTblDetForm childTblDet(String params) {
+        return null;
+    }
+
+    //
 //    @Override
 //    public void generate(Long prodId) {
 ////        1、创建代码目录  createDir;

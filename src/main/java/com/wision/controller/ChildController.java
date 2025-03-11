@@ -46,13 +46,13 @@ public class ChildController {
         return Result.success(mainCont);
     }
 
-////    @ApiOperation("子系统详情页")
-////    @PostMapping("/childtbldet")
-////    public Result childTblDet(@RequestBody String params){
-////        ChildTblDetForm childTblDet= prodService.childTblDet(params);
-////        return Result.success(childTblDet);
-////    }
-//
+    @ApiOperation("子系统详情页")
+    @PostMapping("/childtbldet")
+    public Result childTblDet(@RequestBody String params){
+        ChildTblDetForm childTblDet= childService.childTblDet(params);
+        return Result.success(childTblDet);
+    }
+
 //    @ApiOperation("代码自动生成")
 //    @PostMapping("/generate")
 //    public Result generate(@RequestParam Long prodId){
