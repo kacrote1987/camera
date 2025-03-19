@@ -73,6 +73,7 @@
 
         form.render(null, 'component-form-group');
         var params = window.location.search.substring(1, window.location.search.length);
+        alert(params);
         $.ajax({
             type: "post",
             url: "/child/childtbldet?menuId=" + params,

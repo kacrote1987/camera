@@ -106,34 +106,37 @@
       }
     });
 
+    function search() {
+      return new Promise((resolve) => {
+        var search = document.getElementById("search").value;
+        // alert(search);
+        resolve();
+      });
+    }
+
+    function condition() {
+      return new Promise((resolve) => {
+        var search = document.getElementById("search").value;
+        var val = document.getElementById("col1").value;
+        alert(val);
+        // table.reload('projReload', {
+        //   page: {
+        //     curr: 1 //重新从第 1 页开始
+        //   }
+        //   ,where: {
+        //     search: search.val(),
+        //     val: val.val()
+        //   }
+        // }, 'data');
+        resolve();
+      });
+    }
+
     //执行重载
     var $ = layui.$, active = {
-      reload: function(){
-        var search=$('#search');
-        var arr=document.getElementById("search").value.split(",");
-        var val = "";
-        alert(search);
-        setTimeout(() => {
-          const element = document.getElementById('search').value;
-          if (element) {
-            alert(element); // 输出: 动态插入的值
-          } else {
-            alert('元素未找到');
-          }
-        }, 0);
-
-        for(var i=0;i<arr.length;i++){
-          val = document.getElementById(arr[i]).value;
-        }
-        table.reload('projReload', {
-          page: {
-            curr: 1 //重新从第 1 页开始
-          }
-          ,where: {
-            search: search.val(),
-            val: val.val()
-          }
-        }, 'data');
+      reload: function (){
+        search()
+        .then(condition)
       }
     };
 
