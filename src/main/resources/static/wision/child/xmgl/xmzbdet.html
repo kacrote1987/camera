@@ -77,8 +77,8 @@
             data:projId,
             success:function(detObj){
                 if(detObj.msg=="success"){
-                    var childTblContDet = detObj.data.childTblContDet;
                     var childTblHeadDet = detObj.data.childTblHeadDet;
+                    var childTblContDet = detObj.data.childTblContDet;
 
                     layui.form.render();
                 }
