@@ -40,7 +40,7 @@ public class ChildServiceImpl implements ChildService {
         childTblMenu1.setType("checkbox");
         childTblCol.add(childTblMenu1);
         //获取查询结果列名
-        List<ChildTblCol> childTblCol1=childMapper.getTblSel(menuId,"1",null,null);
+        List<ChildTblCol> childTblCol1=childMapper.getTblSel(menuId,"1",null);
         for(int i=0;i<childTblCol1.size();i++){
             childTblCol.add(childTblCol1.get(i));
         }
@@ -63,7 +63,7 @@ public class ChildServiceImpl implements ChildService {
             }
         }
         //获取查询条件
-        List<ChildTblCol> basicSel=childMapper.getTblSel(menuId,null,"1",null);
+        List<ChildTblCol> basicSel=childMapper.getTblSel(menuId,null,"1");
         //将获取的列名插入ChildTblSel中
         MainSelVo mainSelVo = new MainSelVo();
         mainSelVo.setChildTblCol(childTblCol);
@@ -76,8 +76,6 @@ public class ChildServiceImpl implements ChildService {
 
     @Override
     public PageInfo<MainContVo> mainCont(Long menuId, ChildTblForm params) {
-        System.out.println("x="+params.getSearch());
-
         //获取表名
         String tblName = "t_ext_" + menuId.toString() + "_" + childMapper.getNickNameByMenuId(menuId); //tblName=t_ext_59_xmzb
         //获取导入表的内容
@@ -147,25 +145,26 @@ public class ChildServiceImpl implements ChildService {
 
     @Override
     public ChildTblDetForm childTblDet(String params) {
-        return null;
+        Long projId = Long.valueOf(params.substring(0,params.indexOf("&"))); //projId=1
+        String menuId = params.substring(params.indexOf("&")+1,params.length()); //menuId=59
+        String tblName = "t_ext_" + menuId + "_" + childMapper.getNickNameByMenuId(Long.valueOf(menuId)); //tblName=t_ext_59_xmzb
+        List<BasicCol> childTblHeadDet=childMapper.getBasicCol(Long.valueOf(menuId));
+        ChildTblForm childTblContDet=childMapper.getChildTblContDet(tblName,projId);
+        ChildTblDetForm childTblDet = new ChildTblDetForm();
+        childTblDet.setChildTblContDet(childTblContDet);
+        childTblDet.setChildTblHeadDet(childTblHeadDet);
+        return childTblDet;
     }
 
     @Override
     public List<ChildTblSelVo> childTblSel(String menuId) {
-        Long projId = null,menuId1;
-        if(menuId.indexOf("&")>0){
-            projId = Long.valueOf(menuId.substring(0,menuId.indexOf("&")));
-            menuId1 = Long.valueOf(menuId.substring(menuId.indexOf("&")+1,menuId.length()));
-        }else{
-            menuId1 = Long.valueOf(menuId);
-        }
         List<ChildTblCol> childTblCol=new ArrayList<>();
         //增加选择框
         ChildTblCol childTblMenu1=new ChildTblCol();
         childTblMenu1.setType("checkbox");
         childTblCol.add(childTblMenu1);
         //获取查询结果列名
-        List<ChildTblCol> childTblCol1=childMapper.getTblSel(menuId1,"1",null,projId);
+        List<ChildTblCol> childTblCol1=childMapper.getTblSel(Long.valueOf(menuId),"1",null);
         for(int i=0;i<childTblCol1.size();i++){
             childTblCol.add(childTblCol1.get(i));
         }
@@ -181,7 +180,7 @@ public class ChildServiceImpl implements ChildService {
             childTblCol.get(i).setWidth(width);
         }
         //获取查询条件
-        List<ChildTblCol> basicSel=childMapper.getTblSel(menuId1,null,"1",null);
+        List<ChildTblCol> basicSel=childMapper.getTblSel(Long.valueOf(menuId),null,"1");
         //将获取的列名插入ChildTblSel中
         ChildTblSelVo ChildTblSel= new ChildTblSelVo();
         ChildTblSel.setChildTblCol(childTblCol);

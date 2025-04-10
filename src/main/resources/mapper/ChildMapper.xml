@@ -26,6 +26,13 @@
 <!--            and b.sel_state=1-->
 <!--        </if>-->
     </select>
+    <select id="getBasicCol" resultType="com.wision.entity.BasicCol" >
+        select b.tool_code,b.tool_name from t_supp_relat_main a inner join t_supp_relat_ext b
+        on a.relat_id=b.relat_id where a.menu_id=#{menuId} and a.layout_type='主表'
+    </select>
+    <select id="getChildTblContDet" resultType="com.wision.entity.ChildTblForm" >
+        select * from ${tblName} where id=#{projId}
+    </select>
     <select id="getBasicChildTbl" resultType="String" >
         select basic_tbl from t_supp_relat_main a where menu_id=#{menuId} and layout_type='主表'
     </select>

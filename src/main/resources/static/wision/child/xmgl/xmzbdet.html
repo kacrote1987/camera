@@ -69,19 +69,17 @@
         element.render('conseqReload');
         //前项项目信息表
         var projId=window.location.search.substring(1,window.location.search.length);
-        alert(projId);
         $.ajax({
             type:"post",
-            url:"/child/childtblsel",
+            url:"/child/childtbldet",
             contentType:"application/json;charset=utf-8",
             dataType:"json",
             data:projId,
             success:function(detObj){
-                if(detObj.msg=="sucess"){
-                    var detJson=detObj.data[0];
-                    $('#projId').val(detJson.projId);
-                    $('#projType').val(detJson.projType);
-                    $('#projName').val(detJson.projName);
+                if(detObj.msg=="success"){
+                    var childTblContDet = detObj.data.childTblContDet;
+                    var childTblHeadDet = detObj.data.childTblHeadDet;
+
                     layui.form.render();
                 }
             }
