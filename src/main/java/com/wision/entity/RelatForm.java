@@ -5,6 +5,7 @@ public class RelatForm {
     private String relatName;
     private String layoutType;
     private Long tblId;
+    private String mainTbl;
 
     public Long getRelatId() {
         return relatId;
@@ -36,5 +37,13 @@ public class RelatForm {
 
     public void setTblId(Long tblId) {
         this.tblId = tblId;
+    }
+
+    public String getMainTbl() {
+        return mainTbl;
+    }
+
+    public void setMainTbl(String mainTbl) {
+        this.mainTbl = mainTbl;
     }
 }

@@ -7,6 +7,7 @@ public class ProdDetForm {
     private String prodNikname;
     private String prodVer;
     private String prodExplain;
+    private String action;
 
     public Long getProdId() {
         return prodId;
@@ -54,5 +55,13 @@ public class ProdDetForm {
 
     public void setProdExplain(String prodExplain) {
         this.prodExplain = prodExplain;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }

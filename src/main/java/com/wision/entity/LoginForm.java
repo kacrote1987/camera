@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.NotNull;
 @ApiModel("登陆")
 public class LoginForm {
-    @NotNull(message = "账号不能为空")
+//    @NotNull(message = "账号不能为空")
     private String userCode;
-    @NotNull(message = "密码不能为空")
+//    @NotNull(message = "密码不能为空")
     private String userPwd;
 
     public String getUserCode() {

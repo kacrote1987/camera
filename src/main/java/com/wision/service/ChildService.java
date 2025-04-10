@@ -11,5 +11,7 @@ public interface ChildService {
     List<MainSelVo> mainSel(Long menuId);
     PageInfo<MainContVo> mainCont(Long menuId, ChildTblForm params);
     ChildTblDetForm childTblDet(String params);
+    List<ChildTblSelVo> childTblSel(String menuId);
+    PageInfo<ChildTblForm> childTblCont(String menuId,ChildTblForm params);
 //    void generate(Long prodId);
 }

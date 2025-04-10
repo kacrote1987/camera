@@ -53,6 +53,20 @@ public class ChildController {
         return Result.success(childTblDet);
     }
 
+    @ApiOperation("子系统列名查看")
+    @PostMapping("/childtblsel")
+    public Result childTblSel(@RequestBody String menuId){
+        List<ChildTblSelVo> childTblSel= childService.childTblSel(menuId);
+        return Result.success(childTblSel);
+    }
+
+    @ApiOperation("子系统主表查看")
+    @PostMapping("/childtblcont")
+    public Result childTblCont(@RequestBody String menuId,ChildTblForm params){
+        PageInfo<ChildTblForm> childTblCont= childService.childTblCont(menuId,params);
+        return Result.success(childTblCont);
+    }
+
 //    @ApiOperation("代码自动生成")
 //    @PostMapping("/generate")
 //    public Result generate(@RequestParam Long prodId){

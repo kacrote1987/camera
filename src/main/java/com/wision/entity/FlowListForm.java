@@ -5,6 +5,7 @@ public class FlowListForm {
     private Long extId;
     private String field;
     private String value;
+    private String action;
 
     public Long getRelatId() {
         return relatId;
@@ -36,5 +37,13 @@ public class FlowListForm {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }

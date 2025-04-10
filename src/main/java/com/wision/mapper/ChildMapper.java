@@ -10,9 +10,11 @@ import java.util.List;
 public interface ChildMapper {
     String getChildName(Long prodId);
     List<ChildMenuVo> getChildMenu(Long prodId);
-    List<ChildTblCol> getTblSel(Long menuId, String res, String sel);
+    List<ChildTblCol> getTblSel(Long menuId, String res, String sel,Long projId);
     String getNickNameByMenuId(Long menuId);
     List<MainContVo> getMainCont(String tblName);
+    String getBasicChildTbl(Long menuId);
+    List<ChildTblForm> childTblCont(Long menuId, @Param("params1") ChildTblCont params1);
 //    String getProdNikName(Long prodId);
 //    String getToolPage(Long relatId);
 //    String getRealPage(Long relatId);

@@ -7,6 +7,8 @@ public class BasicCol {
     private String toolType;
     private String resState;
     private String selState;
+    private String field;
+    private String value;
 
     public Long getExtId() {
         return extId;
@@ -54,5 +56,21 @@ public class BasicCol {
 
     public void setSelState(String selState) {
         this.selState = selState;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

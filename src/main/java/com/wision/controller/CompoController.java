@@ -24,7 +24,7 @@ public class CompoController {
         PageInfo<CompoListVo> compoList= compoService.compoList(params);
         return Result.success(compoList);
     }
-//
+
 //    @ApiOperation("组件详细")
 //    @PostMapping("/toolDet")
 //    public Result toolDet(@RequestBody String params){
@@ -38,21 +38,21 @@ public class CompoController {
 //        toolStoService.toolSave(params);
 //        return Result.success();
 //    }
-//
-    @ApiOperation("组件配置-基础信息组件-数据源字典")
+
+    @ApiOperation("基础信息组件-组件配置-数据源字典")
     @PostMapping("/basicSour")
     public Result basicSour(@RequestParam Long relatId){
         BasicSourVo basicSour= compoService.basicSour(relatId);
         return Result.success(basicSour);
     }
 
-    @ApiOperation("组件配置-基础信息组件-组件设置")
+    @ApiOperation("基础信息组件-组件配置-组件设置")
     @PostMapping("/basicCond")
     public Result basicCond(@RequestParam Long relatId){
         List<BasicCondVo> basicCond= compoService.basicCond(relatId);
         return Result.success(basicCond);
     }
-//
+
 //    @ApiOperation("组件配置-基础信息组件-配置修改")
 //    @PostMapping("/basicCondEdit")
 //    public Result basicCondEdit(@RequestBody BasicCondForm1 params){
@@ -66,14 +66,26 @@ public class CompoController {
 //        toolStoService.basicCondAdd(params);
 //        return Result.success();
 //    }
-//
-    @ApiOperation("组件展示-基础信息组件-本表字段字典")
+
+    @ApiOperation("基础信息组件-组件展示-本表字段字典")
     @PostMapping("/basicView")
     public Result basicView(@RequestParam Long relatId){
         List<BasicCol> basicView= compoService.basicView(relatId);
         return Result.success(basicView);
     }
-//
+    @ApiOperation("地图组件-组件展示")
+    @PostMapping("/mapView")
+    public Result mapView(@RequestParam Long relatId){
+        List<BasicCol> mapView= compoService.basicView(relatId);
+        return Result.success(mapView);
+    }
+    @ApiOperation("地图组件-组件配置")
+    @PostMapping("/mapCond")
+    public Result mapCond(@RequestParam Long relatId){
+        List<BasicCondVo> mapCond= compoService.basicCond(relatId);
+        return Result.success(mapCond);
+    }
+
 //    @ApiOperation("组件配置-基础信息组件-条件设置删除")
 //    @PostMapping("/basicCondDel")
 //    public Result basicCondDel(@RequestParam Long extId){
@@ -124,59 +136,59 @@ public class CompoController {
 //    }
 //
 //
-////    @ApiOperation("规则配置字典")
-////    @PostMapping("/ruleDict")
-////    public Result ruleDict(@RequestParam Long relatId){
-////        RuleDictVo ruleDict= toolService.ruleDict(relatId);
-////        return Result.success(ruleDict);
-////    }
-////
-////    @ApiOperation("规则配置新增")
-////    @PostMapping("/ruleAdd")
-////    public Result ruleAdd(@RequestBody RuleListForm params){
-////        toolService.ruleAdd(params);
-////        return Result.success();
-////    }
-////
-////    @ApiOperation("组件数据源详细")
-////    @PostMapping("/sourDet")
-////    public Result sourDet(@RequestParam Long relatId){
-////        SourDetVo sourDet= toolService.sourDet(relatId);
-////        return Result.success(sourDet);
-////    }
-////
-////    @ApiOperation("组件布局修改")
-////    @PostMapping("/layoutEdit")
-////    public Result layoutEdit(@RequestBody RelatForm params){
-////        toolService.layoutEdit(params);
-////        return Result.success();
-////    }
-////
-////    @ApiOperation("组件数据源修改")
-////    @PostMapping("/sourEdit")
-////    public Result sourEdit(@RequestBody RelatForm params){
-////        toolService.sourEdit(params);
-////        return Result.success();
-////    }
+//    @ApiOperation("规则配置字典")
+//    @PostMapping("/ruleDict")
+//    public Result ruleDict(@RequestParam Long relatId){
+//        RuleDictVo ruleDict= toolService.ruleDict(relatId);
+//        return Result.success(ruleDict);
+//    }
 //
-//    ////    @ApiOperation("二维码生成")
-//////    @PostMapping("/qrcode")
-//////    public Result qrcode(){
-//////        toolStoService.qrcode();
-//////        return Result.success();
-//////    }
-//////
-//////    @ApiOperation("微信扫码支付")
-//////    @PostMapping("/payByWx")
-//////    public Result payByWx(){
-//////        toolStoService.payByWx();
-//////        return Result.success();
-//////    }
-//////
-//////    @ApiOperation("kafka")
-//////    @PostMapping("/kafka")
-//////    public Result kafka(){
-//////        toolStoService.kafka();
-//////        return Result.success();
-//////    }
+//    @ApiOperation("规则配置新增")
+//    @PostMapping("/ruleAdd")
+//    public Result ruleAdd(@RequestBody RuleListForm params){
+//        toolService.ruleAdd(params);
+//        return Result.success();
+//    }
+//
+//    @ApiOperation("组件数据源详细")
+//    @PostMapping("/sourDet")
+//    public Result sourDet(@RequestParam Long relatId){
+//        SourDetVo sourDet= toolService.sourDet(relatId);
+//        return Result.success(sourDet);
+//    }
+//
+//    @ApiOperation("组件布局修改")
+//    @PostMapping("/layoutEdit")
+//    public Result layoutEdit(@RequestBody RelatForm params){
+//        toolService.layoutEdit(params);
+//        return Result.success();
+//    }
+//
+//    @ApiOperation("组件数据源修改")
+//    @PostMapping("/sourEdit")
+//    public Result sourEdit(@RequestBody RelatForm params){
+//        toolService.sourEdit(params);
+//        return Result.success();
+//    }
+//
+//      @ApiOperation("二维码生成")
+//    @PostMapping("/qrcode")
+//    public Result qrcode(){
+//        toolStoService.qrcode();
+//        return Result.success();
+//    }
+//
+//    @ApiOperation("微信扫码支付")
+//    @PostMapping("/payByWx")
+//    public Result payByWx(){
+//        toolStoService.payByWx();
+//        return Result.success();
+//    }
+//
+//    @ApiOperation("kafka")
+//    @PostMapping("/kafka")
+//    public Result kafka(){
+//        toolStoService.kafka();
+//        return Result.success();
+//    }
 }
