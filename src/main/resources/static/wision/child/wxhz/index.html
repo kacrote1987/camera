@@ -115,7 +115,7 @@
     var prodId = window.location.search.substring(1, window.location.search.length);
     $.ajax({
       type: "post",
-      url: "/prodSto/getChildMain?prodId=" + prodId,
+      url: "/child/getChildMain?prodId=" + prodId,
       contentType: "application/json;charset=utf-8",
       dataType: "json",
       success: function (detObj) {
@@ -124,10 +124,10 @@
           document.getElementById("prodName").innerHTML = detJson.prodName;
           document.getElementById("title").innerHTML = detJson.prodName;
           document.getElementById("cite").innerHTML = detJson.childMenuVo[0].menuName;
-          document.getElementById("src").src = detJson.childMenuVo[1].realPage + '?' + prodId;
+          document.getElementById("src").src = detJson.childMenuVo[1].nickName + 'list.html?' + prodId;
           var citechild='';
           for(var i=1;i<detJson.childMenuVo.length;i++){
-            citechild = citechild + '<dd id="" data-name="list"><a lay-href="' + detJson.childMenuVo[i].realPage + '?' + prodId + '">' + detJson.childMenuVo[i].menuName + '</a></dd>'
+            citechild = citechild + '<dd id="" data-name="list"><a lay-href="' + detJson.childMenuVo[i].nickName + 'list.html?' + prodId + '">' + detJson.childMenuVo[i].menuName + '</a></dd>'
           }
           document.getElementById("citechild").innerHTML = citechild;
         }
