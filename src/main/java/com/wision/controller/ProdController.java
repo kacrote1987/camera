@@ -1,12 +1,13 @@
 package com.wision.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.wision.config.Result;
 import com.wision.entity.*;
 import com.wision.service.ProdService;
-import com.wision.config.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,13 +40,6 @@ public class ProdController {
         return Result.success(prodDet);
     }
 
-    @ApiOperation("产品修改")
-    @PostMapping("/prodEdit")
-    public Result prodEdit(@RequestBody ProdDetForm params){
-        prodService.prodEdit(params);
-        return Result.success();
-    }
-
     @ApiOperation("产品新增")
     @PostMapping("/prodAdd")
     public Result prodAdd(@RequestBody ProdDetForm params){
@@ -57,6 +51,13 @@ public class ProdController {
     @PostMapping("/prodDel")
     public Result prodDel(@RequestParam Long prodId){
         prodService.prodDel(prodId);
+        return Result.success();
+    }
+
+    @ApiOperation("产品修改")
+    @PostMapping("/prodEdit")
+    public Result prodEdit(@RequestBody ProdDetForm params){
+        prodService.prodEdit(params);
         return Result.success();
     }
 
@@ -80,6 +81,18 @@ public class ProdController {
         List<TblListVo> tblList= prodService.tblList(prodId);
         return Result.success(tblList);
     }
+
+    //库表详细
+
+    //库表导入
+    @ApiOperation("基础库表导入")
+    @PostMapping("/basicimp")
+    public Result basicImp(@RequestParam MultipartFile file, @RequestParam Long tblId, @RequestParam String tblCode) throws Exception {
+        prodService.basicImp(file,tblId,tblCode);
+        return Result.success();
+    }
+
+    //库表删除
 
     @ApiOperation("菜单列表")
     @PostMapping("/menuList")
@@ -156,13 +169,6 @@ public class ProdController {
 //    public Result tblDet(@RequestBody String params){
 //        List<TblImpForm> tblDet= prodService.tblDet(params);
 //        return Result.success(tblDet);
-//    }
-//
-//    @ApiOperation("基础库表导入")
-//    @PostMapping("/basicimp")
-//    public Result basicImp(@RequestParam MultipartFile file, @RequestParam Long tblId,@RequestParam String tblCode) throws Exception {
-//        prodService.basicImp(file,tblId,tblCode);
-//        return Result.success();
 //    }
 //
 //

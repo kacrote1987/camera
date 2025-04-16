@@ -2,6 +2,7 @@ package com.wision.service;
 
 import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -9,12 +10,13 @@ public interface ProdService {
     PageInfo<ProdListVo> storeList(ProdListForm params);
     PageInfo<ProdListVo> prodList(ProdListForm params);
     List<ProdDetVo> prodDet(Long prodId);
-    void prodEdit(ProdDetForm params);
     void prodAdd(ProdDetForm params);
     void prodDel(Long prodId);
+    void prodEdit(ProdDetForm params);
     void onLine(Long prodId);
     void offLine(Long prodId);
     List<TblListVo> tblList(Long prodId);
+    void basicImp(MultipartFile file, Long tblId, String tblCode) throws Exception;
     List<MenuListVo> menuList(Long prodId);
     void menuAdd(Long prodId);
     void menuDel(Long menuId);
@@ -46,11 +48,6 @@ public interface ProdService {
 ////    List<TblImpForm> tblList(String params);
 ////    List<TblImpForm> tblDet(String params);
 //    void relatSave(RelatForm params);
-//    /**
-//     * 基础档案组件导入
-//     * @return
-//     */
-//    void basicImp(MultipartFile file,Long tblId,String tblCode) throws Exception;
 //    /**
 //     * 自建表字段配置列表
 //     * @return

@@ -109,7 +109,7 @@
         formData.append("tblId", tblId);//需要上传的多个参数
         formData.append("tblCode", $('#tblCode').val());//需要上传的多个参数
         $.ajax({//jQuery方法，此处可以换成其它请求方式
-            url: '/supp/basicimp',
+            url: '/prod/basicimp',
             dataType: "json",
             type: "post",
             data: formData,

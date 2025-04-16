@@ -5,12 +5,12 @@ import com.github.pagehelper.PageInfo;
 import com.wision.entity.*;
 import com.wision.mapper.ProdMapper;
 import com.wision.service.ProdService;
+import com.wision.util.ExcelUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class ProdServiceImpl implements ProdService {
@@ -48,11 +48,6 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
-    public void prodEdit(ProdDetForm params) {
-        prodMapper.updateProd(params);
-    }
-
-    @Override
     public void prodAdd(ProdDetForm params) {
         prodMapper.insertProd(params);
 //        创建java文件夹
@@ -69,6 +64,11 @@ public class ProdServiceImpl implements ProdService {
     }
 
     @Override
+    public void prodEdit(ProdDetForm params) {
+        prodMapper.updateProd(params);
+    }
+
+    @Override
     public void onLine(Long prodId) {
         prodMapper.onLine(prodId);
     }
@@ -82,6 +82,49 @@ public class ProdServiceImpl implements ProdService {
     public List<TblListVo> tblList(Long prodId) {
         List<TblListVo> tblList = prodMapper.tblList(prodId);
         return tblList;
+    }
+
+    @Override
+    public void basicImp(MultipartFile file, Long tblId, String tblCode) throws Exception {
+//        tblId=159;tblCode=t_imp_159_ahdlsm
+//        创建表并初始化
+        String[] keys = {"col1","col2","col3","col4","col5","col6","col7","col8","col9","col10"};
+        String keysName="'" + Arrays.toString(keys).substring(1,Arrays.toString(keys).length()-1).replace(",","','") + "'";
+//        判断表是否存在
+        String tblName=prodMapper.checkTblExists(tblCode);
+        if(tblName!=null){
+            prodMapper.dropTbl(tblCode);
+        }
+        prodMapper.createTbl(tblCode,keysName);
+        prodMapper.cleanTbl(tblCode);
+        for(int k=0;k<keys.length;k++){
+            prodMapper.alterTbl(tblCode,keys[k]);
+        }
+//        导入，读取excel中列的信息
+        List<Map<String, Object>> list= ExcelUtils.importExcel(file,keys);
+        for(Map<String,Object> map:list){
+            String col="";
+            for(int i=1;i<=map.size();i++){
+                col += "'"+map.get("col"+i).toString()+"',";
+            }
+            col=col.substring(0,col.length()-1);
+            prodMapper.insertTbl(tblCode,col);
+        }
+//        先清除t_supp_relat_ext中已有表头
+        prodMapper.cleanHeader(tblId);
+//        再重新新增t_supp_relat_ext表中的表头
+        String cols=Arrays.toString(keys).substring(1,Arrays.toString(keys).length()-1);
+        String[] array1 = cols.split(",");
+        cols=cols.replace(",",",',',");
+        String header=prodMapper.getHeader(tblCode,cols);
+        String[] array2 = header.split(",");
+        for(int i=0;i<array1.length;i++){
+            prodMapper.insertHeader(tblId,array1[i],array2[i]);
+        }
+//        清除列中的空格
+        prodMapper.cleanBasicBlank();
+//        从表中删除t_imp_X_X表中第一行表头
+        prodMapper.deleteHeader(tblCode);
     }
 
     @Override
@@ -299,49 +342,6 @@ public class ProdServiceImpl implements ProdService {
 //        return convert;
 //    }
 //
-//    @Override
-//    public void basicImp(MultipartFile file,Long tblId,String tblCode) throws Exception {
-////        tblId=159;tblCode=t_imp_159_ahdlsm
-////        创建表并初始化
-//        String[] keys = {"col1","col2","col3","col4","col5","col6","col7","col8","col9","col10"};
-//        String keysName="'" + Arrays.toString(keys).substring(1,Arrays.toString(keys).length()-1).replace(",","','") + "'";
-////        判断表是否存在
-//        String tblName=prodMapper.checkTblExists(tblCode);
-//        if(tblName!=null){
-//            prodMapper.dropTbl(tblCode);
-//        }
-//        prodMapper.createTbl(tblCode,keysName);
-//        prodMapper.cleanTbl(tblCode);
-//        for(int k=0;k<keys.length;k++){
-//            prodMapper.alterTbl(tblCode,keys[k]);
-//        }
-////        导入，读取excel中列的信息
-//        List<Map<String, Object>> list= ExcelUtils.importExcel(file,keys);
-//        for(Map<String,Object> map:list){
-//            String col="";
-//            for(int i=1;i<=map.size();i++){
-//                col += "'"+map.get("col"+i).toString()+"',";
-//            }
-//            col=col.substring(0,col.length()-1);
-//            prodMapper.insertTbl(tblCode,col);
-//        }
-////        先清除t_supp_relat_ext中已有表头
-//        prodMapper.cleanHeader(tblId);
-////        再重新新增t_supp_relat_ext表中的表头
-//        String cols=Arrays.toString(keys).substring(1,Arrays.toString(keys).length()-1);
-//        String[] array1 = cols.split(",");
-//        cols=cols.replace(",",",',',");
-//        String header=prodMapper.getHeader(tblCode,cols);
-//        String[] array2 = header.split(",");
-//        for(int i=0;i<array1.length;i++){
-//            prodMapper.insertHeader(tblId,array1[i],array2[i]);
-//        }
-////        清除列中的空格
-//        prodMapper.cleanBasicBlank();
-////        从表中删除t_imp_X_X表中第一行表头
-//        prodMapper.deleteHeader(tblCode);
-//    }
-
 //    @Override
 //    public List<BasicCol> basicCol(Long id) {
 //        List<BasicCol> basicCol=prodMapper.getColName(id);
