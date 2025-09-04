@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>用户详细</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-tab">
+      <ul class="layui-tab-title">
+        <li class="layui-this">基本情况</li>
+      </ul>
+      <div id="applyReload" class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <!--            基本情况页-->
+          <div class="layui-row layui-col-space12">
+            <div class="layui-col-md2">
+            </div>
+            <div class="layui-col-md8">
+              <div class="layui-card">
+                <input id="userId" type="text" name="userId" placeholder="" autocomplete="off" class="layui-input" style="display: none">
+                <div class="layui-card-body">
+                  <form class="layui-form" action="" lay-filter="component-form-element">
+                    <div class="layui-row layui-col-space10 layui-form-item">
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-block">
+                          <input id="userName" type="text" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                      </div>
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">性别1</label>
+                        <div class="layui-input-block">
+                          <select id="userSex" name="userSex">
+                            <option value="">全部</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="layui-row layui-col-space10 layui-form-item">
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">编号</label>
+                        <div class="layui-input-block">
+                          <input id="userNo" type="text" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                      </div>
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">所属部门</label>
+                        <div class="layui-input-block">
+                          <select id="userDept" name="userState">
+                            <option value="">全部</option>
+                            <option value="技术部">技术部</option>
+                            <option value="质检部">质检部</option>
+                            <option value="生产部">生产部</option>
+                            <option value="行政部">行政部</option>
+                            <option value="仓储部">仓储部</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="layui-row layui-col-space10 layui-form-item">
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">在岗状态</label>
+                        <div class="layui-input-block">
+                          <select id="userState" name="userState">
+                            <option value="">全部</option>
+                            <option value="在岗">在岗</option>
+                            <option value="请假">请假</option>
+                            <option value="出差">出差</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="layui-col-lg6"></div>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="layui-col-md2">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="layui-form-item layui-layout-admin">
+  <div class="layui-input-block">
+    <div class="layui-footer" style="left: 0;">
+      <button id="save" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1" onclick="save()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="js/demo.js"></script>
+<script src="layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: 'layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table', 'laydate','form'], function(){
+    var admin = layui.admin
+            ,table = layui.table
+            ,$ = layui.$
+            ,element = layui.element
+            ,laydate = layui.laydate
+            ,form = layui.form;
+
+    var userId=window.location.search.substring(1,window.location.search.length);
+    $.ajax({
+      type:"post",
+      url:"/user/userDet",
+      contentType:"application/json;charset=utf-8",
+      dataType:"json",
+      data:userId,
+      success:function(detObj){
+        if(detObj.msg=="success"){
+          var detJson=detObj.data[0];
+          $('#userId').val(userId);
+          $('#userNo').val(detJson.userNo);
+          $('#userName').val(detJson.userName);
+          $('#userSex').val(detJson.userSex);
+          $('#userDept').val(detJson.userDept);
+          $('#userState').val(detJson.userState);
+          layui.form.render();
+        }
+      }
+    });
+
+    $('.layui-fluid .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  });
+
+  function save(){
+    var params={};
+    params.userId=$('#userId').val();
+    params.userNo=$('#userNo').val();
+    params.userName=$('#userName').val();
+    params.userSex=$('#userSex').val();
+    params.userDept=$('#userDept').val();
+    params.userState=$('#userState').val();
+    postdata(params,"/user/userEdit",function () {layer.msg("保存成功！");});
+  }
+</script>
+</body>
+</html>

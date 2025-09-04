@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>项目列表</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-tab">
+      <ul class="layui-tab-title">
+        <li class="layui-this">基本情况</li>
+      </ul>
+      <div id="applyReload" class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <!--            基本情况页-->
+          <div class="layui-row layui-col-space12">
+            <div class="layui-col-md2">
+            </div>
+            <div class="layui-col-md8">
+              <div class="layui-card">
+                <div class="layui-card-body">
+                  <form class="layui-form" action="" lay-filter="component-form-element">
+                    <div class="layui-row layui-col-space10 layui-form-item">
+                      <div class="layui-col-lg12">
+                        <label class="layui-form-label">标题</label>
+                        <div class="layui-input-block">
+                          <input id="applyTitle" type="text" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="layui-row layui-col-space10 layui-form-item">
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">申请类型</label>
+                        <div class="layui-input-block">
+                          <select id="applyType" name="applyType">
+                            <option value="">全部</option>
+                            <option value="办公用品领用">办公用品领用</option>
+                            <option value="请休假">请休假</option>
+                            <option value="公车申请">公车申请</option>
+                            <option value="用印申请">用印申请</option>
+                            <option value="会议室预定">会议室预定</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">所属部门</label>
+                        <div class="layui-input-block">
+                          <select id="applyDept" name="applyDept">
+                            <option value="">全部</option>
+                            <option value="技术部">技术部</option>
+                            <option value="质检部">质检部</option>
+                            <option value="生产部">生产部</option>
+                            <option value="行政部">行政部</option>
+                            <option value="仓储部">仓储部</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="layui-row layui-col-space10 layui-form-item">
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">员工编号</label>
+                        <div class="layui-input-block">
+                          <input id="applyNo" type="text" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                      </div>
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">申请人</label>
+                        <div class="layui-input-block">
+                          <input id="applyName" type="text" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="layui-row layui-col-space10 layui-form-item">
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">申请时间</label>
+                        <div class="layui-input-block">
+                          <input id="applyTime" type="text" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" readonly>
+                        </div>
+                      </div>
+                      <div class="layui-col-lg6">
+                        <label class="layui-form-label">流转状态</label>
+                        <div class="layui-input-block">
+                          <input id="stepName" type="text" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" readonly>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="layui-row layui-col-space10 layui-form-item">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">申请内容</label>
+                        <div class="layui-input-block">
+                          <textarea id="applyContent" placeholder="" class="layui-textarea"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="layui-col-md2">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="layui-form-item layui-layout-admin">
+  <div class="layui-input-block">
+    <div class="layui-footer" style="left: 0;">
+      <button id="submit" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1" onclick="submit()">提交</button>
+    </div>
+  </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="js/demo.js"></script>
+<script src="layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: 'layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table', 'laydate','form'], function(){
+    var admin = layui.admin
+            ,table = layui.table
+            ,$ = layui.$
+            ,element = layui.element
+            ,laydate = layui.laydate
+            ,form = layui.form;
+
+    var currentTime = new Date();
+    var year = currentTime.getFullYear();
+    var month = currentTime.getMonth();
+    var day = currentTime.getDay();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+    var timeString = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+    // document.getElementById("time").innerHTML = timeString;
+
+    $('#applyTime').val(timeString);
+    $('#stepName').val("申请");
+
+
+
+    $('.layui-fluid .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  });
+
+
+
+  function submit(){
+    var params={};
+    params.applyType=$('#applyType').val();
+    params.applyDept=$('#applyDept').val();
+    params.applyTitle=$('#applyTitle').val();
+    params.applyNo=$('#applyNo').val();
+    params.applyName=$('#applyName').val();
+    params.applyContent=$('#applyContent').val();
+    params.applyTime=$('#applyTime').val();
+    postdata(params,"/apply/applyAdd",function () {layer.msg("保存成功！");});
+  }
+</script>
+</body>
+</html>
