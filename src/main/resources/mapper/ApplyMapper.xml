@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.ApplyMapper">
+    <select id="applyList" resultType="com.project.entity.ApplyListForm" >
+        select @rownum:=@rownum+1 as number,t.* from (select @rownum:=0) r,
+        (select a.apply_id,a.apply_type,a.apply_dept,a.apply_title,a.apply_content,a.apply_name,a.apply_time,b.step_name from t_apply_main a
+        left join t_apply_step b on a.step_code=b.step_code where 1=1
+        <if test="params.applyType!=null and params.applyType!=''">
+            and a.apply_type = #{params.applyType}
+        </if>
+        <if test="params.applyDept!=null and params.applyDept!=''">
+            and a.apply_dept = #{params.applyDept}
+        </if>
+        <if test="params.applyTitle!=null and params.applyTitle!=''">
+            and a.apply_title like '%' #{params.applyTitle} '%'
+        </if>
+        <if test="params.stepName!=null and params.stepName!=''">
+            and b.step_name = #{params.stepName}
+        </if>
+        order by a.apply_time desc) t
+    </select>
+    <select id="applyDet" resultType="com.project.entity.ApplyDetForm">
+        select a.apply_id,a.apply_type,a.apply_dept,a.apply_title,a.apply_content,a.apply_no,a.apply_name,a.apply_time,b.step_name from t_apply_main a
+        left join t_apply_step b on a.step_code=b.step_code where a.apply_id = #{applyId}
+    </select>
+    <insert id="insertApply">
+        insert t_apply_main(apply_type,apply_dept,apply_title,apply_content,apply_no,apply_name,apply_time,step_code)
+        values (#{params.applyType},#{params.applyDept},#{params.applyTitle},#{params.applyContent},#{params.applyNo},#{params.applyName},#{params.applyTime},'1')
+    </insert>
+    <update id="applyStep">
+        update t_apply_main set step_code = step_code + #{params.stepFurther} where apply_id=#{params.applyId}
+    </update>
+</mapper>
