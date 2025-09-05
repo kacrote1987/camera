@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>单位档案</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">标签类别</label>
+                    <div class="layui-input-block">
+                        <select id="tagType" name="tagType">
+                            <option value="">全部</option>
+                            <option value="地区标签">地区标签</option>
+                            <option value="场所标签">场所标签</option>
+                            <option value="建设标签">建设标签</option>
+                            <option value="设备类型标签">设备类型标签</option>
+                            <option value="设备厂家标签">设备厂家标签</option>
+                            <option value="算法标签">算法标签</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">一级标签</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="tagName1" name="tagName1" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">二级标签</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="tagName2" name="tagName2" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-useradmin" data-type="reload">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/html" id="test-table-toolbar-toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+                <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+            </div>
+        </script>
+
+        <script type="text/html" id="test-table-toolbar-barDemo">
+            <a id="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
+        </script>
+
+        <div class="layui-card-body">
+            <table id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+            <script type="text/html" id="imgTpl">
+                <img style="display: inline-block; width: 50%; height: 100%;" src= {{ d.avatar }}>
+            </script>
+        </div>
+    </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../js/demo.js"></script>
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index','form', 'table', 'laydate'], function(){
+        var admin = layui.admin
+            ,table = layui.table
+            ,$ = layui.$
+            ,element = layui.element
+            ,form = layui.form;
+
+        table.render({
+            elem: '#test-table-toolbar'
+            ,id: 'tagReload'
+            ,method: 'post'
+            ,url: '/camera/taglist/' //数据接口
+            ,response:{
+                statusName:'code',
+                statusCode:'200'
+            }
+            ,toolbar: '#test-table-toolbar-toolbarDemo'
+            ,title: '标签基本信息表'
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left', width:'5%'}
+                ,{field: 'tagId', title: '序号', width:'5%'}
+                ,{field: 'tagType', title: '标签类别',sort: true, width:'12%'}
+                ,{field: 'tagName1', title: '一级标签名称',sort: true, width:'12%'}
+                ,{field: 'tagCode1', title: '一级标签代码',sort: true, width:'12%'}
+                ,{field: 'tagName2', title: '二级标签名称',sort: true, width:'12%'}
+                ,{field: 'tagCode2', title: '二级标签代码',sort: true, width:'12%'}
+                ,{field: 'tagName3', title: '三级标签名称',sort: true, width:'12%'}
+                ,{field: 'tagCode3', title: '三级标签代码',sort: true, width:'12%'}
+                ,{fixed: 'right', title:'操作', toolbar: '#test-table-toolbar-barDemo', width:'6%'}
+            ]]
+            ,page: true
+            ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.list //解析数据列表
+                };
+            }
+        });
+
+        //执行重载
+        var $ = layui.$, active = {
+            reload: function(){
+                var tagType = $('#tagType');
+                var tagName1 = $('#tagName1');
+                var tagName2 = $('#tagName2');
+                table.reload('cameraReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        tagType: tagType.val(),
+                        tagLv1: tagName1.val(),
+                        tagLv2: tagName2.val()
+                    }
+                }, 'data');
+            }
+        };
+
+        //头工具栏事件
+        table.on('toolbar(test-table-toolbar)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'add':
+                    layer.open({
+                        type: 2
+                        ,title: '新增'
+                        ,content: 'tagdet.html?add'
+                        ,maxmin: true
+                        ,area: ['600px', '400px']
+                    });
+                    break;
+                case 'del':
+                    layer.confirm('是否删除？', {
+                        btn: ['是','否'] //按钮
+                    }, function(){
+                        var params={};
+                        params.action="del";
+                        params.posId=checkStatus.data[0].posId;
+                        postdata(params,"/camera/tagsave",function () {
+                            table.reload('tagReload');layer.msg("已删除");});
+                    });
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(test-table-toolbar)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'det'){
+                layer.open({
+                    type: 2
+                    ,title: '详细'
+                    ,content: 'tagdet.html?' + data.tagId
+                    ,maxmin: true
+                    ,area: ['600px', '450px']
+                });
+            }});
+
+        layui.use(['form'], function() {
+            form=layui.form;
+            form.on('select(cameraOnline)', function(data){
+                var val=data.value;
+                if(val=="是"){
+                    document.getElementById("type").style.display='block';
+                }else{
+                    document.getElementById("type").style.display='none';
+                }
+            });
+        });
+
+        $('.layui-fluid .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>
+</body>
+</html>

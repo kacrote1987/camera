@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>项目详细</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-row layui-col-space12">
+                    <div class="layui-col-md10">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <table id="test-table-param" lay-filter="test-table-param"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md1">
+                        * 注：<p>（1）权重值越小，优先级越高。<p>（2）按照不同参数的权重之和进行比较。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../../js/demo.js"></script>
+<script src="../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'table','laydate'], function(){
+        var $ = layui.$
+            ,form = layui.form
+            ,laydate = layui.laydate
+            ,table = layui.table;
+
+        table.render({
+            elem: '#test-table-param'
+            , id: 'paramReload'
+            , method: 'post'
+            , url: '/camera/reqorder'
+            ,response:{
+                statusName:'code',
+                statusCode:'200'
+            }
+            , title: '规则配置'
+            , page: false
+            , cols: [[
+                {field: 'paramName', title: '参数名称', width: '150'}
+                , {field: 'dictValue', title: '参数值', width: '150'}
+                , {field: 'dictCode', title: '优先级权重', edit: 'text', width: '150'}
+            ]]
+            ,done: function (res, curr, count) {
+                $(".layui-table-body, .layui-table-box, .layui-table-cell").css('overflow', 'visible');
+            }
+        });
+
+        //监听单元格编辑
+        table.on('edit(test-table-param)', function (obj) {
+            var params = {};
+            params.dictValue = obj.data.dictValue;
+            params.field = obj.field;
+            params.value = obj.value;
+            postdata(params, "/camera/ordersave", function () {table.reload('paramReload');layer.msg("更新成功");})
+        });
+    });
+</script>
+</body>
+</html>

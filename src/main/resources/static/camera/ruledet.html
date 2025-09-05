@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>申请记录详细</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-row layui-col-space12">
+                <div class="layui-col-md2">
+                </div>
+                <div class="layui-col-md8">
+                    <div class="layui-card">
+                        <input id="actions" type="text" name="actions" placeholder="" autocomplete="off"
+                               class="layui-input" style="display: none">
+                        <input id="cameraId" type="text" name="cameraId" placeholder="" autocomplete="off"
+                               class="layui-input" style="display: none">
+                        <input id="rpStr" type="text" name="rpStr" placeholder="" autocomplete="off"
+                               class="layui-input" style="display: none">
+                        <div class="layui-card-body">
+                            <form class="layui-form" action="" lay-filter="component-form-element">
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">名称</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraName" type="text" name="cameraCode"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">品牌</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraName1" type="text" name="cameraName"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">型号</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraLng" type="text" name="cameraLng"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">序列号</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraLat" type="text" name="cameraLat"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">COMS型号</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraBrand" type="text" name="cameraBrand"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">对角线</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraModel" type="text" name="cameraModel"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">宽W(mm)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType" type="text" name="cameraType"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">高H(mm)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType2" type="text" name="cameraType2"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">焦距f(mm)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType" type="text" name="cameraType"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">安装高度H(m)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType2" type="text" name="cameraType2"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">水平视场角Γ(°)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType" type="text" name="cameraType"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">垂直视场角α(°)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType2" type="text" name="cameraType2"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">最小倾斜角(°)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType" type="text" name="cameraType"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">最大倾斜角(°)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType2" type="text" name="cameraType2"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">安装角度β(°)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType" type="text" name="cameraType"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">最近可视距离L1(m)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType" type="text" name="cameraType"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">盲区面积SQ1(m^2)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType2" type="text" name="cameraType2"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-row layui-col-space10 layui-form-item">
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">最远可视距离L2(m)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType" type="text" name="cameraType"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-lg6">
+                                        <label class="layui-form-label">可视面积SQ2(m^2)</label>
+                                        <div class="layui-input-block">
+                                            <input id="cameraType2" type="text" name="cameraType2"
+                                                   lay-verify="required" placeholder="" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layui-form-item layui-layout-admin">
+    <div class="layui-input-block">
+        <div class="layui-footer" style="left: 0;">
+            <button id="unitSave" class="layui-btn" lay-submit="submit" lay-filter="component-form-demo1"
+                    onclick="save()">保存
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/script/login.js"></script>
+<script src="../../js/demo.js"></script>
+<script src="../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'element', 'table', 'laydate'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , table = layui.table;
+
+        form.render(null, 'component-form-group');
+        var cameraId = window.location.search.substring(1, window.location.search.length);
+        if (cameraId == "add") {
+            $('#actions').val("add");
+        } else {
+            $('#actions').val("update");
+            $('#cameraId').val(cameraId);
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/camera/paramlist",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: cameraId,
+            success: function (detObj) {
+                if (detObj.msg == "sucess") {
+                    var detJson = detObj.data[0];
+                    $('#paramId').val(detJson.paramId);
+                    $('#cameraName').val(detJson.cameraName);
+                    $('#cameraName').val(detJson.cameraName);
+                    $('#cameraLng').val(detJson.cameraLng);
+                    $('#cameraLat').val(detJson.cameraLat);
+                    $('#cameraBrand').val(detJson.cameraBrand);
+                    $('#cameraType').val(detJson.cameraType);
+                    $('#cameraType2').val(detJson.cameraType2);
+                    $('#cameraModel').val(detJson.cameraModel);
+                    $('#cameraDistance').val(detJson.cameraDistance);
+                    $('#shareType').val(detJson.shareType);
+                    $('#projId').val(detJson.projId);
+                    $('#cameraArea').val(detJson.cameraArea);
+                    $('#cameraTown').val(detJson.cameraTown);
+                    $('#cameraVillage').val(detJson.cameraVillage);
+                    $('#cameraBuildtime').val(detJson.cameraBuildtime);
+                    $('#cameraDeadline').val(detJson.cameraDeadline);
+                    $('#cameraDept').val(detJson.cameraDept);
+                    $('#tagType').val(detJson.tagType);
+                    $('#sceneType').val(detJson.sceneType);
+                    $('#tagLv1').val(detJson.tagLv1);
+                    $('#tagLv2').val(detJson.tagLv2);
+                    $('#tagIds').val(detJson.tagIds);
+                    $('#cameraNet').val(detJson.cameraNet);
+                    $('#cameraIpv4').val(detJson.cameraIpv4);
+                    $('#cameraChannel').val(detJson.cameraChannel);
+                    $('#videoDate').val(detJson.videoDate);
+                    $('#cameraIsp').val(detJson.cameraIsp);
+                    $('#cameraLink').val(detJson.cameraLink);
+                    $('#cameraState').val(detJson.cameraState);
+                    $('#azimuthLevel').val(detJson.azimuthLevel);
+                    $('#azimuthVert').val(detJson.azimuthVert);
+                    $('#rodCode').val(detJson.rodCode);
+                    $('#rodType').val(detJson.rodType);
+                    $('#rodHeight').val(detJson.rodHeight);
+                    $('#rodColor').val(detJson.rodColor);
+                    $('#cameraHeight').val(detJson.cameraHeight);
+                    $('#powerPos').val(detJson.powerPos);
+                    $('#boxNum').val(detJson.boxNum);
+                    $('#boxSituat').val(detJson.boxSituat);
+                    $('#checkUnit').val(detJson.checkUnit);
+                    $('#checkTime').val(detJson.checkTime);
+                    $('#checkUnified').val(detJson.checkUnified);
+                    $('#unifiedUnit').val(detJson.unifiedUnit);
+                    $('#remark').val(detJson.remark);
+                    $('#checkState').val(detJson.checkState);
+                    //以下展示选项
+                    // var rpStr = $('#rpStr').val();
+                    // var temp='';
+                    // for (var i = 0; i < rpStr.substr(rpStr.lastIndexOf(",") + 1, rpStr.length); i++) {
+                    //     temp += '<input type="checkbox" name="posTag" title=' + rpStr.substr(0, rpStr.indexOf(",")) + ' value=' + rpStr.substr(0, rpStr.indexOf(",")) + ' lay-skin="primary">';
+                    //     rpStr = rpStr.substr(rpStr.indexOf(",") + 1, rpStr.length);
+                    // }
+                    // $('#mytag').html(temp);
+                    // form.render('checkbox');
+                    // //以下匹配打勾
+                    // var split = detJson.posTag.split(",");
+                    // for (var j = 0; j < split.length; j++) {
+                    //     $("input[name=posTag][value="+split[j]+"]").attr("checked",true);
+                    // }
+                    layui.form.render();
+                }
+            }
+        });
+
+    });
+
+    function save() {
+        var params = {};
+        params.action = $('#actions').val();
+        params.cameraId = $('#cameraId').val();
+        params.cameraCode = $('#cameraCode').val();
+        params.cameraName = $('#cameraName').val();
+        params.cameraLng = $('#cameraLng').val();
+        params.cameraLat = $('#cameraLat').val();
+        params.cameraBrand = $('#cameraBrand').val();
+        params.cameraType = $('#cameraType').val();
+        params.cameraType2 = $('#cameraType2').val();
+        params.cameraModel = $('#cameraModel').val();
+        params.cameraDistance = $('#cameraDistance').val();
+        params.shareType = $('#shareType').val();
+        params.projId = $('#projId').val();
+        params.cameraArea = $('#cameraArea').val();
+        params.cameraTown = $('#cameraTown').val();
+        params.cameraVillage = $('#cameraVillage').val();
+        params.cameraBuildtime = $('#cameraBuildtime').val();
+        params.cameraDeadline = $('#cameraDeadline').val();
+        params.cameraDept = $('#cameraDept').val();
+        params.tagType = $('#tagType').val();
+        params.sceneType = $('#sceneType').val();
+        params.tagLv1 = $('#tagLv1').val();
+        params.tagLv2 = $('#tagLv2').val();
+        params.tagIds = $('#tagIds').val();
+        params.cameraNet = $('#cameraNet').val();
+        params.cameraIpv4 = $('#cameraIpv4').val();
+        params.cameraChannel = $('#cameraChannel').val();
+        params.videoDate = $('#videoDate').val();
+        params.cameraIsp = $('#cameraIsp').val();
+        params.cameraLink = $('#cameraLink').val();
+        params.cameraState = $('#cameraState').val();
+        params.azimuthLevel = $('#azimuthLevel').val();
+        params.azimuthVert = $('#azimuthVert').val();
+        params.rodCode = $('#rodCode').val();
+        params.rodType = $('#rodType').val();
+        params.rodHeight = $('#rodHeight').val();
+        params.rodColor = $('#rodColor').val();
+        params.cameraHeight = $('#cameraHeight').val();
+        params.powerPos = $('#powerPos').val();
+        params.boxNum = $('#boxNum').val();
+        params.boxSituat = $('#boxSituat').val();
+        params.checkUnit = $('#checkUnit').val();
+        params.checkTime = $('#checkTime').val();
+        params.checkUnified = $('#checkUnified').val();
+        params.unifiedUnit = $('#unifiedUnit').val();
+        params.remark = $('#remark').val();
+        params.checkState = $('#checkState').val();
+        // params.posTag= $("input[name=posTag]:checked").map(function() {
+        //     return $(this).val();
+        // }).get().join(",");
+        postdata(params, "/camera/camerasave", function () {layer.msg("保存成功！");});
+    }
+</script>
+</body>
+</html>
