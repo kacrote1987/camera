@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybaselectByUsernametiselectUsers.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.mapper.AssMapper">
-    <select id="assList" resultType="com.project.entity.AssList" >
+<mapper namespace="com.camera.mapper.AssMapper">
+    <select id="assList" resultType="com.camera.entity.AssList" >
         select a.ass_id,a.ass_no,b.dict_value as ass_type,a.ass_name,ass_no,a.purchase_date,a.ass_state
         from t_ass_main a left join (select * from t_sys_dict where dict_unit='ass' and dict_field='type_code') b
         on left(a.ass_type,1)=b.dict_code where 1=1
@@ -28,7 +28,7 @@
         </if>
         order by a.ass_no
     </select>
-    <select id="selDet" resultType="com.project.entity.AssDet">
+    <select id="selDet" resultType="com.camera.entity.AssDet">
         select t.ass_id,left(t.type_code,2) as ass_type1,left(t.type_code,3) as ass_type2,t.type_code as ass_type3,t.ass_contr
         ,t.ass_no,t.ass_name,t.ass_catg,t.ass_tag,t.ass_model,t.ass_factoryno,t.ass_manufacturer,t.ass_supplier,t.ass_unit,t.ass_num
         ,t.ass_cost,t.purchase_date,t.ass_dept,t.ass_owner,t.ass_addr,t.ass_state,t.ass_remark
@@ -59,7 +59,7 @@
         ,ass_cost=#{params.assCost},purchase_date=#{params.purchaseDate},ass_dept=#{params.assDept},ass_owner=#{params.assOwner}
         ,ass_addr=#{params.assAddr},ass_state=#{params.assState},ass_remark=#{params.assRemark} where ass_id=#{params.assId}
     </update>
-    <select id="assType" resultType="com.project.entity.AssList" >
+    <select id="assType" resultType="com.camera.entity.AssList" >
         select dict_code as ass_type,dict_value as ass_name from t_sys_dict where dict_unit='ass' and dict_field='type_code' and dict_code like '%' #{type} '%'
         and dict_order=(select dict_order+1 from t_sys_dict where dict_unit='ass' and dict_field='type_code' and dict_code=#{type})
     </select>
