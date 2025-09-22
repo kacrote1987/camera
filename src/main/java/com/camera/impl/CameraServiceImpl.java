@@ -26,8 +26,9 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
-    public List<ApplyDet> applyDet(ApplyDet params) {
-        return null;
+    public List<ApplyDet> applyDet(Long applyId) {
+        List<ApplyDet> applyDet = cameraMapper.applyDet(applyId);
+        return applyDet;
     }
 
     @Override

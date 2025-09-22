@@ -1,15 +1,17 @@
 package com.camera.entity;
 
 public class ApplyDet {
+
     private Long applyId;
-    private String applyType;
-    private String applyDept;
+    private String typeId;
+    private String applyNo;
     private String applyTitle;
     private String applyContent;
-    private String applyNo;
-    private String applyName;
+    private String applyDept;
+    private String applyMan;
     private String applyTime;
-    private String stepName;
+    private String applyAnnex;
+    private String applyState;
 
     public Long getApplyId() {
         return applyId;
@@ -19,20 +21,20 @@ public class ApplyDet {
         this.applyId = applyId;
     }
 
-    public String getApplyType() {
-        return applyType;
+    public String getTypeId() {
+        return typeId;
     }
 
-    public void setApplyType(String applyType) {
-        this.applyType = applyType;
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
-    public String getApplyDept() {
-        return applyDept;
+    public String getApplyNo() {
+        return applyNo;
     }
 
-    public void setApplyDept(String applyDept) {
-        this.applyDept = applyDept;
+    public void setApplyNo(String applyNo) {
+        this.applyNo = applyNo;
     }
 
     public String getApplyTitle() {
@@ -51,20 +53,20 @@ public class ApplyDet {
         this.applyContent = applyContent;
     }
 
-    public String getApplyNo() {
-        return applyNo;
+    public String getApplyDept() {
+        return applyDept;
     }
 
-    public void setApplyNo(String applyNo) {
-        this.applyNo = applyNo;
+    public void setApplyDept(String applyDept) {
+        this.applyDept = applyDept;
     }
 
-    public String getApplyName() {
-        return applyName;
+    public String getApplyMan() {
+        return applyMan;
     }
 
-    public void setApplyName(String applyName) {
-        this.applyName = applyName;
+    public void setApplyMan(String applyMan) {
+        this.applyMan = applyMan;
     }
 
     public String getApplyTime() {
@@ -75,11 +77,19 @@ public class ApplyDet {
         this.applyTime = applyTime;
     }
 
-    public String getStepName() {
-        return stepName;
+    public String getApplyAnnex() {
+        return applyAnnex;
     }
 
-    public void setStepName(String stepName) {
-        this.stepName = stepName;
+    public void setApplyAnnex(String applyAnnex) {
+        this.applyAnnex = applyAnnex;
+    }
+
+    public String getApplyState() {
+        return applyState;
+    }
+
+    public void setApplyState(String applyState) {
+        this.applyState = applyState;
     }
 }

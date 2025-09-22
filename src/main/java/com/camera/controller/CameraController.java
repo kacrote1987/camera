@@ -25,13 +25,25 @@ public class CameraController {
     CameraService cameraService;
 
     @ApiOperation("申请记录")
-    @PostMapping("/applylist")
+    @PostMapping("/applyList")
     public Result applyList(ApplyList params){
         PageInfo<ApplyList> applyList= cameraService.applyList(params);
         return Result.success(applyList);
     }
 
+    @ApiOperation("申请记录详细")
+    @PostMapping("/applyDet")
+    public Result applyDet(Long applyId){
+        List<ApplyDet> applyDet= cameraService.applyDet(applyId);
+        return Result.success(applyDet);
+    }
 
+    @ApiOperation("申请记录保存")
+    @PostMapping("/applyEdit")
+    public Result applyEdit(Long applyId){
+//        cameraService.applyEdit(applyId);
+        return Result.success();
+    }
 
     @ApiOperation("点位列表")
     @PostMapping("/cameralist")

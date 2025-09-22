@@ -18,7 +18,7 @@ public interface CameraService {
      * 申请记录详细
      * @return
      */
-    List<ApplyDet> applyDet(ApplyDet params);
+    List<ApplyDet> applyDet(Long applyId);
     /**
      * 点位列表
      * @return

@@ -4,13 +4,15 @@ public class ApplyList {
     private Integer number;
     private Integer page;
     private Long applyId;
-    private String applyType;
-    private String applyDept;
+    private String typeId;
+    private String applyNo;
     private String applyTitle;
     private String applyContent;
-    private String applyName;
+    private String applyDept;
+    private String applyMan;
     private String applyTime;
-    private String stepName;
+    private String applyAnnex;
+    private String applyState;
 
     public Integer getNumber() {
         return number;
@@ -36,20 +38,20 @@ public class ApplyList {
         this.applyId = applyId;
     }
 
-    public String getApplyType() {
-        return applyType;
+    public String getTypeId() {
+        return typeId;
     }
 
-    public void setApplyType(String applyType) {
-        this.applyType = applyType;
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
-    public String getApplyDept() {
-        return applyDept;
+    public String getApplyNo() {
+        return applyNo;
     }
 
-    public void setApplyDept(String applyDept) {
-        this.applyDept = applyDept;
+    public void setApplyNo(String applyNo) {
+        this.applyNo = applyNo;
     }
 
     public String getApplyTitle() {
@@ -68,12 +70,20 @@ public class ApplyList {
         this.applyContent = applyContent;
     }
 
-    public String getApplyName() {
-        return applyName;
+    public String getApplyDept() {
+        return applyDept;
     }
 
-    public void setApplyName(String applyName) {
-        this.applyName = applyName;
+    public void setApplyDept(String applyDept) {
+        this.applyDept = applyDept;
+    }
+
+    public String getApplyMan() {
+        return applyMan;
+    }
+
+    public void setApplyMan(String applyMan) {
+        this.applyMan = applyMan;
     }
 
     public String getApplyTime() {
@@ -84,11 +94,19 @@ public class ApplyList {
         this.applyTime = applyTime;
     }
 
-    public String getStepName() {
-        return stepName;
+    public String getApplyAnnex() {
+        return applyAnnex;
     }
 
-    public void setStepName(String stepName) {
-        this.stepName = stepName;
+    public void setApplyAnnex(String applyAnnex) {
+        this.applyAnnex = applyAnnex;
+    }
+
+    public String getApplyState() {
+        return applyState;
+    }
+
+    public void setApplyState(String applyState) {
+        this.applyState = applyState;
     }
 }

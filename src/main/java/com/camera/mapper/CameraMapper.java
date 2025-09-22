@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper
 public interface CameraMapper {
     List<ApplyList> applyList(@Param("params") ApplyList params);
+    List<ApplyDet> applyDet(Long applyId);
     List<CameraList> cameraList(@Param("params") CameraList params);
     List<CameraDet> cameraDet(Long cameraId);
     boolean cameraSave(@Param("params") CameraDet params);
