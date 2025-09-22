@@ -1,6 +1,6 @@
 package com.camera.entity;
 
-public class TagListVo {
+public class TagList {
     private Long rowNum;
     private Long tagId;
     private String tagType;
@@ -10,6 +10,8 @@ public class TagListVo {
     private String tagCode2;
     private String tagName3;
     private String tagCode3;
+    private Integer page;
+    private Integer limit;
 
     public Long getRowNum() {
         return rowNum;
@@ -81,5 +83,21 @@ public class TagListVo {
 
     public void setTagCode3(String tagCode3) {
         this.tagCode3 = tagCode3;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 }

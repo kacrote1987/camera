@@ -1,6 +1,6 @@
 package com.camera.entity;
 
-public class GanttDetForm {
+public class GanttDet {
     private String action;
     private Long projId;
     private Long ganttId;

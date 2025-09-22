@@ -32,6 +32,12 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
+    public List<ApplyPoint> applyPoint(Long applyId) {
+        List<ApplyPoint> applyPoint = cameraMapper.applyPoint(applyId);
+        return applyPoint;
+    }
+
+    @Override
     public PageInfo<CameraList> cameraList(CameraList params) {
         PageHelper.startPage(params.getPage(), 15);
         List<CameraList> cameraList = cameraMapper.cameraList(params);
@@ -55,7 +61,7 @@ public class CameraServiceImpl implements CameraService {
     @Override
     public ArrayList<JSONObject> lngLat() {
         // 获取经纬度的值,要实现[{ lnglat: [120.089872,30.856878] },{ lnglat: [120.090007,30.857244] },{ lnglat: [120.093914,30.854382] }]
-        List<LnglatDetVo> lngLat=cameraMapper.lngLat();
+        List<LnglatDet> lngLat=cameraMapper.lngLat();
         ArrayList<JSONObject> myArray = new ArrayList<>();
         for(int i=0;i<lngLat.size();i++) {
             String str = "{ \"lnglat\": [" + lngLat.get(i).getCameraLng() + "," + lngLat.get(i).getCameraLat() + "] }";
@@ -75,8 +81,8 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
-    public List<LnglatDetVo> lnglatDraw() {
-        List<LnglatDetVo> lnglatDraw = cameraMapper.lnglatDraw();
+    public List<LnglatDet> lnglatDraw() {
+        List<LnglatDet> lnglatDraw = cameraMapper.lnglatDraw();
         return lnglatDraw;
     }
 
@@ -84,7 +90,7 @@ public class CameraServiceImpl implements CameraService {
     public List<JSONArray> areaDraw() {
         // 获取经纬度的值,要实现[[120.089872,30.856878],[120.090007,30.857244],[120.093914,30.854382]]
         List<JSONArray> myList = new ArrayList<>();
-        List<AreaDrawVo> areaDraw = cameraMapper.areaDraw();
+        List<AreaDraw> areaDraw = cameraMapper.areaDraw();
         for(int i=0;i<areaDraw.size();i++){
             JSONArray jsonArray = new JSONArray();
             String str = areaDraw.get(i).getAreaCode();
@@ -112,9 +118,9 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
-    public PageInfo<TagListVo> tagList(TagListForm params) {
+    public PageInfo<TagList> tagList(TagList params) {
         PageHelper.startPage(params.getPage(), 15);
-        List<TagListVo> tagList = cameraMapper.tagList(params);
+        List<TagList> tagList = cameraMapper.tagList(params);
         return PageInfo.of(tagList);
     }
 
@@ -158,7 +164,7 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
-    public void orderSave(GanttDetForm params) {
+    public void orderSave(GanttDet params) {
 //        String field = cameraMapper.updateOrder1(params.getDictValue()).get(0).getDictCode();
 //        cameraMapper.updateOrder2(params.getDictValue(), field, params.getValue());
         cameraMapper.updateOrder3(params.getDictValue(), method(params.getField()), params.getValue());
@@ -181,16 +187,21 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
-    public PageInfo<ParamListForm> paramList(ParamListForm params) {
+    public PageInfo<ParamList> paramList(ParamList params) {
         PageHelper.startPage(params.getPage(), 15);
-        List<ParamListForm> typeList = cameraMapper.paramList(params);
+        List<ParamList> typeList = cameraMapper.paramList(params);
         return PageInfo.of(typeList);
     }
 
     @Override
-    public List<ParamListForm> paramDet(Long paramId) {
-        System.out.println("paramId="+paramId);
-        return null;
+    public List<ParamList> paramDet(Long paramId) {
+        List<ParamList> paramDet = cameraMapper.paramDet(paramId);
+        return paramDet;
+    }
+
+    @Override
+    public void paramEdit(ParamList params) {
+        cameraMapper.updateParam(params);
     }
 
     @Override
@@ -199,10 +210,21 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
-    public PageInfo<RuleListForm> ruleList(RuleListForm params) {
+    public PageInfo<RuleList> ruleList(RuleList params) {
         PageHelper.startPage(params.getPage(), 15);
-        List<RuleListForm> ruleList = cameraMapper.ruleList(params);
+        List<RuleList> ruleList = cameraMapper.ruleList(params);
         return PageInfo.of(ruleList);
+    }
+
+    @Override
+    public List<RuleList> ruleDet(Long ruleId) {
+        List<RuleList> ruleDet = cameraMapper.ruleDet(ruleId);
+        return ruleDet;
+    }
+
+    @Override
+    public void ruleEdit(RuleList params) {
+        cameraMapper.updateRule(params);
     }
 
 //    @Override

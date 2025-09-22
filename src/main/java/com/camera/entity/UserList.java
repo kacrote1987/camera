@@ -1,6 +1,6 @@
 package com.camera.entity;
 
-public class UserListForm {
+public class UserList {
     private Long number;
     private Long userId;
     private String userName;

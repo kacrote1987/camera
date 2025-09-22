@@ -1,6 +1,6 @@
 package com.camera.entity;
 
-public class ParamListForm {
+public class ParamList {
     private Long rowNum;
     private Long paramId;
     private String cameraName;

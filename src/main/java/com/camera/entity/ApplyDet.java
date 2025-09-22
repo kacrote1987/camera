@@ -1,7 +1,6 @@
 package com.camera.entity;
 
 public class ApplyDet {
-
     private Long applyId;
     private String typeId;
     private String applyNo;

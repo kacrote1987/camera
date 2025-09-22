@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>标签详细</title>
+  <title>标签新增</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -96,30 +96,7 @@
     var $ = layui.$
             ,form = layui.form
             ,table = layui.table;
-
     form.render(null, 'component-form-group');
-    var tagId=window.location.search.substring(1,window.location.search.length);
-    $.ajax({
-      type:"post",
-      url:"/camera/tagDet/",
-      contentType:"application/json;charset=utf-8",
-      dataType:"json",
-      data:tagId,
-      success:function(detObj){
-        if(detObj.msg=="success"){
-          var detJson=detObj.data[0];
-          $('#tagType').val(detJson.tagType);
-          $('#tagName1').val(detJson.tagName1);
-          $('#tagCode1').val(detJson.tagCode1);
-          $('#tagName2').val(detJson.tagName2);
-          $('#tagCode2').val(detJson.tagCode2);
-          $('#tagName3').val(detJson.tagName3);
-          $('#tagCode3').val(detJson.tagCode3);
-          layui.form.render();
-        }
-      }
-    });
-
   });
 
   function save(){

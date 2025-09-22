@@ -31,8 +31,8 @@ public class UserController {
 
     @ApiOperation("用户信息列表")
     @PostMapping("/userList")
-    public Result userList(UserListForm params){
-        PageInfo<UserListForm> userList= userService.userList(params);
+    public Result userList(UserList params){
+        PageInfo<UserList> userList= userService.userList(params);
         return Result.success(userList);
     }
 

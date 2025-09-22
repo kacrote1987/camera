@@ -1,6 +1,6 @@
 package com.camera.entity;
 
-public class PosDetVo {
+public class PosDet {
     private Long rowNum;
     private Long posId;
     private String posArea;

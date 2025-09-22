@@ -37,13 +37,13 @@ public class UserServiceImpl implements UserService {
         return userLoginVo;
     }
 
-    public PageInfo<UserListForm> userList(UserListForm params) {
+    public PageInfo<UserList> userList(UserList params) {
         Integer page = 0;
         if(params.getPage() != null){
             page = params.getPage();
         }
         PageHelper.startPage(page, 10);
-        List<UserListForm> userList=userMapper.userList(params);
+        List<UserList> userList=userMapper.userList(params);
         return PageInfo.of(userList);
     }
 

@@ -90,7 +90,7 @@
             elem: '#test-table-toolbar'
             ,id: 'tagReload'
             ,method: 'post'
-            ,url: '/camera/taglist/' //数据接口
+            ,url: '/camera/tagList/' //数据接口
             ,response:{
                 statusName:'code',
                 statusCode:'200'
@@ -126,14 +126,14 @@
                 var tagType = $('#tagType');
                 var tagName1 = $('#tagName1');
                 var tagName2 = $('#tagName2');
-                table.reload('cameraReload', {
+                table.reload('tagReload', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                     ,where: {
                         tagType: tagType.val(),
-                        tagLv1: tagName1.val(),
-                        tagLv2: tagName2.val()
+                        tagName1: tagName1.val(),
+                        tagName2: tagName2.val()
                     }
                 }, 'data');
             }
@@ -147,7 +147,7 @@
                     layer.open({
                         type: 2
                         ,title: '新增'
-                        ,content: 'tagdet.html?add'
+                        ,content: 'tagnew.html'
                         ,maxmin: true
                         ,area: ['600px', '400px']
                     });

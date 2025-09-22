@@ -1,6 +1,6 @@
 package com.camera.entity;
 
-public class AreaDrawVo {
+public class AreaDraw {
     private String areaCode;
 
     public String getAreaCode() {

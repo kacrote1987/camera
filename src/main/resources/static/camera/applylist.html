@@ -69,6 +69,7 @@
 
     <script type="text/html" id="test-table-toolbar-barDemo">
       <a id="det" class="layui-btn layui-btn-xs" lay-event="det">详细</a>
+      <a id="list" class="layui-btn layui-btn-xs" lay-event="list">清单</a>
     </script>
 
     <div class="layui-card-body">
@@ -112,14 +113,14 @@
         {type: 'checkbox', fixed: 'left', width:'5%'}
         ,{field: 'applyId', title: '序号', width:'5%'}
         ,{field: 'applyNo', title: '申请编号', width:'5%'}
-        ,{field: 'applyTitle', title: '申请名称',sort: true, width:'15%'}
+        ,{field: 'applyTitle', title: '申请名称',sort: true, width:'13%'}
         ,{field: 'typeId', title: '申请类别',sort: true, width:'10%'}
         ,{field: 'applyDept', title: '申请部门',sort: true, width:'10%'}
         ,{field: 'applyMan', title: '申请人',sort: true, width:'10%'}
         ,{field: 'applyTime', title: '申请时间',sort: true, width:'10%'}
         ,{field: 'applyContent', title: '申请内容',sort: true, width:'15%'}
         ,{field: 'applyState', title: '流转状态',sort: true, width:'10%'}
-        ,{fixed: 'right', title:'操作', toolbar: '#test-table-toolbar-barDemo', width:'5%'}
+        ,{fixed: 'right', title:'操作', toolbar: '#test-table-toolbar-barDemo', width:'7%'}
       ]]
       ,page: true
       ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
@@ -191,7 +192,16 @@
           ,maxmin: true
           ,area: ['1200px', '600px']
         });
-      }});
+      }else{
+        layer.open({
+          type: 2
+          ,title: '点位清单'
+          ,content: 'applypoint.html?' + data.applyId
+          ,maxmin: true
+          ,area: ['1200px', '600px']
+        });
+      }
+    });
 
     layui.use(['form'], function() {
       form=layui.form;

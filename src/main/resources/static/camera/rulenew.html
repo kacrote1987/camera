@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>申请记录详细</title>
+    <title>规则新增</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -19,7 +19,11 @@
                 </div>
                 <div class="layui-col-md8">
                     <div class="layui-card">
-                        <input id="paramId" type="text" name="paramId" placeholder="" autocomplete="off"
+                        <input id="actions" type="text" name="actions" placeholder="" autocomplete="off"
+                               class="layui-input" style="display: none">
+                        <input id="cameraId" type="text" name="cameraId" placeholder="" autocomplete="off"
+                               class="layui-input" style="display: none">
+                        <input id="rpStr" type="text" name="rpStr" placeholder="" autocomplete="off"
                                class="layui-input" style="display: none">
                         <div class="layui-card-body">
                             <form class="layui-form" action="" lay-filter="component-form-element">
@@ -229,135 +233,16 @@
         var $ = layui.$
             , form = layui.form
             , table = layui.table;
-
         form.render(null, 'component-form-group');
-        var paramId = window.location.search.substring(1, window.location.search.length);
-        $.ajax({
-            type: "post",
-            url: "/camera/paramDet",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            data: paramId,
-            success: function (detObj) {
-                if (detObj.msg == "success") {
-                    var detJson = detObj.data[0];
-                    $('#paramId').val(detJson.paramId);
-                    $('#cameraName').val(detJson.cameraName);
-                    $('#cameraLng').val(detJson.cameraLng);
-                    $('#cameraLat').val(detJson.cameraLat);
-                    $('#cameraBrand').val(detJson.cameraBrand);
-                    $('#cameraType').val(detJson.cameraType);
-                    $('#cameraType2').val(detJson.cameraType2);
-                    $('#cameraModel').val(detJson.cameraModel);
-                    $('#cameraDistance').val(detJson.cameraDistance);
-                    $('#shareType').val(detJson.shareType);
-                    $('#projId').val(detJson.projId);
-                    $('#cameraArea').val(detJson.cameraArea);
-                    $('#cameraTown').val(detJson.cameraTown);
-                    $('#cameraVillage').val(detJson.cameraVillage);
-                    $('#cameraBuildtime').val(detJson.cameraBuildtime);
-                    $('#cameraDeadline').val(detJson.cameraDeadline);
-                    $('#cameraDept').val(detJson.cameraDept);
-                    $('#tagType').val(detJson.tagType);
-                    $('#sceneType').val(detJson.sceneType);
-                    $('#tagLv1').val(detJson.tagLv1);
-                    $('#tagLv2').val(detJson.tagLv2);
-                    $('#tagIds').val(detJson.tagIds);
-                    $('#cameraNet').val(detJson.cameraNet);
-                    $('#cameraIpv4').val(detJson.cameraIpv4);
-                    $('#cameraChannel').val(detJson.cameraChannel);
-                    $('#videoDate').val(detJson.videoDate);
-                    $('#cameraIsp').val(detJson.cameraIsp);
-                    $('#cameraLink').val(detJson.cameraLink);
-                    $('#cameraState').val(detJson.cameraState);
-                    $('#azimuthLevel').val(detJson.azimuthLevel);
-                    $('#azimuthVert').val(detJson.azimuthVert);
-                    $('#rodCode').val(detJson.rodCode);
-                    $('#rodType').val(detJson.rodType);
-                    $('#rodHeight').val(detJson.rodHeight);
-                    $('#rodColor').val(detJson.rodColor);
-                    $('#cameraHeight').val(detJson.cameraHeight);
-                    $('#powerPos').val(detJson.powerPos);
-                    $('#boxNum').val(detJson.boxNum);
-                    $('#boxSituat').val(detJson.boxSituat);
-                    $('#checkUnit').val(detJson.checkUnit);
-                    $('#checkTime').val(detJson.checkTime);
-                    $('#checkUnified').val(detJson.checkUnified);
-                    $('#unifiedUnit').val(detJson.unifiedUnit);
-                    $('#remark').val(detJson.remark);
-                    $('#checkState').val(detJson.checkState);
-                    //以下展示选项
-                    // var rpStr = $('#rpStr').val();
-                    // var temp='';
-                    // for (var i = 0; i < rpStr.substr(rpStr.lastIndexOf(",") + 1, rpStr.length); i++) {
-                    //     temp += '<input type="checkbox" name="posTag" title=' + rpStr.substr(0, rpStr.indexOf(",")) + ' value=' + rpStr.substr(0, rpStr.indexOf(",")) + ' lay-skin="primary">';
-                    //     rpStr = rpStr.substr(rpStr.indexOf(",") + 1, rpStr.length);
-                    // }
-                    // $('#mytag').html(temp);
-                    // form.render('checkbox');
-                    // //以下匹配打勾
-                    // var split = detJson.posTag.split(",");
-                    // for (var j = 0; j < split.length; j++) {
-                    //     $("input[name=posTag][value="+split[j]+"]").attr("checked",true);
-                    // }
-                    layui.form.render();
-                }
-            }
-        });
-
     });
 
     function save() {
         var params = {};
-        params.paramId = window.location.search.substring(1, window.location.search.length);
+        params.action = $('#actions').val();
+        params.cameraId = $('#cameraId').val();
+        params.cameraCode = $('#cameraCode').val();
         params.cameraName = $('#cameraName').val();
-        params.cameraLng = $('#cameraLng').val();
-        params.cameraLat = $('#cameraLat').val();
-        params.cameraBrand = $('#cameraBrand').val();
-        params.cameraType = $('#cameraType').val();
-        params.cameraType2 = $('#cameraType2').val();
-        params.cameraModel = $('#cameraModel').val();
-        params.cameraDistance = $('#cameraDistance').val();
-        params.shareType = $('#shareType').val();
-        params.projId = $('#projId').val();
-        params.cameraArea = $('#cameraArea').val();
-        params.cameraTown = $('#cameraTown').val();
-        params.cameraVillage = $('#cameraVillage').val();
-        params.cameraBuildtime = $('#cameraBuildtime').val();
-        params.cameraDeadline = $('#cameraDeadline').val();
-        params.cameraDept = $('#cameraDept').val();
-        params.tagType = $('#tagType').val();
-        params.sceneType = $('#sceneType').val();
-        params.tagLv1 = $('#tagLv1').val();
-        params.tagLv2 = $('#tagLv2').val();
-        params.tagIds = $('#tagIds').val();
-        params.cameraNet = $('#cameraNet').val();
-        params.cameraIpv4 = $('#cameraIpv4').val();
-        params.cameraChannel = $('#cameraChannel').val();
-        params.videoDate = $('#videoDate').val();
-        params.cameraIsp = $('#cameraIsp').val();
-        params.cameraLink = $('#cameraLink').val();
-        params.cameraState = $('#cameraState').val();
-        params.azimuthLevel = $('#azimuthLevel').val();
-        params.azimuthVert = $('#azimuthVert').val();
-        params.rodCode = $('#rodCode').val();
-        params.rodType = $('#rodType').val();
-        params.rodHeight = $('#rodHeight').val();
-        params.rodColor = $('#rodColor').val();
-        params.cameraHeight = $('#cameraHeight').val();
-        params.powerPos = $('#powerPos').val();
-        params.boxNum = $('#boxNum').val();
-        params.boxSituat = $('#boxSituat').val();
-        params.checkUnit = $('#checkUnit').val();
-        params.checkTime = $('#checkTime').val();
-        params.checkUnified = $('#checkUnified').val();
-        params.unifiedUnit = $('#unifiedUnit').val();
-        params.remark = $('#remark').val();
-        params.checkState = $('#checkState').val();
-        // params.posTag= $("input[name=posTag]:checked").map(function() {
-        //     return $(this).val();
-        // }).get().join(",");
-        postdata(params, "/camera/paramEdit", function () {layer.msg("保存成功！");});
+        postdata(params, "/camera/camerasave", function () {layer.msg("保存成功！");});
     }
 </script>
 </body>

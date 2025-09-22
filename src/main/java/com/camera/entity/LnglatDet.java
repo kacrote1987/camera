@@ -1,6 +1,6 @@
 package com.camera.entity;
 
-public class LnglatDetVo {
+public class LnglatDet {
     private String cameraLng;
     private String cameraLat;
     private String azimuthLevel;

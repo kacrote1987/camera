@@ -93,7 +93,7 @@
             elem: '#test-table-toolbar'
             ,id: 'paramsReload'
             ,method: 'post'
-            ,url: '/camera/paramlist/' //数据接口
+            ,url: '/camera/paramList/' //数据接口
             ,response:{
                 statusName:'code',
                 statusCode:'200'
@@ -138,19 +138,13 @@
         //执行重载
         var $ = layui.$, active = {
             reload: function(){
-                var projUnitname = $('#projUnitname');
-                var projName = $('#projName');
                 var cameraName = $('#cameraName');
-                var cameraType = $('#cameraType');
                 table.reload('paramsReload', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                     ,where: {
-                        projUnitname: projUnitname.val(),
-                        projName: projName.val(),
-                        cameraName: cameraName.val(),
-                        cameraType: cameraType.val()
+                        cameraName: cameraName.val()
                     }
                 }, 'data');
             }
@@ -179,7 +173,7 @@
                 layer.open({
                     type: 2
                     ,title: '详细'
-                    ,content: 'paramsdet.html?' + data.projId
+                    ,content: 'paramsdet.html?' + data.paramId
                     ,maxmin: true
                     ,area: ['1200px', '600px']
                 });

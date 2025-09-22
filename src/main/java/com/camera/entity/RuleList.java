@@ -1,6 +1,6 @@
 package com.camera.entity;
 
-public class RuleListForm {
+public class RuleList {
     private Long rowNum;
     private Long ruleId;
     private String ruleName;

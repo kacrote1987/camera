@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
     LoginVo login(LoginForm params);
-    PageInfo<UserListForm> userList(UserListForm params);
+    PageInfo<UserList> userList(UserList params);
     List<UserDetForm> userDet(Long userId);
     void userAdd(UserDetForm params);
     void userDel(Long userId);

@@ -18,9 +18,12 @@
 <!--        </if>-->
         order by apply_id
     </select>
-    <select id="ApplyDet" resultType="com.camera.entity.ApplyDet">
+    <select id="applyDet" resultType="com.camera.entity.ApplyDet">
         SELECT apply_id,type_id,apply_no,apply_title,apply_content,apply_dept,apply_man,apply_time,apply_annex,apply_state
         FROM t_apply_main where apply_id=#{applyId}
+    </select>
+    <select id="applyPoint" resultType="com.camera.entity.ApplyPoint">
+        SELECT point_id,apply_id,camera_id,camera_code,camera_name FROM t_apply_point where apply_id=#{applyId}
     </select>
     <select id="cameraList" resultType="com.camera.entity.CameraList">
         SELECT camera_id,camera_area,camera_code,camera_name,camera_brand,camera_type,camera_lng,camera_lat,camera_ipv4,tag_addr,camera_net
@@ -65,7 +68,7 @@
         ,box_situat=#{params.boxSituat},check_unit=#{params.checkUnit},check_time=#{params.checkTime},check_unified=#{params.checkUnified},unified_unit=#{params.unifiedUnit},remark=#{params.remark}
         ,check_state=#{params.checkState} where camera_id=#{params.cameraId}
     </update>
-    <select id="lngLat" resultType="com.camera.entity.LnglatDetVo">
+    <select id="lngLat" resultType="com.camera.entity.LnglatDet">
         SELECT distinct camera_lng,camera_lat FROM t_camera_basic where camera_lng is not null and camera_lat is not null and camera_id &lt;= 10
         group by camera_lng,camera_lat
     </select>
@@ -73,12 +76,12 @@
         SELECT distinct camera_lng,camera_lat,max(camera_code) as camera_code,max(camera_name) as camera_name FROM t_camera_basic
         where camera_lng=#{cameraLng} and camera_lat=#{cameraLat} group by camera_lng,camera_lat
     </select>
-    <select id="lnglatDraw" resultType="com.camera.entity.LnglatDetVo">
+    <select id="lnglatDraw" resultType="com.camera.entity.LnglatDet">
         SELECT distinct t.camera_lng,t.camera_lat,max(t.azimuth_level) as azimuth_level,max(t.includel_angle) as includel_angle,max(t.camera_distance) as camera_distance FROM
         (select a.camera_id,a.camera_lng,a.camera_lat,a.azimuth_level,b.includel_angle,b.distance_max as camera_distance from t_camera_basic a left join t_camera_param b
         on a.param_id=b.param_id) t where t.camera_lng is not null and t.camera_lat is not null and t.camera_id &lt;= 10 group by t.camera_lng,t.camera_lat
     </select>
-    <select id="areaDraw" resultType="com.camera.entity.AreaDrawVo">
+    <select id="areaDraw" resultType="com.camera.entity.AreaDraw">
         SELECT area_code FROM t_plan_point
     </select>
     <insert id="insertArea">
@@ -87,7 +90,7 @@
     <select id="matchTag">
         select pos_tag from t_camera_pos where pos_tag like '%' #{tagName} '%'
     </select>
-    <select id="posDet" resultType="com.camera.entity.PosDetVo">
+    <select id="posDet" resultType="com.camera.entity.PosDet">
         select a.pos_id,a.pos_area,a.pos_type,a.pos_name,a.pos_tag,a.double_num,a.half_num,a.chkpoint_num,a.camera_state
         ,a.double_prenum,a.half_prenum,a.chkpoint_prenum from t_ass_camera_pos a where a.pos_id = #{posId}
     </select>
@@ -110,7 +113,7 @@
         ,a.camera_type,a.camera_license,a.camera_color,a.camera_price,a.camera_ip,a.camera_state from t_camera_basic a
         left join t_ass_camera_proj b on a.proj_id=b.proj_id where a.pos_id = #{posId}
     </select>
-    <select id="tagList" resultType="com.camera.entity.TagListVo">
+    <select id="tagList" resultType="com.camera.entity.TagList">
         select tag_id,tag_type,tag_name1,tag_code1,tag_name2,tag_code2,tag_name3,tag_code3 from t_camera_tag where 1=1
         <if test="params.tagType!=null and params.tagType!=''">
             and tag_type=#{params.tagType}
@@ -138,7 +141,7 @@
         ,tag_content=#{params.tagContent},tag_state=#{params.tagState},camera_resol=#{params.camResol},camera_algo=#{params.camAlgo}
         where tag_id = #{params.tagId}
     </update>
-    <select id="tagGather" resultType="com.camera.entity.TagListVo">
+    <select id="tagGather" resultType="com.camera.entity.TagList">
         select distinct tag_name as tag_gather from t_camera_tag where tag_state='生效' order by tag_no
     </select>
     <update id="updatePre">
@@ -171,22 +174,36 @@
         </foreach>
         order by a.camera_resol+a.camera_algo,a.camera_resol
     </select>
-    <select id="paramList" resultType="com.camera.entity.ParamListForm">
+    <select id="paramList" resultType="com.camera.entity.ParamList">
         select param_id,camera_name,camera_brand,camera_type,camera_type2,camera_model,cmos,diagonal,width,height,focal_length,azheight
         ,includel_angle,includev_angle,angleroll_min,angleroll_max,az_angle,distance_min,area_min,distance_max,area_max
-        from t_camera_param a where 1=1
+        from t_camera_param
+        <where>
+            <if test="params.cameraName!=null and params.cameraName!=''">
+                camera_name like '%' #{params.cameraName} '%'
+            </if>
+        </where>
     </select>
-    <select id="typeSeled" resultType="com.camera.entity.ParamListForm">
+    <select id="paramDet" resultType="com.camera.entity.ParamList">
+        select param_id,camera_name,camera_brand,camera_type,camera_type2,camera_model,cmos,diagonal,width,height,focal_length,azheight
+             ,includel_angle,includev_angle,angleroll_min,angleroll_max,az_angle,distance_min,area_min,distance_max,area_max
+        from t_camera_param a where param_id=#{paramId}
+    </select>
+    <update id="updateParam">
+        update t_camera_param set camera_name=#{params.cameraName}
+        where param_id = #{params.paramId}
+    </update>
+    <select id="typeSeled" resultType="com.camera.entity.ParamList">
         select a.cam_id,a.cam_name,a.cam_brand,a.cam_type,a.cam_model,a.cam_no,a.cam_resol,a.cam_algo,a.cam_range,a.cam_color,a.cam_price
         from t_ass_camera_type a where a.pos_id like '%' #{posIds} '%' and a.cam_type=#{type}
     </select>
-    <select id="typeChksel" resultType="com.camera.entity.ParamListForm">
+    <select id="typeChksel" resultType="com.camera.entity.ParamList">
         select cam_id from t_ass_camera_type where pos_id like '%' #{posIds} '%' and cam_id=#{camId}
     </select>
     <update id="typeSel">
         update t_ass_camera_type set pos_id=(case when pos_id is null then #{posId} else CONCAT(pos_id,#{posId}) end) where cam_id=#{camId}
     </update>
-    <select id="ruleList" resultType="com.camera.entity.RuleListForm">
+    <select id="ruleList" resultType="com.camera.entity.RuleList">
         select rule_id,rule_name,rule_content,rule_state from t_camera_rule
         <where>
             <if test="params.ruleName!=null and params.ruleName!=''">
@@ -200,4 +217,11 @@
             </if>
         </where>
     </select>
+    <select id="ruleDet" resultType="com.camera.entity.RuleList">
+        select rule_id,rule_name,rule_content,rule_state from t_camera_rule where rule_id = #{ruleId}
+    </select>
+    <update id="updateRule">
+        update t_camera_rule set rule_name = #{params.ruleName},rule_content = #{params.ruleContent},rule_state = #{params.ruleState}
+        where rule_id = #{params.ruleId}
+    </update>
 </mapper>

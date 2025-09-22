@@ -8,10 +8,7 @@ import com.camera.service.CameraService;
 import com.camera.config.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -33,9 +30,16 @@ public class CameraController {
 
     @ApiOperation("申请记录详细")
     @PostMapping("/applyDet")
-    public Result applyDet(Long applyId){
+    public Result applyDet(@RequestBody Long applyId){
         List<ApplyDet> applyDet= cameraService.applyDet(applyId);
         return Result.success(applyDet);
+    }
+
+    @ApiOperation("申请点位清单")
+    @PostMapping("/applyPoint")
+    public Result applyPoint(@RequestParam Long applyId){
+        List<ApplyPoint> applyPoint= cameraService.applyPoint(applyId);
+        return Result.success(applyPoint);
     }
 
     @ApiOperation("申请记录保存")
@@ -67,7 +71,7 @@ public class CameraController {
     }
 
     @ApiOperation("经纬度展示")
-    @PostMapping("/lnglat")
+    @PostMapping("/lngLat")
     public Result lngLat(){
         ArrayList<JSONObject> lnglat=cameraService.lngLat();
         return Result.success(lnglat);
@@ -81,14 +85,14 @@ public class CameraController {
     }
 
     @ApiOperation("可视域展示")
-    @PostMapping("/lnglatdraw")
+    @PostMapping("/lnglatDraw")
     public Result lnglatDraw(){
-        List<LnglatDetVo> lnglatDraw=cameraService.lnglatDraw();
+        List<LnglatDet> lnglatDraw=cameraService.lnglatDraw();
         return Result.success(lnglatDraw);
     }
 
     @ApiOperation("需求区域展示")
-    @PostMapping("/areadraw")
+    @PostMapping("/areaDraw")
     public Result areaDraw(){
         List<JSONArray> areaDraw=cameraService.areaDraw();
         return Result.success(areaDraw);
@@ -109,14 +113,14 @@ public class CameraController {
     }
 
     @ApiOperation("标签列表")
-    @PostMapping("/taglist")
-    public Result tagList(TagListForm params){
-        PageInfo<TagListVo> tagList= cameraService.tagList(params);
+    @PostMapping("/tagList")
+    public Result tagList(TagList params){
+        PageInfo<TagList> tagList= cameraService.tagList(params);
         return Result.success(tagList);
     }
 
     @ApiOperation("标签明细")
-    @PostMapping("/tagdet")
+    @PostMapping("/tagDet")
     public Result tagDet(@RequestBody Long tagId){
         List<TagDetVo> tagDet= cameraService.tagDet(tagId);
         return Result.success(tagDet);
@@ -152,7 +156,7 @@ public class CameraController {
 
     @ApiOperation("优先级保存")
     @PostMapping("/ordersave")
-    public Result orderSave(@RequestBody GanttDetForm params){
+    public Result orderSave(@RequestBody GanttDet params){
         cameraService.orderSave(params);
         return Result.success();
     }
@@ -165,17 +169,24 @@ public class CameraController {
     }
 
     @ApiOperation("设备选型库列表")
-    @PostMapping("/paramlist")
-    public Result paramList(ParamListForm params){
-        PageInfo<ParamListForm> paramList= cameraService.paramList(params);
+    @PostMapping("/paramList")
+    public Result paramList(ParamList params){
+        PageInfo<ParamList> paramList= cameraService.paramList(params);
         return Result.success(paramList);
     }
 
     @ApiOperation("设备选型库详细")
-    @PostMapping("/paramdet")
-    public Result paramDet(Long paramId){
-        List<ParamListForm> paramDet= cameraService.paramDet(paramId);
+    @PostMapping("/paramDet")
+    public Result paramDet(@RequestBody Long paramId){
+        List<ParamList> paramDet= cameraService.paramDet(paramId);
         return Result.success(paramDet);
+    }
+
+    @ApiOperation("设备选型库修改")
+    @PostMapping("/paramEdit")
+    public Result paramEdit(@RequestBody ParamList params){
+        cameraService.paramEdit(params);
+        return Result.success();
     }
 
 //    @ApiOperation("已选型号")
@@ -192,10 +203,24 @@ public class CameraController {
         return Result.success();
     }
 
-    @ApiOperation("规则库")
-    @PostMapping("/rulelist")
-    public Result ruleList(RuleListForm params){
-        PageInfo<RuleListForm> ruleList= cameraService.ruleList(params);
+    @ApiOperation("规则库列表")
+    @PostMapping("/ruleList")
+    public Result ruleList(RuleList params){
+        PageInfo<RuleList> ruleList= cameraService.ruleList(params);
         return Result.success(ruleList);
+    }
+
+    @ApiOperation("规则库详细")
+    @PostMapping("/ruleDet")
+    public Result ruleDet(@RequestBody Long ruleId){
+        List<RuleList> ruleDet= cameraService.ruleDet(ruleId);
+        return Result.success(ruleDet);
+    }
+
+    @ApiOperation("规则库修改")
+    @PostMapping("/ruleEdit")
+    public Result ruleEdit(@RequestBody RuleList params){
+        cameraService.ruleEdit(params);
+        return Result.success();
     }
 }

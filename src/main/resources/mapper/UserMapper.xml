@@ -4,7 +4,7 @@
     <select id="login" resultType="com.camera.entity.LoginVo" >
         select * from t_user_main where user_code=#{userCode} and user_pwd=#{userPwd} and user_state='在岗'
     </select>
-    <select id="userList" resultType="com.camera.entity.UserListForm" >
+    <select id="userList" resultType="com.camera.entity.UserList" >
         select @rownum:=@rownum+1 as number,t.* from (select @rownum:=0) r,
         (select user_id,user_code,user_pwd,user_name,user_sex,user_dept,user_state from t_user_main where 1=1
         <if test="params.userDept!=null and params.userDept!=''">

@@ -240,12 +240,12 @@
         var result = null;
         $.ajax({
             type: "post",
-            url: "/camera/areadraw",
+            url: "/camera/areaDraw",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             async: false,
             success: function (detObj) {
-                if (detObj.msg === "sucess") {
+                if (detObj.msg === "success") {
                     result = detObj.data;
                 }
             }
@@ -375,11 +375,11 @@
         if(checkBox.checked === true){
             $.ajax({
                 type: "post",
-                url: "/camera/lnglatdraw",
+                url: "/camera/lnglatDraw",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (detObj) {
-                    if (detObj.msg === "sucess") {
+                    if (detObj.msg === "success") {
                         let ORIGIN_LONGLAT = [];
                         let pos = [];
                         for (var i = 0; i < detObj.data.length; i++) {
@@ -448,12 +448,12 @@
         var result = null;
         $.ajax({
             type: "post",
-            url: "/camera/lnglat",
+            url: "/camera/lngLat",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             async: false,
             success: function (detObj) {
-                if (detObj.msg === "sucess") {
+                if (detObj.msg === "success") {
                     result = detObj.data;
                 }
             }

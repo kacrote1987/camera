@@ -20,6 +20,11 @@ public interface CameraService {
      */
     List<ApplyDet> applyDet(Long applyId);
     /**
+     * 申请记录详细
+     * @return
+     */
+    List<ApplyPoint> applyPoint(Long applyId);
+    /**
      * 点位列表
      * @return
      */
@@ -48,7 +53,7 @@ public interface CameraService {
      * 可视域展示
      * @return
      */
-    List<LnglatDetVo> lnglatDraw();
+    List<LnglatDet> lnglatDraw();
     /**
      * 可视域展示
      * @return
@@ -68,7 +73,7 @@ public interface CameraService {
      * 标签列表
      * @return
      */
-    PageInfo<TagListVo> tagList(TagListForm params);
+    PageInfo<TagList> tagList(TagList params);
     /**
      * 标签详细
      * @return
@@ -98,7 +103,7 @@ public interface CameraService {
      * 优先级保存
      * @return
      */
-    void orderSave(GanttDetForm params);
+    void orderSave(GanttDet params);
     /**
      * 参数要求
      * @return
@@ -108,12 +113,17 @@ public interface CameraService {
      * 设备选型库列表
      * @return
      */
-    PageInfo<ParamListForm> paramList(ParamListForm params);
+    PageInfo<ParamList> paramList(ParamList params);
     /**
      * 设备选型详细
      * @return
      */
-    List<ParamListForm> paramDet(Long paramId);
+    List<ParamList> paramDet(Long paramId);
+    /**
+     * 设备选型修改
+     * @return
+     */
+    void paramEdit(ParamList params);
 //    /**
 //     * 已选型号
 //     * @return
@@ -125,8 +135,18 @@ public interface CameraService {
      */
     void typeSel(String params);
     /**
-     * 型号选择
+     * 规则库列表
      * @return
      */
-    PageInfo<RuleListForm> ruleList(RuleListForm params);
+    PageInfo<RuleList> ruleList(RuleList params);
+    /**
+     * 规则详细
+     * @return
+     */
+    List<RuleList> ruleDet(Long ruleId);
+    /**
+     * 规则修改
+     * @return
+     */
+    void ruleEdit(RuleList params);
 }

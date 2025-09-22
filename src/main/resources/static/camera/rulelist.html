@@ -85,7 +85,7 @@
             elem: '#test-table-toolbar'
             ,id: 'ruleReload'
             ,method: 'post'
-            ,url: '/camera/rulelist/' //数据接口
+            ,url: '/camera/ruleList/' //数据接口
             ,response:{
                 statusName:'code',
                 statusCode:'200'
@@ -138,7 +138,7 @@
                     layer.open({
                         type: 2
                         ,title: '新增'
-                        ,content: 'ruledet.html'
+                        ,content: 'rulenew.html'
                         ,maxmin: true
                         ,area: ['1200px', '600px']
                     });
@@ -149,12 +149,11 @@
         //监听行工具事件
         table.on('tool(test-table-toolbar)', function(obj){
             var data = obj.data;
-            alert(JSON.stringify(data));
             if(obj.event === 'det'){
                 layer.open({
                     type: 2
                     ,title: '详细'
-                    ,content: 'ruledet.html?' + data.projId
+                    ,content: 'ruledet.html?' + data.ruleId
                     ,maxmin: true
                     ,area: ['1200px', '600px']
                 });
