@@ -146,7 +146,7 @@
             overflow-y: auto;
             top: 50px;
             left: 0;
-            width: 280px;
+            width: 200px;
         }
     </style>
 </head>
@@ -158,13 +158,42 @@
                 功能菜单：
                 <a href="#" onclick="show_search()">点位搜索</a> |
                 <a href="#" onclick="show_plan()">科学布建</a> |
-                可视域 <input type="checkbox" id="zzz" name="zzz" lay-skin="switch" lay-text="开启|关闭" onclick="drawSectorOpen()">
+                可视域 <input type="checkbox" id="zzz" onclick="drawSectorOpen()"> |
+                打点 <input type="radio" name='func' value='marker'> |
+                <a href="#" id="clear">清除</a> |
+                <a href="#" onclick="show_mark()">收藏夹</a>
             </li>
         </ul>
     </div>
 </div>
 <div id="container" class="map" tabindex="0"></div>
-<div id="panel_search" class="input-card" style='width: 25rem;'>
+
+<div id="panel_plan" class="input-card" style='width: 22rem;'>
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">需求</li>
+            <li>项目</li>
+            <li>归档</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="input-item">
+                <span class="input-item-text" style="width:4rem;">条件</span>
+                <input id='input' type="text" value='' >
+                <button>搜 索</button>
+            </div>
+            <div class="layui-tab-item layui-show">
+                <div id="test-tree-demo1"></div>
+            </div>
+            <div class="layui-tab-item">
+                <div id="test-tree-demo2"></div>
+            </div>
+            <div class="layui-tab-item">
+                <div id="test-tree-demo3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="panel_search" class="input-card" style='width: 22rem;'>
     <div class="layui-tab">
         <ul class="layui-tab-title">
             <li class="layui-this">组织目录</li>
@@ -185,43 +214,6 @@
         </div>
     </div>
 </div>
-<div id="panel_plan" class="input-card" style='width: 25rem;'>
-    <div class="layui-tab">
-        <ul class="layui-tab-title">
-            <li class="layui-this">需求</li>
-            <li>规划</li>
-            <li>待建</li>
-            <li>归档</li>
-        </ul>
-        <div class="layui-tab-content">
-            <div class="input-item">
-                <span class="input-item-text" style="width:4rem;">条件</span>
-                <input id='input' type="text" value='' >
-                <button>搜 索</button>
-            </div>
-            <div class="layui-tab-item layui-show">
-                <div id="test-tree-demo1"></div>
-            </div>
-            <div class="layui-tab-item">
-                <div id="test-tree-demo2"></div>
-            </div>
-            <div class="layui-tab-item">
-                <div id="test-tree-demo3"></div>
-            </div>
-            <div class="layui-tab-item">
-                <div id="test-tree-demo4"></div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="input-card" style='width: 22rem;'>
-    <div class="input-item">
-        <input type="radio" name='func' value='polygon'><span class="input-text">框选</span>
-        <input type="radio" name='func' value='marker'><span class="input-text">打点</span>
-        <input id="clear" type="button" class="btn" value="清除" />
-    </div>
-</div>
 <script src="//a.amap.com/jsapi_demos/static/china.js"></script>
 <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -234,73 +226,6 @@
         zoom: 15,
         resizeEnable: true
     });
-
-    //获取框选路径
-    function getAllArea() {
-        var result = null;
-        $.ajax({
-            type: "post",
-            url: "/camera/areaDraw",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function (detObj) {
-                if (detObj.msg === "success") {
-                    result = detObj.data;
-                }
-            }
-        });
-        return result;
-    }
-    var areas = getAllArea();
-
-    for(var i=0;i<areas.length;i++){
-        //展示需求区域
-        var polygon = new AMap.Polygon({
-            map:map,
-            fillColor:'',
-            fillOpacity:0.3,
-            path:areas[i]
-        })
-        for(var j=i+1;j<areas.length;j++){
-            //判断重合区域，重复黄色高亮
-            new AMap.Polygon({
-                map:map,
-                fillColor:'yellow',
-                fillOpacity:0.3,
-                path:AMap.GeometryUtil.ringRingClip(areas[i],areas[j])
-            })
-        }
-        //创建左键菜单
-        var contextLeftMenu = new AMap.ContextMenu();
-        polygon.on('click', function (e) {
-            layer.open({
-                type: 2
-                ,title: '需求描述'
-                ,content: '404.html?' + contextRightMenu._amap_id
-                ,maxmin: true
-                ,area: ['600px', '400px']
-            });
-            contextLeftMenu.open(map, e.lnglat);
-        });
-        //创建右键菜单
-        var contextRightMenu = new AMap.ContextMenu();
-        contextRightMenu.addItem("需求编辑", function () {
-            layer.open({
-                type: 2
-                ,title: '需求描述'
-                ,content: 'xuqiu.html?' + contextRightMenu._amap_id
-                ,maxmin: true
-                ,area: ['600px', '400px']
-            });
-        }, 0);
-        contextRightMenu.addItem("删除区域", function () {
-            postdata(contextRightMenu._amap_id, "/camera/areadel", function () {layer.msg("删除成功！");});
-        }, 0);
-        polygon.on('rightclick', function (e) {
-            contextRightMenu.open(map, e.lnglat);
-        });
-    }
 
     //可视域
     var canvas;
@@ -399,26 +324,18 @@
     // 画图工具类开始
     var mouseTool = new AMap.MouseTool(map);
     //监听draw事件可获取画好的覆盖物
-    var overlays = [];
-    mouseTool.on('draw',function(e){
-        overlays.push(e.obj);
-        console.log("draw="+overlays.toString());
-        //存入需求区域的经纬度
-        postdata(overlays.toString(), "/camera/areasave", function () {});
-    })
+    // var overlays = [];
+    // mouseTool.on('draw',function(e){
+    //     overlays.push(e.obj);
+    //     console.log("draw="+overlays.toString());
+    //     //存入需求区域的经纬度
+    //     postdata(overlays.toString(), "/camera/areasave", function () {});
+    // })
     function draw(type){
         switch(type){
             case 'marker':{
                 mouseTool.marker({
                     //同Marker的Option设置
-                });
-                break;
-            }
-            case 'polygon':{
-                mouseTool.polygon({
-                    fillColor:'#00b0ff',
-                    strokeColor:'#80d8ff'
-                    //同Polygon的Option设置
                 });
                 break;
             }
@@ -489,8 +406,8 @@
         context.marker.setContent(div)
     };
 
+    //鼠标点击marker弹出自定义的信息窗体
     var _renderMarker = function(context) {
-        //鼠标点击marker弹出自定义的信息窗体
         context.marker.on('click', function () {
             infoWindow.open(map, context.marker._originOpts.position);
         });
@@ -501,13 +418,13 @@
             var result = null;
             $.ajax({
                 type: "post",
-                url: "/camera/lnglatdet",
+                url: "/camera/lnglatDet",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 async: false,
                 data: "120.089872,30.856878",
                 success: function (detObj) {
-                    if (detObj.msg === "sucess") {
+                    if (detObj.msg === "success") {
                         result = detObj.data[0];
                     }
                 }
@@ -611,15 +528,15 @@
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '区域名称1'
+                    title: '点位名称1'
                     ,id: 2
                     ,field: 'dept2'
                 },{
-                    title: '区域名称2'
+                    title: '点位名称2'
                     ,id: 3
                     ,field: 'dept3'
                 },{
-                    title: '区域名称3'
+                    title: '点位名称3'
                     ,id: 4
                     ,field: 'dept4'
                 }]
@@ -629,15 +546,15 @@
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '区域名称4'
+                    title: '点位名称4'
                     ,id: 2
                     ,field: 'dept2'
                 },{
-                    title: '区域名称5'
+                    title: '点位名称5'
                     ,id: 3
                     ,field: 'dept3'
                 },{
-                    title: '区域名称6'
+                    title: '点位名称6'
                     ,id: 4
                     ,field: 'dept4'
                 }]
@@ -647,15 +564,15 @@
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '区域名称7'
+                    title: '点位名称7'
                     ,id: 2
                     ,field: 'dept2'
                 },{
-                    title: '区域名称8'
+                    title: '点位名称8'
                     ,id: 3
                     ,field: 'dept3'
                 },{
-                    title: '区域名称9'
+                    title: '点位名称9'
                     ,id: 4
                     ,field: 'dept4'
                 }]
@@ -665,23 +582,23 @@
                 ,field: 'dept0'
                 ,spread: true
                 ,children: [{
-                    title: '区域名称10'
+                    title: '点位名称10'
                     ,id: 2
                     ,field: 'dept2'
                 },{
-                    title: '区域名称11'
+                    title: '点位名称11'
                     ,id: 3
                     ,field: 'dept3'
                 },{
-                    title: '区域名称12'
+                    title: '点位名称12'
                     ,id: 4
                     ,field: 'dept4'
                 }]
             }]
 
-            //模拟数--规划
+            //模拟数--项目
             ,data2 = [{
-                title: '2024年上半年公共视频监控建设计划'
+                title: '2025年上半年公共视频监控建设计划'
                 ,id: 1
                 ,field: 'dept0'
                 ,spread: true
@@ -691,41 +608,15 @@
                     ,field: 'dept2'
                     ,spread: true
                     ,children: [{
-                        title: '区域名称1'
+                        title: '点位名称1'
                         ,id: 2
                         ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称A'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称B'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称C'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
                     },{
-                        title: '区域名称2'
+                        title: '点位名称2'
                         ,id: 2
                         ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称D'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称E'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称F'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
                     },{
-                        title: '区域名称3'
+                        title: '点位名称3'
                         ,id: 2
                         ,field: 'dept2'
                     }]
@@ -735,148 +626,15 @@
                     ,field: 'dept3'
                     ,spread: true
                     ,children: [{
-                        title: '区域名称1'
+                        title: '点位名称4'
                         ,id: 2
                         ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称A'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称B'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称C'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
                     },{
-                        title: '区域名称2'
+                        title: '点位名称5'
                         ,id: 2
                         ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称D'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称E'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称F'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
                     },{
-                        title: '区域名称3'
-                        ,id: 2
-                        ,field: 'dept2'
-                    }]
-                },{
-                    title: '应急管理局需求'
-                    ,id: 4
-                    ,field: 'dept4'
-                },{
-                    title: '水利局需求'
-                    ,id: 5
-                    ,field: 'dept5'
-                },{
-                    title: '教育局需求'
-                    ,id: 6
-                    ,field: 'dept6'
-                }]
-            }]
-
-            //模拟数--待建
-            ,data3 = [{
-                title: '2024年上半年公共视频监控建设计划'
-                ,id: 1
-                ,field: 'dept0'
-                ,spread: true
-                ,children: [{
-                    title: '公安分局需求'
-                    ,id: 2
-                    ,field: 'dept2'
-                    ,children: [{
-                        title: '区域名称1'
-                        ,id: 2
-                        ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称A'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称B'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称C'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
-                    },{
-                        title: '区域名称2'
-                        ,id: 2
-                        ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称D'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称E'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称F'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
-                    },{
-                        title: '区域名称3'
-                        ,id: 2
-                        ,field: 'dept2'
-                    }]
-                },{
-                    title: '综合执法局需求'
-                    ,id: 3
-                    ,field: 'dept3'
-                    ,children: [{
-                        title: '区域名称1'
-                        ,id: 2
-                        ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称A'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称B'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称C'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
-                    },{
-                        title: '区域名称2'
-                        ,id: 2
-                        ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称D'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称E'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称F'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
-                    },{
-                        title: '区域名称3'
+                        title: '点位名称6'
                         ,id: 2
                         ,field: 'dept2'
                     }]
@@ -896,8 +654,8 @@
             }]
 
             //模拟数--归档
-            ,data4 = [{
-                title: '2024年上半年公共视频监控建设计划'
+            ,data3 = [{
+                title: '2025年上半年公共视频监控建设计划'
                 ,id: 1
                 ,field: 'dept0'
                 ,spread: true
@@ -905,42 +663,17 @@
                     title: '公安分局需求'
                     ,id: 2
                     ,field: 'dept2'
+                    ,spread: true
                     ,children: [{
-                        title: '区域名称1'
+                        title: '点位名称1'
                         ,id: 2
                         ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称A'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称B'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称C'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
                     },{
-                        title: '区域名称2'
+                        title: '点位名称2'
                         ,id: 2
                         ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称D'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称E'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称F'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
                     },{
-                        title: '区域名称3'
+                        title: '点位名称3'
                         ,id: 2
                         ,field: 'dept2'
                     }]
@@ -948,42 +681,17 @@
                     title: '综合执法局需求'
                     ,id: 3
                     ,field: 'dept3'
+                    ,spread: true
                     ,children: [{
-                        title: '区域名称1'
+                        title: '点位名称4'
                         ,id: 2
                         ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称A'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称B'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称C'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
                     },{
-                        title: '区域名称2'
+                        title: '点位名称5'
                         ,id: 2
                         ,field: 'dept2'
-                        ,children: [{
-                            title: '点位名称D'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称E'
-                            ,id: 2
-                            ,field: 'dept2'
-                        },{
-                            title: '点位名称F'
-                            ,id: 2
-                            ,field: 'dept2'
-                        }]
                     },{
-                        title: '区域名称3'
+                        title: '点位名称6'
                         ,id: 2
                         ,field: 'dept2'
                     }]
@@ -991,23 +699,128 @@
                     title: '应急管理局需求'
                     ,id: 4
                     ,field: 'dept4'
+                },{
+                    title: '水利局需求'
+                    ,id: 5
+                    ,field: 'dept5'
+                },{
+                    title: '教育局需求'
+                    ,id: 6
+                    ,field: 'dept6'
                 }]
             }]
 
             ,search_data1 = [{
-                title: '根目录'
+                title: '点位根目录'
                 ,id: 1
                 ,field: 'dept0'
                 ,spread: true
-                ,children: []
+                ,children: [{
+                    title: '组织目录1'
+                    ,id: 2
+                    ,field: 'dept2'
+                    ,spread: true
+
+                    ,children: [{
+                        title: '点位名称1'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '点位名称2'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '点位名称3'
+                        ,id: 2
+                        ,field: 'dept2'
+                    }]
+                },{
+                    title: '组织目录2'
+                    ,id: 3
+                    ,field: 'dept3'
+                    ,spread: true
+                    ,children: [{
+                        title: '点位名称4'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '点位名称5'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '点位名称6'
+                        ,id: 2
+                        ,field: 'dept2'
+                    }]
+                },{
+                    title: '组织目录3'
+                    ,id: 4
+                    ,field: 'dept4'
+                },{
+                    title: '组织目录4'
+                    ,id: 5
+                    ,field: 'dept5'
+                },{
+                    title: '组织目录5'
+                    ,id: 6
+                    ,field: 'dept6'
+                }]
             }]
 
             ,search_data2 = [{
-                title: '未命名'
+                title: '标签根目录'
                 ,id: 1
                 ,field: 'dept0'
                 ,spread: true
-                ,children: []
+                ,children: [{
+                    title: '场景1'
+                    ,id: 2
+                    ,field: 'dept2'
+                    ,spread: true
+                    ,children: [{
+                        title: '标签1'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '标签2'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '标签3'
+                        ,id: 2
+                        ,field: 'dept2'
+                    }]
+                },{
+                    title: '场景2'
+                    ,id: 3
+                    ,field: 'dept3'
+                    ,spread: true
+                    ,children: [{
+                        title: '标签4'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '标签5'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '标签6'
+                        ,id: 2
+                        ,field: 'dept2'
+                    }]
+                },{
+                    title: '场景3'
+                    ,id: 4
+                    ,field: 'dept4'
+                },{
+                    title: '场景4'
+                    ,id: 5
+                    ,field: 'dept5'
+                },{
+                    title: '场景5'
+                    ,id: 6
+                    ,field: 'dept6'
+                }]
             }]
 
         //仅节点左侧图标控制收缩
@@ -1016,18 +829,7 @@
             ,data: data1
             ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
             ,click: function(obj){
-                $('#type').val(obj.data.field.substring(0,4));
-                $('#deptId').val(obj.data.field.substring(4,obj.data.field.length));
-                $('#deptName').val(obj.data.title);
-                table.reload('userReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        type: obj.data.field.substring(0,4),
-                        deptId: obj.data.field.substring(4,obj.data.field.length)
-                    }
-                }, 'data');
+
             }
         });
 
@@ -1036,18 +838,7 @@
             ,data: data2
             ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
             ,click: function(obj){
-                $('#type').val(obj.data.field.substring(0,4));
-                $('#deptId').val(obj.data.field.substring(4,obj.data.field.length));
-                $('#deptName').val(obj.data.title);
-                table.reload('userReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        type: obj.data.field.substring(0,4),
-                        deptId: obj.data.field.substring(4,obj.data.field.length)
-                    }
-                }, 'data');
+
             }
         });
 
@@ -1056,38 +847,7 @@
             ,data: data3
             ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
             ,click: function(obj){
-                $('#type').val(obj.data.field.substring(0,4));
-                $('#deptId').val(obj.data.field.substring(4,obj.data.field.length));
-                $('#deptName').val(obj.data.title);
-                table.reload('userReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        type: obj.data.field.substring(0,4),
-                        deptId: obj.data.field.substring(4,obj.data.field.length)
-                    }
-                }, 'data');
-            }
-        });
 
-        tree.render({
-            elem: '#test-tree-demo4'
-            ,data: data4
-            ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
-            ,click: function(obj){
-                $('#type').val(obj.data.field.substring(0,4));
-                $('#deptId').val(obj.data.field.substring(4,obj.data.field.length));
-                $('#deptName').val(obj.data.title);
-                table.reload('userReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        type: obj.data.field.substring(0,4),
-                        deptId: obj.data.field.substring(4,obj.data.field.length)
-                    }
-                }, 'data');
             }
         });
 
@@ -1096,18 +856,11 @@
             ,data: search_data1
             ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
             ,click: function(obj){
-                $('#type').val(obj.data.field.substring(0,4));
-                $('#deptId').val(obj.data.field.substring(4,obj.data.field.length));
-                $('#deptName').val(obj.data.title);
-                table.reload('userReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        type: obj.data.field.substring(0,4),
-                        deptId: obj.data.field.substring(4,obj.data.field.length)
-                    }
-                }, 'data');
+                //鼠标点击列表中的点位时地图自动定位
+                var lng = parseFloat('120.093914');
+                var lat = parseFloat('30.854382');
+                map.setCenter([lng, lat]); // 设置地图中心点为点击的点位
+                map.setZoomAndCenter(15, [lng, lat]);
             }
         });
 
@@ -1116,18 +869,7 @@
             ,data: search_data2
             ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
             ,click: function(obj){
-                $('#type').val(obj.data.field.substring(0,4));
-                $('#deptId').val(obj.data.field.substring(4,obj.data.field.length));
-                $('#deptName').val(obj.data.title);
-                table.reload('userReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        type: obj.data.field.substring(0,4),
-                        deptId: obj.data.field.substring(4,obj.data.field.length)
-                    }
-                }, 'data');
+
             }
         });
 

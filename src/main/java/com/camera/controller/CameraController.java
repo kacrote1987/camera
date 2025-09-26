@@ -78,7 +78,7 @@ public class CameraController {
     }
 
     @ApiOperation("根据经纬度查点位详细")
-    @PostMapping("/lnglatdet")
+    @PostMapping("/lnglatDet")
     public Result lnglatDet(@RequestBody String lngLat){
         List<CameraDet> cameraDet=cameraService.lnglatDet(lngLat);
         return Result.success(cameraDet);
