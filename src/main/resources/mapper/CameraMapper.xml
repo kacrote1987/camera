@@ -73,8 +73,8 @@
         group by camera_lng,camera_lat
     </select>
     <select id="lnglatDet" resultType="com.camera.entity.CameraDet">
-        SELECT distinct camera_lng,camera_lat,max(camera_code) as camera_code,max(camera_name) as camera_name FROM t_camera_basic
-        where camera_lng=#{cameraLng} and camera_lat=#{cameraLat} group by camera_lng,camera_lat
+        SELECT distinct camera_lng,camera_lat,max(camera_code) as camera_code,max(camera_name) as camera_name,max(camera_dept1) as camera_dept1,max(camera_dept2) as camera_dept2,camera_area,camera_town,camera_village
+        FROM t_camera_basic where camera_lng=#{cameraLng} and camera_lat=#{cameraLat} group by camera_lng,camera_lat
     </select>
     <select id="lnglatDraw" resultType="com.camera.entity.LnglatDet">
         SELECT distinct t.camera_lng,t.camera_lat,max(t.azimuth_level) as azimuth_level,max(t.includel_angle) as includel_angle,max(t.camera_distance) as camera_distance FROM

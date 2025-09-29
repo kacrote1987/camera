@@ -73,11 +73,12 @@ public class CameraServiceImpl implements CameraService {
 
     @Override
     public List<CameraDet> lnglatDet(String lngLat) {
-        String aa = lngLat;
-        String cameraLng = lngLat.substring(0, lngLat.indexOf(","));
-        String cameraLat = lngLat.substring(lngLat.indexOf(",")+1, lngLat.length());
-        List<CameraDet> cameraDet = cameraMapper.lnglatDet(cameraLng,cameraLat);
-        return cameraDet;
+        System.out.println("x="+lngLat);
+//        String aa = lngLat;
+//        String cameraLng = lngLat.substring(0, lngLat.indexOf(","));
+//        String cameraLat = lngLat.substring(lngLat.indexOf(",")+1, lngLat.length());
+//        List<CameraDet> cameraDet = cameraMapper.lnglatDet(cameraLng,cameraLat);
+        return null;
     }
 
     @Override

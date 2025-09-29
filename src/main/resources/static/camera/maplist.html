@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,34 +12,47 @@
     <script src="https://webapi.amap.com/maps?v=2.0&key=da5c5caa1b78cfce183497a36ad4d2df&plugin=AMap.MarkerCluster,AMap.MouseTool"></script>
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
     <title>万像慧治</title>
-    <link rel="shortcut icon" type="image/x-icon" href="config/img/logo.png"/>
     <style>
         html, body, #container {
-            margin: 0px;
-            padding: 0px;
-            width: 100%;
             height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
-
+        .amap-info-window{
+            width: 150px;
+            background: #fff;
+            border-radius: 3px;
+            padding: 3px 7px;
+            box-shadow: 0 2px 6px 0 rgba(114, 124, 245, .5);
+            position: relative;
+        }
+        .amap-info-sharp{
+            position: absolute;
+            top: 21px;
+            bottom: 0;
+            left: 50%;
+            margin-left: -8px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid #fff;
+        }
         #container {
             width: 100%;
             height: 94%;
         }
-
         .top-bar {
             width: 100%;
             height: 50px;
             margin: 0;
             display: flex;
         }
-
         .box-top {
             width: 100%;
             min-width: 1350px;
             background-color: rgba(255, 255, 255, 0.5);
             padding: 20px;
         }
-
         .top-ui {
             width: 100%;
             min-width: 800px;
@@ -48,7 +61,6 @@
             margin: 0;
             padding: 0;
         }
-
         .top-ui li {
             width: 10%;
             min-width: 50px;
@@ -57,17 +69,14 @@
             text-align: left;
             display: block;
         }
-
         .top-ui a {
             color: black;
             text-decoration: none;
         / / 下划线;
         }
-
         .top-ui a:hover {
             color: white;
         }
-
         .top-ui img {
             height: 40px;
             margin: 0;
@@ -76,24 +85,19 @@
             position: relative;
             top: -10px;
         }
-
         .input-card {
             width: 25rem;
         }
-
         .input-card .btn {
             width: 7rem;
             margin-right: .7rem;
         }
-
         .input-card .btn:last-child {
             margin-right: 0;
         }
-
         .content-window-card p {
             height: 2rem;
         }
-
         div.info-top div {
             display: inline-block;
             color: #333333;
@@ -102,33 +106,27 @@
             line-height: 31px;
             padding: 0 10px;
         }
-
         div.info-top img {
             position: absolute;
             top: 10px;
             right: 10px;
             transition-duration: 0.25s;
         }
-
         div.info-top img:hover {
             box-shadow: 0px 0px 5px #000;
         }
-
         div.info-bottom img {
             position: relative;
             z-index: 104;
         }
-
         span {
             margin-left: 5px;
             font-size: 11px;
         }
-
         .info-middle img {
             float: left;
             margin-right: 6px;
         }
-
         #panel_search {
             position: fixed;
             background-color: white;
@@ -138,7 +136,6 @@
             left: 0;
             width: 280px;
         }
-
         #panel_plan {
             position: fixed;
             background-color: white;
@@ -161,13 +158,14 @@
                 可视域 <input type="checkbox" id="zzz" onclick="drawSectorOpen()"> |
                 打点 <input type="radio" name='func' value='marker'> |
                 <a href="#" id="clear">清除</a> |
-                <a href="#" onclick="show_mark()">收藏夹</a>
+                <a href="#" onclick="show_mark()">收藏夹</a> |
+                <a href="#" onclick="full_screen()">全屏</a>
             </li>
         </ul>
     </div>
 </div>
 <div id="container" class="map" tabindex="0"></div>
-
+<div class="info">收藏夹展示</div>
 <div id="panel_plan" class="input-card" style='width: 22rem;'>
     <div class="layui-tab">
         <ul class="layui-tab-title">
@@ -196,8 +194,9 @@
 <div id="panel_search" class="input-card" style='width: 22rem;'>
     <div class="layui-tab">
         <ul class="layui-tab-title">
-            <li class="layui-this">组织目录</li>
-            <li>标签搜索</li>
+            <li class="layui-this">组织</li>
+            <li>标签</li>
+            <li>已申请</li>
         </ul>
         <div class="layui-tab-content">
             <div class="input-item">
@@ -206,10 +205,13 @@
                 <button>搜 索</button>
             </div>
             <div class="layui-tab-item layui-show">
-                <div id="test-tree-search1"></div>
+                <div id="test-tree-org"></div>
             </div>
             <div class="layui-tab-item">
-                <div id="test-tree-search2"></div>
+                <div id="test-tree-tag"></div>
+            </div>
+            <div class="layui-tab-item">
+                <div id="test-tree-applied"></div>
             </div>
         </div>
     </div>
@@ -221,34 +223,82 @@
 <script src="js/demo.js"></script>
 <script src="layuiadmin/layui/layui.js"></script>
 <script type="text/javascript">
-    var map = new AMap.Map("container", {
-        center: [120.089872,30.856878],
+    //新建地图容器
+    var map = new AMap.Map('container', {
         zoom: 15,
-        resizeEnable: true
+        viewMode:'3D',
+        center: [120.089872,30.856878]
     });
 
-    //可视域
+    //地图初始化
     var canvas;
     map.on("complete", function () {
-        AMap.plugin('AMap.CustomLayer', function () {
-            canvas = document.createElement('canvas');
-            customLayer = new AMap.CustomLayer(canvas, {
-                zooms: [3, 20],
-                alwaysRender: true,//缩放过程中是否重绘，复杂绘制建议设为false
-                zIndex: 22,
-                opacity: 0.6
-            });
-            LabelsLayer = new AMap.LabelsLayer(canvas, {
-                zooms: [3, 20],
-                alwaysRender: true,//缩放过程中是否重绘，复杂绘制建议设为false
-                zIndex: 1000,
-                opacity: 0.6,
-                collision: false
-            });
-            mouseTool.close(true)//关闭，并清除覆盖物
+        // 创建 AMap.LabelsLayer 图层
+        var layer = new AMap.LabelsLayer({
+            zoom: 15
         });
+        // 将图层添加到地图
+        map.add(layer);
+        //设置点位图标样式
+        var markers = [];
+        var icon = {
+            type: 'image',
+            image: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+            size: [20, 30],
+            anchor: 'bottom-center',
+        };
+        // 批量获取点位数据源
+        function getAllPoints() {
+            var result = null;
+            $.ajax({
+                type: "post",
+                url: "/camera/lngLat",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (detObj) {
+                    if (detObj.msg === "success") {
+                        result = detObj.data;
+                    }
+                }
+            });
+            return result;
+        }
+        // var positions = getAllPoints();
+        // var count = positions.length;
+        var positions = [[120.089872,30.856878],[120.090007,30.857244],[120.093914,30.854382]];
+
+        for (var i = 0; i < positions.length; i++) {
+            var curPosition = positions[i];
+            var curData = {
+                position: curPosition,
+                icon
+            };
+            var labelMarker = new AMap.LabelMarker(curData);
+            markers.push(labelMarker);
+        }
+        // 一次性将海量点添加到图层
+        layer.add(markers);
+
+        //设置可视域图层
+        canvas = document.createElement('canvas');
+        customLayer = new AMap.CustomLayer(canvas, {
+            zooms: [3, 20],
+            alwaysRender: true,//缩放过程中是否重绘，复杂绘制建议设为false
+            zIndex: 22,
+            opacity: 0.6
+        });
+        LabelsLayer = new AMap.LabelsLayer(canvas, {
+            zooms: [3, 20],
+            alwaysRender: true,//缩放过程中是否重绘，复杂绘制建议设为false
+            zIndex: 1000,
+            opacity: 0.6,
+            collision: false
+        });
+        mouseTool.close(true)//关闭，并清除覆盖物
     });
 
+    //可视域图层渲染
     function drawSector(centerPos, startAngle, includeAngle, radius) {
         //自定义图层添加渲染方法
         var onRender = function () {
@@ -284,6 +334,7 @@
         customLayer.show();
     }
 
+    // 可视域图层覆盖范围计算
     function azimuth_offset(origin_lon, origin_lat, azimuth, distance) {
         var lonlat = [0.0, 0.0];
         if (azimuth != null && distance > 0) {
@@ -295,6 +346,8 @@
         }
         return lonlat;
     }
+
+    // 可视域图层开关设置
     function drawSectorOpen() {
         var checkBox = document.getElementById("zzz");
         if(checkBox.checked === true){
@@ -358,155 +411,6 @@
         overlays = [];
     }
     // 画图工具类结束
-
-    //点位数据获取和展示
-    var cluster;
-    function getAllPoints() {
-        var result = null;
-        $.ajax({
-            type: "post",
-            url: "/camera/lngLat",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function (detObj) {
-                if (detObj.msg === "success") {
-                    result = detObj.data;
-                }
-            }
-        });
-        return result;
-    }
-
-    //点位聚合
-    var points = getAllPoints();
-    // var points = [{ lnglat: [120.089872,30.856878] },{ lnglat: [120.090007,30.857244] },{ lnglat: [120.093914,30.854382] }];
-    var count = points.length;
-
-    var _renderClusterMarker = function (context) {
-        var factor = Math.pow(context.count / count, 1 / 18);
-        var div = document.createElement('div');
-        var Hue = 180 - factor * 180;
-        var bgColor = 'hsla(' + Hue + ',100%,40%,0.7)';
-        var fontColor = 'hsla(' + Hue + ',100%,90%,1)';
-        var borderColor = 'hsla(' + Hue + ',100%,40%,1)';
-        var shadowColor = 'hsla(' + Hue + ',100%,90%,1)';
-        div.style.backgroundColor = bgColor;
-        var size = Math.round(30 + Math.pow(context.count / count, 1 / 5) * 20);
-        div.style.width = div.style.height = size + 'px';
-        div.style.border = 'solid 1px ' + borderColor;
-        div.style.borderRadius = size / 2 + 'px';
-        div.style.boxShadow = '0 0 5px ' + shadowColor;
-        div.innerHTML = context.count;
-        div.style.lineHeight = size + 'px';
-        div.style.color = fontColor;
-        div.style.fontSize = '14px';
-        div.style.textAlign = 'center';
-        context.marker.setOffset(new AMap.Pixel(-size / 2, -size / 2));
-        context.marker.setContent(div)
-    };
-
-    //鼠标点击marker弹出自定义的信息窗体
-    var _renderMarker = function(context) {
-        context.marker.on('click', function () {
-            infoWindow.open(map, context.marker._originOpts.position);
-        });
-        //实例化信息窗体，根据经纬度查询点位信息
-        function getPointMsg() {
-            var str = context.marker._originOpts.position[0] + ',' + context.marker._originOpts.position[1];
-            // console.log(str);
-            var result = null;
-            $.ajax({
-                type: "post",
-                url: "/camera/lnglatDet",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                async: false,
-                data: "120.089872,30.856878",
-                success: function (detObj) {
-                    if (detObj.msg === "success") {
-                        result = detObj.data[0];
-                    }
-                }
-            });
-            return result;
-        }
-        var pointMsg = getPointMsg();
-        var title = pointMsg.cameraName;
-        content = [];
-        content.push("<video src=\"../../upload/abc.mp4\" width='390' height='150'></video>");
-        content.push("监控点名称：" + "方恒假日酒店");
-        content.push("监控点编码：" + "33050000000000");
-        content.push("所属地区：吴兴区-高新区");
-        content.push("需求部门：公安分局");
-        content.push("经度：120.089872");
-        content.push("纬度：30.856878");
-        content.push("预览 | 回放 | 收藏");
-        var infoWindow = new AMap.InfoWindow({
-            isCustom: true,  //使用自定义窗体
-            content: createInfoWindow(title, content.join("<br/>")),
-            offset: new AMap.Pixel(16, -45)
-        });
-
-        var content = '';
-        var offset = new AMap.Pixel(-9, -9);
-        context.marker.setContent(content)
-        context.marker.setOffset(offset)
-    }
-
-    if (cluster) {
-        cluster.setMap(null);
-    }
-    cluster = new AMap.MarkerCluster(map, points, {
-        gridSize: 60, // 设置网格像素大小
-        renderClusterMarker: _renderClusterMarker, // 自定义聚合点样式
-        renderMarker: _renderMarker, // 自定义非聚合点样式
-    });
-
-    //构建自定义信息窗体
-    function createInfoWindow(title, content) {
-        var info = document.createElement("div");
-        info.className = "custom-info input-card content-window-card";
-
-        //可以通过下面的方式修改自定义窗体的宽高
-        info.style.width = "400px";
-        // 定义顶部标题
-        var top = document.createElement("div");
-        var titleD = document.createElement("div");
-        var closeX = document.createElement("img");
-        top.className = "info-top";
-        titleD.innerHTML = title;
-        closeX.src = "https://webapi.amap.com/images/close2.gif";
-        closeX.onclick = closeInfoWindow;
-
-        top.appendChild(titleD);
-        top.appendChild(closeX);
-        info.appendChild(top);
-
-        // 定义中部内容
-        var middle = document.createElement("div");
-        middle.className = "info-middle";
-        middle.style.backgroundColor = 'white';
-        middle.innerHTML = content;
-        info.appendChild(middle);
-
-        // 定义底部内容
-        var bottom = document.createElement("div");
-        bottom.className = "info-bottom";
-        bottom.style.position = 'relative';
-        bottom.style.top = '0px';
-        bottom.style.margin = '0 auto';
-        var sharp = document.createElement("img");
-        sharp.src = "https://webapi.amap.com/images/sharp.png";
-        bottom.appendChild(sharp);
-        info.appendChild(bottom);
-        return info;
-    }
-
-    //关闭信息窗体
-    function closeInfoWindow() {
-        map.clearInfoWindow();
-    }
 
 </script>
 <script>
@@ -710,7 +614,7 @@
                 }]
             }]
 
-            ,search_data1 = [{
+            ,org_data = [{
                 title: '点位根目录'
                 ,id: 1
                 ,field: 'dept0'
@@ -767,7 +671,7 @@
                 }]
             }]
 
-            ,search_data2 = [{
+            ,tag_data = [{
                 title: '标签根目录'
                 ,id: 1
                 ,field: 'dept0'
@@ -823,6 +727,63 @@
                 }]
             }]
 
+            ,applied_data = [{
+                title: '已申请目录'
+                ,id: 1
+                ,field: 'dept0'
+                ,spread: true
+                ,children: [{
+                    title: '组织目录1'
+                    ,id: 2
+                    ,field: 'dept2'
+                    ,spread: true
+
+                    ,children: [{
+                        title: '点位名称1'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '点位名称2'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '点位名称3'
+                        ,id: 2
+                        ,field: 'dept2'
+                    }]
+                },{
+                    title: '组织目录2'
+                    ,id: 3
+                    ,field: 'dept3'
+                    ,spread: true
+                    ,children: [{
+                        title: '点位名称4'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '点位名称5'
+                        ,id: 2
+                        ,field: 'dept2'
+                    },{
+                        title: '点位名称6'
+                        ,id: 2
+                        ,field: 'dept2'
+                    }]
+                },{
+                    title: '组织目录3'
+                    ,id: 4
+                    ,field: 'dept4'
+                },{
+                    title: '组织目录4'
+                    ,id: 5
+                    ,field: 'dept5'
+                },{
+                    title: '组织目录5'
+                    ,id: 6
+                    ,field: 'dept6'
+                }]
+            }]
+
         //仅节点左侧图标控制收缩
         tree.render({
             elem: '#test-tree-demo1'
@@ -852,8 +813,8 @@
         });
 
         tree.render({
-            elem: '#test-tree-search1'
-            ,data: search_data1
+            elem: '#test-tree-org'
+            ,data: org_data
             ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
             ,click: function(obj){
                 //鼠标点击列表中的点位时地图自动定位
@@ -865,8 +826,17 @@
         });
 
         tree.render({
-            elem: '#test-tree-search2'
-            ,data: search_data2
+            elem: '#test-tree-tag'
+            ,data: tag_data
+            ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+            ,click: function(obj){
+
+            }
+        });
+
+        tree.render({
+            elem: '#test-tree-applied'
+            ,data: applied_data
             ,onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
             ,click: function(obj){
 

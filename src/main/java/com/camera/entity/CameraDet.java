@@ -18,7 +18,8 @@ public class CameraDet {
     private String cameraVillage;
     private String cameraBuildtime;
     private String cameraDeadline;
-    private String cameraDept;
+    private String cameraDept1;
+    private String cameraDept2;
     private String tagType;
     private String tagLv1;
     private String tagLv2;
@@ -183,12 +184,20 @@ public class CameraDet {
         this.cameraDeadline = cameraDeadline;
     }
 
-    public String getCameraDept() {
-        return cameraDept;
+    public String getCameraDept1() {
+        return cameraDept1;
     }
 
-    public void setCameraDept(String cameraDept) {
-        this.cameraDept = cameraDept;
+    public void setCameraDept1(String cameraDept1) {
+        this.cameraDept1 = cameraDept1;
+    }
+
+    public String getCameraDept2() {
+        return cameraDept2;
+    }
+
+    public void setCameraDept2(String cameraDept2) {
+        this.cameraDept2 = cameraDept2;
     }
 
     public String getTagType() {
