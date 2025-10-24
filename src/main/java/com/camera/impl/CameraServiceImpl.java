@@ -1,12 +1,11 @@
 package com.camera.impl;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.camera.entity.*;
 import com.camera.mapper.CameraMapper;
 import com.camera.service.CameraService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -59,26 +58,28 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
-    public ArrayList<JSONObject> lngLat() {
-        // 获取经纬度的值,要实现[{ lnglat: [120.089872,30.856878] },{ lnglat: [120.090007,30.857244] },{ lnglat: [120.093914,30.854382] }]
+    public double[][] lngLat() {
+        // 获取经纬度的值,要实现[[120.089872,30.856878],[120.090007,30.857244],[120.093914,30.854382]];
         List<LnglatDet> lngLat=cameraMapper.lngLat();
-        ArrayList<JSONObject> myArray = new ArrayList<>();
-        for(int i=0;i<lngLat.size();i++) {
-            String str = "{ \"lnglat\": [" + lngLat.get(i).getCameraLng() + "," + lngLat.get(i).getCameraLat() + "] }";
-            JSONObject jsonObject = JSONObject.parseObject(str);
-            myArray.add(jsonObject);
+
+        // 创建二维数组
+        double[][] coordinates = new double[lngLat.size()][2];
+
+        // 使用循环赋值
+        for (int i = 0; i < lngLat.size(); i++) {
+            coordinates[i][0] = Double.parseDouble(lngLat.get(i).getCameraLng());
+            coordinates[i][1] = Double.parseDouble(lngLat.get(i).getCameraLat());
         }
-        return myArray;
+
+        return coordinates;
     }
 
     @Override
     public List<CameraDet> lnglatDet(String lngLat) {
-        System.out.println("x="+lngLat);
-//        String aa = lngLat;
-//        String cameraLng = lngLat.substring(0, lngLat.indexOf(","));
-//        String cameraLat = lngLat.substring(lngLat.indexOf(",")+1, lngLat.length());
-//        List<CameraDet> cameraDet = cameraMapper.lnglatDet(cameraLng,cameraLat);
-        return null;
+        String cameraLng = lngLat.substring(0, lngLat.indexOf(","));
+        String cameraLat = lngLat.substring(lngLat.indexOf(",")+1, lngLat.length());
+        List<CameraDet> cameraDet = cameraMapper.lnglatDet(cameraLng,cameraLat);
+        return cameraDet;
     }
 
     @Override

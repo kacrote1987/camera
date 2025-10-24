@@ -158,14 +158,14 @@
                 可视域 <input type="checkbox" id="zzz" onclick="drawSectorOpen()"> |
                 打点 <input type="radio" name='func' value='marker'> |
                 <a href="#" id="clear">清除</a> |
-                <a href="#" onclick="show_mark()">收藏夹</a> |
+                <a href="#" onclick="show_mark()">待申请</a> |
                 <a href="#" onclick="full_screen()">全屏</a>
             </li>
         </ul>
     </div>
 </div>
 <div id="container" class="map" tabindex="0"></div>
-<div class="info">收藏夹展示</div>
+<div class="info">待申请列表</div>
 <div id="panel_plan" class="input-card" style='width: 22rem;'>
     <div class="layui-tab">
         <ul class="layui-tab-title">
@@ -244,7 +244,7 @@
         var icon = {
             type: 'image',
             image: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
-            size: [20, 30],
+            size: [10, 15],
             anchor: 'bottom-center',
         };
         // 批量获取点位数据源
@@ -264,9 +264,13 @@
             });
             return result;
         }
-        // var positions = getAllPoints();
-        // var count = positions.length;
-        var positions = [[120.089872,30.856878],[120.090007,30.857244],[120.093914,30.854382]];
+        var positions = getAllPoints();
+        // var positions = [[120.089872,30.856878],[120.090007,30.857244],[120.093914,30.854382]];
+
+        // 点的聚合
+
+
+
 
         for (var i = 0; i < positions.length; i++) {
             var curPosition = positions[i];
@@ -276,9 +280,103 @@
             };
             var labelMarker = new AMap.LabelMarker(curData);
             markers.push(labelMarker);
+
+            // 给marker绑定事件,点击弹出信息窗体
+            labelMarker.on('click', function(e){
+                var position = e.data.data && e.data.data.position;
+
+                //实例化信息窗体
+                function getPointMsg() {
+                    var result = null;
+                    $.ajax({
+                        type: "post",
+                        url: "/camera/lnglatDet",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: position.toString(),
+                        success: function (detObj) {
+                            if (detObj.msg === "success") {
+                                result = detObj.data[0];
+                            }
+                        }
+                    });
+                    return result;
+                }
+                var pointMsg = getPointMsg();
+
+                var title = "";
+                content = [];
+                content.push("<video src=\"../../upload/abc.mp4\" width='390' height='150'></video>");
+                content.push("监控点名称：" + pointMsg.cameraName);
+                content.push("监控点编码：" + pointMsg.cameraCode);
+                content.push("所属地区：" + pointMsg.cameraArea);
+                content.push("需求部门：" + pointMsg.cameraDept1);
+                content.push("经度：" + pointMsg.cameraLng);
+                content.push("纬度：" + pointMsg.cameraLat);
+                content.push("预览 | 回放 | 申请");
+                var infoWindow = new AMap.InfoWindow({
+                    isCustom: true,  //使用自定义窗体
+                    content: createInfoWindow(title, content.join("<br/>")),
+                    offset: new AMap.Pixel(16, -45)
+                });
+
+                //构建自定义信息窗体
+                function createInfoWindow(title, content) {
+                    var info = document.createElement("div");
+                    info.className = "custom-info input-card content-window-card";
+
+                    //可以通过下面的方式修改自定义窗体的宽高
+                    info.style.width = "400px";
+                    // 定义顶部标题
+                    var top = document.createElement("div");
+                    var titleD = document.createElement("div");
+                    var closeX = document.createElement("img");
+                    top.className = "info-top";
+                    titleD.innerHTML = title;
+                    closeX.src = "https://webapi.amap.com/images/close2.gif";
+                    closeX.onclick = closeInfoWindow;
+
+                    top.appendChild(titleD);
+                    top.appendChild(closeX);
+                    info.appendChild(top);
+
+                    // 定义中部内容
+                    var middle = document.createElement("div");
+                    middle.className = "info-middle";
+                    middle.style.backgroundColor = 'white';
+                    middle.innerHTML = content;
+                    info.appendChild(middle);
+
+                    // 定义底部内容
+                    var bottom = document.createElement("div");
+                    bottom.className = "info-bottom";
+                    bottom.style.position = 'relative';
+                    bottom.style.top = '0px';
+                    bottom.style.margin = '0 auto';
+                    var sharp = document.createElement("img");
+                    sharp.src = "https://webapi.amap.com/images/sharp.png";
+                    bottom.appendChild(sharp);
+                    info.appendChild(bottom);
+                    return info;
+                }
+
+                //关闭信息窗体
+                function closeInfoWindow() {
+                    map.clearInfoWindow();
+                }
+
+                infoWindow.open(map, position);
+            });
+
+
+
+
         }
         // 一次性将海量点添加到图层
         layer.add(markers);
+
+
 
         //设置可视域图层
         canvas = document.createElement('canvas');

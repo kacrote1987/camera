@@ -1,17 +1,15 @@
 package com.camera.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageInfo;
+import com.camera.config.Result;
 import com.camera.entity.*;
 import com.camera.service.CameraService;
-import com.camera.config.Result;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(description = "万像慧治")
@@ -73,7 +71,7 @@ public class CameraController {
     @ApiOperation("经纬度展示")
     @PostMapping("/lngLat")
     public Result lngLat(){
-        ArrayList<JSONObject> lnglat=cameraService.lngLat();
+        double[][] lnglat=cameraService.lngLat();
         return Result.success(lnglat);
     }
 

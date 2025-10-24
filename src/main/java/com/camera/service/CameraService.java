@@ -1,11 +1,9 @@
 package com.camera.service;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageInfo;
 import com.camera.entity.*;
+import com.github.pagehelper.PageInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface CameraService {
@@ -43,7 +41,7 @@ public interface CameraService {
      * 经纬度展示
      * @return
      */
-    ArrayList<JSONObject> lngLat();
+    double[][] lngLat();
     /**
      * 根据经纬度查点位详细
      * @return

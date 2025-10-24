@@ -69,7 +69,7 @@
         ,check_state=#{params.checkState} where camera_id=#{params.cameraId}
     </update>
     <select id="lngLat" resultType="com.camera.entity.LnglatDet">
-        SELECT distinct camera_lng,camera_lat FROM t_camera_basic where camera_lng is not null and camera_lat is not null and camera_id &lt;= 10
+        SELECT distinct camera_lng,camera_lat FROM t_camera_basic where camera_lng is not null and camera_lat is not null -- and camera_id &lt;= 100
         group by camera_lng,camera_lat
     </select>
     <select id="lnglatDet" resultType="com.camera.entity.CameraDet">
@@ -79,7 +79,8 @@
     <select id="lnglatDraw" resultType="com.camera.entity.LnglatDet">
         SELECT distinct t.camera_lng,t.camera_lat,max(t.azimuth_level) as azimuth_level,max(t.includel_angle) as includel_angle,max(t.camera_distance) as camera_distance FROM
         (select a.camera_id,a.camera_lng,a.camera_lat,a.azimuth_level,b.includel_angle,b.distance_max as camera_distance from t_camera_basic a left join t_camera_param b
-        on a.param_id=b.param_id) t where t.camera_lng is not null and t.camera_lat is not null and t.camera_id &lt;= 10 group by t.camera_lng,t.camera_lat
+        on a.param_id=b.param_id) t where t.camera_lng is not null and t.camera_lat is not null -- and t.camera_id &lt;= 100
+        group by t.camera_lng,t.camera_lat
     </select>
     <select id="areaDraw" resultType="com.camera.entity.AreaDraw">
         SELECT area_code FROM t_plan_point
